@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Calculators>
+	<Sum TriggersOn="Repeating" Caption="after [years] years">
+		<Image Name="Cash"/>
+	</Sum>
+	
+	<!-- Captions appear after the calculated value. EG: "$12,000 by Retirement" -->	
+	<Investment TriggersOn="OneTime,Repeating" Caption="by Retirement">
+		<!-- Image names will be appended with ".png" and looked for in bundle -->
+		<Image Name="money"/>
+		<!-- Labels appear before the editable control. EG: "Expected annual yield 5%" -->
+		<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="5"/>
+		<Configurable Name="Years" Type="Year" Label="I plan to retire in" Value="30"/>
+	</Investment>
+	
+	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in Index Funds">
+		<Image Name="stockmarket"/>
+		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="5"/>
+		<Configurable Name="Years" Type="Year" Label="When invested for" Value="5"/>
+	</Investment>
+	
+	<UnitsPerDay TriggersOn="Repeating" Caption="cups of premium coffee per day">
+		<Image Name="coffeecup"/>
+		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="2.95"/>
+	</UnitsPerDay>
+	
+	<MonthsOfService TriggersOn="OneTime" Caption="months of daily newspaper delivery">
+		<Image Name="newspaper"/>
+		<!-- Estimate comes from New York Times rate for daily delivery -->
+		<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>
+	</MonthsOfService>
+	
+	<Within10Percent TriggersOn="OneTime,Repeating" Caption="iPad with 64gb and LTE wireless after [months] months">
+		<Image Name="iPad"/>
+		<Configurable Name="Threshold" Type="Money" Label="MSRP" Value="829.00"/>
+		<Configurable Name="Limit" Type="Months" Label="Worth postponing for no more than" Value="6"/>
+	</Within10Percent>
+	
+	<Within10Percent TriggersOn="OneTime,Repeating" Caption="iPad with WiFi and 32gb after [months] months">
+		<Image Name="iPad"/>
+		<Configurable Name="Threshold" Type="Money" Label="MSRP" Value="599.00"/>
+		<Configurable Name="Limit" Type="Months" Label="Worth postponing for no more than" Value="6"/>
+	</Within10Percent>
+</Calculators>

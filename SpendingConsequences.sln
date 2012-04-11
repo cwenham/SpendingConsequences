@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpendingConsequences", "SpendingConsequences\SpendingConsequences.csproj", "{33D876FC-57FA-4E89-9975-0FEEA4A8988A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33D876FC-57FA-4E89-9975-0FEEA4A8988A}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{33D876FC-57FA-4E89-9975-0FEEA4A8988A}.Debug|iPhone.Build.0 = Debug|iPhone
+		{33D876FC-57FA-4E89-9975-0FEEA4A8988A}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{33D876FC-57FA-4E89-9975-0FEEA4A8988A}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{33D876FC-57FA-4E89-9975-0FEEA4A8988A}.Release|iPhone.ActiveCfg = Release|iPhone
+		{33D876FC-57FA-4E89-9975-0FEEA4A8988A}.Release|iPhone.Build.0 = Release|iPhone
+		{33D876FC-57FA-4E89-9975-0FEEA4A8988A}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{33D876FC-57FA-4E89-9975-0FEEA4A8988A}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = SpendingConsequences\SpendingConsequences.csproj
+	EndGlobalSection
+EndGlobal
