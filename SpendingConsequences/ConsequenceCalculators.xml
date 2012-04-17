@@ -17,21 +17,34 @@
 		<Image Name="stockmarket"/>
 		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="9.34"/>
 		<Configurable Name="Years" Type="Year" Label="When invested for" Value="5"/>
-		<Commentary Source="http://en.wikipedia.org/wiki/S%26P_500" SourceName="Wikipedia">The Compound Annual Growth Rate of the Standard &amp; Poor 500 Index since its inception in 1957 is about 9.34%</Commentary>
+		<Commentary>The Compound Annual Growth Rate of the Standard &amp; Poor 500 Index since its inception in 1957 is 
+			about 9.34%, however this is not what you'll typically expect in any given year; in some years the index 
+			does worse than others, some years it does much better. When investing in such a fund you should be thinking
+			about the long term and be willing to ride-out dips in the market that can make it look as if you're losing
+			money.
+		</Commentary>
+	</Investment>
+	
+	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years at [Rate]%">
+		<Image Name="stockmarket"/>
+		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="5"/>
+		<Configurable Name="Years" Type="Year" Label="When invested for" Value="3"/>		
 	</Investment>
 	
 	<UnitsPerDay TriggersOn="Repeating" Caption="cups of premium coffee per day">
 		<Image Name="coffeecup"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="2.95"/>
+		<Commentary>
+		</Commentary>
 	</UnitsPerDay>
 	
-	<MonthsOfService TriggersOn="OneTime" Caption="months of daily newspaper delivery">
-		<Image Name="newspaper"/>
+<!--	<MonthsOfService TriggersOn="OneTime" Caption="months of daily newspaper delivery">
+		<Image Name="newspaper"/> -->
 		<!-- Estimate comes from New York Times rate for daily delivery -->
-		<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>
-	</MonthsOfService>
+<!--		<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>
+	</MonthsOfService>-->
 	
-	<Within10Percent TriggersOn="OneTime,Repeating" Caption="iPad with 64gb and LTE wireless after [months] months">
+<!--	<Within10Percent TriggersOn="OneTime,Repeating" Caption="iPad with 64gb and LTE wireless after [months] months">
 		<Image Name="iPad"/>
 		<Configurable Name="Threshold" Type="Money" Label="MSRP" Value="829.00"/>
 		<Configurable Name="Limit" Type="Months" Label="Worth postponing for no more than" Value="6"/>
@@ -41,5 +54,5 @@
 		<Image Name="iPad"/>
 		<Configurable Name="Threshold" Type="Money" Label="MSRP" Value="599.00"/>
 		<Configurable Name="Limit" Type="Months" Label="Worth postponing for no more than" Value="6"/>
-	</Within10Percent>
+	</Within10Percent>-->
 </Calculators>

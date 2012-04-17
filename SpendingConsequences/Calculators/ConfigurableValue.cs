@@ -48,12 +48,14 @@ namespace SpendingConsequences.Calculators
 					return int.Parse (Definition.Attribute ("Value").Value);
 				case ConfigurableValueType.Months:
 					return int.Parse (Definition.Attribute ("Value").Value);
+				case ConfigurableValueType.String:
+					return Definition.Attribute("Value").Value;
 				default:
-					return null;
+					return Definition.Attribute ("Value").Value;
 				}
 			}
 			set {
-				Definition.Attribute("Value").SetValue(value);
+				Definition.Attribute ("Value").SetValue (value);
 			}
 		}
 	}
@@ -65,7 +67,8 @@ namespace SpendingConsequences.Calculators
 		Money,
 		Year,
 		Percentage,
-		Months
+		Months,
+		String
 	}
 }
 

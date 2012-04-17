@@ -7,9 +7,19 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>SpendingConsequences</string>
+	<string>Spent Better</string>
 	<key>CFBundleExecutable</key>
 	<string>SpendingConsequences</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Icon.png</string>
+		<string>Icon@2x.png</string>
+		<string>Icon-72.png</string>
+		<string>Icon-Small.png</string>
+		<string>Icon-Small@2x.png</string>
+		<string>Icon-Small-50.png</string>
+		<string>iTunesArtwork.png</string>
+	</array>
 	<key>CFBundleIdentifier</key>
 	<string>com.yourcompany.spendingconsequences</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -34,6 +44,10 @@
 	<true/>
 	<key>MinimumOSVersion</key>
 	<string>5.1</string>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv6</string>

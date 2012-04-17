@@ -37,7 +37,7 @@ namespace SpendingConsequences
 			this.stepper.StepValue = 0.1d;
 			this.stepper.ValueChanged += delegate {
 				this.ConfigValue.Value = stepper.Value;
-				this.configuredValue.Text = stepper.Value.ToString ();
+				this.configuredValue.Text = String.Format("{0}",stepper.Value);
 			};
 		}
 		
