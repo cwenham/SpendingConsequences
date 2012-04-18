@@ -152,6 +152,30 @@ namespace SpendingConsequences.Calculators
 				                             (decimal)sum,
 				                             FormatMyCaption (),
 				                             this.ImageName);					
+			} else if (investmentsPerYear > CompoundingsPerYear) {
+				// Apply the interest to the midpoint of the previous + next balance for each compounding period
+			
+				double investmentsPerPeriod = (double)investmentsPerYear / CompoundingsPerYear;
+				double amountPerPeriod = (investmentsPerPeriod * ((double)request.InitialAmount));
+				
+				double sum = 0;
+				for (int i = 1; i <= compoundingPeriods; i++) {
+					sum = sum + amountPerPeriod + ((sum + amountPerPeriod / 2) * ratePerPeriod);
+				}
+				
+				return new ConsequenceResult (this,
+				                             (decimal)sum,
+				                             FormatMyCaption (),
+				                             this.ImageName);
+				
+//				double seriesSum = 0;
+//				for (int i = 1; i <= compoundingPeriods; i++)
+//					seriesSum += Math.Pow (1 + ratePerPeriod, i);
+//				
+//				return new ConsequenceResult (this,
+//				                             (decimal)(amountPerPeriod * seriesSum),
+//				                             FormatMyCaption (),
+//				                             this.ImageName);
 			}
 			
 			return null;

@@ -5,10 +5,12 @@
 	</Sum>
 	
 	<!-- Captions appear after the calculated value. EG: "$12,000 by Retirement" -->	
+	<!-- Image names will be appended with ".png" and looked for in bundle -->
+	<!-- Labels appear before the editable control. EG: "Expected annual yield 5%" -->
 	<Investment TriggersOn="OneTime,Repeating" Caption="by Retirement">
-		<!-- Image names will be appended with ".png" and looked for in bundle -->
+
 		<Image Name="money"/>
-		<!-- Labels appear before the editable control. EG: "Expected annual yield 5%" -->
+
 		<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="5"/>
 		<Configurable Name="Years" Type="Year" Label="I plan to retire in" Value="30"/>
 	</Investment>
@@ -25,10 +27,18 @@
 		</Commentary>
 	</Investment>
 	
-	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years at [Rate]%">
+	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years at [Rate]% compounded [Compounding]">
 		<Image Name="stockmarket"/>
 		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="5"/>
-		<Configurable Name="Years" Type="Year" Label="When invested for" Value="3"/>		
+		<Configurable Name="Years" Type="Year" Label="When invested for" Value="3"/>	
+		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>
+	</Investment>
+	
+	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years at [Rate]% compounded [Compounding]">
+		<Image Name="stockmarket"/>
+		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="5"/>
+		<Configurable Name="Years" Type="Year" Label="When invested for" Value="3"/>	
+		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Annually"/>	
 	</Investment>
 	
 	<UnitsPerDay TriggersOn="Repeating" Caption="cups of premium coffee per day">
