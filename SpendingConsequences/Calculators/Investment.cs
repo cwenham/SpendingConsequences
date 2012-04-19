@@ -118,13 +118,13 @@ namespace SpendingConsequences.Calculators
 			double ratePerPeriod = (double)DecimalRate / CompoundingsPerYear;
 			int investmentsPerYear = InvestmentsPerYear (request.TriggerMode);
 			
+			decimal result = 0;
+			
 			if (request.TriggerMode == TriggerType.OneTime) {
 				// A one-time investment means we can use the compound interest formula
+				
+				result = request.InitialAmount * ((decimal)Math.Pow (1 + ratePerPeriod, compoundingPeriods));
 
-				return new ConsequenceResult (this, 
-				                             request.InitialAmount * ((decimal)Math.Pow (1 + ratePerPeriod, compoundingPeriods)), 
-				                             FormatMyCaption (),
-				                             this.ImageName);
 			} else if (CompoundingsPerYear == investmentsPerYear) {
 				// Compounding frequency is the same as the investment frequency, so we can
 				// use a mathematical series.
@@ -134,10 +134,8 @@ namespace SpendingConsequences.Calculators
 				for (int i = 1; i <= compoundingPeriods; i++)
 					seriesSum += Math.Pow (1 + ratePerPeriod, i);
 				
-				return new ConsequenceResult (this,
-				                             (decimal)(((double)request.InitialAmount) * seriesSum),
-				                             FormatMyCaption (),
-				                             this.ImageName);
+				result = (decimal)(((double)request.InitialAmount) * seriesSum);
+				
 			} else if (CompoundingsPerYear > investmentsPerYear) {
 				// We need to take the sum of sub-periods and apply the standard compound interest formula to each
 				
@@ -148,10 +146,8 @@ namespace SpendingConsequences.Calculators
 				for (int i = 1; i <= investmentPeriods - 1; i++)
 					sum = (sum + ((double)request.InitialAmount)) * Math.Pow (1 + ratePerPeriod, compoundingsPerInvestment);
 				
-				return new ConsequenceResult (this,
-				                             (decimal)sum,
-				                             FormatMyCaption (),
-				                             this.ImageName);					
+				result = (decimal)sum;
+					
 			} else if (investmentsPerYear > CompoundingsPerYear) {
 				// Apply the interest to the midpoint of the previous + next balance for each compounding period
 			
@@ -163,22 +159,16 @@ namespace SpendingConsequences.Calculators
 					sum = sum + amountPerPeriod + ((sum + amountPerPeriod / 2) * ratePerPeriod);
 				}
 				
-				return new ConsequenceResult (this,
-				                             (decimal)sum,
-				                             FormatMyCaption (),
-				                             this.ImageName);
-				
-//				double seriesSum = 0;
-//				for (int i = 1; i <= compoundingPeriods; i++)
-//					seriesSum += Math.Pow (1 + ratePerPeriod, i);
-//				
-//				return new ConsequenceResult (this,
-//				                             (decimal)(amountPerPeriod * seriesSum),
-//				                             FormatMyCaption (),
-//				                             this.ImageName);
+				result = (decimal)sum;
 			}
 			
-			return null;
+			if (result > 0)
+				return new ConsequenceResult (this,
+				                             (decimal)result,
+				                             FormatMyCaption (),
+				                             this.ImageName);
+			else
+				return null;
 		}
 		#endregion
 	}

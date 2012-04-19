@@ -47,12 +47,17 @@
 		<Commentary>
 		</Commentary>
 	</UnitsPerDay>
+
+	<UnitsPerDay TriggersOn="Repeating" Caption="doses of Polio vaccine per day">
+		<Image Name="syringe" Source="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
+		<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" Source="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
+	</UnitsPerDay>
 	
-<!--	<MonthsOfService TriggersOn="OneTime" Caption="months of daily newspaper delivery">
-		<Image Name="newspaper"/> -->
+	<MonthsOfService TriggersOn="OneTime" Caption="months of daily newspaper delivery">
+		<Image Name="newspaper"/>
 		<!-- Estimate comes from New York Times rate for daily delivery -->
-<!--		<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>
-	</MonthsOfService>-->
+		<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>
+	</MonthsOfService>
 	
 <!--	<Within10Percent TriggersOn="OneTime,Repeating" Caption="iPad with 64gb and LTE wireless after [months] months">
 		<Image Name="iPad"/>

@@ -11,6 +11,14 @@ namespace SpendingConsequences.Calculators
 {
 	public abstract class ACalculator
 	{
+		private static TriggerType[] RepeatingModes = new TriggerType[] {
+			TriggerType.PerDay,
+			TriggerType.PerMonth,
+			TriggerType.PerQuarter,
+			TriggerType.PerWeek,
+			TriggerType.PerYear
+		};
+		
 		public ACalculator (XElement definition)
 		{
 			this.Definition = definition;
@@ -33,15 +41,29 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		
-		public TriggerType TriggersOn {
+		public TriggerType[] TriggersOn {
 			get {
-				if (_TriggersOn == TriggerType.Undefined && Definition.Attribute ("TriggersOn") != null)
-					_TriggersOn = ((TriggerType)Enum.Parse (typeof(TriggerType), Definition.Attribute ("TriggersOn").Value, true));
+				if (_TriggersOn == null && Definition.Attribute ("TriggersOn") != null) {
+					string triggerList = Definition.Attribute ("TriggersOn").Value;
+					string[] components = triggerList.Split (',');
+					_TriggersOn = components.Select(x => (TriggerType)Enum.Parse (typeof(TriggerType), x, true)).ToArray();
+				}
 				
 				return _TriggersOn;					
 			}
 		}
-		private TriggerType _TriggersOn = TriggerType.Undefined;
+		private TriggerType[] _TriggersOn = null;
+		
+		public bool WillTriggerOn (TriggerType mode)
+		{
+			if (TriggersOn.Contains (mode))
+				return true;
+			
+			if (RepeatingModes.Contains (mode))
+				return TriggersOn.Contains (TriggerType.Repeating);
+			
+			return false;
+		}
 		
 		public String ImageName {
 			get {

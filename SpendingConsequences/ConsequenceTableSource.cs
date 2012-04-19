@@ -32,6 +32,7 @@ namespace SpendingConsequences
 		public void ComputeConsequences (ConsequenceRequest request)
 		{	
 			this.CurrentResults = (from c in this.Calculators
+			        where c.WillTriggerOn(request.TriggerMode)
 				    let result = c.Calculate (request)
 					where result != null
 					select result).ToArray ();

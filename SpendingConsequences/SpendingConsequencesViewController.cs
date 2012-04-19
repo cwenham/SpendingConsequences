@@ -88,6 +88,11 @@ namespace SpendingConsequences
 				FinishedEditingInitialAmount ();
 				return true;
 			};
+			
+			this.SpendingMode.ValueChanged += (sender, e) => {
+				if (!IsEditingAmount)
+					RefreshCalculators();
+			};
 		}
 		
 		/// <summary>
@@ -96,8 +101,12 @@ namespace SpendingConsequences
 		/// <returns>
 		/// The pad accessory view.
 		/// </returns>
+		/// <remarks>This is static internal so it can be used on some ConfigUI elements.
+		/// It should be moved to a more neutral class later, though.</remarks>
 		internal static UIView CreateDecimalPadAccessoryView (EventHandler doneButtonHandler)
 		{
+			//ToDo: Move me to a neutral class so it's easier to reuse me
+			
 			UIView accView = new UIView (new RectangleF (10.0f, 0.0f, 310.0f, 30.0f));
 			accView.BackgroundColor = UIColor.LightGray;
 			
@@ -116,6 +125,13 @@ namespace SpendingConsequences
 			UITextField textField = this.InitialAmount;
 			textField.ResignFirstResponder ();
 
+			RefreshCalculators();
+		}
+		
+		private void RefreshCalculators ()
+		{
+			UITextField textField = this.InitialAmount;
+			
 			if (TableSource != null && !String.IsNullOrWhiteSpace (textField.Text)) {
 				TriggerType mode = TriggerType.OneTime;
 				switch (this.SpendingMode.SelectedSegment) {
@@ -156,9 +172,12 @@ namespace SpendingConsequences
 			}
 		}
 		
+		private bool IsEditingAmount = false;
+		
 		protected void KeyboardOpenedOrClosed (NSNotification n, string openOrClose)
 		{
 			if (openOrClose == "Open") {
+				IsEditingAmount = true;
 				this._contentViewSize = this.View.Frame;
 				RectangleF kbdFrame = UIKeyboard.BoundsFromNotification (n);
 				double animationDuration = UIKeyboard.AnimationDurationFromNotification (n);
@@ -172,6 +191,7 @@ namespace SpendingConsequences
 				this.View.Frame = newFrame;
 				UIView.CommitAnimations ();
 			} else { 
+				IsEditingAmount = false;
 				double animationDuration = UIKeyboard.AnimationDurationFromNotification (n);
 
 				UIView.BeginAnimations ("ResizeForKeyboard");

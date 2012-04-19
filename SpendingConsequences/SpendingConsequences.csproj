@@ -130,6 +130,7 @@
     <Content Include="Icons\Icon%402x.png" />
     <Content Include="Icons\iTunesArtwork.png" />
     <Content Include="Icons\iTunesArtwork%402x.png" />
+    <Content Include="Artwork\syringe.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />
