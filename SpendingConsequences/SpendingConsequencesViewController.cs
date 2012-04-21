@@ -23,7 +23,7 @@ namespace SpendingConsequences
 		public SpendingConsequencesViewController ()
 		{
 			NSBundle.MainBundle.LoadNib ("SpendingConsequencesViewController", this, null);
-			this.ViewDidLoad();
+			this.ViewDidLoad ();
 		}
 		
 		public XDocument CalculatorDocument { get; private set; }
@@ -34,11 +34,11 @@ namespace SpendingConsequences
 		
 		public ConsequenceDetailController DetailController { get; private set; }
 		
-		public override UINavigationController NavigationController {
-			get {
-				return this.navMain;
-			}
-		}
+//		public override UINavigationController NavigationController {
+//			get {
+//				return this.navMain;
+//			}
+//		}
 		
 		private UIView DecimalAccessoryView { get; set; }
 		

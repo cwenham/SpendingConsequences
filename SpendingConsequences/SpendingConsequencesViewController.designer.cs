@@ -12,9 +12,6 @@ namespace SpendingConsequences
 	partial class SpendingConsequencesViewController
 	{
 		[Outlet]
-		MonoTouch.UIKit.UINavigationController navMain { get; set; }
-
-		[Outlet]
 		MonoTouch.UIKit.UITableView ConsequenceView { get; set; }
 
 		[Outlet]
@@ -25,11 +22,6 @@ namespace SpendingConsequences
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (navMain != null) {
-				navMain.Dispose ();
-				navMain = null;
-			}
-
 			if (ConsequenceView != null) {
 				ConsequenceView.Dispose ();
 				ConsequenceView = null;

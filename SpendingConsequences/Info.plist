@@ -14,6 +14,8 @@
 		<string>Icons/Icon-Small-50.png</string>
 		<string>Icons/iTunesArtwork.png</string>
 	</array>
+	<key>MinimumOSVersion</key>
+	<string>5.0</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -21,8 +23,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>

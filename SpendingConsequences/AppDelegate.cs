@@ -16,6 +16,7 @@ namespace SpendingConsequences
 		// class-level declarations
 		UIWindow window;
 		SpendingConsequencesViewController viewController;
+		UINavigationController navController;
 
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
@@ -29,7 +30,9 @@ namespace SpendingConsequences
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
 			viewController = new SpendingConsequencesViewController ();
-			window.RootViewController = viewController.NavigationController;
+			navController = new UINavigationController (viewController);
+			navController.SetNavigationBarHidden(true,false);
+			window.RootViewController = navController;
 			window.MakeKeyAndVisible ();
 			
 			return true;

@@ -46,6 +46,8 @@
     <CodesignKey>iPhone Developer: Christopher Wenham (73G3G75QNK)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <MtouchProfiling>true</MtouchProfiling>
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchI18n />
     <CodesignProvision>3C64E50F-CF2C-42AA-A01B-634D5F9B3E2F</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">

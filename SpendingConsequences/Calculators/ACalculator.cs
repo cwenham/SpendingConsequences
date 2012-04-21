@@ -11,6 +11,11 @@ namespace SpendingConsequences.Calculators
 {
 	public abstract class ACalculator
 	{
+		// Default thresholds for selection. InitialAmmounts that are outside this threshold will exclude this
+		// calculator from the result set.
+		private const decimal DEFAULT_LOWER_THRESHOLD = 0.01m;
+		private const decimal DEFAULT_UPPER_THRESHOLD = decimal.MaxValue;
+		
 		private static TriggerType[] RepeatingModes = new TriggerType[] {
 			TriggerType.PerDay,
 			TriggerType.PerMonth,
@@ -56,15 +61,62 @@ namespace SpendingConsequences.Calculators
 		
 		public bool WillTriggerOn (TriggerType mode)
 		{
-			if (TriggersOn.Contains (mode))
+			// We need to force the AOT compiler to include the Contains() method in the pre-compiled binary to avoid 
+			// ExecutionEngineExceptions on the device.
+			// See http://docs.xamarin.com/ios/troubleshooting#System.ExecutionEngineException.3a_Attempting_to_JIT_compile_method_(wrapper_managed-to-managed)_Foo.5b.5d.3aSystem.Collections.Generic.ICollection.601.get_Count_()
+			if (((ICollection<TriggerType>)TriggersOn).Contains (mode))
 				return true;
 			
-			if (RepeatingModes.Contains (mode))
+			if (((ICollection<TriggerType>)RepeatingModes).Contains (mode))
 				return TriggersOn.Contains (TriggerType.Repeating);
 			
 			return false;
 		}
 		
+		/// <summary>
+		/// The lowest InitialAmount that this calculator will work for
+		/// </summary>
+		/// <value>
+		/// The lower threshold.
+		/// </value>
+		public decimal LowerThreshold {
+			get {
+				if (_lowerThreshold == 0m && Definition.Attribute ("LowerThreshold") != null) {
+					if (!decimal.TryParse (Definition.Attribute ("LowerThreshold").Value, out _lowerThreshold))
+						_lowerThreshold = DEFAULT_LOWER_THRESHOLD;
+				} else
+					_lowerThreshold = DEFAULT_LOWER_THRESHOLD;
+				
+				return _lowerThreshold;
+			}
+		}
+		private decimal _lowerThreshold = 0m;
+		
+		/// <summary>
+		/// The highest InitialAmount that this calculator will work for
+		/// </summary>
+		/// <value>
+		/// The upper threshold.
+		/// </value>
+		public decimal UpperThreshold {
+			get {
+				if (_upperThreshold == 0m && Definition.Attribute ("UpperThreshold") != null) {
+					if (!decimal.TryParse (Definition.Attribute ("UpperThreshold").Value, out _upperThreshold))
+						_upperThreshold = DEFAULT_UPPER_THRESHOLD;
+				} else
+					_upperThreshold = DEFAULT_UPPER_THRESHOLD;
+				
+				return _upperThreshold;				
+			}
+		}
+		private decimal _upperThreshold = 0m;
+		
+		/// <summary>
+		/// Name of the image/icon representing this calculator, not including extension
+		/// </summary>
+		/// <value>
+		/// The name of the image.
+		/// </value>
 		public String ImageName {
 			get {
 				var imageElement = Definition.Element ("Image");
@@ -75,6 +127,12 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		
+		/// <summary>
+		/// The comments for this calculator, before any formatting
+		/// </summary>
+		/// <value>
+		/// The unformatted commentary.
+		/// </value>
 		public String UnformattedCommentary {
 			get {
 				var commentaryElement = Definition.Element ("Commentary");
