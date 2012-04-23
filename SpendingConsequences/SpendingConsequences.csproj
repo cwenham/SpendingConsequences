@@ -140,6 +140,7 @@
     <Content Include="Artwork\beach_chair.png" />
     <Content Include="Artwork\beach_umbrella.png" />
     <Content Include="Artwork\laptop.png" />
+    <Content Include="Artwork\cappuccino.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

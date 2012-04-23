@@ -42,7 +42,7 @@
 	</Investment>
 	
 	<UnitsPerDay TriggersOn="Repeating" Caption="cups of premium coffee per day">
-		<Image Name="coffeecup"/>
+		<Image Name="cappuccino"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="2.95"/>
 		<Commentary>
 		</Commentary>
@@ -85,5 +85,6 @@
 		<Image Name="beach_umbrella" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="coffeecup" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="laptop" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="cappuccino" Source="Creative 9 Design" SourceUrl="http://www.c9-d.com/"/>
 	</Sources>
 </Calculators>
