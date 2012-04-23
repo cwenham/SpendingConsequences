@@ -84,7 +84,13 @@ namespace SpendingConsequences
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			
+		
+			this.scrollView.Scrolled += delegate(object sender, EventArgs e) {
+				// Make the subview with the results stay fixed while content scrolls underneath it
+				this.resultSubview.Frame = new RectangleF (0, this.scrollView.ContentOffset.Y, 
+				                                          this.resultSubview.Frame.Width, 
+				                                          this.resultSubview.Frame.Height);
+			};
 		}
 		
 		public override void ViewWillAppear (bool animated)

@@ -19,6 +19,9 @@ namespace SpendingConsequences
 
 		[Outlet]
 		MonoTouch.UIKit.UILabel caption { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UIView resultSubview { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -35,6 +38,11 @@ namespace SpendingConsequences
 			if (caption != null) {
 				caption.Dispose ();
 				caption = null;
+			}
+
+			if (resultSubview != null) {
+				resultSubview.Dispose ();
+				resultSubview = null;
 			}
 		}
 	}

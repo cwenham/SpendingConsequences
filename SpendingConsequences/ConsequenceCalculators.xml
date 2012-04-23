@@ -77,14 +77,14 @@
 	</Within10Percent>-->
 	
 	<Sources>
-		<Image Name="coins" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="credit_card" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="gold_bullion" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="safe" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="beach_chair" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="beach_umbrella" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="coffeecup" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="laptop" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="coins" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="credit_card" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="gold_bullion" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="safe" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="beach_chair" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="beach_umbrella" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="coffeecup" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="laptop" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="cappuccino" Source="Creative 9 Design" SourceUrl="http://www.c9-d.com/"/>
 	</Sources>
 </Calculators>
