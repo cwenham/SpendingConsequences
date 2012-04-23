@@ -49,9 +49,14 @@
 	</UnitsPerDay>
 
 	<UnitsPerDay TriggersOn="Repeating" Caption="doses of Polio vaccine per day">
-		<Image Name="syringe" Source="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
+		<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
 		<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" Source="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
 	</UnitsPerDay>
+	
+	<UnitsPerWeek TriggersOn="Repeating" Caption="movie rentals per week">
+		<Image Name="movie" SourceUrl="http://www.officinadigitale.org/"/>
+		<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99"/>
+	</UnitsPerWeek>
 	
 	<MonthsOfService TriggersOn="OneTime" Caption="months of daily newspaper delivery">
 		<Image Name="newspaper"/>
@@ -70,4 +75,15 @@
 		<Configurable Name="Threshold" Type="Money" Label="MSRP" Value="599.00"/>
 		<Configurable Name="Limit" Type="Months" Label="Worth postponing for no more than" Value="6"/>
 	</Within10Percent>-->
+	
+	<Sources>
+		<Image Name="coins" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="credit_card" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="gold_bullion" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="safe" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="beach_chair" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="beach_umbrella" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="coffeecup" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="laptop" Source="VisualPharm "SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+	</Sources>
 </Calculators>

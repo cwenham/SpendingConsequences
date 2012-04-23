@@ -120,7 +120,6 @@
     <Content Include="Artwork\money.png" />
     <Content Include="Artwork\stockmarket.png" />
     <Content Include="Artwork\coffeecup.png" />
-    <Content Include="Artwork\iPad.png" />
     <Content Include="Artwork\newspaper.png" />
     <Content Include="Icons\Icon-72.png" />
     <Content Include="Icons\Icon-72%402x.png" />
@@ -133,6 +132,14 @@
     <Content Include="Icons\iTunesArtwork.png" />
     <Content Include="Icons\iTunesArtwork%402x.png" />
     <Content Include="Artwork\syringe.png" />
+    <Content Include="Artwork\movie.png" />
+    <Content Include="Artwork\coins.png" />
+    <Content Include="Artwork\credit_card.png" />
+    <Content Include="Artwork\gold_bullion.png" />
+    <Content Include="Artwork\safe.png" />
+    <Content Include="Artwork\beach_chair.png" />
+    <Content Include="Artwork\beach_umbrella.png" />
+    <Content Include="Artwork\laptop.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />
