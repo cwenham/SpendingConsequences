@@ -21,7 +21,20 @@ namespace SpendingConsequences.Calculators
 		
 		public String Label {
 			get {
-				return Definition.Attribute ("Label") != null ? Definition.Attribute ("Label").Value : "Value";
+				return Definition.Attribute ("Label") != null ? Definition.Attribute ("Label").Value : "Label";
+			}
+		}
+		
+		/// <summary>
+		/// Returns true if a UI should not be presented for changing the value
+		/// </summary>
+		/// <remarks>Used for values that may be computed from other sources, fetched from web services, etc.</remarks>
+		public bool SuppressUI {
+			get {
+				bool _suppress = false;
+				if (Definition.Attribute ("SuppressUI") != null)
+					bool.TryParse (Definition.Attribute ("SuppressUI").Value, out _suppress);
+				return _suppress;
 			}
 		}
 		

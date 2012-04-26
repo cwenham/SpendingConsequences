@@ -54,6 +54,23 @@ namespace SpendingConsequences
 		{
 			base.ViewDidLoad ();
 			
+			UIImage backgroundImage = UIImage.FromBundle (@"Artwork/InputPanel.png");
+			this.panelView.BackgroundColor = UIColor.FromPatternImage (backgroundImage);
+			
+			UIImage segSelected = UIImage.FromBundle (@"Artwork/mode_sel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
+			UIImage segUnselected = UIImage.FromBundle (@"Artwork/mode_unsel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
+			UIImage segSelUnsel = UIImage.FromBundle (@"Artwork/mode_sel_unsel.png");
+			UIImage segUnselSel = UIImage.FromBundle (@"Artwork/mode_unsel_sel.png");
+			UIImage segUnselUnsel = UIImage.FromBundle (@"Artwork/mode_unsel_unsel.png");
+			
+			this.SpendingMode.SetBackgroundImage (segUnselected, UIControlState.Normal, UIBarMetrics.Default);
+			this.SpendingMode.SetBackgroundImage (segSelected, UIControlState.Selected, UIBarMetrics.Default);
+			this.SpendingMode.SetDividerImage (segUnselUnsel, UIControlState.Normal, UIControlState.Normal, UIBarMetrics.Default);
+			this.SpendingMode.SetDividerImage (segSelUnsel, UIControlState.Selected, UIControlState.Normal, UIBarMetrics.Default);
+			this.SpendingMode.SetDividerImage (segUnselSel, UIControlState.Normal, UIControlState.Selected, UIBarMetrics.Default);
+			
+			
+			
 			// Add handlers to move the view whenever the keyboard appears or disappears
 			NSNotificationCenter.DefaultCenter.AddObserver (UIKeyboard.WillShowNotification, delegate(NSNotification n) {
 				this.KeyboardOpenedOrClosed (n, "Open");
@@ -91,7 +108,7 @@ namespace SpendingConsequences
 			
 			this.SpendingMode.ValueChanged += (sender, e) => {
 				if (!IsEditingAmount)
-					RefreshCalculators();
+					RefreshCalculators ();
 			};
 		}
 		
@@ -142,9 +159,12 @@ namespace SpendingConsequences
 					mode = TriggerType.PerDay;
 					break;
 				case 2:
-					mode = TriggerType.PerMonth;
+					mode = TriggerType.PerWeek;
 					break;
 				case 3:
+					mode = TriggerType.PerMonth;
+					break;
+				case 4:
 					mode = TriggerType.PerYear;
 					break;
 				default:

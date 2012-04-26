@@ -64,6 +64,14 @@
 		<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>
 	</MonthsOfService>
 	
+	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for a vacation for 2 in Hawaii">
+		<Image Name="beach_umbrella"/>
+		<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" Source="http://www.planhawaiivacation.com/vacationcost/"/>
+		<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
+			$455 for food, $540 for activities and $450 to rent a car for the week.
+		</Commentary>
+	</TimeUntil>
+	
 <!--	<Within10Percent TriggersOn="OneTime,Repeating" Caption="iPad with 64gb and LTE wireless after [months] months">
 		<Image Name="iPad"/>
 		<Configurable Name="Threshold" Type="Money" Label="MSRP" Value="829.00"/>

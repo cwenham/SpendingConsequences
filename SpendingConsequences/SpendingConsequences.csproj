@@ -106,6 +106,7 @@
       <DependentUpon>YearControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Calculators\UnitsPerWeek.cs" />
+    <Compile Include="Calculators\TimeUntil.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
@@ -142,6 +143,12 @@
     <Content Include="Artwork\beach_umbrella.png" />
     <Content Include="Artwork\laptop.png" />
     <Content Include="Artwork\cappuccino.png" />
+    <Content Include="Artwork\InputPanel%402x.png" />
+    <Content Include="Artwork\mode_sel%402x.png" />
+    <Content Include="Artwork\mode_sel_unsel%402x.png" />
+    <Content Include="Artwork\mode_unsel%402x.png" />
+    <Content Include="Artwork\mode_unsel_sel%402x.png" />
+    <Content Include="Artwork\mode_unsel_unsel%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

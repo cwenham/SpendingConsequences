@@ -19,6 +19,9 @@ namespace SpendingConsequences
 
 		[Outlet]
 		MonoTouch.UIKit.UITextField InitialAmount { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UIView panelView { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -35,6 +38,11 @@ namespace SpendingConsequences
 			if (InitialAmount != null) {
 				InitialAmount.Dispose ();
 				InitialAmount = null;
+			}
+
+			if (panelView != null) {
+				panelView.Dispose ();
+				panelView = null;
 			}
 		}
 	}
