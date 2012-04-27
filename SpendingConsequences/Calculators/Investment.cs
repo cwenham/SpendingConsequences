@@ -77,11 +77,11 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		
-		private int InvestmentsPerYear (TriggerType trigger)
+		private double InvestmentsPerYear (TriggerType trigger)
 		{
 			switch (trigger) {
 			case TriggerType.PerDay:
-				return 365;
+				return 365.25;
 			case TriggerType.PerMonth:
 				return 12;
 			case TriggerType.PerQuarter:
@@ -116,7 +116,7 @@ namespace SpendingConsequences.Calculators
 			
 			double compoundingPeriods = Years * CompoundingsPerYear;
 			double ratePerPeriod = (double)DecimalRate / CompoundingsPerYear;
-			int investmentsPerYear = InvestmentsPerYear (request.TriggerMode);
+			double investmentsPerYear = InvestmentsPerYear (request.TriggerMode);
 			
 			decimal result = 0;
 			
@@ -139,7 +139,7 @@ namespace SpendingConsequences.Calculators
 			} else if (CompoundingsPerYear > investmentsPerYear) {
 				// We need to take the sum of sub-periods and apply the standard compound interest formula to each
 				
-				int investmentPeriods = Years * investmentsPerYear;
+				double investmentPeriods = Years * investmentsPerYear;
 				int compoundingsPerInvestment = ((int)Math.Floor (((double)CompoundingsPerYear / investmentsPerYear)));
 				
 				double sum = ((double)request.InitialAmount) * Math.Pow (1 + ratePerPeriod, compoundingsPerInvestment);

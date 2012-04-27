@@ -34,29 +34,9 @@ namespace SpendingConsequences.Calculators
 			
 			double givenUnitsUntil = (double)Cost / ((double)request.InitialAmount);
 			
-			TimeSpan timeUntil;
+			TimeSpan timeUntil = new TimeSpan(((int)Math.Ceiling(givenUnitsUntil * ConsequenceRequest.DayCounts[request.TriggerMode])), 0, 0, 0);
 			
-			switch (request.TriggerMode) {
-			case TriggerType.PerDay:
-				timeUntil = new TimeSpan (((int)Math.Ceiling (givenUnitsUntil)), 0, 0, 0);
-				break;
-			case TriggerType.PerWeek:
-				timeUntil = new TimeSpan (((int)Math.Ceiling (givenUnitsUntil * 7)), 0, 0, 0);
-				break;
-			case TriggerType.PerMonth:
-				timeUntil = new TimeSpan (((int)Math.Ceiling (givenUnitsUntil * 30)), 0, 0, 0);
-				break;
-			case TriggerType.PerQuarter:
-				timeUntil = new TimeSpan (((int)Math.Ceiling (givenUnitsUntil * 90)), 0, 0, 0);
-				break;
-			case TriggerType.PerYear:
-				timeUntil = new TimeSpan (((int)Math.Ceiling (givenUnitsUntil * 365.25)), 0, 0, 1);
-				break;
-			default:
-				break;
-			}
-			
-			if (timeUntil.TotalDays > 1 && timeUntil.TotalDays < (365 * 30)) {
+			if (timeUntil.TotalDays > 1 && timeUntil.TotalDays < (365.25 * 30)) {
 				string unit = null;
 				double val = 0;
 				

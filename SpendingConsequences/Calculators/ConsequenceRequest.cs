@@ -29,12 +29,12 @@ namespace SpendingConsequences.Calculators
 		// require higher precision. EG: A month or quarter can't be summarized
 		// to 30 and 90 days, respectively. If we adapt this for ETF, we must use
 		// calendar-sensitive math.
-		private Dictionary<TriggerType, int> DayCounts = new Dictionary<TriggerType, int>() {
+		public static Dictionary<TriggerType, double> DayCounts = new Dictionary<TriggerType, double>() {
 			{TriggerType.PerDay, 1},
 			{TriggerType.PerWeek, 7},
 			{TriggerType.PerMonth, 30},
 			{TriggerType.PerQuarter, 90},
-			{TriggerType.PerYear, 365}
+			{TriggerType.PerYear, 365.25}
 		};
 	}
 }

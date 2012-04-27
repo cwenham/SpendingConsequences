@@ -64,7 +64,7 @@
 		<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>
 	</MonthsOfService>
 	
-	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for a vacation for 2 in Hawaii">
+	<TimeUntil TriggersOn="Repeating" Caption="[Unit] for a vacation for 2 in Hawaii">
 		<Image Name="beach_umbrella"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" Source="http://www.planhawaiivacation.com/vacationcost/"/>
 		<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
