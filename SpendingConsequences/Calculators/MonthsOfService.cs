@@ -26,8 +26,11 @@ namespace SpendingConsequences.Calculators
 			if (Cost == 0m)
 				return null;
 			
+			if (request.TriggerMode != TriggerType.OneTime)
+				return null;
+			
 			decimal monthsService = request.InitialAmount / this.Cost;
-			if (monthsService > 0m)
+			if (monthsService > 1m)
 				return new ConsequenceResult (this, monthsService, this.FormatCaption (this.Caption, new Dictionary<string,string> {
 					{"Months", monthsService.ToString ()},
 					{"Cost", this.Cost.ToString ()}

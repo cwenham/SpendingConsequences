@@ -32,6 +32,9 @@ namespace SpendingConsequences.Calculators
 			decimal perWeek = request.InitialAmount;
 			
 			switch (request.TriggerMode) {
+			case TriggerType.PerDay:
+				perWeek = request.InitialAmount * 7;
+				break;
 			case TriggerType.PerWeek:
 				perWeek = request.InitialAmount;
 				break;
