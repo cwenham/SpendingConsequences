@@ -83,7 +83,6 @@
     <Compile Include="Calculators\Investment.cs" />
     <Compile Include="Calculators\UnitsPerDay.cs" />
     <Compile Include="Calculators\MonthsOfService.cs" />
-    <Compile Include="Calculators\Within10Percent.cs" />
     <Compile Include="ConsequenceTableSource.cs" />
     <Compile Include="ConsequenceDetailController.cs" />
     <Compile Include="ConsequenceDetailController.designer.cs">
@@ -149,6 +148,9 @@
     <Content Include="Artwork\mode_unsel%402x.png" />
     <Content Include="Artwork\mode_unsel_sel%402x.png" />
     <Content Include="Artwork\mode_unsel_unsel%402x.png" />
+    <Content Include="Artwork\wineglass.png" />
+    <Content Include="Artwork\house.png" />
+    <Content Include="Artwork\inkjet.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

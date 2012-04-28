@@ -72,27 +72,18 @@
 		</Commentary>
 	</TimeUntil>
 	
-<!--	<Within10Percent TriggersOn="OneTime,Repeating" Caption="iPad with 64gb and LTE wireless after [months] months">
-		<Image Name="iPad"/>
-		<Configurable Name="Threshold" Type="Money" Label="MSRP" Value="829.00"/>
-		<Configurable Name="Limit" Type="Months" Label="Worth postponing for no more than" Value="6"/>
-	</Within10Percent>
-	
-	<Within10Percent TriggersOn="OneTime,Repeating" Caption="iPad with WiFi and 32gb after [months] months">
-		<Image Name="iPad"/>
-		<Configurable Name="Threshold" Type="Money" Label="MSRP" Value="599.00"/>
-		<Configurable Name="Limit" Type="Months" Label="Worth postponing for no more than" Value="6"/>
-	</Within10Percent>-->
-	
 	<Sources>
-		<Image Name="coins" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="credit_card" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="gold_bullion" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="safe" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="beach_chair" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="beach_umbrella" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="coffeecup" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="laptop" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseURL="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="coins" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="credit_card" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="gold_bullion" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="safe" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="beach_chair" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="beach_umbrella" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="coffeecup" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="laptop" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="cappuccino" Source="Creative 9 Design" SourceUrl="http://www.c9-d.com/"/>
+		<Image Name="wineglass" Source="Oxygen Team" SourceUrl="http://www.oxygen-icons.org/" License="Creative Commons Attribution-ShareAlike 3.0 License" LicenseUrl="http://creativecommons.org/licenses/by-sa/3.0/"/>
+		<Image Name="house" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
+		<Image Name="inkjet" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
 	</Sources>
 </Calculators>
