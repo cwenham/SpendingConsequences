@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace SpendingConsequences.Calculators
 {
-	public class MonthsOfService : ACalculator
+	public class UnitsPerYear : ACalculator
 	{
-		public MonthsOfService (XElement definition) : base(definition)
+		public UnitsPerYear (XElement definition) : base(definition)
 		{
 		}
 		
@@ -20,24 +20,27 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		
+		private static TimeSpan oneYear = new TimeSpan(365,0,0,0);
+
 		#region implemented abstract members of SpendingConsequences.Calculators.ACalculator
 		public override ConsequenceResult Calculate (ConsequenceRequest request)
 		{
 			if (Cost == 0m)
 				return null;
 			
-			if (request.TriggerMode != TriggerType.OneTime)
+			if (request.TriggerMode == TriggerType.OneTime)
 				return null;
 			
-			decimal monthsService = request.InitialAmount / this.Cost;
-			if (monthsService >= LowerResultLimit && monthsService <= UpperResultLimit)
-				return new ConsequenceResult (this, monthsService, this.FormatCaption (this.Caption, new Dictionary<string,string> {
-					{"Months", monthsService.ToString ()},
-					{"Cost", this.Cost.ToString ()}
-				}),
+			decimal perYear = request.AmountAfter (oneYear);
+			decimal units = perYear / Cost;			
+			
+			if (units >= LowerResultLimit && units <= UpperResultLimit)
+				return new ConsequenceResult (this, units, FormatCaption (this.Caption, new Dictionary<string,string> {
+						{"Cost", this.Cost.ToString ()}
+					}),
 				                              this.ImageName);
 			else
-				return null;			
+				return null;
 		}
 		
 		public override string ResultFormat {

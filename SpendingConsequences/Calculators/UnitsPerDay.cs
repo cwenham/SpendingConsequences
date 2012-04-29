@@ -29,10 +29,12 @@ namespace SpendingConsequences.Calculators
 			if (request.TriggerMode == TriggerType.OneTime)
 				return null;
 			
-			double perDay = ((double)request.InitialAmount) / ConsequenceRequest.DayCounts[request.TriggerMode];
+			double perDay = ((double)request.InitialAmount) / ConsequenceRequest.DayCounts [request.TriggerMode];
 			
-			if (perDay / (double)Cost > 1.0d)
-				return new ConsequenceResult (this, ((decimal)perDay / Cost), FormatCaption (this.Caption, new Dictionary<string,string> {
+			decimal units = ((decimal)perDay / Cost);
+			
+			if (units >= LowerResultLimit && units <= UpperResultLimit)
+				return new ConsequenceResult (this, units, FormatCaption (this.Caption, new Dictionary<string,string> {
 						{"Cost", this.Cost.ToString ()}
 					}),
 				                              this.ImageName);

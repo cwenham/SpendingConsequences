@@ -162,7 +162,7 @@ namespace SpendingConsequences.Calculators
 				result = (decimal)sum;
 			}
 			
-			if (result > 0)
+			if (result >= this.LowerResultLimit && result <= this.UpperResultLimit)
 				return new ConsequenceResult (this,
 				                             (decimal)result,
 				                             FormatMyCaption (),

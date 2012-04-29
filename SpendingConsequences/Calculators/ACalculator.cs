@@ -11,10 +11,12 @@ namespace SpendingConsequences.Calculators
 {
 	public abstract class ACalculator
 	{
-		// Default thresholds for selection. InitialAmmounts that are outside this threshold will exclude this
+		// Default thresholds for selection. InitialAmmounts or results that are outside this threshold will exclude this
 		// calculator from the result set.
 		private const decimal DEFAULT_LOWER_THRESHOLD = 0.01m;
 		private const decimal DEFAULT_UPPER_THRESHOLD = decimal.MaxValue;
+		private const decimal DEFAULT_LOWER_RESULT_LIMIT = 0.01m;
+		private const decimal DEFAULT_UPPER_RESULT_LIMIT = decimal.MaxValue;
 		
 		private static TriggerType[] RepeatingModes = new TriggerType[] {
 			TriggerType.PerDay,
@@ -81,11 +83,12 @@ namespace SpendingConsequences.Calculators
 		/// </value>
 		public decimal LowerThreshold {
 			get {
-				if (_lowerThreshold == 0m && Definition.Attribute ("LowerThreshold") != null) {
-					if (!decimal.TryParse (Definition.Attribute ("LowerThreshold").Value, out _lowerThreshold))
+				if (_lowerThreshold == 0m)
+					if (Definition.Attribute ("LowerThreshold") != null) {
+						if (!decimal.TryParse (Definition.Attribute ("LowerThreshold").Value, out _lowerThreshold))
+							_lowerThreshold = DEFAULT_LOWER_THRESHOLD;
+					} else
 						_lowerThreshold = DEFAULT_LOWER_THRESHOLD;
-				} else
-					_lowerThreshold = DEFAULT_LOWER_THRESHOLD;
 				
 				return _lowerThreshold;
 			}
@@ -100,16 +103,54 @@ namespace SpendingConsequences.Calculators
 		/// </value>
 		public decimal UpperThreshold {
 			get {
-				if (_upperThreshold == 0m && Definition.Attribute ("UpperThreshold") != null) {
-					if (!decimal.TryParse (Definition.Attribute ("UpperThreshold").Value, out _upperThreshold))
+				if (_upperThreshold == 0m)
+					if (Definition.Attribute ("UpperThreshold") != null) {
+						if (!decimal.TryParse (Definition.Attribute ("UpperThreshold").Value, out _upperThreshold))
+							_upperThreshold = DEFAULT_UPPER_THRESHOLD;
+					} else
 						_upperThreshold = DEFAULT_UPPER_THRESHOLD;
-				} else
-					_upperThreshold = DEFAULT_UPPER_THRESHOLD;
 				
 				return _upperThreshold;				
 			}
 		}
 		private decimal _upperThreshold = 0m;
+		
+		
+		/// <summary>
+		/// The lowest result value that's worth displaying
+		/// </summary>
+		public decimal LowerResultLimit {
+			get {
+				if (_lowerResultLimit == 0m)
+					if (Definition.Attribute ("LowerResultLimit") != null) {
+						if (!decimal.TryParse (Definition.Attribute ("LowerResultLimit").Value, out _lowerResultLimit))
+							_lowerResultLimit = DEFAULT_LOWER_RESULT_LIMIT;
+					} else
+						_lowerResultLimit = DEFAULT_LOWER_RESULT_LIMIT;
+				
+				return _lowerResultLimit;	
+			}
+		}
+		private decimal _lowerResultLimit = 0m;
+		
+		/// <summary>
+		/// The highest result value that's worth displaying
+		/// </summary>
+		/// <remarks>If a calculator's result exceeds this value, it will return null. Should be used when the results
+		/// would not be useful, eg: more than 12 inkjet cartridges per year for a home user.</remarks>
+		public decimal UpperResultLimit {
+			get {
+				if (_upperResultLimit == 0m)
+					if (Definition.Attribute ("UpperResultLimit") != null) {
+						if (!decimal.TryParse (Definition.Attribute ("UpperResultLimit").Value, out _upperResultLimit))
+							_upperResultLimit = DEFAULT_UPPER_RESULT_LIMIT;
+					} else
+						_upperResultLimit = DEFAULT_UPPER_RESULT_LIMIT;
+				
+				return _upperResultLimit;	
+			}
+		}
+		private decimal _upperResultLimit = 0m;
 		
 		/// <summary>
 		/// Name of the image/icon representing this calculator, not including extension

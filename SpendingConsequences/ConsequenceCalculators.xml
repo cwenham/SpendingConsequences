@@ -27,7 +27,7 @@
 		</Commentary>
 	</Investment>
 	
-	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years at [Rate]% compounded [Compounding]">
+<!--	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years at [Rate]% compounded [Compounding]">
 		<Image Name="stockmarket"/>
 		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="5"/>
 		<Configurable Name="Years" Type="Year" Label="When invested for" Value="3"/>	
@@ -39,32 +39,35 @@
 		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="5"/>
 		<Configurable Name="Years" Type="Year" Label="When invested for" Value="3"/>	
 		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Annually"/>	
-	</Investment>
+	</Investment>-->
 	
-	<UnitsPerDay TriggersOn="Repeating" Caption="cups of premium coffee per day">
+	<UnitsPerDay TriggersOn="Repeating" Caption="cups of premium coffee per day" LowerResultLimit="1" UpperResultLimit="3">
 		<Image Name="cappuccino"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="2.95"/>
-		<Commentary>
-		</Commentary>
 	</UnitsPerDay>
 
-	<UnitsPerDay TriggersOn="Repeating" Caption="doses of Polio vaccine per day">
+	<UnitsPerDay TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000">
 		<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
 		<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" Source="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
 	</UnitsPerDay>
 	
-	<UnitsPerWeek TriggersOn="Repeating" Caption="movie rentals per week">
+	<UnitsPerWeek TriggersOn="Repeating" Caption="movie rentals per week" LowerResultLimit="1" UpperResultLimit="7">
 		<Image Name="movie" SourceUrl="http://www.officinadigitale.org/"/>
 		<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99"/>
 	</UnitsPerWeek>
 	
-	<MonthsOfService TriggersOn="OneTime" Caption="months of daily newspaper delivery">
+	<UnitsPerYear TriggersOn="Repeating" Caption="ink cartridges per year" LowerResultLimit="1" UpperResultLimit="12">
+		<Image Name="inkjet"/>
+		<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30"/>
+	</UnitsPerYear>
+	
+	<MonthsOfService TriggersOn="OneTime" Caption="months of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24">
 		<Image Name="newspaper"/>
 		<!-- Estimate comes from New York Times rate for daily delivery -->
 		<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>
 	</MonthsOfService>
 	
-	<TimeUntil TriggersOn="Repeating" Caption="[Unit] for a vacation for 2 in Hawaii">
+	<TimeUntil TriggersOn="Repeating" Caption="[Unit] for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30">
 		<Image Name="beach_umbrella"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" Source="http://www.planhawaiivacation.com/vacationcost/"/>
 		<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
