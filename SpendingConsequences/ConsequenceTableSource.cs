@@ -20,13 +20,10 @@ namespace SpendingConsequences
 		
 		public ConsequenceResult[] CurrentResults { get; private set; }
 		
-		public NSCache ImageCache { get; private set; }
-		
 		public ConsequenceTableSource (List<ACalculator> calculators, SpendingConsequencesViewController parent)
 		{
 			this.ParentController = parent;
 			this.Calculators = calculators;
-			ImageCache = new NSCache();
 		}
 		
 		public void ComputeConsequences (ConsequenceRequest request)
@@ -65,11 +62,13 @@ namespace SpendingConsequences
 			if (cell == null)
 				cell = new UITableViewCell (UITableViewCellStyle.Subtitle, this._consequenceCellID);
 			
+			NSCache imgCache = ((AppDelegate)UIApplication.SharedApplication.Delegate).ImageCache;
+			
 			NSObject key = NSObject.FromObject (result.ImageName);
-			UIImage image = ImageCache.ObjectForKey (key) as UIImage;
+			UIImage image = imgCache.ObjectForKey (key) as UIImage;
 			if (image == null) {
 				image = UIImage.FromBundle (string.Format ("Artwork/{0}.png", result.ImageName));
-				ImageCache.SetObjectforKey (image, key);
+				imgCache.SetObjectforKey (image, key);
 			}
 			
 			cell.TextLabel.Text = String.Format (result.Calculator.ResultFormat, result.ComputedValue);

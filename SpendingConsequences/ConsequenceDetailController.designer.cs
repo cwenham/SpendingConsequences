@@ -22,6 +22,9 @@ namespace SpendingConsequences
 
 		[Outlet]
 		MonoTouch.UIKit.UIView resultSubview { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UIImageView iconView { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -43,6 +46,11 @@ namespace SpendingConsequences
 			if (resultSubview != null) {
 				resultSubview.Dispose ();
 				resultSubview = null;
+			}
+
+			if (iconView != null) {
+				iconView.Dispose ();
+				iconView = null;
 			}
 		}
 	}

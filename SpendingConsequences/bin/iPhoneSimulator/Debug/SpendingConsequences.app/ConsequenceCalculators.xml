@@ -56,7 +56,7 @@
 		<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99"/>
 	</UnitsPerWeek>
 	
-	<UnitsPerYear TriggersOn="Repeating" Caption="ink cartridges per year" LowerResultLimit="1" UpperResultLimit="12">
+	<UnitsPerYear TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12">
 		<Image Name="inkjet"/>
 		<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30"/>
 	</UnitsPerYear>
@@ -67,7 +67,7 @@
 		<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>
 	</MonthsOfService>
 	
-	<TimeUntil TriggersOn="Repeating" Caption="[Unit] for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30">
+	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30">
 		<Image Name="beach_umbrella"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" Source="http://www.planhawaiivacation.com/vacationcost/"/>
 		<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
@@ -88,5 +88,13 @@
 		<Image Name="wineglass" Source="Oxygen Team" SourceUrl="http://www.oxygen-icons.org/" License="Creative Commons Attribution-ShareAlike 3.0 License" LicenseUrl="http://creativecommons.org/licenses/by-sa/3.0/"/>
 		<Image Name="house" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
 		<Image Name="inkjet" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
+		<Image Name="champagne" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/310" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="shoppingbag" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/321" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="shoppingbasket" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/510" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="slrcamera" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/510" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="globe" Source="MazeNL77" SourceUrl="http://mazenl77.deviantart.com/"/>
+		<Image Name="controller" Source="MazeNL77" SourceUrl="http://mazenl77.deviantart.com/"/>
+		<Image Name="books" Source="PC Unleashed" SourceUrl="http://pcunleashed.com/download/icon-sets/"/>
+		<Image Name="cardsanddice" Source="Tooschee" SourceUrl="http://tooschee.com"/>
 	</Sources>
 </Calculators>

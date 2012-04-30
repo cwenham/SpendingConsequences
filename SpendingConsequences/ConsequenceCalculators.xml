@@ -94,5 +94,7 @@
 		<Image Name="slrcamera" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/510" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
 		<Image Name="globe" Source="MazeNL77" SourceUrl="http://mazenl77.deviantart.com/"/>
 		<Image Name="controller" Source="MazeNL77" SourceUrl="http://mazenl77.deviantart.com/"/>
+		<Image Name="books" Source="PC Unleashed" SourceUrl="http://pcunleashed.com/download/icon-sets/"/>
+		<Image Name="cardsanddice" Source="Tooschee" SourceUrl="http://tooschee.com"/>
 	</Sources>
 </Calculators>

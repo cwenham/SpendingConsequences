@@ -35,6 +35,16 @@ namespace SpendingConsequences
 			this.calculatedAmount.Text = String.Format (result.Calculator.ResultFormat, result.ComputedValue);
 			this.caption.Text = result.FormattedCaption;
 			
+			NSCache imgCache = ((AppDelegate)UIApplication.SharedApplication.Delegate).ImageCache;
+			
+			NSObject key = NSObject.FromObject (result.ImageName);
+			UIImage image = imgCache.ObjectForKey (key) as UIImage;
+			if (image == null) {
+				image = UIImage.FromBundle (string.Format ("Artwork/{0}.png", result.ImageName));
+				imgCache.SetObjectforKey (image, key);
+			}
+			iconView.Image = image;
+			
 			// Remove any controls we had dynamically placed before
 			foreach (UIView v in scrollView.Subviews.ToArray())
 				if (v.Tag == DYNAMIC_VIEW_TAG)
@@ -84,6 +94,8 @@ namespace SpendingConsequences
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+			
+			this.resultSubview.BackgroundColor = this.resultSubview.BackgroundColor.ColorWithAlpha(0.5f);
 		
 			this.scrollView.Scrolled += delegate(object sender, EventArgs e) {
 				// Make the subview with the results stay fixed while content scrolls underneath it

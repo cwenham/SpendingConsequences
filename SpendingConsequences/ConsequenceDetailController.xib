@@ -12,6 +12,7 @@
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBUILabel</string>
+			<string>IBUIImageView</string>
 			<string>IBUIView</string>
 			<string>IBUIScrollView</string>
 			<string>IBProxyObject</string>
@@ -47,7 +48,7 @@
 									<object class="IBUILabel" id="130908006">
 										<reference key="NSNextResponder" ref="356077263"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{20, 0}, {280, 35}}</string>
+										<string key="NSFrame">{{82, 10}, {203, 35}}</string>
 										<reference key="NSSuperview" ref="356077263"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="204835103"/>
@@ -80,7 +81,7 @@
 									<object class="IBUILabel" id="204835103">
 										<reference key="NSNextResponder" ref="356077263"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{20, 33}, {280, 21}}</string>
+										<string key="NSFrame">{{82, 40}, {218, 43}}</string>
 										<reference key="NSSuperview" ref="356077263"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView"/>
@@ -95,6 +96,8 @@
 										<nil key="IBUIHighlightedColor"/>
 										<int key="IBUIBaselineAdjustment">0</int>
 										<float key="IBUIMinimumFontSize">10</float>
+										<int key="IBUINumberOfLines">2</int>
+										<int key="IBUILineBreakMode">0</int>
 										<object class="IBUIFontDescription" key="IBUIFontDescription">
 											<int key="type">1</int>
 											<double key="pointSize">17</double>
@@ -105,18 +108,28 @@
 											<int key="NSfFlags">16</int>
 										</object>
 									</object>
+									<object class="IBUIImageView" id="734731491">
+										<reference key="NSNextResponder" ref="356077263"/>
+										<int key="NSvFlags">292</int>
+										<string key="NSFrame">{{10, 10}, {64, 64}}</string>
+										<reference key="NSSuperview" ref="356077263"/>
+										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView" ref="130908006"/>
+										<string key="NSReuseIdentifierKey">_NS:9</string>
+										<bool key="IBUIUserInteractionEnabled">NO</bool>
+										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+									</object>
 								</array>
-								<string key="NSFrameSize">{320, 55}</string>
+								<string key="NSFrameSize">{320, 83}</string>
 								<reference key="NSSuperview" ref="776772675"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="130908006"/>
+								<reference key="NSNextKeyView" ref="734731491"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC44NzExMDczMjcxIDAuOTY0MTI2NDk2MiAxAA</bytes>
 								</object>
 								<bool key="IBUIOpaque">NO</bool>
-								<float key="IBUIAlpha">0.5</float>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
@@ -187,6 +200,14 @@
 					</object>
 					<int key="connectionID">11</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">iconView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="734731491"/>
+					</object>
+					<int key="connectionID">13</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -227,6 +248,7 @@
 						<int key="objectID">10</int>
 						<reference key="object" ref="356077263"/>
 						<array class="NSMutableArray" key="children">
+							<reference ref="734731491"/>
 							<reference ref="130908006"/>
 							<reference ref="204835103"/>
 						</array>
@@ -242,6 +264,11 @@
 						<reference key="object" ref="204835103"/>
 						<reference key="parent" ref="356077263"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">12</int>
+						<reference key="object" ref="734731491"/>
+						<reference key="parent" ref="356077263"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -251,6 +278,7 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="10.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="12.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -259,7 +287,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">11</int>
+			<int key="maxID">13</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -269,6 +297,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="calculatedAmount">UILabel</string>
 						<string key="caption">UILabel</string>
+						<string key="iconView">UIImageView</string>
 						<string key="resultSubview">UIView</string>
 						<string key="scrollView">UIScrollView</string>
 					</dictionary>
@@ -280,6 +309,10 @@
 						<object class="IBToOneOutletInfo" key="caption">
 							<string key="name">caption</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="iconView">
+							<string key="name">iconView</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="resultSubview">
 							<string key="name">resultSubview</string>

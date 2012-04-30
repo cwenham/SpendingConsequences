@@ -158,6 +158,8 @@
     <Content Include="Artwork\slrcamera.png" />
     <Content Include="Artwork\globe.png" />
     <Content Include="Artwork\controller.png" />
+    <Content Include="Artwork\books.png" />
+    <Content Include="Artwork\cardsanddice.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />
