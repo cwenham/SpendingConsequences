@@ -152,6 +152,12 @@
     <Content Include="Artwork\wineglass.png" />
     <Content Include="Artwork\house.png" />
     <Content Include="Artwork\inkjet.png" />
+    <Content Include="Artwork\champagne.png" />
+    <Content Include="Artwork\shoppingbag.png" />
+    <Content Include="Artwork\shoppingbasket.png" />
+    <Content Include="Artwork\slrcamera.png" />
+    <Content Include="Artwork\globe.png" />
+    <Content Include="Artwork\controller.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

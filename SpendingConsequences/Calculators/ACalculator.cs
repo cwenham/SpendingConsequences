@@ -115,7 +115,6 @@ namespace SpendingConsequences.Calculators
 		}
 		private decimal _upperThreshold = 0m;
 		
-		
 		/// <summary>
 		/// The lowest result value that's worth displaying
 		/// </summary>
