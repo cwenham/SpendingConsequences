@@ -75,6 +75,12 @@
 		</Commentary>
 	</TimeUntil>
 	
+	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000">
+		<Image Name="treadmill"/>
+		<Configurable Name="Cost" Type="Money" Label="Average price" Value="1314.11" Source="http://www.amazon.com/mn/search/?_encoding=UTF8&amp;keywords=treadmills&amp;tag=synesmedia-20&amp;linkCode=ur2&amp;qid=1335895621&amp;camp=1789&amp;creative=390957&amp;rh=k%3Atreadmills%2Ci%3Asporting#/ref=sr_st?keywords=treadmills"/>
+		<Commentary>Based on the average price of the top-20 highest-rated motorized treadmills on Amazon.com.</Commentary>
+	</TimeUntil>
+	
 	<Sources>
 		<Image Name="coins" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="credit_card" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>

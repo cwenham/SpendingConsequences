@@ -74,6 +74,7 @@ namespace SpendingConsequences
 			cell.TextLabel.Text = String.Format (result.Calculator.ResultFormat, result.ComputedValue);
 			cell.DetailTextLabel.Text = result.FormattedCaption;
 			cell.ImageView.Image = image;
+			cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
 			
 			return cell;
 		}
