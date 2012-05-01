@@ -163,10 +163,11 @@ namespace SpendingConsequences.Calculators
 			}
 			
 			if (result >= this.LowerResultLimit && result <= this.UpperResultLimit)
-				return new ConsequenceResult (this,
-				                             (decimal)result,
-				                             FormatMyCaption (),
-				                             this.ImageName);
+				return new ConsequenceResult (this, 
+				                              request,
+				                              (decimal)result,
+				                              FormatMyCaption (),
+				                              this.ImageName);
 			else
 				return null;
 		}

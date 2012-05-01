@@ -31,7 +31,10 @@ namespace SpendingConsequences.Calculators
 			
 			decimal monthsService = request.InitialAmount / this.Cost;
 			if (monthsService >= LowerResultLimit && monthsService <= UpperResultLimit)
-				return new ConsequenceResult (this, monthsService, this.FormatCaption (this.Caption, new Dictionary<string,string> {
+				return new ConsequenceResult (this, 
+				                              request, 
+				                              monthsService, 
+				                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
 					{"Months", monthsService.ToString ()},
 					{"Cost", this.Cost.ToString ()}
 				}),

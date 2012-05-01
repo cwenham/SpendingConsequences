@@ -107,6 +107,7 @@
     <Compile Include="Calculators\UnitsPerWeek.cs" />
     <Compile Include="Calculators\TimeUntil.cs" />
     <Compile Include="Calculators\UnitsPerYear.cs" />
+    <Compile Include="ConfigUI\IConfigControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />

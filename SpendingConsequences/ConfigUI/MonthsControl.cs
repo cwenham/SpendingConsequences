@@ -8,7 +8,7 @@ using SpendingConsequences.Calculators;
 
 namespace SpendingConsequences
 {
-	public partial class MonthsControl : UIViewController
+	public partial class MonthsControl : UIViewController, IConfigControl
 	{
 		public MonthsControl (ConfigurableValue val) : base ("MonthsControl", null)
 		{
@@ -38,6 +38,7 @@ namespace SpendingConsequences
 			this.stepper.ValueChanged += delegate {
 				this.ConfigValue.Value = stepper.Value;
 				this.configuredValue.Text = stepper.Value.ToString ();
+				ValueChanged (this, new ConfigurableValueChanged (this.ConfigValue));
 			};
 		}
 		
@@ -58,6 +59,10 @@ namespace SpendingConsequences
 			// Return true for supported orientations
 			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
 		}
+		
+		#region IConfigControl implementation
+		public event EventHandler<ConfigurableValueChanged> ValueChanged = delegate {};
+		#endregion
 	}
 }
 

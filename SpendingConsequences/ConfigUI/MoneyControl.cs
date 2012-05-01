@@ -8,7 +8,7 @@ using SpendingConsequences.Calculators;
 
 namespace SpendingConsequences
 {
-	public partial class MoneyControl : UIViewController
+	public partial class MoneyControl : UIViewController, IConfigControl
 	{
 		public MoneyControl (ConfigurableValue val) : base ("MoneyControl", null)
 		{
@@ -32,7 +32,8 @@ namespace SpendingConsequences
 			this.configuredValue.KeyboardType = UIKeyboardType.DecimalPad;
 			this.configuredValue.InputAccessoryView = SpendingConsequencesViewController.CreateDecimalPadAccessoryView ((sender, e) => {
 				this.configuredValue.ResignFirstResponder ();
-				this.ConfigValue.Value = decimal.Parse(this.configuredValue.Text);
+				this.ConfigValue.Value = decimal.Parse (this.configuredValue.Text);
+				ValueChanged(this, new ConfigurableValueChanged(this.ConfigValue));
 			});
 			
 			this.caption.Text = ConfigValue.Label;
@@ -58,6 +59,10 @@ namespace SpendingConsequences
 			// Return true for supported orientations
 			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
 		}
+
+		#region IConfigControl implementation
+		public event EventHandler<ConfigurableValueChanged> ValueChanged = delegate {};
+		#endregion
 	}
 }
 

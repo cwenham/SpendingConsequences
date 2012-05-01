@@ -30,10 +30,7 @@ namespace SpendingConsequences
 		
 		public void SetCurrentResult (ConsequenceResult result)
 		{
-			CurrentResult = result;
-			
-			this.calculatedAmount.Text = String.Format (result.Calculator.ResultFormat, result.ComputedValue);
-			this.caption.Text = result.FormattedCaption;
+			UpdateCurrentResult (result);
 			
 			NSCache imgCache = ((AppDelegate)UIApplication.SharedApplication.Delegate).ImageCache;
 			
@@ -64,23 +61,46 @@ namespace SpendingConsequences
 			}
 		}
 		
+		private void UpdateCurrentResult (ConsequenceResult result)
+		{
+			CurrentResult = result;
+			
+			this.calculatedAmount.Text = String.Format (result.Calculator.ResultFormat, result.ComputedValue);
+			this.caption.Text = result.FormattedCaption;
+		}
+		
 		private UIViewController GetConfigurator (ConfigurableValue val)
 		{
 			// ToDo: Implement this with flyweight pattern
+			
+			IConfigControl control = null;
+			
 			switch (val.ValueType) {
-			case ConfigurableValueType.Integer:
-				return null; // ToDo: Complete me
 			case ConfigurableValueType.Money:
-				return new MoneyControl(val);
+				control = new MoneyControl (val);
+				break;
 			case ConfigurableValueType.Months:
-				return new MonthsControl (val);
+				control = new MonthsControl (val);
+				break;
 			case ConfigurableValueType.Percentage:
-				return new PercentageControl (val);
+				control = new PercentageControl (val);
+				break;
 			case ConfigurableValueType.Year:
-				return new YearControl(val);
-			default:
-				return null;
+				control = new YearControl (val);
+				break;
 			}
+			
+			if (control != null)
+				control.ValueChanged += HandleControlValueChanged;
+			
+			return control as UIViewController;
+		}
+
+		void HandleControlValueChanged (object sender, ConfigurableValueChanged e)
+		{
+			ConsequenceResult newResult = this.CurrentResult.Calculator.Calculate (this.CurrentResult.Request);
+			if (newResult != null)
+				this.UpdateCurrentResult (newResult);			
 		}
 		
 		public override void DidReceiveMemoryWarning ()

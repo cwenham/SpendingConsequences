@@ -34,7 +34,10 @@ namespace SpendingConsequences.Calculators
 			decimal units = ((decimal)perDay / Cost);
 			
 			if (units >= LowerResultLimit && units <= UpperResultLimit)
-				return new ConsequenceResult (this, units, FormatCaption (this.Caption, new Dictionary<string,string> {
+				return new ConsequenceResult (this, 
+				                              request, 
+				                              units, 
+				                              FormatCaption (this.Caption, new Dictionary<string,string> {
 						{"Cost", this.Cost.ToString ()}
 					}),
 				                              this.ImageName);

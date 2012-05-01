@@ -56,7 +56,10 @@ namespace SpendingConsequences.Calculators
 					val = timeUntil.TotalDays / 365.25;
 				}
 				
-				return new ConsequenceResult (this, (decimal)val, this.FormatCaption (this.Caption, new Dictionary<string,string> {
+				return new ConsequenceResult (this, 
+				                              request,
+				                              (decimal)val, 
+				                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
 					{"Unit", unit},
 					{"Cost", this.Cost.ToString ()}
 				}), this.ImageName);

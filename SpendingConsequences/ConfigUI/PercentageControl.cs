@@ -8,7 +8,7 @@ using SpendingConsequences.Calculators;
 
 namespace SpendingConsequences
 {
-	public partial class PercentageControl : UIViewController
+	public partial class PercentageControl : UIViewController, IConfigControl
 	{
 		public PercentageControl (ConfigurableValue val) : base ("PercentageControl", null)
 		{
@@ -37,7 +37,8 @@ namespace SpendingConsequences
 			this.stepper.StepValue = 0.1d;
 			this.stepper.ValueChanged += delegate {
 				this.ConfigValue.Value = stepper.Value;
-				this.configuredValue.Text = String.Format("{0}",stepper.Value);
+				this.configuredValue.Text = String.Format ("{0}", stepper.Value);
+				ValueChanged (this, new ConfigurableValueChanged (this.ConfigValue));
 			};
 		}
 		
@@ -58,6 +59,10 @@ namespace SpendingConsequences
 			// Return true for supported orientations
 			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
 		}
+		
+		#region IConfigControl implementation
+		public event EventHandler<ConfigurableValueChanged> ValueChanged = delegate {};
+		#endregion
 	}
 }
 
