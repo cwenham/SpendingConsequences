@@ -161,6 +161,11 @@
     <Content Include="Artwork\controller.png" />
     <Content Include="Artwork\books.png" />
     <Content Include="Artwork\cardsanddice.png" />
+    <Content Include="Artwork\treadmill.png" />
+    <Content Include="Artwork\fryingpan.png" />
+    <Content Include="Artwork\carkey.png" />
+    <Content Include="Artwork\rockinghorse.png" />
+    <Content Include="Artwork\guitar.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

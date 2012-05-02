@@ -82,6 +82,8 @@
 	</TimeUntil>
 	
 	<Sources>
+		<Image Name="newspaper" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
+		<Image Name="fryingpan" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
 		<Image Name="coins" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="credit_card" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="gold_bullion" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
@@ -94,13 +96,16 @@
 		<Image Name="wineglass" Source="Oxygen Team" SourceUrl="http://www.oxygen-icons.org/" License="Creative Commons Attribution-ShareAlike 3.0 License" LicenseUrl="http://creativecommons.org/licenses/by-sa/3.0/"/>
 		<Image Name="house" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
 		<Image Name="inkjet" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
-		<Image Name="champagne" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/310" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
-		<Image Name="shoppingbag" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/321" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
-		<Image Name="shoppingbasket" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/510" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
-		<Image Name="slrcamera" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/510" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="champagne" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="shoppingbag" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="shoppingbasket" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="slrcamera" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
 		<Image Name="globe" Source="MazeNL77" SourceUrl="http://mazenl77.deviantart.com/"/>
 		<Image Name="controller" Source="MazeNL77" SourceUrl="http://mazenl77.deviantart.com/"/>
 		<Image Name="books" Source="PC Unleashed" SourceUrl="http://pcunleashed.com/download/icon-sets/"/>
 		<Image Name="cardsanddice" Source="Tooschee" SourceUrl="http://tooschee.com"/>
+		<Image Name="carkey" Source="GraphicsFuel" SourceUrl="http://www.graphicsfuel.com"/>
+		<Image Name="rockinghorse" Source="webtoolkit4me.com" SourceUrl="http://webtoolkit4.me/"/>
+		<Image Name="guitar" Source="Fast Icon" SourceUrl="http://www.fasticon.com"/>
 	</Sources>
 </Calculators>
