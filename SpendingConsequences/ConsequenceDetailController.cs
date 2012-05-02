@@ -37,10 +37,14 @@ namespace SpendingConsequences
 			NSObject key = NSObject.FromObject (result.ImageName);
 			UIImage image = imgCache.ObjectForKey (key) as UIImage;
 			if (image == null) {
-				image = UIImage.FromBundle (string.Format ("Artwork/{0}.png", result.ImageName));
-				imgCache.SetObjectforKey (image, key);
+				string filename = string.Format ("Artwork/{0}.png", result.ImageName);
+				if (NSFileManager.DefaultManager.FileExists (filename)) {
+					image = UIImage.FromBundle (string.Format ("Artwork/{0}.png", result.ImageName));
+					imgCache.SetObjectforKey (image, key);
+				}
 			}
-			iconView.Image = image;
+			if (image != null)
+				iconView.Image = image;
 			
 			// Remove any controls we had dynamically placed before
 			foreach (UIView v in scrollView.Subviews.ToArray())

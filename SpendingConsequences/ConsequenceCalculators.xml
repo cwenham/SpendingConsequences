@@ -41,6 +41,12 @@
 		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Annually"/>	
 	</Investment>-->
 	
+	<YearsOfService TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00">
+		<Image Name="walle"/>
+		<Configurable Name="Cost" Type="Money" Label="Cost per year for trash removal" Value="479.28"/>
+		<!-- Monthly: 39.94. Source: http://www.sanramon.ca.gov/recycle/curbside.htm -->
+	</YearsOfService>
+	
 	<UnitsPerDay TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3">
 		<Image Name="cappuccino"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="4.36" Source="HuMuch.com" SourceUrl="http://www.humuch.com/detailspage.php?item_id=102"/>
@@ -59,6 +65,14 @@
 	<UnitsPerYear TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12">
 		<Image Name="inkjet"/>
 		<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30"/>
+	</UnitsPerYear>
+	
+	<UnitsPerYear TriggersOn="Repeating" Caption="haircuts per year" LowerResultLimit="1" UpperResultLimit="15" UserGender="Female">
+		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a woman" Value="56" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
+	</UnitsPerYear>
+	
+	<UnitsPerYear TriggersOn="Repeating" Caption="haircuts per year" LowerResultLimit="1" UpperResultLimit="12" UserGender="Male">
+		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 	</UnitsPerYear>
 	
 	<MonthsOfService TriggersOn="OneTime" Caption="months of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24">
@@ -114,5 +128,10 @@
 		<Image Name="carkey" Source="GraphicsFuel" SourceUrl="http://www.graphicsfuel.com"/>
 		<Image Name="rockinghorse" Source="webtoolkit4me.com" SourceUrl="http://webtoolkit4.me/"/>
 		<Image Name="guitar" Source="Fast Icon" SourceUrl="http://www.fasticon.com"/>
-	</Sources>
+		<Image Name="umbrella" Source="R. sky" SourceUrl="http://rskys.deviantart.com/"/>
+		<Image Name="hamburger" Source="PixTea" SourceUrl="http://pixtea.com/"/>
+		<Image Name="pistol" Source="PixTea" SourceUrl="http://pixtea.com/"/>
+		<Image Name="orange" Source="dembSky" SourceUrl="http://www.dembsky.me/"/>
+		<Image Name="walle" Source="Noctuline" SourceUrl="http://noctuline.deviantart.com/"/>
+	</Sources> 
 </Calculators>

@@ -108,6 +108,7 @@
     <Compile Include="Calculators\TimeUntil.cs" />
     <Compile Include="Calculators\UnitsPerYear.cs" />
     <Compile Include="ConfigUI\IConfigControl.cs" />
+    <Compile Include="Calculators\YearsOfService.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
@@ -167,6 +168,12 @@
     <Content Include="Artwork\rockinghorse.png" />
     <Content Include="Artwork\guitar.png" />
     <Content Include="Artwork\espressomachine.png" />
+    <Content Include="Artwork\bestsoap.png" />
+    <Content Include="Artwork\umbrella.png" />
+    <Content Include="Artwork\hamburger.png" />
+    <Content Include="Artwork\pistol.png" />
+    <Content Include="Artwork\orange.png" />
+    <Content Include="Artwork\walle.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

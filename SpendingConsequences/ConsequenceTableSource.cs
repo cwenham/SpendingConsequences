@@ -67,13 +67,17 @@ namespace SpendingConsequences
 			NSObject key = NSObject.FromObject (result.ImageName);
 			UIImage image = imgCache.ObjectForKey (key) as UIImage;
 			if (image == null) {
-				image = UIImage.FromBundle (string.Format ("Artwork/{0}.png", result.ImageName));
-				imgCache.SetObjectforKey (image, key);
+				string filename = string.Format ("Artwork/{0}.png", result.ImageName);
+				if (NSFileManager.DefaultManager.FileExists (filename)) {
+					image = UIImage.FromBundle (filename);
+					imgCache.SetObjectforKey (image, key);	
+				}
 			}
 			
+			if (image != null)
+				cell.ImageView.Image = image;
 			cell.TextLabel.Text = String.Format (result.Calculator.ResultFormat, result.ComputedValue);
 			cell.DetailTextLabel.Text = result.FormattedCaption;
-			cell.ImageView.Image = image;
 			cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
 			
 			return cell;
