@@ -41,9 +41,9 @@
 		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Annually"/>	
 	</Investment>-->
 	
-	<UnitsPerDay TriggersOn="Repeating" Caption="cups of premium coffee per day" LowerResultLimit="1" UpperResultLimit="3">
+	<UnitsPerDay TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3">
 		<Image Name="cappuccino"/>
-		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="2.95"/>
+		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="4.36" Source="HuMuch.com" SourceUrl="http://www.humuch.com/detailspage.php?item_id=102"/>
 	</UnitsPerDay>
 
 	<UnitsPerDay TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000">
@@ -78,7 +78,13 @@
 	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000">
 		<Image Name="treadmill"/>
 		<Configurable Name="Cost" Type="Money" Label="Average price" Value="1314.11" Source="Amazon.com" SourceUrl="http://www.amazon.com/mn/search/?_encoding=UTF8&amp;keywords=treadmills&amp;tag=synesmedia-20&amp;linkCode=ur2&amp;qid=1335895621&amp;camp=1789&amp;creative=390957&amp;rh=k%3Atreadmills%2Ci%3Asporting#/ref=sr_st?keywords=treadmills"/>
-		<Commentary>Based on the average price of the top-20 highest-rated motorized treadmills on Amazon.com.</Commentary>
+		<Commentary>Based on the average price of the top-20 highest customer rated motorized treadmills on Amazon.com.</Commentary>
+	</TimeUntil>
+	
+	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for an Espresso machine" LowerResultLimit="1" UpperResultLimit="1000">
+		<Image Name="espressomachine"/>
+		<Configurable Name="Cost" Type="Money" Label="Average price" Value="334.72" Source="Amazon.com" SourceUrl="http://amzn.to/IJIUe5"/>
+		<Commentary>Based on the average price of the top-20 highest customer rated espresso machines on Amazon.com</Commentary>
 	</TimeUntil>
 	
 	<Sources>
@@ -91,6 +97,7 @@
 		<Image Name="beach_chair" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="beach_umbrella" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="coffeecup" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="espressomachine" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="laptop" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="cappuccino" Source="Creative 9 Design" SourceUrl="http://www.c9-d.com/"/>
 		<Image Name="wineglass" Source="Oxygen Team" SourceUrl="http://www.oxygen-icons.org/" License="Creative Commons Attribution-ShareAlike 3.0 License" LicenseUrl="http://creativecommons.org/licenses/by-sa/3.0/"/>

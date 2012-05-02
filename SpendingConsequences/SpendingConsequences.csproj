@@ -166,6 +166,7 @@
     <Content Include="Artwork\carkey.png" />
     <Content Include="Artwork\rockinghorse.png" />
     <Content Include="Artwork\guitar.png" />
+    <Content Include="Artwork\espressomachine.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

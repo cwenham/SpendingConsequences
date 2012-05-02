@@ -41,14 +41,14 @@
 		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Annually"/>	
 	</Investment>-->
 	
-	<UnitsPerDay TriggersOn="Repeating" Caption="cups of premium coffee per day" LowerResultLimit="1" UpperResultLimit="3">
+	<UnitsPerDay TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3">
 		<Image Name="cappuccino"/>
-		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="2.95"/>
+		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="4.36" Source="HuMuch.com" SourceUrl="http://www.humuch.com/detailspage.php?item_id=102"/>
 	</UnitsPerDay>
 
 	<UnitsPerDay TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000">
 		<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
-		<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" Source="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
+		<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" SourceUrl="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
 	</UnitsPerDay>
 	
 	<UnitsPerWeek TriggersOn="Repeating" Caption="movie rentals per week" LowerResultLimit="1" UpperResultLimit="7">
@@ -69,7 +69,7 @@
 	
 	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30">
 		<Image Name="beach_umbrella"/>
-		<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" Source="http://www.planhawaiivacation.com/vacationcost/"/>
+		<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" Source="PlanHawaiiVacation.com" SourceUrl="http://www.planhawaiivacation.com/vacationcost/"/>
 		<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
 			$455 for food, $540 for activities and $450 to rent a car for the week.
 		</Commentary>
@@ -77,11 +77,19 @@
 	
 	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000">
 		<Image Name="treadmill"/>
-		<Configurable Name="Cost" Type="Money" Label="Average price" Value="1314.11" Source="http://www.amazon.com/mn/search/?_encoding=UTF8&amp;keywords=treadmills&amp;tag=synesmedia-20&amp;linkCode=ur2&amp;qid=1335895621&amp;camp=1789&amp;creative=390957&amp;rh=k%3Atreadmills%2Ci%3Asporting#/ref=sr_st?keywords=treadmills"/>
-		<Commentary>Based on the average price of the top-20 highest-rated motorized treadmills on Amazon.com.</Commentary>
+		<Configurable Name="Cost" Type="Money" Label="Average price" Value="1314.11" Source="Amazon.com" SourceUrl="http://www.amazon.com/mn/search/?_encoding=UTF8&amp;keywords=treadmills&amp;tag=synesmedia-20&amp;linkCode=ur2&amp;qid=1335895621&amp;camp=1789&amp;creative=390957&amp;rh=k%3Atreadmills%2Ci%3Asporting#/ref=sr_st?keywords=treadmills"/>
+		<Commentary>Based on the average price of the top-20 highest customer rated motorized treadmills on Amazon.com.</Commentary>
+	</TimeUntil>
+	
+	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for an Espresso machine" LowerResultLimit="1" UpperResultLimit="1000">
+		<Image Name="cappuccino"/>
+		<Configurable Name="Cost" Type="Money" Label="Average price" Value="334.72" Source="Amazon.com" SourceUrl="http://amzn.to/IJIUe5"/>
+		<Commentary>Based on the average price of the top-20 highest customer rated espresso machines on Amazon.com</Commentary>
 	</TimeUntil>
 	
 	<Sources>
+		<Image Name="newspaper" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
+		<Image Name="fryingpan" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
 		<Image Name="coins" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="credit_card" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="gold_bullion" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
@@ -94,13 +102,16 @@
 		<Image Name="wineglass" Source="Oxygen Team" SourceUrl="http://www.oxygen-icons.org/" License="Creative Commons Attribution-ShareAlike 3.0 License" LicenseUrl="http://creativecommons.org/licenses/by-sa/3.0/"/>
 		<Image Name="house" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
 		<Image Name="inkjet" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
-		<Image Name="champagne" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/310" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
-		<Image Name="shoppingbag" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/321" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
-		<Image Name="shoppingbasket" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/510" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
-		<Image Name="slrcamera" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/510" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="champagne" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="shoppingbag" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="shoppingbasket" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="slrcamera" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
 		<Image Name="globe" Source="MazeNL77" SourceUrl="http://mazenl77.deviantart.com/"/>
 		<Image Name="controller" Source="MazeNL77" SourceUrl="http://mazenl77.deviantart.com/"/>
 		<Image Name="books" Source="PC Unleashed" SourceUrl="http://pcunleashed.com/download/icon-sets/"/>
 		<Image Name="cardsanddice" Source="Tooschee" SourceUrl="http://tooschee.com"/>
+		<Image Name="carkey" Source="GraphicsFuel" SourceUrl="http://www.graphicsfuel.com"/>
+		<Image Name="rockinghorse" Source="webtoolkit4me.com" SourceUrl="http://webtoolkit4.me/"/>
+		<Image Name="guitar" Source="Fast Icon" SourceUrl="http://www.fasticon.com"/>
 	</Sources>
 </Calculators>
