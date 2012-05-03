@@ -47,6 +47,11 @@
 		<!-- Monthly: 39.94. Source: http://www.sanramon.ca.gov/recycle/curbside.htm -->
 	</YearsOfService>
 	
+	<UnitsPerYear TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53">
+		<Image Name="bestsoap"/>
+		<Configurable Name="Cost" Type="Money" Label="Per bar of luxury soap" Value="12.00" Source="The SoapCreek Company" SourceUrl="http://www.soapcreek.com/index.php/luxury-artisan-soap-1.html"/>
+	</UnitsPerYear>
+	
 	<UnitsPerDay TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3">
 		<Image Name="cappuccino"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="4.36" Source="HuMuch.com" SourceUrl="http://www.humuch.com/detailspage.php?item_id=102"/>
@@ -62,16 +67,26 @@
 		<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99"/>
 	</UnitsPerWeek>
 	
+	<UnitsPerWeek TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14">
+		<Image Name="hamburger"/>
+		<Configurable Name="Cost" Type="Money" Label="Average meal price" Value="10.16" Source="QSR Magazine" SourceUrl="http://www.qsrmagazine.com/news/study-says-fast-food-remains-popular"/>
+	</UnitsPerWeek>
+	
+	<UnitsPerWeek TriggersOn="Repeating" Caption="subway rides per week" LowerResultLimit="1" UpperResultLimit="14">
+		<Image Name="nysubway"/>
+		<Configurable Name="Cost" Type="Money" Label="Ticket price" Value="2.25"/>
+	</UnitsPerWeek>
+	
 	<UnitsPerYear TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12">
 		<Image Name="inkjet"/>
 		<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30"/>
 	</UnitsPerYear>
 	
-	<UnitsPerYear TriggersOn="Repeating" Caption="haircuts per year" LowerResultLimit="1" UpperResultLimit="15" UserGender="Female">
+	<UnitsPerYear TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" UserGender="Female">
 		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a woman" Value="56" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 	</UnitsPerYear>
 	
-	<UnitsPerYear TriggersOn="Repeating" Caption="haircuts per year" LowerResultLimit="1" UpperResultLimit="12" UserGender="Male">
+	<UnitsPerYear TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" UserGender="Male">
 		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 	</UnitsPerYear>
 	
@@ -133,5 +148,7 @@
 		<Image Name="pistol" Source="PixTea" SourceUrl="http://pixtea.com/"/>
 		<Image Name="orange" Source="dembSky" SourceUrl="http://www.dembsky.me/"/>
 		<Image Name="walle" Source="Noctuline" SourceUrl="http://noctuline.deviantart.com/"/>
+		<Image Name="nysubway" Source="ncrow" SourceUrl="http://ncrow.deviantart.com/"/>
+		<Image Name="plane" Source="Sallee Design" SourceUrl="http://www.salleedesign.com/"/>
 	</Sources> 
 </Calculators>

@@ -109,6 +109,7 @@
     <Compile Include="Calculators\UnitsPerYear.cs" />
     <Compile Include="ConfigUI\IConfigControl.cs" />
     <Compile Include="Calculators\YearsOfService.cs" />
+    <Compile Include="MarkishString.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
@@ -174,6 +175,8 @@
     <Content Include="Artwork\pistol.png" />
     <Content Include="Artwork\orange.png" />
     <Content Include="Artwork\walle.png" />
+    <Content Include="Artwork\nysubway.png" />
+    <Content Include="Artwork\plane.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />
