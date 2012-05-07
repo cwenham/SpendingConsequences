@@ -46,14 +46,7 @@ namespace SpendingConsequences
 			if (image != null)
 				iconView.Image = image;
 			
-			// Remove any controls we had dynamically placed before
-			foreach (UIView v in scrollView.Subviews.ToArray())
-				if (v.Tag == DYNAMIC_VIEW_TAG)
-					v.RemoveFromSuperview ();
-			
-			if (CurrentConfiggers != null)
-				foreach (UIViewController configger in CurrentConfiggers.Where(x => x != null))
-					configger.View.RemoveFromSuperview ();
+			ClearDynamicViews();
 			
 			float offset = LastLabelYOffset + 10;
 
@@ -63,6 +56,23 @@ namespace SpendingConsequences
 				offset += configger.View.Frame.Height + 5;
 				this.scrollView.AddSubview (configger.View);
 			}
+			
+			if (result.Calculator.SupportElements != null && result.Calculator.SupportElements.ContainsKey ("Commentary")) {
+				Commentary commentaryElement = result.Calculator.SupportElements ["Commentary"] as Commentary;
+				NSAttributedString commentaryFormatted = commentaryElement.ToAttributedString (UIFont.FromName ("Baskerville", 15.0f));
+				
+				//CoreTextView commentView = new CoreTextView (new RectangleF (5, offset, this.View.Frame.Width - 10, 100));
+				CoreTextView commentView = new CoreTextView ();
+				commentView.Tag = DYNAMIC_VIEW_TAG;
+				commentView.Text = commentaryFormatted;
+				SizeF suggestedSize = commentView.SuggestedFrameSize (new SizeF (this.View.Frame.Width - 10, 10000.0f));
+				commentView.Frame = new RectangleF (5, offset, this.View.Frame.Width - 10, suggestedSize.Height);
+				offset += suggestedSize.Height + 5;
+				this.scrollView.AddSubview (commentView);
+			}
+			
+			this.scrollView.ContentSize = new SizeF (this.View.Frame.Width, offset);
+			this.scrollView.BringSubviewToFront (this.resultSubview);
 		}
 		
 		private void UpdateCurrentResult (ConsequenceResult result)
@@ -119,7 +129,7 @@ namespace SpendingConsequences
 		{
 			base.ViewDidLoad ();
 			
-			this.resultSubview.BackgroundColor = this.resultSubview.BackgroundColor.ColorWithAlpha(0.5f);
+			this.resultSubview.BackgroundColor = this.resultSubview.BackgroundColor.ColorWithAlpha (0.8f);
 		
 			this.scrollView.Scrolled += delegate(object sender, EventArgs e) {
 				// Make the subview with the results stay fixed while content scrolls underneath it
@@ -137,8 +147,18 @@ namespace SpendingConsequences
 		
 		public override void ViewWillDisappear (bool animated)
 		{
-			NavigationController.SetNavigationBarHidden(true,true);
+			NavigationController.SetNavigationBarHidden (true, true);
 			base.ViewWillDisappear (animated);
+		}
+		
+		private void ClearDynamicViews() {
+			foreach (UIView v in scrollView.Subviews.ToArray())
+				if (v.Tag == DYNAMIC_VIEW_TAG)
+					v.RemoveFromSuperview ();
+			
+			if (CurrentConfiggers != null)
+				foreach (UIViewController configger in CurrentConfiggers.Where(x => x != null))
+					configger.View.RemoveFromSuperview ();
 		}
 		
 		public override void ViewDidUnload ()
@@ -149,6 +169,7 @@ namespace SpendingConsequences
 			// allow the Garbage Collector to collect them sooner.
 			//
 			// e.g. myOutlet.Dispose (); myOutlet = null;
+			ClearDynamicViews();
 			
 			ReleaseDesignerOutlets ();
 		}

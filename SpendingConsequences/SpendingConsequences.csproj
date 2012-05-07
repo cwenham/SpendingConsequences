@@ -109,7 +109,9 @@
     <Compile Include="Calculators\UnitsPerYear.cs" />
     <Compile Include="ConfigUI\IConfigControl.cs" />
     <Compile Include="Calculators\YearsOfService.cs" />
-    <Compile Include="MarkishString.cs" />
+    <Compile Include="Calculators\Commentary.cs" />
+    <Compile Include="Calculators\ASupportElement.cs" />
+    <Compile Include="CoreTextView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />

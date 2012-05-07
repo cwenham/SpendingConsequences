@@ -20,10 +20,13 @@
 		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="9.34"/>
 		<Configurable Name="Years" Type="Year" Label="When invested for" Value="5"/>
 		<Commentary>The Compound Annual Growth Rate of the Standard &amp; Poor 500 Index since its inception in 1957 is 
-			about 9.34%, however this is not what you'll typically expect in any given year; in some years the index 
+			about <b>9.34%</b>, however this is not what you'll typically expect in any given year; in some years the index 
 			does worse than others, some years it does much better. When investing in such a fund you should be thinking
 			about the long term and be willing to ride-out dips in the market that can make it look as if you're losing
 			money.
+			<br/>Test line break.
+			<br/>Test <b>bold, <i>bold italic</i></b> and <i>italic</i>.
+			<br/>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		</Commentary>
 	</Investment>
 	
@@ -41,14 +44,25 @@
 		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Annually"/>	
 	</Investment>-->
 	
-	<UnitsPerDay TriggersOn="Repeating" Caption="cups of premium coffee per day" LowerResultLimit="1" UpperResultLimit="3">
+	<YearsOfService TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00">
+		<Image Name="walle"/>
+		<Configurable Name="Cost" Type="Money" Label="Cost per year for trash removal" Value="479.28"/>
+		<!-- Monthly: 39.94. Source: http://www.sanramon.ca.gov/recycle/curbside.htm -->
+	</YearsOfService>
+	
+	<UnitsPerYear TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53">
+		<Image Name="bestsoap"/>
+		<Configurable Name="Cost" Type="Money" Label="Per bar of luxury soap" Value="12.00" Source="The SoapCreek Company" SourceUrl="http://www.soapcreek.com/index.php/luxury-artisan-soap-1.html"/>
+	</UnitsPerYear>
+	
+	<UnitsPerDay TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3">
 		<Image Name="cappuccino"/>
-		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="2.95"/>
+		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="4.36" Source="HuMuch.com" SourceUrl="http://www.humuch.com/detailspage.php?item_id=102"/>
 	</UnitsPerDay>
 
 	<UnitsPerDay TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000">
 		<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
-		<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" Source="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
+		<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" SourceUrl="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
 	</UnitsPerDay>
 	
 	<UnitsPerWeek TriggersOn="Repeating" Caption="movie rentals per week" LowerResultLimit="1" UpperResultLimit="7">
@@ -56,9 +70,27 @@
 		<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99"/>
 	</UnitsPerWeek>
 	
+	<UnitsPerWeek TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14">
+		<Image Name="hamburger"/>
+		<Configurable Name="Cost" Type="Money" Label="Average meal price" Value="10.16" Source="QSR Magazine" SourceUrl="http://www.qsrmagazine.com/news/study-says-fast-food-remains-popular"/>
+	</UnitsPerWeek>
+	
+	<UnitsPerWeek TriggersOn="Repeating" Caption="subway rides per week" LowerResultLimit="1" UpperResultLimit="14">
+		<Image Name="nysubway"/>
+		<Configurable Name="Cost" Type="Money" Label="Ticket price" Value="2.25"/>
+	</UnitsPerWeek>
+	
 	<UnitsPerYear TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12">
 		<Image Name="inkjet"/>
 		<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30"/>
+	</UnitsPerYear>
+	
+	<UnitsPerYear TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" UserGender="Female">
+		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a woman" Value="56" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
+	</UnitsPerYear>
+	
+	<UnitsPerYear TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" UserGender="Male">
+		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 	</UnitsPerYear>
 	
 	<MonthsOfService TriggersOn="OneTime" Caption="months of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24">
@@ -69,13 +101,27 @@
 	
 	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30">
 		<Image Name="beach_umbrella"/>
-		<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" Source="http://www.planhawaiivacation.com/vacationcost/"/>
+		<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" Source="PlanHawaiiVacation.com" SourceUrl="http://www.planhawaiivacation.com/vacationcost/"/>
 		<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
 			$455 for food, $540 for activities and $450 to rent a car for the week.
 		</Commentary>
 	</TimeUntil>
 	
+	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000">
+		<Image Name="treadmill"/>
+		<Configurable Name="Cost" Type="Money" Label="Average price" Value="1314.11" Source="Amazon.com" SourceUrl="http://www.amazon.com/mn/search/?_encoding=UTF8&amp;keywords=treadmills&amp;tag=synesmedia-20&amp;linkCode=ur2&amp;qid=1335895621&amp;camp=1789&amp;creative=390957&amp;rh=k%3Atreadmills%2Ci%3Asporting#/ref=sr_st?keywords=treadmills"/>
+		<Commentary>Based on the average price of the top-20 highest customer rated motorized treadmills on Amazon.com.</Commentary>
+	</TimeUntil>
+	
+	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for an Espresso machine" LowerResultLimit="1" UpperResultLimit="1000">
+		<Image Name="espressomachine"/>
+		<Configurable Name="Cost" Type="Money" Label="Average price" Value="334.72" Source="Amazon.com" SourceUrl="http://amzn.to/IJIUe5"/>
+		<Commentary>Based on the average price of the top-20 highest customer rated espresso machines on Amazon.com</Commentary>
+	</TimeUntil>
+	
 	<Sources>
+		<Image Name="newspaper" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
+		<Image Name="fryingpan" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
 		<Image Name="coins" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="credit_card" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="gold_bullion" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
@@ -83,18 +129,29 @@
 		<Image Name="beach_chair" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="beach_umbrella" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="coffeecup" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="espressomachine" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="laptop" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="cappuccino" Source="Creative 9 Design" SourceUrl="http://www.c9-d.com/"/>
 		<Image Name="wineglass" Source="Oxygen Team" SourceUrl="http://www.oxygen-icons.org/" License="Creative Commons Attribution-ShareAlike 3.0 License" LicenseUrl="http://creativecommons.org/licenses/by-sa/3.0/"/>
 		<Image Name="house" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
 		<Image Name="inkjet" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
-		<Image Name="champagne" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/310" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
-		<Image Name="shoppingbag" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/321" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
-		<Image Name="shoppingbasket" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/510" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
-		<Image Name="slrcamera" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/archives/510" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="champagne" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="shoppingbag" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="shoppingbasket" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="slrcamera" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
 		<Image Name="globe" Source="MazeNL77" SourceUrl="http://mazenl77.deviantart.com/"/>
 		<Image Name="controller" Source="MazeNL77" SourceUrl="http://mazenl77.deviantart.com/"/>
 		<Image Name="books" Source="PC Unleashed" SourceUrl="http://pcunleashed.com/download/icon-sets/"/>
 		<Image Name="cardsanddice" Source="Tooschee" SourceUrl="http://tooschee.com"/>
-	</Sources>
+		<Image Name="carkey" Source="GraphicsFuel" SourceUrl="http://www.graphicsfuel.com"/>
+		<Image Name="rockinghorse" Source="webtoolkit4me.com" SourceUrl="http://webtoolkit4.me/"/>
+		<Image Name="guitar" Source="Fast Icon" SourceUrl="http://www.fasticon.com"/>
+		<Image Name="umbrella" Source="R. sky" SourceUrl="http://rskys.deviantart.com/"/>
+		<Image Name="hamburger" Source="PixTea" SourceUrl="http://pixtea.com/"/>
+		<Image Name="pistol" Source="PixTea" SourceUrl="http://pixtea.com/"/>
+		<Image Name="orange" Source="dembSky" SourceUrl="http://www.dembsky.me/"/>
+		<Image Name="walle" Source="Noctuline" SourceUrl="http://noctuline.deviantart.com/"/>
+		<Image Name="nysubway" Source="ncrow" SourceUrl="http://ncrow.deviantart.com/"/>
+		<Image Name="plane" Source="Sallee Design" SourceUrl="http://www.salleedesign.com/"/>
+	</Sources> 
 </Calculators>

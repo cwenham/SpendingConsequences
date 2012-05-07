@@ -32,12 +32,24 @@ namespace SpendingConsequences.Calculators
 			
 			ConfigurableValues = Definition.Elements ("Configurable")
 				.Select (x => new ConfigurableValue (x))
-				.ToDictionary(x => x.Name);
+				.ToDictionary (x => x.Name);
+			
+			SupportElements = (from e in Definition.Elements()
+			                   where ASupportElement.KnownElementNames().Contains(e.Name.LocalName)
+			                   select ASupportElement.GetInstance(e)).ToDictionary(x => x.Name);
 		}
 		
 		public XElement Definition { get; private set; }
 		
+		/// <summary>
+		/// Configuration values, such as cost, interest rate, etc. used by calculator
+		/// </summary>
 		public Dictionary<String,ConfigurableValue> ConfigurableValues { get; private set; }
+		
+		/// <summary>
+		/// Support elements, such as commentary, etc.
+		/// </summary>
+		public Dictionary<String,ASupportElement> SupportElements { get; private set; }
 		
 		public String Caption {
 			get {
