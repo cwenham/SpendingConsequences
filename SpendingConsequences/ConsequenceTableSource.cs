@@ -37,6 +37,20 @@ namespace SpendingConsequences
 					select result).ToArray ();
 		}
 		
+		public int ReplaceResult (ConsequenceResult oldResult, ConsequenceResult newResult)
+		{
+			if (CurrentResults == null)
+				return -1;
+			
+			for (int i = 0; i < CurrentResults.Length; i++)
+				if (CurrentResults [i] == oldResult) {
+					CurrentResults [i] = newResult;
+					return i;
+				}
+			
+			return -1;
+		}
+		
 		public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
 		{
 			//ToDo: Find a more elegant way to do this. Carry a reference around to a
@@ -44,7 +58,7 @@ namespace SpendingConsequences
 			this.ParentController.DisplayConsequenceDetails (CurrentResults [indexPath.Row]);
 		}
 		
-		#region implemented abstract members of MonoTouch.UIKit.UITableViewSource
+		#region implemented abstract members of MonoTouch.UIKit.UITableViewSource		
 		public override int RowsInSection (UITableView tableview, int section)
 		{
 			if (CurrentResults == null)

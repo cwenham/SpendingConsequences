@@ -177,8 +177,16 @@ namespace SpendingConsequences
 		
 		public void DisplayConsequenceDetails (ConsequenceResult result)
 		{
-			if (this.DetailController == null)
+			if (this.DetailController == null) {
 				DetailController = new ConsequenceDetailController ();
+				DetailController.ResultChanged += delegate(object sender, ResultChangedArgs e) {
+					int index = this.TableSource.ReplaceResult (e.OldResult, e.NewResult);
+					if (index > -1) {
+						NSIndexPath path = NSIndexPath.FromRowSection (index, 0);
+						this.ConsequenceView.ReloadRows (new NSIndexPath[] {path}, UITableViewRowAnimation.None);
+					}
+				};
+			}
 			
 			DetailController.SetCurrentResult (result);
 			

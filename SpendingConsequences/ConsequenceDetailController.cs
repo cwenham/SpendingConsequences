@@ -30,6 +30,8 @@ namespace SpendingConsequences
 		
 		public void SetCurrentResult (ConsequenceResult result)
 		{
+			this.NavigationItem.Title = result.Request.Summary;
+			
 			UpdateCurrentResult (result);
 			
 			NSCache imgCache = ((AppDelegate)UIApplication.SharedApplication.Delegate).ImageCache;
@@ -46,7 +48,7 @@ namespace SpendingConsequences
 			if (image != null)
 				iconView.Image = image;
 			
-			ClearDynamicViews();
+			ClearDynamicViews ();
 			
 			float offset = LastLabelYOffset + 10;
 
@@ -112,10 +114,16 @@ namespace SpendingConsequences
 
 		void HandleControlValueChanged (object sender, ConfigurableValueChanged e)
 		{
+			ConsequenceResult oldResult = this.CurrentResult;
 			ConsequenceResult newResult = this.CurrentResult.Calculator.Calculate (this.CurrentResult.Request);
 			if (newResult != null)
-				this.UpdateCurrentResult (newResult);			
+				this.UpdateCurrentResult (newResult);
+			
+			// Bump the notificiation up so the main view controller can refresh the result, too
+			ResultChanged (this, new ResultChangedArgs (oldResult, newResult));
 		}
+		
+		public event EventHandler<ResultChangedArgs> ResultChanged = delegate{};
 		
 		public override void DidReceiveMemoryWarning ()
 		{
@@ -178,6 +186,19 @@ namespace SpendingConsequences
 		{
 			// Return true for supported orientations
 			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
+		}
+	}
+	
+	public class ResultChangedArgs : EventArgs
+	{
+		public ConsequenceResult OldResult { get; private set; }
+		
+		public ConsequenceResult NewResult { get; private set; }
+		
+		public ResultChangedArgs (ConsequenceResult oldResult, ConsequenceResult newResult)
+		{
+			this.OldResult = oldResult;
+			this.NewResult = newResult;
 		}
 	}
 }

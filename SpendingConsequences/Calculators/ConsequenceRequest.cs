@@ -24,6 +24,15 @@ namespace SpendingConsequences.Calculators
 			return (decimal)(period.TotalDays / DayCounts [TriggerMode]) * InitialAmount;
 		}
 		
+		/// <summary>
+		/// Summary of the request, for use in titles
+		/// </summary>
+		public string Summary {
+			get {
+				return String.Format("{0:C} {1}", InitialAmount, ShortTerms[TriggerMode]);
+			}
+		}
+		
 		// These are "good enough" values, sufficient for the app's scope. The
 		// calculations we'll base on these woudln't be sufficient for apps that
 		// require higher precision. EG: A month or quarter can't be summarized
@@ -35,6 +44,15 @@ namespace SpendingConsequences.Calculators
 			{TriggerType.PerMonth, 30},
 			{TriggerType.PerQuarter, 90},
 			{TriggerType.PerYear, 365.25}
+		};
+		
+		public static Dictionary<TriggerType, string> ShortTerms = new Dictionary<TriggerType, string>() {
+			{TriggerType.OneTime, "Once"},
+			{TriggerType.PerDay, "Daily"},
+			{TriggerType.PerWeek, "Weekly"},
+			{TriggerType.PerMonth, "Monthly"},
+			{TriggerType.PerQuarter, "Quarterly"},
+			{TriggerType.PerYear, "Yearly"}
 		};
 	}
 }
