@@ -1,5 +1,9 @@
+Mono.Data.Sqlite.dll
+Mono.Data.Tds.dll
 Mono.Security.dll
 System.Core.dll
+System.Data.dll
+System.Transactions.dll
 System.Xml.Linq.dll
 System.Xml.dll
 System.dll

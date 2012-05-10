@@ -65,6 +65,8 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data" />
+    <Reference Include="Mono.Data.Sqlite" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -112,6 +114,7 @@
     <Compile Include="Calculators\Commentary.cs" />
     <Compile Include="Calculators\ASupportElement.cs" />
     <Compile Include="CoreTextView.cs" />
+    <Compile Include="UserCalculatorSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />

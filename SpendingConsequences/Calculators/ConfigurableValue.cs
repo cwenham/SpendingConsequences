@@ -25,6 +25,12 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		
+		public String ID {
+			get {
+				return Definition.Attribute("ID") != null ? Definition.Attribute("ID").Value : null;
+			}
+		}
+		
 		/// <summary>
 		/// Returns true if a UI should not be presented for changing the value
 		/// </summary>
@@ -48,29 +54,40 @@ namespace SpendingConsequences.Calculators
 		}
 		private ConfigurableValueType _ValueType = ConfigurableValueType.Undefined;
 		
+		private static UserCalculatorSettings UserSettings = new UserCalculatorSettings();
+		
 		public object Value {
 			get {
+				if (_value == null) {
+					_value = UserSettings.GetCustomValue (this);
+					if (_value == null)
+						_value = Definition.Attribute ("Value").Value;
+				}
+				
 				switch (ValueType) {
 				case ConfigurableValueType.Integer:
-					return int.Parse (Definition.Attribute ("Value").Value);
+					return int.Parse (_value);
 				case ConfigurableValueType.Money:
-					return decimal.Parse (Definition.Attribute ("Value").Value);
+					return decimal.Parse (_value);
 				case ConfigurableValueType.Percentage:
-					return double.Parse (Definition.Attribute ("Value").Value);
+					return double.Parse (_value);
 				case ConfigurableValueType.Year:
-					return int.Parse (Definition.Attribute ("Value").Value);
+					return int.Parse (_value);
 				case ConfigurableValueType.Months:
-					return int.Parse (Definition.Attribute ("Value").Value);
+					return int.Parse (_value);
 				case ConfigurableValueType.String:
-					return Definition.Attribute("Value").Value;
+					return _value;
 				default:
-					return Definition.Attribute ("Value").Value;
+					return _value;
 				}
 			}
 			set {
-				Definition.Attribute ("Value").SetValue (value);
+				_value = value.ToString();
+				if (value != null)
+					UserSettings.StoreCustomValue (this, value.ToString());
 			}
 		}
+		private string _value = null;
 	}
 	
 	public enum ConfigurableValueType
