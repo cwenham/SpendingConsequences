@@ -65,6 +65,11 @@
 		<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99"/>
 	</UnitsPerWeek>
 	
+	<UnitsPerWeek TriggersOn="Repeating" Caption="movie tickets per week" LowerResultLimit="2" UpperResultLimit="14">
+		<Image Name="popcorn"/>
+		<Configurable Name="Cost" Type="Money" Label="Cost per ticket" Value="8.15" Source="Time.com" SourceUrl="http://moneyland.time.com/2012/01/05/the-cure-for-the-ailing-movie-business-is-to-raise-ticket-prices/"/>
+	</UnitsPerWeek>
+	
 	<UnitsPerWeek TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14">
 		<Image Name="hamburger"/>
 		<Configurable Name="Cost" Type="Money" Label="Average meal price" Value="10.16" Source="QSR Magazine" SourceUrl="http://www.qsrmagazine.com/news/study-says-fast-food-remains-popular"/>
@@ -150,5 +155,6 @@
 		<Image Name="walle" Source="Noctuline" SourceUrl="http://noctuline.deviantart.com/"/>
 		<Image Name="nysubway" Source="ncrow" SourceUrl="http://ncrow.deviantart.com/"/>
 		<Image Name="plane" Source="Sallee Design" SourceUrl="http://www.salleedesign.com/"/>
+		<Image Name="popcorn" Source="Svengraph" SourceUrl="http://svengraph.deviantart.com/"/>
 	</Sources> 
 </Calculators>
