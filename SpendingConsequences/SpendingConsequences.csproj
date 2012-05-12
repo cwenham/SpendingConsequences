@@ -151,12 +151,6 @@
     <Content Include="Artwork\beach_umbrella.png" />
     <Content Include="Artwork\laptop.png" />
     <Content Include="Artwork\cappuccino.png" />
-    <Content Include="Artwork\InputPanel%402x.png" />
-    <Content Include="Artwork\mode_sel%402x.png" />
-    <Content Include="Artwork\mode_sel_unsel%402x.png" />
-    <Content Include="Artwork\mode_unsel%402x.png" />
-    <Content Include="Artwork\mode_unsel_sel%402x.png" />
-    <Content Include="Artwork\mode_unsel_unsel%402x.png" />
     <Content Include="Artwork\wineglass.png" />
     <Content Include="Artwork\house.png" />
     <Content Include="Artwork\inkjet.png" />
@@ -185,11 +179,19 @@
     <Content Include="Artwork\hair_man.png" />
     <Content Include="Artwork\hair_woman.png" />
     <Content Include="Artwork\popcorn.png" />
+    <Content Include="UIArt\input_panel%402x.png" />
+    <Content Include="UIArt\mode_sel_unsel%402x.png" />
+    <Content Include="UIArt\mode_sel%402x.png" />
+    <Content Include="UIArt\mode_unsel_sel%402x.png" />
+    <Content Include="UIArt\mode_unsel_unsel%402x.png" />
+    <Content Include="UIArt\mode_unsel%402x.png" />
+    <Content Include="UIArt\result_panel%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />
     <Folder Include="Artwork\" />
     <Folder Include="ConfigUI\" />
     <Folder Include="Icons\" />
+    <Folder Include="UIArt\" />
   </ItemGroup>
 </Project>
