@@ -120,46 +120,55 @@ namespace SpendingConsequences.Calculators
 			
 			decimal result = 0;
 			
-			if (request.TriggerMode == TriggerType.OneTime) {
-				// A one-time investment means we can use the compound interest formula
+			try {
+				if (request.TriggerMode == TriggerType.OneTime) {
+					// A one-time investment means we can use the compound interest formula
 				
-				result = request.InitialAmount * ((decimal)Math.Pow (1 + ratePerPeriod, compoundingPeriods));
+					result = request.InitialAmount * ((decimal)Math.Pow (1 + ratePerPeriod, compoundingPeriods));
 
-			} else if (CompoundingsPerYear == investmentsPerYear) {
-				// Compounding frequency is the same as the investment frequency, so we can
-				// use a mathematical series.
-				// Described here: http://mathdude.quickanddirtytips.com/math-dude-web-bonus.aspx
+				} else if (CompoundingsPerYear == investmentsPerYear) {
+					// Compounding frequency is the same as the investment frequency, so we can
+					// use a mathematical series.
+					// Described here: http://mathdude.quickanddirtytips.com/math-dude-web-bonus.aspx
 				
-				double seriesSum = 0;
-				for (int i = 1; i <= compoundingPeriods; i++)
-					seriesSum += Math.Pow (1 + ratePerPeriod, i);
+					double seriesSum = 0;
+					for (int i = 1; i <= compoundingPeriods; i++)
+						seriesSum += Math.Pow (1 + ratePerPeriod, i);
 				
-				result = (decimal)(((double)request.InitialAmount) * seriesSum);
+					result = (decimal)(((double)request.InitialAmount) * seriesSum);
 				
-			} else if (CompoundingsPerYear > investmentsPerYear) {
-				// We need to take the sum of sub-periods and apply the standard compound interest formula to each
+				} else if (CompoundingsPerYear > investmentsPerYear) {
+					// We need to take the sum of sub-periods and apply the standard compound interest formula to each
 				
-				double investmentPeriods = Years * investmentsPerYear;
-				int compoundingsPerInvestment = ((int)Math.Floor (((double)CompoundingsPerYear / investmentsPerYear)));
+					double investmentPeriods = Years * investmentsPerYear;
+					int compoundingsPerInvestment = ((int)Math.Floor (((double)CompoundingsPerYear / investmentsPerYear)));
 				
-				double sum = ((double)request.InitialAmount) * Math.Pow (1 + ratePerPeriod, compoundingsPerInvestment);
-				for (int i = 1; i <= investmentPeriods - 1; i++)
-					sum = (sum + ((double)request.InitialAmount)) * Math.Pow (1 + ratePerPeriod, compoundingsPerInvestment);
+					double sum = ((double)request.InitialAmount) * Math.Pow (1 + ratePerPeriod, compoundingsPerInvestment);
+					for (int i = 1; i <= investmentPeriods - 1; i++)
+						sum = (sum + ((double)request.InitialAmount)) * Math.Pow (1 + ratePerPeriod, compoundingsPerInvestment);
 				
-				result = (decimal)sum;
+					result = (decimal)sum;
 					
-			} else if (investmentsPerYear > CompoundingsPerYear) {
-				// Apply the interest to the midpoint of the previous + next balance for each compounding period
+				} else if (investmentsPerYear > CompoundingsPerYear) {
+					// Apply the interest to the midpoint of the previous + next balance for each compounding period
 			
-				double investmentsPerPeriod = (double)investmentsPerYear / CompoundingsPerYear;
-				double amountPerPeriod = (investmentsPerPeriod * ((double)request.InitialAmount));
+					double investmentsPerPeriod = (double)investmentsPerYear / CompoundingsPerYear;
+					double amountPerPeriod = (investmentsPerPeriod * ((double)request.InitialAmount));
 				
-				double sum = 0;
-				for (int i = 1; i <= compoundingPeriods; i++) {
-					sum = sum + amountPerPeriod + ((sum + amountPerPeriod / 2) * ratePerPeriod);
-				}
+					double sum = 0;
+					for (int i = 1; i <= compoundingPeriods; i++) {
+						sum = sum + amountPerPeriod + ((sum + amountPerPeriod / 2) * ratePerPeriod);
+					}
 				
-				result = (decimal)sum;
+					result = (decimal)sum;
+				}				
+			} catch (OverflowException oex) {
+				// ToDo: Find a way to convey via UI that we can't crunch numbers this big
+				Console.WriteLine (String.Format ("Number overflow in investment calculator: {0}", oex.Message));
+				return null;
+			} catch (Exception ex) {
+				Console.WriteLine (String.Format ("{0} thrown in investment calculator: {1}", ex.GetType ().Name, ex.Message));
+				return null;
 			}
 			
 			if (result >= this.LowerResultLimit && result <= this.UpperResultLimit)

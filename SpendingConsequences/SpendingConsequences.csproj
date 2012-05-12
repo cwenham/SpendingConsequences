@@ -186,6 +186,8 @@
     <Content Include="UIArt\mode_unsel_unsel%402x.png" />
     <Content Include="UIArt\mode_unsel%402x.png" />
     <Content Include="UIArt\result_panel%402x.png" />
+    <Content Include="UIArt\div2_unsel%402x.png" />
+    <Content Include="UIArt\mul2_unsel%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

@@ -100,7 +100,14 @@ namespace SpendingConsequences
 				return null;
 			
 			string key = ValueKeyName (val);
-			Connection.Open ();
+			
+			try {
+				Connection.Open ();				
+			} catch (Exception ex) {
+				Console.WriteLine (string.Format ("{0} thrown when opening DB for GetCustomValue: {1}", ex.GetType ().Name, ex.Message));
+				return null;
+			}
+
 			SqliteCommand cmd = Connection.CreateCommand ();
 			cmd.CommandText = queryTemplate;
 			cmd.CommandType = CommandType.Text;
@@ -113,7 +120,7 @@ namespace SpendingConsequences
 				if (!(result is DBNull))
 					return (string)result;
 			} catch (Exception ex) {
-				Console.WriteLine(string.Format("{0} thrown when reading DB: {1}", ex.GetType().Name, ex.Message));
+				Console.WriteLine (string.Format ("{0} thrown when reading DB: {1}", ex.GetType ().Name, ex.Message));
 			} finally {
 				Connection.Close ();
 			}
@@ -131,7 +138,12 @@ namespace SpendingConsequences
 			string key = ValueKeyName (val);
 			bool exists = GetCustomValue (val) != null;
 			
-			Connection.Open ();
+			try {
+				Connection.Open ();				
+			} catch (Exception ex) {
+				Console.WriteLine (string.Format ("{0} thrown when opening DB for StoreCustomValue: {1}", ex.GetType ().Name, ex.Message));
+				return;
+			}
 			
 			SqliteCommand cmd = Connection.CreateCommand ();
 			cmd.CommandText = exists ? updateTemplate : insertTemplate;

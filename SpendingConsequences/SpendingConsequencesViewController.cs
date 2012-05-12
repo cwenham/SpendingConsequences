@@ -13,6 +13,9 @@ namespace SpendingConsequences
 {
 	public partial class SpendingConsequencesViewController : UIViewController
 	{	
+		// Maximum dollar value that will fit in input field without being truncated
+		private const decimal MAX_AMOUNT = 99999999999999.99m;
+		
 		// The space we live in, used to restore after scrolling up to accomodate an on-screen keyboard
 		RectangleF _contentViewSize = RectangleF.Empty;
 		
@@ -69,7 +72,16 @@ namespace SpendingConsequences
 			this.SpendingMode.SetDividerImage (segSelUnsel, UIControlState.Selected, UIControlState.Normal, UIBarMetrics.Default);
 			this.SpendingMode.SetDividerImage (segUnselSel, UIControlState.Normal, UIControlState.Selected, UIBarMetrics.Default);
 			
-			UIImage resultBackground = UIImage.FromBundle(@"UIArt/result_panel.png");
+			UIImage mul2unsel = UIImage.FromBundle (@"UIArt/mul2_unsel.png");
+			UIImage div2unsel = UIImage.FromBundle (@"UIArt/div2_unsel.png");
+			
+			this.mul2.SetBackgroundImage (mul2unsel, UIControlState.Normal);
+			this.div2.SetBackgroundImage (div2unsel, UIControlState.Normal);
+			
+			this.mul2.TouchUpInside += HandleMul2handleTouchUpInside;
+			this.div2.TouchUpInside += HandleDiv2handleTouchUpInside;
+			
+			UIImage resultBackground = UIImage.FromBundle (@"UIArt/result_panel.png");
 			this.View.BackgroundColor = UIColor.FromPatternImage (resultBackground);
 			
 			
@@ -113,6 +125,67 @@ namespace SpendingConsequences
 					RefreshCalculators ();
 			};
 		}
+
+		void HandleDiv2handleTouchUpInside (object sender, EventArgs e)
+		{
+			decimal current = CurrentAmount;
+			if (current > 0.01m)
+				CurrentAmount = current / 2m;
+			else if (current == 0m)
+				CurrentAmount = 1.00m; // Default to a simple value so the user can enter small amounts quickly
+			else
+				return;
+			
+			TableSource.ComputeConsequences (new ConsequenceRequest (CurrentAmount, CurrentMode));
+			this.ConsequenceView.ReloadData ();
+		}
+
+		void HandleMul2handleTouchUpInside (object sender, EventArgs e)
+		{
+			decimal current = CurrentAmount;
+			if (current > 0m)
+			if (current < MAX_AMOUNT / 2)
+				CurrentAmount = current * 2m;
+			else
+				return;
+			else
+				CurrentAmount = 1.00m;
+			
+			TableSource.ComputeConsequences (new ConsequenceRequest (CurrentAmount, CurrentMode));
+			this.ConsequenceView.ReloadData ();			
+		}
+		
+		private decimal CurrentAmount {
+			get {
+				decimal amount;
+				if (decimal.TryParse (this.InitialAmount.Text, out amount))
+					return amount;
+				else 
+					return 0;
+			}
+			set {
+				this.InitialAmount.Text = string.Format("{0:0.00}", value);
+			}
+		}
+		
+		private TriggerType CurrentMode {
+			get {
+				switch (this.SpendingMode.SelectedSegment) {
+				case 0:
+					return TriggerType.OneTime;
+				case 1:
+					return TriggerType.PerDay;
+				case 2:
+					return TriggerType.PerWeek;
+				case 3:
+					return TriggerType.PerMonth;
+				case 4:
+					return TriggerType.PerYear;
+				default:
+					return TriggerType.OneTime;
+				}
+			}
+		}
 		
 		/// <summary>
 		/// Create the Input Accessory View for a decimal pad that contains a "Done" button
@@ -149,30 +222,8 @@ namespace SpendingConsequences
 		
 		private void RefreshCalculators ()
 		{
-			UITextField textField = this.InitialAmount;
-			
-			if (TableSource != null && !String.IsNullOrWhiteSpace (textField.Text)) {
-				TriggerType mode = TriggerType.OneTime;
-				switch (this.SpendingMode.SelectedSegment) {
-				case 0:
-					mode = TriggerType.OneTime;
-					break;
-				case 1:
-					mode = TriggerType.PerDay;
-					break;
-				case 2:
-					mode = TriggerType.PerWeek;
-					break;
-				case 3:
-					mode = TriggerType.PerMonth;
-					break;
-				case 4:
-					mode = TriggerType.PerYear;
-					break;
-				default:
-					break;
-				}
-				TableSource.ComputeConsequences (new ConsequenceRequest (decimal.Parse (textField.Text), mode));
+			if (TableSource != null && CurrentAmount > 0m) {
+				TableSource.ComputeConsequences (new ConsequenceRequest (CurrentAmount, CurrentMode));
 				this.ConsequenceView.ReloadData ();
 			}
 		}

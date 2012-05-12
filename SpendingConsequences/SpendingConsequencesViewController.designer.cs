@@ -22,6 +22,12 @@ namespace SpendingConsequences
 
 		[Outlet]
 		MonoTouch.UIKit.UIView panelView { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UIButton mul2 { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UIButton div2 { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -43,6 +49,16 @@ namespace SpendingConsequences
 			if (panelView != null) {
 				panelView.Dispose ();
 				panelView = null;
+			}
+
+			if (mul2 != null) {
+				mul2.Dispose ();
+				mul2 = null;
+			}
+
+			if (div2 != null) {
+				div2.Dispose ();
+				div2 = null;
 			}
 		}
 	}
