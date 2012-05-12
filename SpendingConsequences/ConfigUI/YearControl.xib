@@ -39,7 +39,7 @@
 					<object class="IBUILabel" id="150224770">
 						<reference key="NSNextResponder" ref="408093717"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{7, 1}, {313, 21}}</string>
+						<string key="NSFrame">{{7, 1}, {293, 21}}</string>
 						<reference key="NSSuperview" ref="408093717"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="673566488"/>
@@ -70,7 +70,7 @@
 					<object class="IBUIStepper" id="673566488">
 						<reference key="NSNextResponder" ref="408093717"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{85, 30}, {94, 27}}</string>
+						<string key="NSFrame">{{85, 29}, {94, 27}}</string>
 						<reference key="NSSuperview" ref="408093717"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1030655520"/>
@@ -85,7 +85,7 @@
 					<object class="IBUILabel" id="1052352162">
 						<reference key="NSNextResponder" ref="408093717"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{245, 33}, {55, 21}}</string>
+						<string key="NSFrame">{{237, 33}, {55, 21}}</string>
 						<reference key="NSSuperview" ref="408093717"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -112,7 +112,7 @@
 					<object class="IBUILabel" id="1030655520">
 						<reference key="NSNextResponder" ref="408093717"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{187, 33}, {50, 21}}</string>
+						<string key="NSFrame">{{184, 33}, {45, 21}}</string>
 						<reference key="NSSuperview" ref="408093717"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1052352162"/>
@@ -132,17 +132,10 @@
 						<reference key="IBUIFont" ref="119715154"/>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 58}</string>
+				<string key="NSFrameSize">{306, 58}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">3</int>
-					<bytes key="NSWhite">MQA</bytes>
-					<object class="NSColorSpace" key="NSCustomColorSpace">
-						<int key="NSID">2</int>
-					</object>
-				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 		</array>

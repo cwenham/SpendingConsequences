@@ -50,7 +50,7 @@ namespace SpendingConsequences
 			
 			ClearDynamicViews ();
 			
-			float offset = LastLabelYOffset + 10;
+			float offset = LastLabelYOffset + 5;
 
 			CurrentConfiggers = result.Calculator.ConfigurableValues.Values.Select (x => GetConfigurator (x)).ToArray ();
 			foreach (UIViewController configger in CurrentConfiggers.Where(x => x != null)) {
@@ -63,17 +63,16 @@ namespace SpendingConsequences
 				Commentary commentaryElement = result.Calculator.SupportElements ["Commentary"] as Commentary;
 				NSAttributedString commentaryFormatted = commentaryElement.ToAttributedString (UIFont.FromName ("Baskerville", 15.0f));
 				
-				//CoreTextView commentView = new CoreTextView (new RectangleF (5, offset, this.View.Frame.Width - 10, 100));
 				CoreTextView commentView = new CoreTextView ();
 				commentView.Tag = DYNAMIC_VIEW_TAG;
 				commentView.Text = commentaryFormatted;
-				SizeF suggestedSize = commentView.SuggestedFrameSize (new SizeF (this.View.Frame.Width - 10, 10000.0f));
-				commentView.Frame = new RectangleF (5, offset, this.View.Frame.Width - 10, suggestedSize.Height);
+				SizeF suggestedSize = commentView.SuggestedFrameSize (new SizeF (this.scrollView.Frame.Width - 12, 10000.0f));
+				commentView.Frame = new RectangleF (5, offset, this.scrollView.Frame.Width - 12, suggestedSize.Height);
 				offset += suggestedSize.Height + 5;
 				this.scrollView.AddSubview (commentView);
 			}
 			
-			this.scrollView.ContentSize = new SizeF (this.View.Frame.Width, offset);
+			this.scrollView.ContentSize = new SizeF (this.scrollView.Frame.Width, offset);
 			this.scrollView.BringSubviewToFront (this.resultSubview);
 		}
 		
@@ -137,7 +136,11 @@ namespace SpendingConsequences
 		{
 			base.ViewDidLoad ();
 			
-			this.resultSubview.BackgroundColor = this.resultSubview.BackgroundColor.ColorWithAlpha (0.8f);
+			UIImage detailBackground = UIImage.FromBundle (@"UIArt/detail_background.png");
+			this.View.BackgroundColor = UIColor.FromPatternImage (detailBackground);
+			
+			UIImage resultBackground = UIImage.FromBundle (@"UIArt/detail_result_panel.png");
+			this.resultSubview.BackgroundColor = UIColor.FromPatternImage (resultBackground);
 		
 			this.scrollView.Scrolled += delegate(object sender, EventArgs e) {
 				// Make the subview with the results stay fixed while content scrolls underneath it

@@ -38,7 +38,8 @@ namespace SpendingConsequences.Calculators
 				                              request, 
 				                              units, 
 				                              FormatCaption (this.Caption, new Dictionary<string,string> {
-						{"Cost", this.Cost.ToString ()}
+					{"Cost", this.Cost.ToString ()},
+					{"Units", units.ToString ()}
 					}),
 				                              this.ImageName);
 			else

@@ -39,7 +39,7 @@
 					<object class="IBUILabel" id="244314019">
 						<reference key="NSNextResponder" ref="917888232"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{7, 0}, {313, 21}}</string>
+						<string key="NSFrame">{{7, 0}, {293, 21}}</string>
 						<reference key="NSSuperview" ref="917888232"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -129,17 +129,10 @@
 						<reference key="IBUIFont" ref="27886229"/>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 60}</string>
+				<string key="NSFrameSize">{306, 60}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">3</int>
-					<bytes key="NSWhite">MQA</bytes>
-					<object class="NSColorSpace" key="NSCustomColorSpace">
-						<int key="NSID">2</int>
-					</object>
-				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 		</array>

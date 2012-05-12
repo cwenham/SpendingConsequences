@@ -11,6 +11,9 @@
 		<Image Name="money"/>
 		<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="5"/>
 		<Configurable Name="Years" Type="Year" Label="I plan to retire in" Value="30"/>
+		<Commentary>The average annual yield of your retirement portfolio may be more or less than our estimates. Use
+		the controls above to adjust the yield to match what your investment advisor has projected, as well as the 
+		number of years remaining before you expect to retire.</Commentary>
 	</Investment>
 	
 	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in Index Funds">
@@ -43,6 +46,7 @@
 		<Image Name="walle"/>
 		<Configurable Name="Cost" Type="Money" Label="Cost per year for trash removal" Value="479.28"/>
 		<!-- Monthly: 39.94. Source: http://www.sanramon.ca.gov/recycle/curbside.htm -->
+		<Commentary>Based on yearly curbside pickup rates as quoted by Waste Management Inc. for San Ramon, CA.</Commentary>
 	</YearsOfService>
 	
 	<UnitsPerYear TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53">
@@ -53,16 +57,22 @@
 	<UnitsPerDay TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3">
 		<Image Name="cappuccino"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="4.36" Source="HuMuch.com" SourceUrl="http://www.humuch.com/detailspage.php?item_id=102"/>
+		<Commentary>Based on the average price of a Grande Cappucino from a national coffee restaurant chain.</Commentary>
 	</UnitsPerDay>
 
 	<UnitsPerDay TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000">
 		<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
 		<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" SourceUrl="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
+		<Commentary>As many as [Units] children in third-world nations can be vaccinated against polio for this much
+		money. The good news is that it appears to be working, as India was declared entirely polio-free in 2012 by the
+		World Health Organization.</Commentary>
+		<!-- Source: http://www.cbsnews.com/8301-202_162-57385542/india-declared-polio-free-by-world-health-org/ -->
 	</UnitsPerDay>
 	
 	<UnitsPerWeek TriggersOn="Repeating" Caption="movie rentals per week" LowerResultLimit="1" UpperResultLimit="7">
 		<Image Name="movie" SourceUrl="http://www.officinadigitale.org/"/>
 		<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99"/>
+		<Commentary>Based on the price of a High-Defenition New Release rental on Apple's iTunes movie store.</Commentary>
 	</UnitsPerWeek>
 	
 	<UnitsPerWeek TriggersOn="Repeating" Caption="movie tickets per week" LowerResultLimit="2" UpperResultLimit="14">
