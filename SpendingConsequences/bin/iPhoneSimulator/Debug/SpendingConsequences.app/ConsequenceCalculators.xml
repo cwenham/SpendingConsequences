@@ -25,7 +25,6 @@
 			does worse than others, some years it does much better. When investing in such a fund you should be thinking
 			about the long term and be willing to ride-out dips in the market that can make it look as if you're losing
 			money.
-			<br/>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		</Commentary>
 	</Investment>
 	
@@ -64,9 +63,9 @@
 	<UnitsPerDay TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000">
 		<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
 		<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" SourceUrl="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
-		<Commentary>As many as [Units] children in third-world nations can be vaccinated against polio for this much
-		money. The good news is that it appears to be working, as India was declared entirely polio-free in 2012 by the
-		World Health Organization.</Commentary>
+		<Commentary>It costs surprisingly little to vaccinate a child against polio. The good news is that it appears to 
+			be working, as India was declared entirely polio-free in 2012 by the World Health Organization.
+		</Commentary>
 		<!-- Source: http://www.cbsnews.com/8301-202_162-57385542/india-declared-polio-free-by-world-health-org/ -->
 	</UnitsPerDay>
 	

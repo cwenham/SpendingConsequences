@@ -63,9 +63,9 @@
 	<UnitsPerDay TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000">
 		<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
 		<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" SourceUrl="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
-		<Commentary>As many as [Units] children in third-world nations can be vaccinated against polio for this much
-		money. The good news is that it appears to be working, as India was declared entirely polio-free in 2012 by the
-		World Health Organization.</Commentary>
+		<Commentary>It costs surprisingly little to vaccinate a child against polio. The good news is that it appears to 
+			be working, as India was declared entirely polio-free in 2012 by the World Health Organization.
+		</Commentary>
 		<!-- Source: http://www.cbsnews.com/8301-202_162-57385542/india-declared-polio-free-by-world-health-org/ -->
 	</UnitsPerDay>
 	
