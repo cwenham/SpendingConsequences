@@ -61,7 +61,7 @@ namespace SpendingConsequences
 			
 			if (result.Calculator.SupportElements != null && result.Calculator.SupportElements.ContainsKey ("Commentary")) {
 				Commentary commentaryElement = result.Calculator.SupportElements ["Commentary"] as Commentary;
-				NSAttributedString commentaryFormatted = commentaryElement.ToAttributedString (UIFont.FromName ("Baskerville", 15.0f));
+				NSAttributedString commentaryFormatted = commentaryElement.ToAttributedString (UIFont.FromName ("Baskerville", 17.0f));
 				
 				CoreTextView commentView = new CoreTextView ();
 				commentView.Tag = DYNAMIC_VIEW_TAG;

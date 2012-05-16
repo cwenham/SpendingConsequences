@@ -75,6 +75,11 @@ namespace SpendingConsequences.Calculators
 					return int.Parse (_value);
 				case ConfigurableValueType.Months:
 					return int.Parse (_value);
+				case ConfigurableValueType.PayoffMode:
+					PayoffMode mode;
+					if (!Enum.TryParse (_value, out mode))
+						mode = PayoffMode.PercentPlusInterest;
+					return mode;
 				case ConfigurableValueType.String:
 					return _value;
 				default:
@@ -82,9 +87,9 @@ namespace SpendingConsequences.Calculators
 				}
 			}
 			set {
-				_value = value.ToString();
+				_value = value.ToString ();
 				if (value != null)
-					UserSettings.StoreCustomValue (this, value.ToString());
+					UserSettings.StoreCustomValue (this, value.ToString ());
 			}
 		}
 		private string _value = null;
@@ -98,6 +103,7 @@ namespace SpendingConsequences.Calculators
 		Year,
 		Percentage,
 		Months,
+		PayoffMode,
 		String
 	}
 }

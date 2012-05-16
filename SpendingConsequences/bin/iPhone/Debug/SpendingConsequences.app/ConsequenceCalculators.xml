@@ -11,14 +11,42 @@
 		<Image Name="money"/>
 		<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="5"/>
 		<Configurable Name="Years" Type="Year" Label="I plan to retire in" Value="30"/>
+		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>
 		<Commentary>The average annual yield of your retirement portfolio may be more or less than our estimates. Use
 		the controls above to adjust the yield to match what your investment advisor has projected, as well as the 
 		number of years remaining before you expect to retire.</Commentary>
 	</Investment>
 	
+	<LoanPayoff TriggersOn="OneTime" Caption="to pay-off credit card in [Periods] months" LowerThreshold="10.00">
+		<Image Name="credit_card"/>
+		<Configurable Name="Rate" Type="Percentage" Label="APR for your card" Value="14.9"/>
+		<Configurable Name="PayoffMode" Type="PayoffMode" Label="Minimum payments calculated as" Value="PercentPlusInterest"/>
+		<Configurable Name="MinPayPercent" Type="Percentage" Label="Percent-After-Interest for minimum payments" Value="1.00"/>
+		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>
+		<Commentary>Our figures assume that you'll only make minimum payments each month, which can force you to pay
+		an enormous amount of interest over time thanks to <b>monthly compounding and low monthly payments:</b> even if 
+		the interest rate is only 14% per year, putting $100 on a credit card does not mean you'll only ever to pay $14 
+		in interest, in fact you may pay <i>much</i> more.
+		<br/>The first trick they use, <b>monthly compounding</b> means that they calculate your interest and add it to
+			your balance each month. That means that by the second month they're now charging you <i>interest on the
+			interest.</i> Before the CARD act of 2009, some banks even charged more interest than the minimum payment
+			could cover, creating an escalating debt problem called <i>Negative Amortization</i> that you can never
+			escape from.
+		<br/>The second trick is to make the minimum monthly payment as low as possible in order to <i>stretch out</i>
+			the time it takes you to pay-off the card, sometimes to many years or decades. The longer you carry a 
+			balance the more often they can use monthly compounding to charge you more interest.
+		<br/>So what's the best way to use credit cards? Many smart shoppers pay-off their credit card balance in full
+			each month, while it's still in the <b>grace period.</b> The grace period is when you can pay-off the balance
+			of the card <i>without being charged interest</i>, and lasts for about 20 days after you use the card.
+		<br/>Even if you can't pay the balance in full, every time you pay <i>more than the minimum balance</i> the extra
+			amount will chip away at the <b>principal</b> balance, meaning that it bites-off more of the balance that
+			they're using to calculate your interest the following month.
+		</Commentary>
+	</LoanPayoff>
+	
 	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in Index Funds">
 		<Image Name="stockmarket"/>
-		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="9.34"/>
+		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="9.3"/>
 		<Configurable Name="Years" Type="Year" Label="When invested for" Value="5"/>
 		<Commentary>The Compound Annual Growth Rate of the Standard &amp; Poor 500 Index since its inception in 1957 is 
 			about <b>9.34%</b>, however this is not what you'll typically expect in any given year; in some years the index 
@@ -51,7 +79,8 @@
 	
 	<UnitsPerYear TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53">
 		<Image Name="bestsoap"/>
-		<Configurable Name="Cost" Type="Money" Label="Per bar of luxury soap" Value="12.00" Source="The SoapCreek Company" SourceUrl="http://www.soapcreek.com/index.php/luxury-artisan-soap-1.html"/>
+		<Configurable Name="Cost" Type="Money" Label="Per bar of luxury soap" Value="20.00"/>
+		<Commentary>Soap: the yardstick of civilization.</Commentary>
 	</UnitsPerYear>
 	
 	<UnitsPerDay TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3">
@@ -90,6 +119,17 @@
 		<Configurable Name="Cost" Type="Money" Label="Ticket price" Value="2.25"/>
 	</UnitsPerWeek>
 	
+	<UnitsPerYear TriggersOn="Repeating" Caption="console games per year" LowerResultLimit="1" UpperResultLimit="12">
+		<Image Name="controller"/>
+		<Configurable Name="Cost" Type="Money" Label="Average price per game" Value="45.00" Source="CostHelper" SourceUrl="http://electronics.costhelper.com/xbox360.html"/>
+		<Commentary>Video games, although sometimes expensive, actually offer a very economical form of entertainment.
+		With some studies indicating that gamers spend an average of 13 hours a week playing their favorites, a game that
+		you play for 2 or 3 weeks can work out to only pennies per hour of enjoyment. Far cheaper than renting movies.
+		<br/>Beware, of course, the endless stream of accessories and upgrades, subscription fees for online gaming, and
+			the sudden evaporation of your social life.
+		</Commentary>
+	</UnitsPerYear>
+	
 	<UnitsPerYear TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12">
 		<Image Name="inkjet"/>
 		<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30"/>
@@ -112,7 +152,7 @@
 	</MonthsOfService>
 	
 	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30">
-		<Image Name="beach_umbrella"/>
+		<Image Name="beach_chair"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" Source="PlanHawaiiVacation.com" SourceUrl="http://www.planhawaiivacation.com/vacationcost/"/>
 		<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
 			$455 for food, $540 for activities and $450 to rent a car for the week.

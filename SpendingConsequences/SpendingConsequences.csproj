@@ -115,6 +115,7 @@
     <Compile Include="Calculators\ASupportElement.cs" />
     <Compile Include="CoreTextView.cs" />
     <Compile Include="UserCalculatorSettings.cs" />
+    <Compile Include="Calculators\LoanPayoff.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />

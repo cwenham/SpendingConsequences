@@ -212,6 +212,50 @@ namespace SpendingConsequences.Calculators
 		
 		#region Static helpers
 		
+		public static double PercentAsDouble (decimal percent)
+		{
+			return ((double)percent / 100);
+		}
+		
+		public static double PercentAsDouble (double percent)
+		{
+			return percent / 100;
+		}
+		
+		public static double InvestmentsPerYear (TriggerType trigger)
+		{
+			switch (trigger) {
+			case TriggerType.PerDay:
+				return 365.25;
+			case TriggerType.PerMonth:
+				return 12;
+			case TriggerType.PerQuarter:
+				return 4;
+			case TriggerType.PerWeek:
+				return 52;
+			case TriggerType.PerYear:
+				return 1;
+			default:
+				return 1;
+			}
+		}
+		
+		public static int CompoundingsPerYear (string Compounding) 
+		{
+				switch (Compounding) {
+				case "Monthly":
+					return 12;
+				case "Weekly":
+					return 52;
+				case "Annually":
+					return 1;
+				case "Quarterly":
+					return 4;
+				default:
+					return 12;
+				}
+		}
+		
 		private static Dictionary<string, Type> _calcTypes { get; set; }
 		
 		public static Type CalcType (XElement definition)
