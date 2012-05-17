@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+		<key>PreferenceSpecifiers</key>
+		<array>
+			<dict>
+				<key>Type</key>
+				<string>PSGroupSpecifier</string>
+				<key>Title</key>
+				<string>Personalizing Results</string>
+			</dict>
+			<dict>
+				<key>Type</key>
+				<string>PSToggleSwitchSpecifier</string>
+				<key>Title</key>
+				<string>Use current location</string>
+				<key>DefaultValue</key>
+				<false/>
+				<key>FalseValue</key>
+				<false/>
+				<key>Key</key>
+				<string>UseCurrentLocation</string>
+				<key>TrueValue</key>
+				<true/>
+			</dict>
+			<dict>
+				<key>Type</key>
+				<string>PSMultiValueSpecifier</string>
+				<key>DefaultValue</key>
+				<string>Unspecified</string>
+				<key>Key</key>
+				<string>Gender</string>
+				<key>Title</key>
+				<string>Your gender</string>
+				<key>Titles</key>
+				<array>
+					<string>Prefer not to say</string>
+					<string>Male</string>
+					<string>Female</string>
+				</array>
+				<key>Values</key>
+				<array>
+					<string>Unspecified</string>
+					<string>Male</string>
+					<string>Female</string>
+				</array>
+			</dict>
+		</array>
+</dict>
+</plist>

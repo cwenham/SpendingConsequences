@@ -73,6 +73,23 @@ namespace SpendingConsequences.Calculators
 		}
 		private TriggerType[] _TriggersOn = null;
 		
+		public Gender ForGender {
+			get {
+				if (!_genderWasSet) {
+					if (Definition.Attribute ("ForGender") != null)
+						Enum.TryParse (Definition.Attribute ("ForGender").Value, true, out _forGender);
+					else
+						_forGender = Gender.Unspecified;
+					
+					_genderWasSet = true;
+				}			
+				
+				return _forGender;
+			}
+		}
+		private Gender _forGender = Gender.Unspecified;
+		private bool _genderWasSet = false;
+		
 		public bool WillTriggerOn (TriggerType mode)
 		{
 			// We need to force the AOT compiler to include the Contains() method in the pre-compiled binary to avoid 
@@ -303,6 +320,13 @@ namespace SpendingConsequences.Calculators
 		PerMonth,
 		PerQuarter,
 		PerYear
+	}
+	
+	public enum Gender
+	{
+		Unspecified,
+		Male,
+		Female
 	}
 }
 

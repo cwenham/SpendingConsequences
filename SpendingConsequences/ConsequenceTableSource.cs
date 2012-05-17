@@ -24,12 +24,18 @@ namespace SpendingConsequences
 		{
 			this.ParentController = parent;
 			this.Calculators = calculators;
+			
+			if (NSUserDefaults.StandardUserDefaults ["Gender"] != null)
+				Enum.TryParse (NSUserDefaults.StandardUserDefaults ["Gender"].ToString (), true, out UserGender);
 		}
+		
+		private Gender UserGender = Gender.Unspecified;
 		
 		public void ComputeConsequences (ConsequenceRequest request)
 		{	
 			this.CurrentResults = (from c in this.Calculators
 			        where c.WillTriggerOn (request.TriggerMode)
+			        && (c.ForGender == Gender.Unspecified || c.ForGender == UserGender)
 			        && c.LowerThreshold <= request.InitialAmount
 			        && c.UpperThreshold >= request.InitialAmount
 				    let result = c.Calculate (request)

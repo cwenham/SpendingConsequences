@@ -139,12 +139,12 @@
 		<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30"/>
 	</UnitsPerYear>
 	
-	<UnitsPerYear TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" UserGender="Female">
+	<UnitsPerYear TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" ForGender="Female">
 		<Image Name="hair_woman"/>
 		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a woman" Value="56" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 	</UnitsPerYear>
 	
-	<UnitsPerYear TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" UserGender="Male">
+	<UnitsPerYear TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" ForGender="Male">
 		<Image Name="hair_man"/>
 		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 	</UnitsPerYear>
