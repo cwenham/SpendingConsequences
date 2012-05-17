@@ -51,6 +51,7 @@ namespace SpendingConsequences
 			base.DidReceiveMemoryWarning ();
 			
 			// Release any cached data, images, etc that aren't in use.
+			ConfigurableValue.CloseResources ();
 		}
 		
 		public override void ViewDidLoad ()
@@ -296,6 +297,7 @@ namespace SpendingConsequences
 			//
 			// e.g. myOutlet.Dispose (); myOutlet = null;
 			
+			ConfigurableValue.CloseResources ();
 			ReleaseDesignerOutlets ();
 		}
 		

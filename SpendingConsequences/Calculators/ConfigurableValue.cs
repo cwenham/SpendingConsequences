@@ -56,6 +56,12 @@ namespace SpendingConsequences.Calculators
 		
 		private static UserCalculatorSettings UserSettings = new UserCalculatorSettings();
 		
+		public static void CloseResources ()
+		{
+			if (UserSettings != null)
+				UserSettings.CloseConnection ();
+		}
+		
 		public object Value {
 			get {
 				if (_value == null) {

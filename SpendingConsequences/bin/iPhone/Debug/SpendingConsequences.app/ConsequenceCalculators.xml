@@ -23,10 +23,14 @@
 		<Configurable Name="PayoffMode" Type="PayoffMode" Label="Minimum payments calculated as" Value="PercentPlusInterest"/>
 		<Configurable Name="MinPayPercent" Type="Percentage" Label="Percent-After-Interest for minimum payments" Value="1.00"/>
 		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>
-		<Commentary>Our figures assume that you'll only make minimum payments each month, which can force you to pay
-		an enormous amount of interest over time thanks to <b>monthly compounding and low monthly payments:</b> even if 
-		the interest rate is only 14% per year, putting $100 on a credit card does not mean you'll only ever to pay $14 
-		in interest, in fact you may pay <i>much</i> more.
+		<Commentary>The total payoff includes the principal plus the interest. This calculator assumes that you'll
+			only make minimum payments, defined as the interest plus a percentage of the balance.
+			Try increasing the <b>Percent-After-Interest</b> to see how much you'd save if you paid more each month.
+			<br/>
+			<br/>Making only minimum payments can force you to pay
+			an enormous amount of interest over time thanks to <b>monthly compounding and low monthly payments:</b> even if 
+			the interest rate is only 14% per year, putting $100 on a credit card does not mean you'll only ever to pay $14 
+			in interest, in fact you may pay <i>much</i> more.
 		<br/>The first trick they use, <b>monthly compounding</b> means that they calculate your interest and add it to
 			your balance each month. That means that by the second month they're now charging you <i>interest on the
 			interest.</i> Before the CARD act of 2009, some banks even charged more interest than the minimum payment

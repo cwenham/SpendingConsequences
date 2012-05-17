@@ -80,6 +80,37 @@ namespace SpendingConsequences
 		}
 		private SqliteConnection _connection = null;
 		
+		private bool OpenConnection ()
+		{
+			if (Connection.State != ConnectionState.Open) {
+				try {
+					Connection.Open ();					
+				} catch (Exception ex) {
+					Console.WriteLine (string.Format (
+						"{0} thrown when opening DB: {1}",
+						ex.GetType ().Name,
+						ex.Message
+					)
+					);
+					return false;
+				}
+
+				Connection.StateChange += delegate(object sender, StateChangeEventArgs e) {
+					_preparedInsert = null;
+					_preparedUpdate = null;
+					_preparedQuery = null;
+				};
+			}
+			
+			return true;
+		}
+		
+		public void CloseConnection ()
+		{
+			if (Connection.State == ConnectionState.Open)
+				Connection.Close ();
+		}
+		
 		private string ValueKeyName (ConfigurableValue val)
 		{
 			// Use .ID if it exist, else compute a unique path
@@ -101,16 +132,13 @@ namespace SpendingConsequences
 			
 			string key = ValueKeyName (val);
 			
-			try {
-				Connection.Open ();				
-			} catch (Exception ex) {
-				Console.WriteLine (string.Format ("{0} thrown when opening DB for GetCustomValue: {1}", ex.GetType ().Name, ex.Message));
+			if (Connection.State != ConnectionState.Open)
+			if (!OpenConnection ())
 				return null;
-			}
 
-			SqliteCommand cmd = Connection.CreateCommand ();
-			cmd.CommandText = queryTemplate;
-			cmd.CommandType = CommandType.Text;
+			SqliteCommand cmd = PreparedQuery;
+			cmd.Parameters.Clear ();
+			
 			SqliteParameter param = new SqliteParameter ("@key");
 			param.Value = key;
 			cmd.Parameters.Add (param);
@@ -121,12 +149,37 @@ namespace SpendingConsequences
 					return (string)result;
 			} catch (Exception ex) {
 				Console.WriteLine (string.Format ("{0} thrown when reading DB: {1}", ex.GetType ().Name, ex.Message));
-			} finally {
-				Connection.Close ();
 			}
 			
 			return null;
 		}
+		
+		private SqliteCommand PreparedQuery {
+			get {
+				if (_preparedQuery == null) {
+					if (Connection.State != ConnectionState.Open)
+						try {
+							Connection.Open ();
+						} catch (Exception ex) {
+							Console.WriteLine (string.Format (
+								"{0} thrown when opening DB for PreparedUpdate: {1}",
+								ex.GetType ().Name,
+								ex.Message
+							)
+							);
+							return null;
+						}
+					
+					_preparedQuery = Connection.CreateCommand ();
+					_preparedQuery.CommandType = CommandType.Text;
+					_preparedQuery.CommandText = queryTemplate;
+					_preparedQuery.Prepare ();
+				}
+				
+				return _preparedQuery;
+			}
+		}
+		private SqliteCommand _preparedQuery = null;
 		
 		private const string queryTemplate = "SELECT [value] FROM ConfigurableValues WHERE valueID = @key LIMIT 1";
 		
@@ -138,16 +191,12 @@ namespace SpendingConsequences
 			string key = ValueKeyName (val);
 			bool exists = GetCustomValue (val) != null;
 			
-			try {
-				Connection.Open ();				
-			} catch (Exception ex) {
-				Console.WriteLine (string.Format ("{0} thrown when opening DB for StoreCustomValue: {1}", ex.GetType ().Name, ex.Message));
-				return;
-			}
+			if (Connection.State != ConnectionState.Open)
+				if (!OpenConnection ())
+					return;
 			
-			SqliteCommand cmd = Connection.CreateCommand ();
-			cmd.CommandText = exists ? updateTemplate : insertTemplate;
-			cmd.CommandType = CommandType.Text;
+			SqliteCommand cmd = exists ? PreparedUpdate : PreparedInsert;
+			cmd.Parameters.Clear ();
 			
 			SqliteParameter pValueID = new SqliteParameter ("@valueID");
 			pValueID.Value = key;
@@ -163,12 +212,64 @@ namespace SpendingConsequences
 				cmd.ExecuteNonQuery ();				
 			} catch (Exception ex) {
 				Console.WriteLine (string.Format ("{0} thrown when writing to DB: {1}", ex.GetType ().Name, ex.Message));
-			} finally {
-				Connection.Close ();
 			}
 		}
 		
+		private SqliteCommand PreparedInsert {
+			get {
+				if (_preparedInsert == null) {
+					if (Connection.State != ConnectionState.Open)
+						try {
+							Connection.Open ();
+						} catch (Exception ex) {
+							Console.WriteLine (string.Format (
+								"{0} thrown when opening DB for PreparedInsert: {1}",
+								ex.GetType ().Name,
+								ex.Message
+							)
+							);
+							return null;
+						}
+					
+					_preparedInsert = Connection.CreateCommand ();
+					_preparedInsert.CommandType = CommandType.Text;
+					_preparedInsert.CommandText = insertTemplate;
+					_preparedInsert.Prepare ();
+				}
+
+				return _preparedInsert;
+			}
+		}
+		private SqliteCommand _preparedInsert = null;
+		
 		private const string insertTemplate = "INSERT INTO ConfigurableValues (valueID, added, value) VALUES (@valueID, @added, @value)";
+		
+		private SqliteCommand PreparedUpdate {
+			get {
+				if (_preparedUpdate == null) {
+					if (Connection.State != ConnectionState.Open)
+						try {
+							Connection.Open ();
+						} catch (Exception ex) {
+							Console.WriteLine (string.Format (
+								"{0} thrown when opening DB for PreparedUpdate: {1}",
+								ex.GetType ().Name,
+								ex.Message
+							)
+							);
+							return null;
+						}
+					
+					_preparedUpdate = Connection.CreateCommand ();
+					_preparedUpdate.CommandType = CommandType.Text;
+					_preparedUpdate.CommandText = updateTemplate;
+					_preparedUpdate.Prepare ();
+				}
+				
+				return _preparedUpdate;
+			}
+		}
+		private SqliteCommand _preparedUpdate = null;
 		
 		private const string updateTemplate = "UPDATE ConfigurableValues SET updated = @updated, value = @value WHERE valueID = @valueID";
 	}
