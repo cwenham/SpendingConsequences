@@ -119,6 +119,7 @@
     <Compile Include="CoreTextView.cs" />
     <Compile Include="UserCalculatorSettings.cs" />
     <Compile Include="Calculators\LoanPayoff.cs" />
+    <Compile Include="Calculators\UnitsForPrice.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
@@ -197,6 +198,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
     </Content>
+    <Content Include="Artwork\aircraftcarrier.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

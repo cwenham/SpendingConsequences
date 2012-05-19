@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -58,33 +59,10 @@ namespace SpendingConsequences
 		{
 			base.ViewDidLoad ();
 			
-			UIImage backgroundImage = UIImage.FromBundle (@"UIArt/input_panel.png");
-			this.panelView.BackgroundColor = UIColor.FromPatternImage (backgroundImage);
-			
-			UIImage segSelected = UIImage.FromBundle (@"UIArt/mode_sel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
-			UIImage segUnselected = UIImage.FromBundle (@"UIArt/mode_unsel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
-			UIImage segSelUnsel = UIImage.FromBundle (@"UIArt/mode_sel_unsel.png");
-			UIImage segUnselSel = UIImage.FromBundle (@"UIArt/mode_unsel_sel.png");
-			UIImage segUnselUnsel = UIImage.FromBundle (@"UIArt/mode_unsel_unsel.png");
-			
-			this.SpendingMode.SetBackgroundImage (segUnselected, UIControlState.Normal, UIBarMetrics.Default);
-			this.SpendingMode.SetBackgroundImage (segSelected, UIControlState.Selected, UIBarMetrics.Default);
-			this.SpendingMode.SetDividerImage (segUnselUnsel, UIControlState.Normal, UIControlState.Normal, UIBarMetrics.Default);
-			this.SpendingMode.SetDividerImage (segSelUnsel, UIControlState.Selected, UIControlState.Normal, UIBarMetrics.Default);
-			this.SpendingMode.SetDividerImage (segUnselSel, UIControlState.Normal, UIControlState.Selected, UIBarMetrics.Default);
-			
-			UIImage mul2unsel = UIImage.FromBundle (@"UIArt/mul2_unsel.png");
-			UIImage div2unsel = UIImage.FromBundle (@"UIArt/div2_unsel.png");
-			
-			this.mul2.SetBackgroundImage (mul2unsel, UIControlState.Normal);
-			this.div2.SetBackgroundImage (div2unsel, UIControlState.Normal);
+			SetUICosmetics ();
 			
 			this.mul2.TouchUpInside += HandleMul2handleTouchUpInside;
 			this.div2.TouchUpInside += HandleDiv2handleTouchUpInside;
-			
-			UIImage resultBackground = UIImage.FromBundle (@"UIArt/result_panel.png");
-			this.View.BackgroundColor = UIColor.FromPatternImage (resultBackground);
-			
 			
 			// Add handlers to move the view whenever the keyboard appears or disappears
 			NSNotificationCenter.DefaultCenter.AddObserver (UIKeyboard.WillShowNotification, delegate(NSNotification n) {
@@ -125,6 +103,45 @@ namespace SpendingConsequences
 				if (!IsEditingAmount)
 					RefreshCalculators ();
 			};
+		}
+		
+		/// <summary>
+		/// Fits views and controls with custom backgrounds and bitmaps
+		/// </summary>
+		private void SetUICosmetics ()
+		{
+			UIImage backgroundImage = UIImage.FromBundle (@"UIArt/input_panel.png");
+			this.panelView.BackgroundColor = UIColor.FromPatternImage (backgroundImage);
+			
+			UIImage segSelected = UIImage.FromBundle (@"UIArt/mode_sel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
+			UIImage segUnselected = UIImage.FromBundle (@"UIArt/mode_unsel.png").CreateResizableImage (new UIEdgeInsets (0,	9, 0, 9));
+			UIImage segSelUnsel = UIImage.FromBundle (@"UIArt/mode_sel_unsel.png");
+			UIImage segUnselSel = UIImage.FromBundle (@"UIArt/mode_unsel_sel.png");
+			UIImage segUnselUnsel = UIImage.FromBundle (@"UIArt/mode_unsel_unsel.png");
+			
+			this.SpendingMode.SetBackgroundImage (segUnselected, UIControlState.Normal, UIBarMetrics.Default);
+			this.SpendingMode.SetBackgroundImage (segSelected, UIControlState.Selected, UIBarMetrics.Default);
+			this.SpendingMode.SetDividerImage (segUnselUnsel, UIControlState.Normal, UIControlState.Normal,	UIBarMetrics.Default);
+			this.SpendingMode.SetDividerImage (segSelUnsel,
+				UIControlState.Selected,
+				UIControlState.Normal,
+				UIBarMetrics.Default
+			);
+			this.SpendingMode.SetDividerImage (
+				segUnselSel,
+				UIControlState.Normal,
+				UIControlState.Selected,
+				UIBarMetrics.Default
+			);
+			
+			UIImage mul2unsel = UIImage.FromBundle (@"UIArt/mul2_unsel.png");
+			UIImage div2unsel = UIImage.FromBundle (@"UIArt/div2_unsel.png");
+			
+			this.mul2.SetBackgroundImage (mul2unsel, UIControlState.Normal);
+			this.div2.SetBackgroundImage (div2unsel, UIControlState.Normal);
+			
+			UIImage resultBackground = UIImage.FromBundle (@"UIArt/result_panel.png");
+			this.View.BackgroundColor = UIColor.FromPatternImage (resultBackground);
 		}
 
 		void HandleDiv2handleTouchUpInside (object sender, EventArgs e)

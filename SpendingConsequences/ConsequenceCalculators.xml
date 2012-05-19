@@ -175,6 +175,14 @@
 		<Commentary>Based on the average price of the top-20 highest customer rated espresso machines on Amazon.com</Commentary>
 	</TimeUntil>
 	
+	<UnitsForPrice TriggersOn="OneTime" Caption="Nimitz-class Aircraft Carriers" LowerResultLimit="1" UpperResultLimit="10" LowerThreshold="4500000000.00">
+		<Image Name="aircraftcarrier"/>
+		<Configurable Name="Cost" Type="Money" Label="Price per carrier" Value="4500000000.00" Source="Wikipedia" SourceUrl="http://en.wikipedia.org/wiki/Nimitz_class_aircraft_carrier"/>
+		<Commentary>The largest capital ships in the world are Nimitz-class supercarriers. As President of the United
+		States, you would expect to have 5-10 of these warships in service at any given time.</Commentary>
+		<!-- Note: re-visit for best number of ships in service -->
+	</UnitsForPrice>
+	
 	<Sources>
 		<Image Name="newspaper" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
 		<Image Name="fryingpan" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
@@ -210,5 +218,6 @@
 		<Image Name="nysubway" Source="ncrow" SourceUrl="http://ncrow.deviantart.com/"/>
 		<Image Name="plane" Source="Sallee Design" SourceUrl="http://www.salleedesign.com/"/>
 		<Image Name="popcorn" Source="Svengraph" SourceUrl="http://svengraph.deviantart.com/"/>
+		<Image Name="aircraftcarrier" Source="8icon" SourceUrl="http://www.8icon.com/"/> <!-- Note: 8icon probably isn't author. Revisit this for license rights before publishing -->
 	</Sources> 
 </Calculators>
