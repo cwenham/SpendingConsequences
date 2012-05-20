@@ -199,6 +199,11 @@
       <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
     </Content>
     <Content Include="Artwork\aircraftcarrier.png" />
+    <Content Include="Artwork\apple.png" />
+    <Content Include="Artwork\ambunance.png" />
+    <Content Include="Artwork\cfl.png" />
+    <Content Include="Artwork\wifirouter.png" />
+    <Content Include="Artwork\bank.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

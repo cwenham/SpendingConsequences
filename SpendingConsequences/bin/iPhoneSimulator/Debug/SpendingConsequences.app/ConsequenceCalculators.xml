@@ -60,6 +60,12 @@
 		</Commentary>
 	</Investment>
 	
+	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in a savings account">
+		<Image Name="bank"/>
+		<Configurable Name="Rate" Type="Percentage" Label="Savings APR" Value="0.8"/>
+		<Configurable Name="Years" Type="Year" Label="When saved for" Value="5"/>
+	</Investment>
+	
 <!--	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years at [Rate]% compounded [Compounding]">
 		<Image Name="stockmarket"/>
 		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="5"/>
@@ -183,6 +189,11 @@
 		<!-- Note: re-visit for best number of ships in service -->
 	</UnitsForPrice>
 	
+	<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6">
+		<Image Name="ambulance"/>
+		<Configurable Name="Cost" Type="Money" Label="Price per service call" Value="600"/>
+	</UnitsForPrice>
+	
 	<Sources>
 		<Image Name="newspaper" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
 		<Image Name="fryingpan" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
@@ -218,6 +229,11 @@
 		<Image Name="nysubway" Source="ncrow" SourceUrl="http://ncrow.deviantart.com/"/>
 		<Image Name="plane" Source="Sallee Design" SourceUrl="http://www.salleedesign.com/"/>
 		<Image Name="popcorn" Source="Svengraph" SourceUrl="http://svengraph.deviantart.com/"/>
-		<Image Name="aircraftcarrier" Source="8icon" SourceUrl="http://www.8icon.com/"/> <!-- Note: 8icon probably isn't author. Revisit this for license rights before publishing -->
+		<Image Name="apple" Source="Fi3uR" SourceUrl="http://fi3ur.deviantart.com/"/>
+		<Image Name="ambulance" Source="DevCom" SourceUrl="http://www.devcom.com/"/>
+		<Image Name="cfl" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
+		<Image Name="wifirouter" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
+		<Image Name="bank" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
+		<Image Name="aircraftcarrier" Source="8icon" SourceUrl="http://www.8icon.com/"/> <!-- Note: 8icon isn't author. Discovered real author, this art is not licensed for commercial use. Must replace -->
 	</Sources> 
 </Calculators>
