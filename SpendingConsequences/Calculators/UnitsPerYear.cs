@@ -37,7 +37,7 @@ namespace SpendingConsequences.Calculators
 			if (units >= LowerResultLimit && units <= UpperResultLimit)
 				return new ConsequenceResult (this, 
 				                              request, 
-				                              units, 
+				                              new Units(units), 
 				                              FormatCaption (this.Caption, new Dictionary<string,string> {
 						{"Cost", this.Cost.ToString ()}
 					}),
@@ -45,12 +45,7 @@ namespace SpendingConsequences.Calculators
 			else
 				return null;
 		}
-		
-		public override string ResultFormat {
-			get {
-				return "{0:0.0}";
-			}
-		}
+
 		#endregion
 	}
 }

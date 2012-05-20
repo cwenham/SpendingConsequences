@@ -36,42 +36,15 @@ namespace SpendingConsequences.Calculators
 			
 			TimeSpan timeUntil = new TimeSpan (((int)Math.Ceiling (givenUnitsUntil * ConsequenceRequest.DayCounts [request.TriggerMode])), 0, 0, 0);
 			
-			if (timeUntil.TotalDays >= (double)LowerResultLimit && timeUntil.TotalDays <= (double)UpperResultLimit) {
-				string unit = null;
-				double val = 0;
-				
-				// Return a value that's easier for a human to judge quickly. Ie: "48 months" doesn't always translate
-				// to "4 years" quickly and meaningfully when browsing a list of many results.
-				if (timeUntil.TotalDays < 7) {
-					unit = "days";
-					val = timeUntil.TotalDays;
-				} else if (timeUntil.TotalDays <= 49) {
-					unit = "weeks";
-					val = timeUntil.TotalDays / 7;
-				} else if (timeUntil.TotalDays <= 540) {
-					unit = "months";
-					val = timeUntil.TotalDays / 30;
-				} else {
-					unit = "years";
-					val = timeUntil.TotalDays / 365.25;
-				}
-				
+			if (timeUntil.TotalDays >= (double)LowerResultLimit && timeUntil.TotalDays <= (double)UpperResultLimit) 				
 				return new ConsequenceResult (this, 
 				                              request,
-				                              (decimal)val, 
+				                              new Time(timeUntil), 
 				                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
-					{"Unit", unit},
 					{"Cost", this.Cost.ToString ()}
 				}), this.ImageName);
-			}
 			
 			return null;
-		}
-		
-		public override string ResultFormat {
-			get {
-				return "{0:0.0}";
-			}
 		}
 		#endregion
 	}

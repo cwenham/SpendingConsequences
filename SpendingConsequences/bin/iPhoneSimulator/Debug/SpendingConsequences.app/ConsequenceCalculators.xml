@@ -74,12 +74,12 @@
 		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Annually"/>	
 	</Investment>-->
 	
-	<YearsOfService TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00">
+	<TimeOfService Unit="Year" TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00">
 		<Image Name="walle"/>
 		<Configurable Name="Cost" Type="Money" Label="Cost per year for trash removal" Value="479.28"/>
 		<!-- Monthly: 39.94. Source: http://www.sanramon.ca.gov/recycle/curbside.htm -->
 		<Commentary>Based on yearly curbside pickup rates as quoted by Waste Management Inc. for San Ramon, CA.</Commentary>
-	</YearsOfService>
+	</TimeOfService>
 	
 	<UnitsPerYear TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53">
 		<Image Name="bestsoap"/>
@@ -149,13 +149,13 @@
 		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 	</UnitsPerYear>
 	
-	<MonthsOfService TriggersOn="OneTime" Caption="months of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24">
+	<TimeOfService Unit="Month" TriggersOn="OneTime" Caption="months of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24">
 		<Image Name="newspaper"/>
 		<!-- Estimate comes from New York Times rate for daily delivery -->
 		<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>
-	</MonthsOfService>
+	</TimeOfService>
 	
-	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30">
+	<TimeUntil TriggersOn="Repeating" Caption="to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30">
 		<Image Name="beach_chair"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" Source="PlanHawaiiVacation.com" SourceUrl="http://www.planhawaiivacation.com/vacationcost/"/>
 		<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
@@ -163,13 +163,13 @@
 		</Commentary>
 	</TimeUntil>
 	
-	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000">
+	<TimeUntil TriggersOn="Repeating" Caption="to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000">
 		<Image Name="treadmill"/>
 		<Configurable Name="Cost" Type="Money" Label="Average price" Value="1314.11" Source="Amazon.com" SourceUrl="http://www.amazon.com/mn/search/?_encoding=UTF8&amp;keywords=treadmills&amp;tag=synesmedia-20&amp;linkCode=ur2&amp;qid=1335895621&amp;camp=1789&amp;creative=390957&amp;rh=k%3Atreadmills%2Ci%3Asporting#/ref=sr_st?keywords=treadmills"/>
 		<Commentary>Based on the average price of the top-20 highest customer rated motorized treadmills on Amazon.com.</Commentary>
 	</TimeUntil>
 	
-	<TimeUntil TriggersOn="Repeating" Caption="[Unit] to save for an Espresso machine" LowerResultLimit="1" UpperResultLimit="1000">
+	<TimeUntil TriggersOn="Repeating" Caption="to save for an Espresso machine" LowerResultLimit="1" UpperResultLimit="1000">
 		<Image Name="espressomachine"/>
 		<Configurable Name="Cost" Type="Money" Label="Average price" Value="334.72" Source="Amazon.com" SourceUrl="http://amzn.to/IJIUe5"/>
 		<Commentary>Based on the average price of the top-20 highest customer rated espresso machines on Amazon.com</Commentary>

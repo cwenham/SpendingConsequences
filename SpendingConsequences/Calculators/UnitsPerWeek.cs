@@ -54,19 +54,13 @@ namespace SpendingConsequences.Calculators
 			if (perWeek / Cost >= LowerResultLimit && perWeek / Cost <= UpperResultLimit)
 				return new ConsequenceResult (this, 
 				                              request,
-				                              perWeek / Cost, 
+				                              new Units(perWeek / Cost), 
 				                              FormatCaption (this.Caption, new Dictionary<string,string> {
 						{"Cost", this.Cost.ToString ()}
 					}),
 				                              this.ImageName);
 			else
 				return null;
-		}
-		
-		public override string ResultFormat {
-			get {
-				return "{0:0}";
-			}
 		}
 		#endregion
 	}

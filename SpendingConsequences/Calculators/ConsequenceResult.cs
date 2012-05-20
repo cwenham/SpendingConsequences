@@ -1,4 +1,7 @@
 using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SpendingConsequences.Calculators
 {
@@ -6,7 +9,7 @@ namespace SpendingConsequences.Calculators
 	{
 		public ConsequenceResult (ACalculator calculator,
 		                          ConsequenceRequest request,
-		                          decimal computedValue, 
+		                          object computedValue, 
 		                          string formattedCaption,
 		                          string imageName)
 		{
@@ -21,7 +24,7 @@ namespace SpendingConsequences.Calculators
 		
 		public ConsequenceRequest Request { get; private set; }
 		
-		public decimal ComputedValue {
+		public object ComputedValue {
 			get;
 			private set;
 		}

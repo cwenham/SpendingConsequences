@@ -96,7 +96,7 @@ namespace SpendingConsequences
 			
 			if (image != null)
 				cell.ImageView.Image = image;
-			cell.TextLabel.Text = String.Format (result.Calculator.ResultFormat, result.ComputedValue);
+			cell.TextLabel.Text = result.ComputedValue.ToString();
 			cell.DetailTextLabel.Text = result.FormattedCaption;
 			cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
 			

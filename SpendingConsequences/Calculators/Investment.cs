@@ -129,7 +129,7 @@ namespace SpendingConsequences.Calculators
 			if (result >= this.LowerResultLimit && result <= this.UpperResultLimit)
 				return new ConsequenceResult (this, 
 				                              request,
-				                              (decimal)result,
+				                              new Money(result),
 				                              FormatMyCaption (),
 				                              this.ImageName);
 			else

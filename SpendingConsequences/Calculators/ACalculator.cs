@@ -219,12 +219,6 @@ namespace SpendingConsequences.Calculators
 			return formatted;
 		}
 		
-		public virtual string ResultFormat {
-			get {
-				return "{0:C}";
-			}
-		}
-		
 		public abstract ConsequenceResult Calculate (ConsequenceRequest request);
 		
 		#region Static helpers

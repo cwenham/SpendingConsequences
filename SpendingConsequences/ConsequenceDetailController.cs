@@ -80,7 +80,7 @@ namespace SpendingConsequences
 		{
 			CurrentResult = result;
 			
-			this.calculatedAmount.Text = String.Format (result.Calculator.ResultFormat, result.ComputedValue);
+			this.calculatedAmount.Text = result.ComputedValue.ToString();
 			this.caption.Text = result.FormattedCaption;
 		}
 		

@@ -98,7 +98,7 @@ namespace SpendingConsequences.Calculators
 			
 			return new ConsequenceResult (this,
 			                             request,
-			                             accruedInterest + request.InitialAmount,
+			                             new Money(accruedInterest + request.InitialAmount),
 			                             FormatCaption (this.Caption, new Dictionary<string,string> {
 				{"Periods", periods.ToString()},
 				{"Interest", accruedInterest.ToString ()}
