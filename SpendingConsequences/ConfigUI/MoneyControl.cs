@@ -29,6 +29,8 @@ namespace SpendingConsequences
 		{
 			base.ViewDidLoad ();
 			
+			this.currencyLabel.Text = Money.LocalCurrencySymbol ();
+			
 			this.configuredValue.KeyboardType = UIKeyboardType.DecimalPad;
 			this.configuredValue.InputAccessoryView = SpendingConsequencesViewController.CreateDecimalPadAccessoryView ((sender, e) => {
 				this.configuredValue.ResignFirstResponder ();

@@ -32,6 +32,19 @@ namespace SpendingConsequences.Calculators
 			formatter.Locale = NSLocale.CurrentLocale;
 			return formatter.StringFromNumber (new NSNumber((double)(this.Value)));
 		}
+		
+		#region Static helper methods
+		/// <summary>
+		/// Returns the currency symbol for the Current Locale
+		/// </summary>
+		public static string LocalCurrencySymbol ()
+		{
+			NSNumberFormatter formatter = new NSNumberFormatter ();
+			formatter.NumberStyle = NSNumberFormatterStyle.Currency;
+			formatter.Locale = NSLocale.CurrentLocale;
+			return formatter.CurrencySymbol;
+		}
+		#endregion
 	}
 }
 
