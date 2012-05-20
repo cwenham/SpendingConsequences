@@ -74,7 +74,7 @@
 		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Annually"/>	
 	</Investment>-->
 	
-	<TimeOfService Unit="Year" TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00">
+	<TimeOfService UnitForCost="Year" TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00">
 		<Image Name="walle"/>
 		<Configurable Name="Cost" Type="Money" Label="Cost per year for trash removal" Value="479.28"/>
 		<!-- Monthly: 39.94. Source: http://www.sanramon.ca.gov/recycle/curbside.htm -->
@@ -149,7 +149,7 @@
 		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 	</UnitsPerYear>
 	
-	<TimeOfService Unit="Month" TriggersOn="OneTime" Caption="months of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24">
+	<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24">
 		<Image Name="newspaper"/>
 		<!-- Estimate comes from New York Times rate for daily delivery -->
 		<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>

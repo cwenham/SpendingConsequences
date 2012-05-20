@@ -20,21 +20,21 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		
-		public TimeUnit Unit {
+		public TimeUnit UnitForCost {
 			get {
 				if (!_unitWasSet) {
-					if (Definition.Attribute ("Unit") != null)
-						Enum.TryParse (Definition.Attribute ("Unit").Value, true, out _unit);
+					if (Definition.Attribute ("UnitForCost") != null)
+						Enum.TryParse (Definition.Attribute ("UnitForCost").Value, true, out _unitForCost);
 					else
-						_unit = TimeUnit.Day;
+						_unitForCost = TimeUnit.Day;
 					
 					_unitWasSet = true;
 				}			
 				
-				return _unit;
+				return _unitForCost;
 			}
 		}
-		private TimeUnit _unit = TimeUnit.Day;
+		private TimeUnit _unitForCost = TimeUnit.Day;
 		private bool _unitWasSet = false;
 		
 		public static Dictionary<TimeUnit, double> DaysPerUnit = new Dictionary<TimeUnit, double> {
@@ -63,14 +63,14 @@ namespace SpendingConsequences.Calculators
 				return null;
 			
 			double serviceUnits = (double)(request.InitialAmount / this.Cost);
-			double serviceDays = DaysPerUnit[Unit] * serviceUnits;
+			double serviceDays = DaysPerUnit[UnitForCost] * serviceUnits;
 			
 			if (serviceDays <= MaxDays && serviceUnits >= (double)LowerResultLimit && serviceUnits <= (double)UpperResultLimit)
 				return new ConsequenceResult (this, 
 				                              request, 
 				                              new Time(new TimeSpan((int)(Math.Floor(serviceDays)), 0, 0, 0)),
 				                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
-					{"Unit", this.Unit.ToString ()},
+					{"Unit", this.UnitForCost.ToString ()},
 					{"Cost", this.Cost.ToString ()}
 				}),
 				                              this.ImageName);
