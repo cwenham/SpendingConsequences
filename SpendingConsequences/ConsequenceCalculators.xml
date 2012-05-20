@@ -81,49 +81,49 @@
 		<Commentary>Based on yearly curbside pickup rates as quoted by Waste Management Inc. for San Ramon, CA.</Commentary>
 	</TimeOfService>
 	
-	<UnitsPerYear TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53">
+	<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53">
 		<Image Name="bestsoap"/>
 		<Configurable Name="Cost" Type="Money" Label="Per bar of luxury soap" Value="20.00"/>
 		<Commentary>Soap: the yardstick of civilization.</Commentary>
-	</UnitsPerYear>
+	</UnitsPerPeriod>
 	
-	<UnitsPerDay TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3">
+	<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3">
 		<Image Name="cappuccino"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="4.36" Source="HuMuch.com" SourceUrl="http://www.humuch.com/detailspage.php?item_id=102"/>
 		<Commentary>Based on the average price of a Grande Cappucino from a national coffee restaurant chain.</Commentary>
-	</UnitsPerDay>
+	</UnitsPerPeriod>
 
-	<UnitsPerDay TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000">
+	<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000">
 		<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
 		<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" SourceUrl="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
 		<Commentary>It costs surprisingly little to vaccinate a child against polio. The good news is that it appears to 
 			be working, as India was declared entirely polio-free in 2012 by the World Health Organization.
 		</Commentary>
 		<!-- Source: http://www.cbsnews.com/8301-202_162-57385542/india-declared-polio-free-by-world-health-org/ -->
-	</UnitsPerDay>
+	</UnitsPerPeriod>
 	
-	<UnitsPerWeek TriggersOn="Repeating" Caption="movie rentals per week" LowerResultLimit="1" UpperResultLimit="7">
+	<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie rentals per week" LowerResultLimit="1" UpperResultLimit="7">
 		<Image Name="movie" SourceUrl="http://www.officinadigitale.org/"/>
 		<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99"/>
 		<Commentary>Based on the price of a High-Defenition New Release rental on Apple's iTunes movie store.</Commentary>
-	</UnitsPerWeek>
+	</UnitsPerPeriod>
 	
-	<UnitsPerWeek TriggersOn="Repeating" Caption="movie tickets per week" LowerResultLimit="2" UpperResultLimit="14">
+	<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie tickets per week" LowerResultLimit="2" UpperResultLimit="14">
 		<Image Name="popcorn"/>
 		<Configurable Name="Cost" Type="Money" Label="Cost per ticket" Value="8.15" Source="Time.com" SourceUrl="http://moneyland.time.com/2012/01/05/the-cure-for-the-ailing-movie-business-is-to-raise-ticket-prices/"/>
-	</UnitsPerWeek>
+	</UnitsPerPeriod>
 	
-	<UnitsPerWeek TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14">
+	<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14">
 		<Image Name="hamburger"/>
 		<Configurable Name="Cost" Type="Money" Label="Average meal price" Value="10.16" Source="QSR Magazine" SourceUrl="http://www.qsrmagazine.com/news/study-says-fast-food-remains-popular"/>
-	</UnitsPerWeek>
+	</UnitsPerPeriod>
 	
-	<UnitsPerWeek TriggersOn="Repeating" Caption="subway rides per week" LowerResultLimit="1" UpperResultLimit="14">
+	<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="subway rides per week" LowerResultLimit="1" UpperResultLimit="14">
 		<Image Name="nysubway"/>
 		<Configurable Name="Cost" Type="Money" Label="Ticket price" Value="2.25"/>
-	</UnitsPerWeek>
+	</UnitsPerPeriod>
 	
-	<UnitsPerYear TriggersOn="Repeating" Caption="console games per year" LowerResultLimit="1" UpperResultLimit="12">
+	<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="console games per year" LowerResultLimit="1" UpperResultLimit="12">
 		<Image Name="controller"/>
 		<Configurable Name="Cost" Type="Money" Label="Average price per game" Value="45.00" Source="CostHelper" SourceUrl="http://electronics.costhelper.com/xbox360.html"/>
 		<Commentary>Video games, although sometimes expensive, actually offer a very economical form of entertainment.
@@ -132,22 +132,22 @@
 		<br/>Beware, of course, the endless stream of accessories and upgrades, subscription fees for online gaming, and
 			the sudden evaporation of your social life.
 		</Commentary>
-	</UnitsPerYear>
+	</UnitsPerPeriod>
 	
-	<UnitsPerYear TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12">
+	<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12">
 		<Image Name="inkjet"/>
 		<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30"/>
-	</UnitsPerYear>
+	</UnitsPerPeriod>
 	
-	<UnitsPerYear TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" ForGender="Female">
+	<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" ForGender="Female">
 		<Image Name="hair_woman"/>
 		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a woman" Value="56" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
-	</UnitsPerYear>
+	</UnitsPerPeriod>
 	
-	<UnitsPerYear TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" ForGender="Male">
+	<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" ForGender="Male">
 		<Image Name="hair_man"/>
 		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
-	</UnitsPerYear>
+	</UnitsPerPeriod>
 	
 	<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24">
 		<Image Name="newspaper"/>

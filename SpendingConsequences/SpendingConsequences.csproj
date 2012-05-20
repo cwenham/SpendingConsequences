@@ -86,7 +86,6 @@
     <Compile Include="Calculators\ConsequenceRequest.cs" />
     <Compile Include="Calculators\ConsequenceResult.cs" />
     <Compile Include="Calculators\Investment.cs" />
-    <Compile Include="Calculators\UnitsPerDay.cs" />
     <Compile Include="ConsequenceTableSource.cs" />
     <Compile Include="ConsequenceDetailController.cs" />
     <Compile Include="ConsequenceDetailController.designer.cs">
@@ -108,9 +107,7 @@
     <Compile Include="ConfigUI\YearControl.designer.cs">
       <DependentUpon>YearControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Calculators\UnitsPerWeek.cs" />
     <Compile Include="Calculators\TimeUntil.cs" />
-    <Compile Include="Calculators\UnitsPerYear.cs" />
     <Compile Include="ConfigUI\IConfigControl.cs" />
     <Compile Include="Calculators\Commentary.cs" />
     <Compile Include="Calculators\ASupportElement.cs" />
@@ -122,6 +119,7 @@
     <Compile Include="Calculators\Time.cs" />
     <Compile Include="Calculators\Units.cs" />
     <Compile Include="Calculators\TimeOfService.cs" />
+    <Compile Include="Calculators\UnitsPerPeriod.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
