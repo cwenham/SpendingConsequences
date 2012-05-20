@@ -54,7 +54,7 @@ namespace SpendingConsequences.Calculators
 			
 			double perDay = ((double)request.InitialAmount) / ConsequenceRequest.DayCounts [request.TriggerMode];
 			double unitsPerDay = perDay / (double)Cost;
-			double unitsPerPeriod = unitsPerDay * TimeOfService.DaysPerUnit[Period];
+			double unitsPerPeriod = unitsPerDay * ConsequenceRequest.DaysPerUnit[Period];
 			
 			if (unitsPerPeriod >= (double)LowerResultLimit && unitsPerPeriod <= (double)UpperResultLimit)
 				return new ConsequenceResult (this, 

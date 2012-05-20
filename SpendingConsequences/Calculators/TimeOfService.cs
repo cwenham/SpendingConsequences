@@ -37,20 +37,6 @@ namespace SpendingConsequences.Calculators
 		private TimeUnit _unitForCost = TimeUnit.Day;
 		private bool _unitWasSet = false;
 		
-		public static Dictionary<TimeUnit, double> DaysPerUnit = new Dictionary<TimeUnit, double> {
-			{TimeUnit.Millisecond, 0.0000000116},
-			{TimeUnit.Second, 0.0000115741},
-			{TimeUnit.Minute, 0.0006944444},
-			{TimeUnit.Hour, 0.0416666667},
-			{TimeUnit.Day, 1},
-			{TimeUnit.Week, 7},
-			{TimeUnit.Month, 30.4375},
-			{TimeUnit.Quarter, 4.0583333333},
-			{TimeUnit.Year, 365.25},
-			{TimeUnit.Century, 36525},
-			{TimeUnit.Millenium, 365250}
-		};
-		
 		private static double MaxDays = TimeSpan.MaxValue.TotalDays;
 		
 		#region implemented abstract members of SpendingConsequences.Calculators.ACalculator
@@ -63,7 +49,7 @@ namespace SpendingConsequences.Calculators
 				return null;
 			
 			double serviceUnits = (double)(request.InitialAmount / this.Cost);
-			double serviceDays = DaysPerUnit[UnitForCost] * serviceUnits;
+			double serviceDays = ConsequenceRequest.DaysPerUnit[UnitForCost] * serviceUnits;
 			
 			if (serviceDays <= MaxDays && serviceUnits >= (double)LowerResultLimit && serviceUnits <= (double)UpperResultLimit)
 				return new ConsequenceResult (this, 
@@ -78,20 +64,5 @@ namespace SpendingConsequences.Calculators
 				return null;			
 		}
 		#endregion
-	}
-	
-	public enum TimeUnit {
-		Millisecond,
-		Second,
-		Minute,
-		Hour,
-		Day,
-		Week,
-		Month,
-		Quarter,
-		Year,
-		Decade,
-		Century,
-		Millenium
 	}
 }

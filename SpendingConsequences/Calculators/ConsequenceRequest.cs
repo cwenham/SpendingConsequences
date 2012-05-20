@@ -54,6 +54,35 @@ namespace SpendingConsequences.Calculators
 			{TriggerType.PerQuarter, "Quarterly"},
 			{TriggerType.PerYear, "Yearly"}
 		};
+		
+		public static Dictionary<TimeUnit, double> DaysPerUnit = new Dictionary<TimeUnit, double> {
+			{TimeUnit.Millisecond, 0.0000000116},
+			{TimeUnit.Second, 0.0000115741},
+			{TimeUnit.Minute, 0.0006944444},
+			{TimeUnit.Hour, 0.0416666667},
+			{TimeUnit.Day, 1},
+			{TimeUnit.Week, 7},
+			{TimeUnit.Month, 30.4375},
+			{TimeUnit.Quarter, 4.0583333333},
+			{TimeUnit.Year, 365.25},
+			{TimeUnit.Century, 36525},
+			{TimeUnit.Millenium, 365250}
+		};
+	}
+	
+	public enum TimeUnit {
+		Millisecond,
+		Second,
+		Minute,
+		Hour,
+		Day,
+		Week,
+		Month,
+		Quarter,
+		Year,
+		Decade,
+		Century,
+		Millenium
 	}
 }
 
