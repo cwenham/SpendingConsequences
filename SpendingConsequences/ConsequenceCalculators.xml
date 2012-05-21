@@ -20,8 +20,15 @@
 	<Investment TriggersOn="OneTime,Repeating" Caption="under the mattress for [Years] years">
 		<Image Name="bed"/>
 		<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="0"/>
-		<Configurable Name="Years" Type="Year" Label="I plan to raid this after" Value="2"/>
+		<Configurable Name="Years" Type="Year" Label="I plan to raid this after" Value="3"/>
 		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>		
+		<Commentary>The phrase "stuffing money under the mattress" might have come from the Depression era, when banks were failing and the FDIC (Federal
+		Deposit Insurance Corporation) didn't exist yet.
+		<br/>According to the Federal Reserve about one in every 12 families, or 8.7 percent of the US population, do not have a bank account. The majority of
+		those are immigrants with low incomes who may be inhibited by a language barrier, or because they distrust traditional financial institutions.
+		<br/>Another reason for going without a bank account, especially for low-income workers, are the fees: monthly service fees and overdraft fees are more
+		common when you can't keep much money in your account at any time. Plus, the number of banks offering free checking accounts has dwindled rapidly since
+		2008.</Commentary>
 	</Investment>
 	
 	<LoanPayoff TriggersOn="OneTime" Caption="to pay-off credit card in [Periods] months" LowerThreshold="10.00">
@@ -92,20 +99,6 @@
 		because	most of your maintenance expenses will be covered by the warrantee. 
 		<br/>Indeed, some studies have suggested that the most <i>economical</i> choice is to buy a new car and drive it until it falls apart.</Commentary>
 	</SpendingPower>
-	
-<!--	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years at [Rate]% compounded [Compounding]">
-		<Image Name="stockmarket"/>
-		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="5"/>
-		<Configurable Name="Years" Type="Year" Label="When invested for" Value="3"/>	
-		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>
-	</Investment>
-	
-	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years at [Rate]% compounded [Compounding]">
-		<Image Name="stockmarket"/>
-		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="5"/>
-		<Configurable Name="Years" Type="Year" Label="When invested for" Value="3"/>	
-		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Annually"/>	
-	</Investment>-->
 	
 	<TimeOfService UnitForCost="Year" TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00">
 		<Image Name="walle"/>
@@ -208,7 +201,16 @@
 		<Commentary>Based on the average price of the top-20 highest customer rated espresso machines on Amazon.com</Commentary>
 	</TimeUntil>
 	
-	<UnitsForPrice TriggersOn="OneTime" Caption="Nimitz-class Aircraft Carriers" LowerResultLimit="1" UpperResultLimit="10" LowerThreshold="4500000000.00">
+	<TimeUntil TriggersOn="Repeating" Caption="to save for a Home Theater system" LowerResultLimit="1" UpperResultLimit="1000">
+		<Image Name="home_theater"/>
+		<Configurable Name="Cost" Type="Money" Label="Average price" Value="5000.00"/>
+		<Commentary>Our $5,000 estimate would cover a 42-inch flat-screen TV, a surround-sound system with five speakers, Blu-Ray DVD player
+		and a basic infrared remote. We didn't include some of the more expensive options such as professional installation, sound-proofing your room and 
+		installing theater seats, which can add another $30,000 or more to the budget.
+		<br/>If that high-end experience is what you're looking for then just tap on the <b>Average price</b> above and enter what your contractor has quoted you.</Commentary>
+	</TimeUntil>
+	
+	<UnitsForPrice TriggersOn="OneTime" Caption="Nimitz-class Aircraft Carriers" LowerResultLimit="1" UpperResultLimit="10" LowerThreshold="4500000000.00" Country="US">
 		<Image Name="aircraftcarrier"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per carrier" Value="4500000000.00" Source="Wikipedia" SourceUrl="http://en.wikipedia.org/wiki/Nimitz_class_aircraft_carrier"/>
 		<Commentary>The largest capital ships in the world are Nimitz-class supercarriers. As President of the United
@@ -216,9 +218,13 @@
 		<!-- Note: re-visit for best number of ships in service -->
 	</UnitsForPrice>
 	
-	<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6">
+	<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6" Country="US">
 		<Image Name="ambulance"/>
-		<Configurable Name="Cost" Type="Money" Label="Price per service call" Value="600"/>
+		<Configurable Name="Cost" Type="Money" Label="Price per service call" Value="750"/>
+		<Commentary>Ambulance transport varies widely in the United States, with most billings coming between $500 and $1,000, but you may be lucky enough to live
+		in an area where ambulance service is provided free by the city or county.
+		<br/>The most expensive emergency ride you can get, however, is an <b>Airlift</b>, or hellicopter ambulance, which can add more than $2,000 to your
+		hospital bill. An airlift is called for by paramedics for certain types of injury, especially head injuries that could have caused damage to the brain.</Commentary>
 	</UnitsForPrice>
 	
 	<Sources>

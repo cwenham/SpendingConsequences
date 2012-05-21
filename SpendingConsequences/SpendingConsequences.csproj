@@ -201,11 +201,19 @@
     </Content>
     <Content Include="Artwork\aircraftcarrier.png" />
     <Content Include="Artwork\apple.png" />
-    <Content Include="Artwork\ambunance.png" />
     <Content Include="Artwork\cfl.png" />
     <Content Include="Artwork\wifirouter.png" />
     <Content Include="Artwork\bank.png" />
     <Content Include="Artwork\bed.png" />
+    <Content Include="Artwork\couch.png" />
+    <Content Include="Artwork\dishwasher.png" />
+    <Content Include="Artwork\drying_machine.png" />
+    <Content Include="Artwork\freezer.png" />
+    <Content Include="Artwork\home_theater.png" />
+    <Content Include="Artwork\microwave.png" />
+    <Content Include="Artwork\refrigerator.png" />
+    <Content Include="Artwork\washing_machine.png" />
+    <Content Include="Artwork\ambulance.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

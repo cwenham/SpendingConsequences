@@ -73,7 +73,7 @@
 		<Configurable Name="Years" Type="Year" Label="When saved for" Value="5"/>
 	</Investment>
 	
-	<SpendingPower TriggersOn="Repeating" Caption="for a new car in [Installments] payments" LowerResultLimit="10000" UpperResultLimit="100000">
+	<SpendingPower TriggersOn="Repeating" Caption="for a new car in [Installments] monthly payments" LowerResultLimit="10000" UpperResultLimit="100000">
 		<Image Name="carkey"/>
 		<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="4.5"/>
 		<Configurable Name="Installments" Type="Months" Label="Total payments" Value="60"/>		
@@ -81,7 +81,7 @@
 		you'll qualify anyway, and shows how much you could borrow for the given payment amount.</Commentary>
 	</SpendingPower>
 	
-	<SpendingPower TriggersOn="Repeating" Caption="for a used car in [Installments] payments" LowerResultLimit="1000" UpperResultLimit="9999">
+	<SpendingPower TriggersOn="Repeating" Caption="for a used car in [Installments] monthly payments" LowerResultLimit="1000" UpperResultLimit="9999">
 		<Image Name="carkey"/> <!-- Note: We want to look for a reasonable "used car" icon, if possible -->
 		<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="5.2"/>
 		<Configurable Name="Installments" Type="Months" Label="Total payments" Value="36"/>
@@ -92,20 +92,6 @@
 		because	most of your maintenance expenses will be covered by the warrantee. 
 		<br/>Indeed, some studies have suggested that the most <i>economical</i> choice is to buy a new car and drive it until it falls apart.</Commentary>
 	</SpendingPower>
-	
-<!--	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years at [Rate]% compounded [Compounding]">
-		<Image Name="stockmarket"/>
-		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="5"/>
-		<Configurable Name="Years" Type="Year" Label="When invested for" Value="3"/>	
-		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>
-	</Investment>
-	
-	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years at [Rate]% compounded [Compounding]">
-		<Image Name="stockmarket"/>
-		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="5"/>
-		<Configurable Name="Years" Type="Year" Label="When invested for" Value="3"/>	
-		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Annually"/>	
-	</Investment>-->
 	
 	<TimeOfService UnitForCost="Year" TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00">
 		<Image Name="walle"/>
@@ -208,7 +194,16 @@
 		<Commentary>Based on the average price of the top-20 highest customer rated espresso machines on Amazon.com</Commentary>
 	</TimeUntil>
 	
-	<UnitsForPrice TriggersOn="OneTime" Caption="Nimitz-class Aircraft Carriers" LowerResultLimit="1" UpperResultLimit="10" LowerThreshold="4500000000.00">
+	<TimeUntil TriggersOn="Repeating" Caption="to save for a Home Theater system" LowerResultLimit="1" UpperResultLimit="1000">
+		<Image Name="home_theater"/>
+		<Configurable Name="Cost" Type="Money" Label="Average price" Value="5000.00"/>
+		<Commentary>Our $5,000 estimate would cover a 42-inch flat-screen TV, a surround-sound system with five speakers, Blu-Ray DVD player
+		and a basic infrared remote. We didn't include some of the more expensive options such as professional installation, sound-proofing your room and 
+		installing theater seats, which can add another $30,000 or more to the budget.
+		<br/>If that high-end experience is what you're looking for then just tap on the <b>Average price</b> above and enter what your contractor has quoted you.</Commentary>
+	</TimeUntil>
+	
+	<UnitsForPrice TriggersOn="OneTime" Caption="Nimitz-class Aircraft Carriers" LowerResultLimit="1" UpperResultLimit="10" LowerThreshold="4500000000.00" Country="US">
 		<Image Name="aircraftcarrier"/>
 		<Configurable Name="Cost" Type="Money" Label="Price per carrier" Value="4500000000.00" Source="Wikipedia" SourceUrl="http://en.wikipedia.org/wiki/Nimitz_class_aircraft_carrier"/>
 		<Commentary>The largest capital ships in the world are Nimitz-class supercarriers. As President of the United
@@ -216,9 +211,13 @@
 		<!-- Note: re-visit for best number of ships in service -->
 	</UnitsForPrice>
 	
-	<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6">
+	<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6" Country="US">
 		<Image Name="ambulance"/>
-		<Configurable Name="Cost" Type="Money" Label="Price per service call" Value="600"/>
+		<Configurable Name="Cost" Type="Money" Label="Price per service call" Value="750"/>
+		<Commentary>Ambulance transport varies widely in the United States, with most billings coming between $500 and $1,000, but you may be lucky enough to live
+		in an area where ambulance service is provided free by the city or county.
+		<br/>The most expensive emergency ride you can get, however, is an <b>Airlift</b>, or hellicopter ambulance, which can add more than $2,000 to your
+		hospital bill. An airlift is called for by paramedics for certain types of injury, especially head injuries that could have caused damage to the brain.</Commentary>
 	</UnitsForPrice>
 	
 	<Sources>

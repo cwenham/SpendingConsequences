@@ -73,6 +73,9 @@ namespace SpendingConsequences.Calculators
 		}
 		private TriggerType[] _TriggersOn = null;
 		
+		/// <summary>
+		/// Return the gender the consequence definition is limited to
+		/// </summary>
 		public Gender ForGender {
 			get {
 				if (!_genderWasSet) {
@@ -89,6 +92,18 @@ namespace SpendingConsequences.Calculators
 		}
 		private Gender _forGender = Gender.Unspecified;
 		private bool _genderWasSet = false;
+		
+		/// <summary>
+		/// Return a country-code if the consequence definition is regionally limited
+		/// </summary>
+		public string Country {
+			get {
+				if (Definition.Attribute ("Country") != null)
+					return Definition.Attribute ("Country").Value;
+				else
+					return null;
+			}
+		}
 		
 		public bool WillTriggerOn (TriggerType mode)
 		{

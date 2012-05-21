@@ -36,6 +36,7 @@ namespace SpendingConsequences
 			this.CurrentResults = (from c in this.Calculators
 			        where c.WillTriggerOn (request.TriggerMode)
 			        && (c.ForGender == Gender.Unspecified || c.ForGender == UserGender)
+			        && (c.Country == null || c.Country == NSLocale.CurrentLocale.CountryCode)
 			        && c.LowerThreshold <= request.InitialAmount
 			        && c.UpperThreshold >= request.InitialAmount
 				    let result = c.Calculate (request)
