@@ -31,17 +31,15 @@ namespace SpendingConsequences.Calculators
 			
 			decimal units = request.InitialAmount / Cost;
 			
-			if (units >= LowerResultLimit && units <= UpperResultLimit)
-				return new ConsequenceResult (this,
-				                             request,
-				                             new Units(units),
-				                             FormatCaption (Caption, new Dictionary<string,string> {
-					{"Cost", Cost.ToString()}
-				}
-				), this.ImageName
-				);
-			else
-				return null;
+			return new ConsequenceResult (this,
+			                             request,
+			                             new Units (units),
+			                             FormatCaption (Caption, new Dictionary<string,string> {
+				{"Cost", Cost.ToString()}
+			}
+			), this.ImageName,
+			   (units >= LowerResultLimit && units <= UpperResultLimit)
+			);
 		}
 		#endregion
 	}

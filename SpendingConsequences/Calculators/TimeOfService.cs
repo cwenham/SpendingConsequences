@@ -49,19 +49,19 @@ namespace SpendingConsequences.Calculators
 				return null;
 			
 			double serviceUnits = (double)(request.InitialAmount / this.Cost);
-			double serviceDays = ConsequenceRequest.DaysPerUnit[UnitForCost] * serviceUnits;
+			double serviceDays = ConsequenceRequest.DaysPerUnit [UnitForCost] * serviceUnits;
 			
-			if (serviceDays <= MaxDays && serviceUnits >= (double)LowerResultLimit && serviceUnits <= (double)UpperResultLimit)
-				return new ConsequenceResult (this, 
-				                              request, 
-				                              new Time(new TimeSpan((int)(Math.Floor(serviceDays)), 0, 0, 0)),
-				                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
-					{"Unit", this.UnitForCost.ToString ()},
-					{"Cost", this.Cost.ToString ()}
-				}),
-				                              this.ImageName);
-			else
-				return null;			
+			return new ConsequenceResult (this, 
+			                              request, 
+			                              new Time (new TimeSpan ((int)(Math.Floor (serviceDays)), 0, 0, 0)),
+			                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
+				{"Unit", this.UnitForCost.ToString ()},
+				{"Cost", this.Cost.ToString ()}
+			}
+			),
+			                              this.ImageName,
+			                              (serviceDays <= MaxDays && serviceUnits >= (double)LowerResultLimit && serviceUnits <= (double)UpperResultLimit));
+		
 		}
 		#endregion
 	}

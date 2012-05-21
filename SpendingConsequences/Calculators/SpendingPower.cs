@@ -68,18 +68,16 @@ namespace SpendingConsequences.Calculators
 			else
 				maxLoanAmount = totalPayment;
 			
-			if (maxLoanAmount >= LowerResultLimit && maxLoanAmount <= UpperResultLimit)
-				return new ConsequenceResult (this,
-			                             request,
-			                             new Money (maxLoanAmount),
-			                             FormatCaption (this.Caption, new Dictionary<string,string> {
-				{"Installments", Installments.ToString ()},
-				{"TotalPayment", totalPayment.ToString ()},
-				{"TotalInterest", (totalPayment - maxLoanAmount).ToString()}
-			}
-				), this.ImageName);
-			else
-				return null;
+			return new ConsequenceResult (this,
+		                             request,
+		                             new Money (maxLoanAmount),
+		                             FormatCaption (this.Caption, new Dictionary<string,string> {
+			{"Installments", Installments.ToString ()},
+			{"TotalPayment", totalPayment.ToString ()},
+			{"TotalInterest", (totalPayment - maxLoanAmount).ToString()}
+		}
+			), this.ImageName,
+			   (maxLoanAmount >= LowerResultLimit && maxLoanAmount <= UpperResultLimit));
 		}
 		#endregion
 	}

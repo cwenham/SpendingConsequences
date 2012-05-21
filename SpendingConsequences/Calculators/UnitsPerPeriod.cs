@@ -54,18 +54,16 @@ namespace SpendingConsequences.Calculators
 			
 			double perDay = ((double)request.InitialAmount) / ConsequenceRequest.DayCounts [request.TriggerMode];
 			double unitsPerDay = perDay / (double)Cost;
-			double unitsPerPeriod = unitsPerDay * ConsequenceRequest.DaysPerUnit[Period];
+			double unitsPerPeriod = unitsPerDay * ConsequenceRequest.DaysPerUnit [Period];
 			
-			if (unitsPerPeriod >= (double)LowerResultLimit && unitsPerPeriod <= (double)UpperResultLimit)
-				return new ConsequenceResult (this, 
-				                              request, 
-				                              new Units (unitsPerPeriod), 
-				                              FormatCaption (this.Caption, new Dictionary<string,string> {
-					{"Cost", this.Cost.ToString ()}
-				}
-				),this.ImageName);
-			else
-				return null;
+			return new ConsequenceResult (this, 
+			                              request, 
+			                              new Units (unitsPerPeriod), 
+			                              FormatCaption (this.Caption, new Dictionary<string,string> {
+				{"Cost", this.Cost.ToString ()}
+			}
+			), this.ImageName,
+			  (unitsPerPeriod >= (double)LowerResultLimit && unitsPerPeriod <= (double)UpperResultLimit));
 		}
 		#endregion
 	}

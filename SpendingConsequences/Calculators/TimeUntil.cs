@@ -35,16 +35,15 @@ namespace SpendingConsequences.Calculators
 			double givenUnitsUntil = (double)Cost / ((double)request.InitialAmount);
 			
 			TimeSpan timeUntil = new TimeSpan (((int)Math.Ceiling (givenUnitsUntil * ConsequenceRequest.DayCounts [request.TriggerMode])), 0, 0, 0);
-			
-			if (timeUntil.TotalDays >= (double)LowerResultLimit && timeUntil.TotalDays <= (double)UpperResultLimit) 				
-				return new ConsequenceResult (this, 
-				                              request,
-				                              new Time(timeUntil), 
-				                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
-					{"Cost", this.Cost.ToString ()}
-				}), this.ImageName);
-			
-			return null;
+							
+			return new ConsequenceResult (this, 
+			                              request,
+			                              new Time (timeUntil), 
+			                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
+				{"Cost", this.Cost.ToString ()}
+			}
+			), this.ImageName,
+			   (timeUntil.TotalDays >= (double)LowerResultLimit && timeUntil.TotalDays <= (double)UpperResultLimit));
 		}
 		#endregion
 	}

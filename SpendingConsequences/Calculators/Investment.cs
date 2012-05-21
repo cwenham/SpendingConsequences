@@ -67,7 +67,7 @@ namespace SpendingConsequences.Calculators
 			if (request.InitialAmount == 0m)
 				return null;
 			
-			int annualCompoundings = CompoundingsPerYear(Compounding);
+			int annualCompoundings = CompoundingsPerYear (Compounding);
 			
 			double compoundingPeriods = Years * annualCompoundings;
 			double ratePerPeriod = PercentAsDouble (Rate) / annualCompoundings;
@@ -126,14 +126,12 @@ namespace SpendingConsequences.Calculators
 				return null;
 			}
 			
-			if (result >= this.LowerResultLimit && result <= this.UpperResultLimit)
-				return new ConsequenceResult (this, 
-				                              request,
-				                              new Money(result),
-				                              FormatMyCaption (),
-				                              this.ImageName);
-			else
-				return null;
+			return new ConsequenceResult (this, 
+			                              request,
+			                              new Money (result),
+			                              FormatMyCaption (),
+			                              this.ImageName,
+			                              (result >= this.LowerResultLimit && result <= this.UpperResultLimit));
 		}
 		#endregion
 	}

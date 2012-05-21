@@ -11,13 +11,15 @@ namespace SpendingConsequences.Calculators
 		                          ConsequenceRequest request,
 		                          object computedValue, 
 		                          string formattedCaption,
-		                          string imageName)
+		                          string imageName,
+		                          bool recommended)
 		{
 			this.Calculator = calculator;
 			this.Request = request;
 			this.ComputedValue = computedValue;
 			this.FormattedCaption = formattedCaption;
 			this.ImageName = imageName;
+			this.Recommended = recommended;
 		}
 		
 		public ACalculator Calculator { get; private set; }
@@ -32,6 +34,14 @@ namespace SpendingConsequences.Calculators
 		public String FormattedCaption { get; private set; }
 		
 		public string ImageName { get; private set; }
+		
+		/// <summary>
+		/// True if the result is worth including in the result set, false if it should be excluded
+		/// </summary>
+		/// <remarks>A problem was noticed when the user changes the configurable values of a consequence module until the result falls outside of a
+		/// threshold. Therefore, rather than returning null, all calculators will do the best they can and set this property to False if they think the
+		/// result is unworthwhile for display in the result set.</remarks>
+		public bool Recommended { get; private set; }
 	}
 }
 

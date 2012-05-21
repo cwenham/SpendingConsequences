@@ -41,6 +41,7 @@ namespace SpendingConsequences
 			        && c.UpperThreshold >= request.InitialAmount
 				    let result = c.Calculate (request)
 					where result != null
+			        && result.Recommended
 					select result).ToArray ();
 		}
 		

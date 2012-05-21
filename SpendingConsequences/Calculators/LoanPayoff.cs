@@ -96,14 +96,17 @@ namespace SpendingConsequences.Calculators
 				remaining -= minPayment;
 			}
 			
+			decimal payoff = accruedInterest + request.InitialAmount;
+			
 			return new ConsequenceResult (this,
 			                             request,
-			                             new Money(accruedInterest + request.InitialAmount),
+			                             new Money(payoff),
 			                             FormatCaption (this.Caption, new Dictionary<string,string> {
 				{"Periods", periods.ToString()},
 				{"Interest", accruedInterest.ToString ()}
 			}
-			), this.ImageName);
+			), this.ImageName,
+			   (payoff >= LowerResultLimit && payoff <= UpperResultLimit));
 		}
 		#endregion
 	}
