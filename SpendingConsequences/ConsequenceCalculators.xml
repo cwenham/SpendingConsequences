@@ -17,6 +17,13 @@
 		number of years remaining before you expect to retire.</Commentary>
 	</Investment>
 	
+	<Investment TriggersOn="OneTime,Repeating" Caption="under the mattress for [Years] years">
+		<Image Name="bed"/>
+		<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="0"/>
+		<Configurable Name="Years" Type="Year" Label="I plan to raid this after" Value="2"/>
+		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>		
+	</Investment>
+	
 	<LoanPayoff TriggersOn="OneTime" Caption="to pay-off credit card in [Periods] months" LowerThreshold="10.00">
 		<Image Name="credit_card"/>
 		<Configurable Name="Rate" Type="Percentage" Label="APR for your card" Value="14.9"/>
@@ -65,6 +72,26 @@
 		<Configurable Name="Rate" Type="Percentage" Label="Savings APR" Value="0.8"/>
 		<Configurable Name="Years" Type="Year" Label="When saved for" Value="5"/>
 	</Investment>
+	
+	<SpendingPower TriggersOn="Repeating" Caption="for a new car in [Installments] monthly payments" LowerResultLimit="10000" UpperResultLimit="100000">
+		<Image Name="carkey"/>
+		<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="4.5"/>
+		<Configurable Name="Installments" Type="Months" Label="Total payments" Value="60"/>		
+		<Commentary>The actual amount of money you can borrow will depend on your income, cash flow and credit history. This calculator assumes that
+		you'll qualify anyway, and shows how much you could borrow for the given payment amount.</Commentary>
+	</SpendingPower>
+	
+	<SpendingPower TriggersOn="Repeating" Caption="for a used car in [Installments] monthly payments" LowerResultLimit="1000" UpperResultLimit="9999">
+		<Image Name="carkey"/> <!-- Note: We want to look for a reasonable "used car" icon, if possible -->
+		<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="5.2"/>
+		<Configurable Name="Installments" Type="Months" Label="Total payments" Value="36"/>
+		<Commentary>They say that a new car loses half of its value the moment you drive it off the dealer's lot, but at the same time the loans for buying
+		used cars tend to have a slightly higher interest rate over a shorter period of time (60 months for new cars, 36 months for used).
+		<br/>Used cars also tend to incur more <i>repair costs</i> and have a <i>shorter</i> lifetime, so while they may be cheaper to buy initially, you need to 
+		be careful to balance price versus economy. If you plan to drive the same car for more than 6 years, you may wish to consider a <b>new</b> car instead 
+		because	most of your maintenance expenses will be covered by the warrantee. 
+		<br/>Indeed, some studies have suggested that the most <i>economical</i> choice is to buy a new car and drive it until it falls apart.</Commentary>
+	</SpendingPower>
 	
 <!--	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years at [Rate]% compounded [Compounding]">
 		<Image Name="stockmarket"/>

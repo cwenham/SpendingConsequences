@@ -120,6 +120,7 @@
     <Compile Include="Calculators\Units.cs" />
     <Compile Include="Calculators\TimeOfService.cs" />
     <Compile Include="Calculators\UnitsPerPeriod.cs" />
+    <Compile Include="Calculators\SpendingPower.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
@@ -204,6 +205,7 @@
     <Content Include="Artwork\cfl.png" />
     <Content Include="Artwork\wifirouter.png" />
     <Content Include="Artwork\bank.png" />
+    <Content Include="Artwork\bed.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />
