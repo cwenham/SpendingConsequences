@@ -31,10 +31,10 @@ namespace SpendingConsequences
 			
 			this.caption.Text = ConfigValue.Label;
 			this.configuredValue.Text = ConfigValue.Value.ToString ();
-			this.stepper.Value = Convert.ToDouble(ConfigValue.Value);
-			this.stepper.MinimumValue = 1d;
-			this.stepper.MaximumValue = 120d;
-			this.stepper.StepValue = 1d;
+			this.stepper.Value = Convert.ToDouble (ConfigValue.Value);
+			this.stepper.MinimumValue = ConfigValue.MinValue;
+			this.stepper.MaximumValue = ConfigValue.MaxValue;
+			this.stepper.StepValue = 1;
 			this.stepper.ValueChanged += delegate {
 				this.ConfigValue.Value = Convert.ToInt32(stepper.Value);
 				this.configuredValue.Text = stepper.Value.ToString ();

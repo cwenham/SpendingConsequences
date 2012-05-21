@@ -30,6 +30,9 @@ namespace SpendingConsequences
 		
 		public void SetCurrentResult (ConsequenceResult result)
 		{
+			if (result == null)
+				return;
+			
 			this.NavigationItem.Title = result.Request.Summary;
 			
 			UpdateCurrentResult (result);

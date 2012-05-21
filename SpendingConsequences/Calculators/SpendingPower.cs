@@ -60,16 +60,13 @@ namespace SpendingConsequences.Calculators
 			double ratePerPeriod = PercentAsDouble (Rate) / annualPayments;
 			decimal paymentPerInstallment = (request.InitialAmount * (decimal)(InvestmentsPerYear (request.TriggerMode))) / annualPayments;
 			
-			// The lender will assume payments will be made at the PaymentFrequency, so even if the borrower makes more frequent payments the loan will still be 
-			// calculated on the former assumption. That means we can treat this like a periodic investment and subtract the interest from the sum to get the 
-			// maximum loan amount.
-			double seriesSum = 0;
-			for (int i = 1; i <= Installments; i++)
-				seriesSum += Math.Pow (1 + ratePerPeriod, i);
-				
-			decimal totalWithInterest = (decimal)(((double)paymentPerInstallment) * seriesSum);
+			
 			decimal totalPayment = paymentPerInstallment * Installments;
-			decimal maxLoanAmount = totalPayment - (totalWithInterest - totalPayment);
+			decimal maxLoanAmount = 0;
+			if (Rate > 0)
+				maxLoanAmount = (decimal)(((double)paymentPerInstallment / ratePerPeriod) * (1 - (1 / Math.Pow ((1 + ratePerPeriod), (double)Installments))));
+			else
+				maxLoanAmount = totalPayment;
 			
 			if (maxLoanAmount >= LowerResultLimit && maxLoanAmount <= UpperResultLimit)
 				return new ConsequenceResult (this,
@@ -78,7 +75,7 @@ namespace SpendingConsequences.Calculators
 			                             FormatCaption (this.Caption, new Dictionary<string,string> {
 				{"Installments", Installments.ToString ()},
 				{"TotalPayment", totalPayment.ToString ()},
-				{"TotalInterest", (totalWithInterest - totalPayment).ToString()}
+				{"TotalInterest", (totalPayment - maxLoanAmount).ToString()}
 			}
 				), this.ImageName);
 			else

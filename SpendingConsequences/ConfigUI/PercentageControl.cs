@@ -30,11 +30,11 @@ namespace SpendingConsequences
 			base.ViewDidLoad ();
 			
 			this.caption.Text = ConfigValue.Label;
-			this.configuredValue.Text = String.Format("{0:0.00}", ConfigValue.Value);
+			this.configuredValue.Text = String.Format ("{0:0.00}", ConfigValue.Value);
 			this.stepper.Value = ((double)ConfigValue.Value);
-			this.stepper.MinimumValue = 0.1d;
-			this.stepper.MaximumValue = 100.0d;
-			this.stepper.StepValue = 0.1d;
+			this.stepper.MinimumValue = ConfigValue.MinValue;
+			this.stepper.MaximumValue = ConfigValue.MaxValue;
+			this.stepper.StepValue = ConfigValue.StepValue;
 			this.stepper.ValueChanged += delegate {
 				this.ConfigValue.Value = stepper.Value;
 				this.configuredValue.Text = String.Format ("{0:0.00}", stepper.Value);

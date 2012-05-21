@@ -31,6 +31,45 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		
+		public double MinValue {
+			get {
+				if (Definition.Attribute ("MinValue") != null) {
+					double minVal = 0;
+					if (!double.TryParse (Definition.Attribute ("MinValue").Value, out minVal))
+						return 0;
+					else
+						return minVal;
+				} else
+					return 0;
+			}
+		}
+		
+		public double MaxValue {
+			get {
+				if (Definition.Attribute ("MaxValue") != null) {
+					double maxVal = 0;
+					if (!double.TryParse (Definition.Attribute ("MaxValue").Value, out maxVal))
+						return double.MaxValue;
+					else
+						return maxVal;
+				} else
+					return double.MaxValue;
+			}
+		}
+		
+		public double StepValue {
+			get {
+				if (Definition.Attribute ("StepValue") != null) {
+					double stepVal = 0;
+					if (!double.TryParse (Definition.Attribute ("StepValue").Value, out stepVal))
+						return 0.1;
+					else
+						return stepVal;
+				} else
+					return 0.1;
+			}
+		}
+		
 		/// <summary>
 		/// Returns true if a UI should not be presented for changing the value
 		/// </summary>

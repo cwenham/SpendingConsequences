@@ -84,22 +84,31 @@ namespace SpendingConsequences
 				cell = new UITableViewCell (UITableViewCellStyle.Subtitle, this._consequenceCellID);
 			
 			NSCache imgCache = ((AppDelegate)UIApplication.SharedApplication.Delegate).ImageCache;
-			
-			NSObject key = NSObject.FromObject (result.ImageName);
-			UIImage image = imgCache.ObjectForKey (key) as UIImage;
-			if (image == null) {
-				string filename = string.Format ("Artwork/{0}.png", result.ImageName);
-				if (NSFileManager.DefaultManager.FileExists (filename)) {
-					image = UIImage.FromBundle (filename);
-					imgCache.SetObjectforKey (image, key);	
+
+			if (result != null) {
+				NSObject key = NSObject.FromObject (result.ImageName);
+				UIImage image = imgCache.ObjectForKey (key) as UIImage;
+				if (image == null) {
+					string filename = string.Format ("Artwork/{0}.png", result.ImageName);
+					if (NSFileManager.DefaultManager.FileExists (filename)) {
+						image = UIImage.FromBundle (filename);
+						imgCache.SetObjectforKey (image, key);	
+					}
 				}
-			}
 			
-			if (image != null)
-				cell.ImageView.Image = image;
-			cell.TextLabel.Text = result.ComputedValue.ToString();
-			cell.DetailTextLabel.Text = result.FormattedCaption;
-			cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
+				if (image != null)
+					cell.ImageView.Image = image;
+				cell.TextLabel.Text = result.ComputedValue.ToString ();
+				cell.DetailTextLabel.Text = result.FormattedCaption;
+				cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;				
+			} else {
+				// Return empty cell. We'll remove this later rather than return a null from this method, which raises an assertion anyway
+				cell.ImageView.Image = null;
+				cell.TextLabel.Text = "";
+				cell.DetailTextLabel.Text = "";
+				cell.Accessory = UITableViewCellAccessory.None;
+			}
+
 			
 			return cell;
 		}
