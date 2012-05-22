@@ -118,9 +118,14 @@ namespace SpendingConsequences.Calculators
 					result = (decimal)sum;
 				}				
 			} catch (OverflowException oex) {
-				// ToDo: Find a way to convey via UI that we can't crunch numbers this big
 				Console.WriteLine (String.Format ("Number overflow in investment calculator: {0}", oex.Message));
-				return null;
+				return new ConsequenceResult (this,
+				                              request,
+				                              new OverflowMessage (),
+				                              "Try reducing the interest rate or years",
+				                              this.ImageName,
+				                              false				                             
+				);
 			} catch (Exception ex) {
 				Console.WriteLine (String.Format ("{0} thrown in investment calculator: {1}", ex.GetType ().Name, ex.Message));
 				return null;

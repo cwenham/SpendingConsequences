@@ -121,6 +121,7 @@
     <Compile Include="Calculators\TimeOfService.cs" />
     <Compile Include="Calculators\UnitsPerPeriod.cs" />
     <Compile Include="Calculators\SpendingPower.cs" />
+    <Compile Include="Calculators\OverflowMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
