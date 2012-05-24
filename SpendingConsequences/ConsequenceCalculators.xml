@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Calculators xmlns="http://schemas.spentbetter.com/Profile"
-		xmlns:h="http://www.w3.org/1999/xhtml">
+		xmlns:h="http://www.w3.org/1999/xhtml"
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<Consequences>
 		<!-- Captions appear after the calculated value. EG: "$12,000 by Retirement" -->	
 		<!-- Image names will be appended with ".png" and looked for in bundle -->
@@ -30,7 +31,7 @@
 			<!-- http://www.cbsnews.com/2100-201_162-2970973.html -->
 		</Investment>
 		
-		<LoanPayoff TriggersOn="OneTime" Caption="to pay-off credit card in [Periods] months" LowerThreshold="10.00">
+		<LoanPayoff TriggersOn="OneTime" Caption="to pay-off credit card in [Periods] months" LowerThreshold="10.00" TableTemplate="AmortizationTable">
 			<Image Name="credit_card"/>
 			<Configurable Name="Rate" Type="Percentage" Label="APR for your card" Value="14.9"/>
 			<Configurable Name="PayoffMode" Type="PayoffMode" Label="Minimum payments calculated as" Value="PercentPlusInterest"/>
@@ -79,7 +80,7 @@
 			<Configurable Name="Years" Type="Year" Label="When saved for" Value="5"/>
 		</Investment>
 		
-		<SpendingPower TriggersOn="Repeating" Caption="for a new car in [Installments] monthly payments" LowerResultLimit="10000" UpperResultLimit="100000">
+		<SpendingPower TriggersOn="Repeating" Caption="for a new car in [Installments] monthly payments" LowerResultLimit="10000" UpperResultLimit="100000" TableTemplate="AmortizationTable" RowTemplate="AmortizationRow">
 			<Image Name="carkey"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="4.5"/>
 			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="60"/>		
@@ -87,7 +88,7 @@
 			you'll qualify anyway, and shows how much you could borrow for the given payment amount.</Commentary>
 		</SpendingPower>
 		
-		<SpendingPower TriggersOn="Repeating" Caption="for a used car in [Installments] monthly payments" LowerResultLimit="1000" UpperResultLimit="9999">
+		<SpendingPower TriggersOn="Repeating" Caption="for a used car in [Installments] monthly payments" LowerResultLimit="1000" UpperResultLimit="9999" TableTemplate="AmortizationTable" RowTemplate="AmortizationRow">
 			<Image Name="carkey"/> <!-- Note: We want to look for a reasonable "used car" icon, if possible -->
 			<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="5.2"/>
 			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="36"/>
@@ -99,7 +100,7 @@
 			<br/>Indeed, some studies have suggested that the most <i>economical</i> choice is to buy a new car and drive it until it falls apart.</Commentary>
 		</SpendingPower>
 		
-		<SpendingPower TriggersOn="Repeating" Caption="mortgage, with [Installments] monthly payments" LowerResultLimit="100000" UpperResultLimit="1000000">
+		<SpendingPower TriggersOn="Repeating" Caption="mortgage, with [Installments] monthly payments" LowerResultLimit="100000" UpperResultLimit="1000000" TableTemplate="AmortizationTable" RowTemplate="AmortizationRow">
 			<Image Name="house"/>
 			<Configurable Name="Rate" Type="Percentage" Label="APR" Value="3.50"/>
 			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="360"/>		
@@ -234,33 +235,49 @@
 	</Consequences>
 	
 	<ResultTemplates>
-		<Template Name="AmortizationTable" Syntax="HTML">
-			<h:html>
-				<h:head>
-					<h:title><title/></h:title>
-				</h:head>
-				<h:body>
-					<h:table>
-						<h:thead>
-							<h:tr>
-								<h:th>Installment</h:th>
-								<h:th>Payment</h:th>
-								<h:th>Interest</h:th>
-								<h:th>Principal</h:th>
-								<h:th>Balance</h:th>
-							</h:tr>
-						</h:thead>
+		<Template Name="AmortizationTable" Syntax="XSLT">
+			<xsl:stylesheet version="1.0">
+				<xsl:output method="html" indent="yes" omit-xml-declaration="yes"/>
+				<xsl:template match="/">
+					<h:html>
+						<h:head>
+							<h:title><xsl:value-of select="@title"/></h:title>
+						</h:head>
+						<h:body>
+							<h:table>
+								<h:thead>
+									<h:tr>
+										<h:th>Installment</h:th>
+										<h:th>Payment</h:th>
+										<h:th>Interest</h:th>
+										<h:th>Principal</h:th>
+										<h:th>Balance</h:th>
+									</h:tr>
+								</h:thead>
+		
+								<h:tbody>
+									<xsl:apply-templates/>
+								</h:tbody>						
+							</h:table>
+						</h:body>
+					</h:html>				
+				</xsl:template>
+				
+				<xsl:template match="Row">
+					<h:tr>
+						<xsl:apply-templates/>
+					</h:tr>
+				</xsl:template>
+				
+				<xsl:template match="Installment">
+					<h:th><xsl:apply-templates/></h:th>
+				</xsl:template>
+				
+				<xsl:template match="Payment|Interest|Principal|Balance">
+					<h:td><xsl:apply-templates/></h:td>
+				</xsl:template>
+			</xsl:stylesheet>
 
-						<h:tbody>
-							<TableRows/>
-						</h:tbody>						
-					</h:table>
-				</h:body>
-			</h:html>
-		</Template>
-	
-		<Template Name="AmortizationRow" Syntax="HTML">
-			<h:tr><TableCells/></h:tr>
 		</Template>
 	</ResultTemplates>
 	

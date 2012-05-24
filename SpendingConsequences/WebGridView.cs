@@ -1,5 +1,11 @@
 using System;
 using System.Drawing;
+using System.Linq;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Xsl;
+using System.Collections.Generic;
+using System.Text;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -22,7 +28,42 @@ namespace SpendingConsequences
 				return;
 			
 			CurrentResult = result;			
+			
+			string tableTemplateName = result.Calculator.TableTemplate;
+			if (tableTemplateName == null)
+				return; // ToDo: Maybe throw exception so parent view can abort the transition
+			
+			XElement tableTemplate = SpendingConsequencesViewController.ResultTemplates.ContainsKey (tableTemplateName) ?
+				SpendingConsequencesViewController.ResultTemplates [tableTemplateName] : null;
+			
+			if (tableTemplate == null)
+				return; // ToDo: Maybe throw exception so parent view can abort the transition
+			
+			XElement data = result.Table.GetData ();
+			
+			if (data == null)
+				return; // ToDo: Throw exception?
+			
+			Transform = new XslCompiledTransform ();
+			XmlReader tmplReader = tableTemplate.CreateReader ();
+			Transform.Load (tmplReader);
+			
+			XmlReader datReader = data.CreateReader ();
+			StringBuilder htmlBuilder = new StringBuilder ();
+			XmlWriter writer = XmlWriter.Create (htmlBuilder);
+			Transform.Transform (datReader, writer);
+			writer.Flush ();
+			
+			DisplayedHTML = htmlBuilder.ToString ();
+			if (this.webView != null)
+				this.webView.LoadData (DisplayedHTML, "application/xhtml+xml", "utf-8", BaseURL);
 		}
+		
+		private string DisplayedHTML { get; set; }
+		
+		private static NSUrl BaseURL = NSUrl.FromString("http://spentbetter.com/");
+		
+		private XslCompiledTransform Transform { get; set; }
 		
 		public override void DidReceiveMemoryWarning ()
 		{
@@ -37,6 +78,8 @@ namespace SpendingConsequences
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
+			if (DisplayedHTML != null)
+				this.webView.LoadData (DisplayedHTML, "application/xhtml+xml", "utf-8", BaseURL);
 		}
 		
 		public override void ViewDidUnload ()

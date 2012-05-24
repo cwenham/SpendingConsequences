@@ -119,6 +119,15 @@ namespace SpendingConsequences.Calculators
 			return false;
 		}
 		
+		public string TableTemplate {
+			get {
+				if (Definition.Attribute ("TableTemplate") != null)
+					return Definition.Attribute ("TableTemplate").Value;
+				else
+					return null;
+			}
+		}
+		
 		/// <summary>
 		/// The lowest InitialAmount that this calculator will work for
 		/// </summary>
@@ -241,7 +250,7 @@ namespace SpendingConsequences.Calculators
 		/// </summary>
 		/// <remarks>Any calculator that returns dynamic tabular data, such as amortization tables, should override this and pass a TabularResult to the
 		/// ConsequenceResult they return.</remarks>
-		public virtual List<List<string>> GetTableData(ConsequenceResult result)
+		public virtual XElement GetTableData(ConsequenceResult result)
 		{
 			return null;
 		}

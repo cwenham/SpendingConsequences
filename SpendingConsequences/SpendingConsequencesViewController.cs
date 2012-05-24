@@ -34,6 +34,13 @@ namespace SpendingConsequences
 		
 		public List<ACalculator> Calculators { get; private set; }
 		
+		// We need to reference the next two from other class instances, but we'd also like to read them all in at
+		// once from the same XML file, so we'll make them static
+		
+		public static Dictionary<string, XElement> ResultTemplates { get; private set; }
+		
+		public static Dictionary<string, XElement> ConsequenceTemplates { get; private set; }
+		
 		public ConsequenceTableSource TableSource { get; private set; }
 		
 		public ConsequenceDetailController DetailController { get; private set; }
@@ -67,16 +74,19 @@ namespace SpendingConsequences
 			// Add handlers to move the view whenever the keyboard appears or disappears
 			NSNotificationCenter.DefaultCenter.AddObserver (UIKeyboard.WillShowNotification, delegate(NSNotification n) {
 				this.KeyboardOpenedOrClosed (n, "Open");
-			});
+			}
+			);
 			NSNotificationCenter.DefaultCenter.AddObserver (UIKeyboard.WillHideNotification, delegate(NSNotification n) {
 				this.KeyboardOpenedOrClosed (n, "Close");
-			});
+			}
+			);
 			
 			// 
 			this.InitialAmount.KeyboardType = UIKeyboardType.DecimalPad;
 			DecimalAccessoryView = CreateDecimalPadAccessoryView (delegate(object sender, EventArgs e) {
 				FinishedEditingInitialAmount ();
-			});
+			}
+			);
 			this.InitialAmount.InputAccessoryView = DecimalAccessoryView;
 			
 			// Load the XML file with the rules our app acts on
@@ -88,6 +98,14 @@ namespace SpendingConsequences
 						select ACalculator.GetInstance (e);
 				if (calculators != null)
 					this.Calculators = calculators.ToList ();
+				
+				ResultTemplates = CalculatorDocument.Root.Element (NS.Profile + "ResultTemplates").Elements ()
+					.Where (x => x.Attribute ("Name") != null)
+					.ToDictionary (x => x.Attribute ("Name").Value, y => y.Element(NS.XSLT + "stylesheet"));
+				
+				ConsequenceTemplates = CalculatorDocument.Root.Element (NS.Profile + "ConsequenceTemplates").Elements ()
+					.Where (x => x.Attribute ("Name") != null)
+					.ToDictionary (x => x.Attribute ("Name").Value);
 			}
 			
 			if (Calculators != null) {

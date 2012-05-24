@@ -12,21 +12,19 @@ namespace SpendingConsequences
 	/// </summary>
 	public class TabularResult
 	{
-		public TabularResult (string title, string unformattedCaption, ACalculator calc, List<string> headers)
+		public TabularResult (string title, string unformattedCaption, ACalculator calc)
 		{
 			this.Title = title;
 			this.UnformattedCaption = unformattedCaption;
 			this.OriginatingCalculator = calc;
-			this.Headers = headers;
 		}
 		
-		public TabularResult (string title, string unformattedCaption, ACalculator calc, List<string> headers, List<List<string>> data)
+		public TabularResult (string title, string unformattedCaption, ACalculator calc, XElement data)
 		{
 			this.Title = title;
 			this.UnformattedCaption = unformattedCaption;
 			this.OriginatingCalculator = calc;
-			this.Headers = headers;
-			this.TableData = data;
+			this.Data = data;
 		}
 		
 		public string Title { get; private set; }
@@ -37,14 +35,12 @@ namespace SpendingConsequences
 		
 		public ConsequenceResult MainResult { get; internal set; }
 		
-		public List<string> Headers { get; private set; }
+		private XElement Data { get; set; }
 		
-		private List<List<string>> TableData { get; set; }
-		
-		public List<List<string>> GetData ()
+		public XElement GetData ()
 		{
-			if (TableData != null)
-				return TableData;
+			if (Data != null)
+				return Data;
 			
 			return OriginatingCalculator.GetTableData (MainResult);
 		}

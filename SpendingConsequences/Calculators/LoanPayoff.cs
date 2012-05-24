@@ -65,14 +65,6 @@ namespace SpendingConsequences.Calculators
 					return DEFAULT_COMPOUNDING_FREQUENCY;
 			}
 		}
-		
-		private static List<string> AmortizationTableHeader = new List<string> {
-			"Installment",
-			"Payment",
-			"Interest",
-			"Principal",
-			"Balance"
-		};
 
 		#region implemented abstract members of SpendingConsequences.Calculators.ACalculator
 		public override ConsequenceResult Calculate (ConsequenceRequest request)
@@ -87,7 +79,7 @@ namespace SpendingConsequences.Calculators
 			double ratePerPeriod = PercentAsDouble (Rate) / annualCompoundings;
 			double minPayRate = PercentAsDouble (MinPayPercent);
 			
-			List<List<string>> amortTable = new List<List<string>> ();
+			XElement amortTable = new XElement("Amortization");
 			
 			while (remaining > 0m) {
 				periods++;
@@ -105,14 +97,12 @@ namespace SpendingConsequences.Calculators
 				
 				remaining -= minPayment;
 				
-				amortTable.Add (new List<string> {
-					string.Format("Payment {0}", periods),  // Date
-					minPayment.ToString("C"),               // Payment
-					interest.ToString("C"),                 // Interest
-					(minPayment - interest).ToString(),     // Principal paid
-					remaining.ToString()                    // Balance
-				}
-				);
+				amortTable.Add(new XElement("Row",
+				                            new XElement("Installment", string.Format("Payment {0}", periods)),
+				                            new XElement("Payment", minPayment.ToString("C")),
+				                            new XElement("Interest", interest.ToString("C")),
+				                            new XElement("Principal", (minPayment - interest).ToString("C")),
+				                            new XElement("Balance", remaining.ToString("C"))));
 			}
 			
 			decimal payoff = accruedInterest + request.InitialAmount;
@@ -120,7 +110,7 @@ namespace SpendingConsequences.Calculators
 			return new ConsequenceResult (this,
 			                             request,
 			                             new Money(payoff),
-			                             new TabularResult(request.Summary, String.Format("Amortization of a {0:C} loan at {1}%", request.InitialAmount, Rate), this, AmortizationTableHeader, amortTable),
+			                             new TabularResult(request.Summary, String.Format("Amortization of a {0:C} loan at {1}%", request.InitialAmount, Rate), this, amortTable),
 			                             FormatCaption (this.Caption, new Dictionary<string,string> {
 				{"Periods", periods.ToString()},
 				{"Interest", accruedInterest.ToString ()}
