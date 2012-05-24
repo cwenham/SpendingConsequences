@@ -30,7 +30,7 @@ namespace SpendingConsequences.Calculators
 		{
 			this.Definition = definition;
 			
-			ConfigurableValues = Definition.Elements ("Configurable")
+			ConfigurableValues = Definition.Elements (NS.Profile + "Configurable")
 				.Select (x => new ConfigurableValue (x))
 				.ToDictionary (x => x.Name);
 			
@@ -203,7 +203,7 @@ namespace SpendingConsequences.Calculators
 		/// </value>
 		public String ImageName {
 			get {
-				var imageElement = Definition.Element ("Image");
+				var imageElement = Definition.Element (NS.Profile + "Image");
 				if (imageElement != null && imageElement.Attribute ("Name") != null)
 					return imageElement.Attribute ("Name").Value;
 				else
@@ -219,7 +219,7 @@ namespace SpendingConsequences.Calculators
 		/// </value>
 		public String UnformattedCommentary {
 			get {
-				var commentaryElement = Definition.Element ("Commentary");
+				var commentaryElement = Definition.Element (NS.Profile + "Commentary");
 				if (commentaryElement != null)
 					return commentaryElement.Value;
 				else return null;
@@ -235,6 +235,16 @@ namespace SpendingConsequences.Calculators
 		}
 		
 		public abstract ConsequenceResult Calculate (ConsequenceRequest request);
+		
+		/// <summary>
+		/// Dynamically generated tabular data
+		/// </summary>
+		/// <remarks>Any calculator that returns dynamic tabular data, such as amortization tables, should override this and pass a TabularResult to the
+		/// ConsequenceResult they return.</remarks>
+		public virtual List<List<string>> GetTableData(ConsequenceResult result)
+		{
+			return null;
+		}
 		
 		#region Static helpers
 		
@@ -281,7 +291,7 @@ namespace SpendingConsequences.Calculators
 					return 12;
 				}
 		}
-		
+			
 		private static Dictionary<string, Type> _calcTypes { get; set; }
 		
 		public static Type CalcType (XElement definition)

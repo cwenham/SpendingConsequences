@@ -82,8 +82,9 @@ namespace SpendingConsequences
 			// Load the XML file with the rules our app acts on
 			if (CalculatorDocument == null) {
 				CalculatorDocument = XDocument.Load ("ConsequenceCalculators.xml");
-				var calculators = from e in CalculatorDocument.Root.Elements ()
-					where ACalculator.CalcType (e) != null
+				var calculators = from e in CalculatorDocument.Root.Element (NS.Profile + "Consequences").Elements ()
+					where e.Name.Namespace == NS.Profile
+					&& ACalculator.CalcType (e) != null
 						select ACalculator.GetInstance (e);
 				if (calculators != null)
 					this.Calculators = calculators.ToList ();

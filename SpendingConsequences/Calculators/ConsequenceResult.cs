@@ -22,6 +22,24 @@ namespace SpendingConsequences.Calculators
 			this.Recommended = recommended;
 		}
 		
+				public ConsequenceResult (ACalculator calculator,
+		                          ConsequenceRequest request,
+		                          object computedValue, 
+		                          TabularResult table,
+		                          string formattedCaption,
+		                          string imageName,
+		                          bool recommended)
+		{
+			this.Calculator = calculator;
+			this.Request = request;
+			this.ComputedValue = computedValue;
+			this.FormattedCaption = formattedCaption;
+			this.ImageName = imageName;
+			this.Recommended = recommended;
+			this.Table = table;
+			this.Table.MainResult = this;
+		}
+		
 		public ACalculator Calculator { get; private set; }
 		
 		public ConsequenceRequest Request { get; private set; }
@@ -42,6 +60,11 @@ namespace SpendingConsequences.Calculators
 		/// threshold. Therefore, rather than returning null, all calculators will do the best they can and set this property to False if they think the
 		/// result is unworthwhile for display in the result set.</remarks>
 		public bool Recommended { get; private set; }
+		
+		/// <summary>
+		/// An amortization table or other tabular result, usually displayed in landscape view
+		/// </summary>
+		public TabularResult Table { get; private set; }
 	}
 }
 

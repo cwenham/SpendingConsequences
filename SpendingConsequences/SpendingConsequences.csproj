@@ -122,6 +122,12 @@
     <Compile Include="Calculators\UnitsPerPeriod.cs" />
     <Compile Include="Calculators\SpendingPower.cs" />
     <Compile Include="Calculators\OverflowMessage.cs" />
+    <Compile Include="Calculators\TabularResult.cs" />
+    <Compile Include="WebGridView.cs" />
+    <Compile Include="WebGridView.designer.cs">
+      <DependentUpon>WebGridView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NS.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
@@ -130,6 +136,7 @@
     <InterfaceDefinition Include="ConfigUI\MonthsControl.xib" />
     <InterfaceDefinition Include="ConfigUI\MoneyControl.xib" />
     <InterfaceDefinition Include="ConfigUI\YearControl.xib" />
+    <InterfaceDefinition Include="WebGridView.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

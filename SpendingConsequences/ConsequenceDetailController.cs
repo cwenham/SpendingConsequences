@@ -28,6 +28,11 @@ namespace SpendingConsequences
 		
 		private UIViewController[] CurrentConfiggers { get; set; }
 		
+		/// <summary>
+		/// A view used to display tabular results, such as amortization tables, when the device is rotated to landscape
+		/// </summary>
+		private WebGridView GridView { get; set; }
+		
 		public void SetCurrentResult (ConsequenceResult result)
 		{
 			if (result == null)
@@ -133,6 +138,10 @@ namespace SpendingConsequences
 			base.DidReceiveMemoryWarning ();
 			
 			// Release any cached data, images, etc that aren't in use.
+			if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.Portrait 
+				|| UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.PortraitUpsideDown
+				&& this.GridView != null)
+				this.GridView = null;
 		}
 		
 		public override void ViewDidLoad ()
@@ -151,6 +160,32 @@ namespace SpendingConsequences
 				                                          this.resultSubview.Frame.Width, 
 				                                          this.resultSubview.Frame.Height);
 			};
+			
+			// We want to show an extra detail view, usually WebGridView for amortization tables, etc.
+			NSNotificationCenter.DefaultCenter.AddObserver ("UIDeviceOrientationDidChangeNotification", DeviceRotated);
+		}
+		
+		private void DeviceRotated (NSNotification notification)
+		{
+			if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeLeft 
+				|| UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight
+				&& CurrentResult.Table != null) {
+				if (GridView == null)
+					GridView = new WebGridView ();
+				GridView.SetResult (this.CurrentResult);
+				this.PresentViewController (GridView, false, null);
+			}
+			
+			if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.Portrait 
+				|| UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.PortraitUpsideDown
+				&& this.PresentedViewController == GridView) {
+				this.DismissViewController (false, () => {});
+			}
+		}
+		
+		public override void ViewDidAppear (bool animated)
+		{
+			UIDevice.CurrentDevice.BeginGeneratingDeviceOrientationNotifications ();
 		}
 		
 		public override void ViewWillAppear (bool animated)
@@ -162,6 +197,7 @@ namespace SpendingConsequences
 		public override void ViewWillDisappear (bool animated)
 		{
 			NavigationController.SetNavigationBarHidden (true, true);
+			UIDevice.CurrentDevice.EndGeneratingDeviceOrientationNotifications ();
 			base.ViewWillDisappear (animated);
 		}
 		
@@ -191,7 +227,13 @@ namespace SpendingConsequences
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
 		{
 			// Return true for supported orientations
-			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
+			if (toInterfaceOrientation == UIInterfaceOrientation.PortraitUpsideDown || toInterfaceOrientation == UIInterfaceOrientation.Portrait)
+				return true;
+			
+			if ((toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight) && CurrentResult.Table != null)
+				return true;
+			
+			return false;
 		}
 	}
 	
