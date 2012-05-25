@@ -51,16 +51,24 @@ namespace SpendingConsequences.Calculators
 			double serviceUnits = (double)(request.InitialAmount / this.Cost);
 			double serviceDays = ConsequenceRequest.DaysPerUnit [UnitForCost] * serviceUnits;
 			
-			return new ConsequenceResult (this, 
-			                              request, 
-			                              new Time (new TimeSpan ((int)(Math.Floor (serviceDays)), 0, 0, 0)),
-			                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
-				{"Unit", this.UnitForCost.ToString ()},
-				{"Cost", this.Cost.ToString ()}
-			}
-			),
-			                              this.ImageName,
-			                              (serviceDays <= MaxDays && serviceUnits >= (double)LowerResultLimit && serviceUnits <= (double)UpperResultLimit));
+			if (serviceDays > MaxDays)
+				return new ConsequenceResult (this,
+				                             request,
+				                             new OverflowMessage (),
+				                             "Try reducing the spending amount",
+				                             this.ImageName,
+				                             false);
+			else
+				return new ConsequenceResult (this, 
+				                              request, 
+				                              new Time (new TimeSpan ((int)(Math.Floor (serviceDays)), 0, 0, 0)),
+				                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
+					{"Unit", this.UnitForCost.ToString ()},
+					{"Cost", this.Cost.ToString ()}
+				}
+				),
+				                              this.ImageName,
+				                              (serviceDays <= MaxDays && serviceUnits >= (double)LowerResultLimit && serviceUnits <= (double)UpperResultLimit));
 		
 		}
 		#endregion

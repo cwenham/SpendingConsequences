@@ -241,32 +241,70 @@
 				<xsl:template match="/">
 					<h:html>
 						<h:head>
-							<h:title><xsl:value-of select="@title"/></h:title>
+							<h:title><xsl:value-of select="Amortization/@Title"/></h:title>
 						</h:head>
 						<h:style type="text/css">
-							tbody.scrollable {
-								overflow: scroll;
-								max-height: 300px;
+							table.amortization {
+								font-family: Helvitica, sans-serif;
+								border: 1px solid black;
+								border-collapse: collapse;
+								margin: 0px;
+							}
+							table.amortization thead th {
+								background: #86a18a;
+								text-align: left;
+								padding: 3px;
+								margin: 0px;
+								border: 1px solid #004217;
+							}
+							table.amortization thead th.title {
+								background: #fbaf5d;
+								font-size: 120%;
+								text-align: center;
+							}
+							tbody {
+								overflow-y: scroll;
+								-webkit-overflow-scrolling: touch;
+							}
+							tbody td {
+								padding: 3px;
+								margin: 0px;
+								border: 1px solid #004217;
+								text-align: right;
+							}
+							tbody th {
+								border: 1px solid #004217;
+								text-align: left;
+							}
+							tbody tr:nth-child(even) {
+								background: #c4d3c2;
 							}
 						</h:style>
 						<h:body>
-							<h:table width="100%">
-								<h:thead>
-									<h:tr>
-										<h:th>Installment</h:th>
-										<h:th>Payment</h:th>
-										<h:th>Interest</h:th>
-										<h:th>Principal</h:th>
-										<h:th>Balance</h:th>
-									</h:tr>
-								</h:thead>
-		
-								<h:tbody class="scrollable">
-									<xsl:apply-templates/>
-								</h:tbody>						
-							</h:table>
+							<xsl:apply-templates/>
 						</h:body>
 					</h:html>				
+				</xsl:template>
+				
+				<xsl:template match="Amortization">
+					<h:table width="100%" class="amortization">
+						<h:thead>
+							<h:tr>
+								<h:th colspan="5" class="title"><xsl:value-of select="@Title"/></h:th>
+							</h:tr>
+							<h:tr>
+								<h:th>Installment</h:th>
+								<h:th>Payment</h:th>
+								<h:th>Interest</h:th>
+								<h:th>Principal</h:th>
+								<h:th>Balance</h:th>
+							</h:tr>
+						</h:thead>
+
+						<h:tbody>
+							<xsl:apply-templates/>
+						</h:tbody>						
+					</h:table>				
 				</xsl:template>
 				
 				<xsl:template match="Row">
