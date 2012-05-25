@@ -36,8 +36,10 @@ namespace SpendingConsequences
 			this.stepper.MaximumValue = ConfigValue.MaxValue;
 			this.stepper.StepValue = 1;
 			this.stepper.ValueChanged += delegate {
-				this.ConfigValue.Value = Convert.ToInt32(stepper.Value);
 				this.configuredValue.Text = stepper.Value.ToString ();
+			};
+			this.stepper.TouchUpInside += delegate {
+				this.ConfigValue.Value = Convert.ToInt32 (stepper.Value);
 				ValueChanged (this, new ConfigurableValueChanged (this.ConfigValue));
 			};
 		}
