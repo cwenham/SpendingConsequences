@@ -45,26 +45,26 @@ namespace SpendingConsequences.Calculators
 			TimeSpan period = span.Value;
 			
 			if (period.TotalMinutes <= 59)
-				return string.Format ("{0:%m} minutes", period);
+				return string.Format ("{0:%m} minute{1}", period, period.TotalMinutes > 1 ? "s" : "");
 			
 			if (period.TotalMinutes <= 2879)
-				return string.Format ("{0:%h} hours {0:%m} minutes", period);
+				return string.Format ("{0:%h} hour{1} {0:%m} minute{2}", period, period.Hours > 1 ? "s" : "", period.Minutes > 1 ? "s" : "");
 		
 			string unit = null;
 			double val = 0;
 			
 			if (period.TotalDays < 7) {
-				unit = "days";
 				val = period.TotalDays;
+				unit = val > 1 ? "days" : "day";
 			} else if (period.TotalDays <= 49) {
-				unit = "weeks";
 				val = period.TotalDays / 7;
+				unit = val > 1 ? "weeks" : "week";
 			} else if (period.TotalDays <= 540) {
-				unit = "months";
 				val = period.TotalDays / 30;
+				unit = val > 1 ? "months" : "month";
 			} else {
-				unit = "years";
 				val = period.TotalDays / 365.25;
+				unit = val > 1 ? "years" : "year";
 			}
 			
 			if (val % 1 == 0)
@@ -80,31 +80,34 @@ namespace SpendingConsequences.Calculators
 		{
 			TimeSpan period = span.Value;
 			
+			if (period.TotalMinutes <= 59)
+				return string.Format ("{0:%m} minute{1}", period, period.TotalMinutes > 1 ? "s" : "");
+			
 			if (period.TotalMinutes <= 2879)
-				return string.Format ("{0:%h} hours {0:%m} minutes", period);
+				return string.Format ("{0:%h} hour{1} {0:%m} minute{2}", period, period.Hours > 1 ? "s" : "", period.Minutes > 1 ? "s" : "");
 			
 			List<string> pieces = new List<string> ();
 			
 			if (period.TotalDays > 365) {
 				int years = (int)(Math.Floor (period.TotalDays / 365));
 				period = period.Subtract (new TimeSpan (365 * years, 0, 0, 0));
-				pieces.Add (string.Format ("{0} years", years));
+				pieces.Add (string.Format ("{0} year{1}", years, years > 1 ? "s" : ""));
 			}
 			
 			if (period.TotalDays > 30) {
 				int months = (int)(Math.Floor (period.TotalDays / 30));
 				period = period.Subtract (new TimeSpan (30 * months, 0, 0, 0));
-				pieces.Add (string.Format ("{0} months", months));
+				pieces.Add (string.Format ("{0} month{1}", months, months > 1 ? "s" : ""));
 			}
 			
 			if (period.TotalDays > 7) {
 				int weeks = (int)(Math.Floor (period.TotalDays / 7));
 				period = period.Subtract (new TimeSpan (7 * weeks, 0, 0, 0));
-				pieces.Add (string.Format ("{0} weeks", weeks));
+				pieces.Add (string.Format ("{0} week{1}", weeks, weeks > 1 ? "s" : ""));
 			}
 			
 			if (period.TotalDays > 0)
-				pieces.Add (string.Format ("{0} days", period.TotalDays));
+				pieces.Add (string.Format ("{0} day{1}", period.TotalDays, period.TotalDays > 1 ? "s" : ""));
 			
 			if (pieces.Count == 1)
 				return pieces.First();
