@@ -16,11 +16,14 @@ namespace SpendingConsequences
 {
 	public partial class WebGridView : UIViewController
 	{
-		public WebGridView () : base ("WebGridView", null)
+		public WebGridView (Profile profile) : base ("WebGridView", null)
 		{
+			this.Profile = profile;
 			if (TransformCache == null)
 				TransformCache = new Dictionary<string, XslCompiledTransform>();
 		}
+		
+		private Profile Profile { get; set; }
 		
 		public ConsequenceResult CurrentResult { get; private set; }
 		
@@ -46,8 +49,7 @@ namespace SpendingConsequences
 			XslCompiledTransform transformer;
 			
 			if (!TransformCache.ContainsKey (tableTemplateName)) {
-				XElement tableTemplate = SpendingConsequencesViewController.ResultTemplates.ContainsKey (tableTemplateName) ?
-				SpendingConsequencesViewController.ResultTemplates [tableTemplateName] : null;
+				XElement tableTemplate = Profile.GetResultTemplate (tableTemplateName);
 			
 				if (tableTemplate == null)
 					return; // ToDo: Maybe throw exception so parent view can abort the transition

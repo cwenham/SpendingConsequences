@@ -18,10 +18,7 @@ namespace SpendingConsequences
 		SpendingConsequencesViewController viewController;
 		UINavigationController navController;
 		
-		/// <summary>
-		/// Cache of artwork, used in several screens
-		/// </summary>
-		public NSCache ImageCache { get; private set; }
+		public Profile Profile { get; private set; }
 
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
@@ -32,11 +29,11 @@ namespace SpendingConsequences
 		//
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
-			ImageCache = new NSCache ();
+			Profile = Profile.Load ("ConsequenceCalculators.xml");
 			
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
-			viewController = new SpendingConsequencesViewController ();
+			viewController = new SpendingConsequencesViewController (Profile);
 			navController = new UINavigationController (viewController);
 			navController.SetNavigationBarHidden (true, false);
 			window.RootViewController = navController;

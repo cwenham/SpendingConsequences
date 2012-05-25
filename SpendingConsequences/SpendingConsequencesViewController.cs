@@ -20,36 +20,18 @@ namespace SpendingConsequences
 		// The space we live in, used to restore after scrolling up to accomodate an on-screen keyboard
 		RectangleF _contentViewSize = RectangleF.Empty;
 		
-//		public SpendingConsequencesViewController () : base ("SpendingConsequencesViewController", null)
-//		{
-//		}
-		
-		public SpendingConsequencesViewController ()
+		public SpendingConsequencesViewController (Profile profile)
 		{
 			NSBundle.MainBundle.LoadNib ("SpendingConsequencesViewController", this, null);
+			this.Profile = profile;
 			this.ViewDidLoad ();
 		}
 		
-		public XDocument CalculatorDocument { get; private set; }
-		
-		public List<ACalculator> Calculators { get; private set; }
-		
-		// We need to reference the next two from other class instances, but we'd also like to read them all in at
-		// once from the same XML file, so we'll make them static
-		
-		public static Dictionary<string, XElement> ResultTemplates { get; private set; }
-		
-		public static Dictionary<string, XElement> ConsequenceTemplates { get; private set; }
+		public Profile Profile { get; private set; }
 		
 		public ConsequenceTableSource TableSource { get; private set; }
 		
 		public ConsequenceDetailController DetailController { get; private set; }
-		
-//		public override UINavigationController NavigationController {
-//			get {
-//				return this.navMain;
-//			}
-//		}
 		
 		private UIView DecimalAccessoryView { get; set; }
 		
@@ -89,27 +71,8 @@ namespace SpendingConsequences
 			);
 			this.InitialAmount.InputAccessoryView = DecimalAccessoryView;
 			
-			// Load the XML file with the rules our app acts on
-			if (CalculatorDocument == null) {
-				CalculatorDocument = XDocument.Load ("ConsequenceCalculators.xml");
-				var calculators = from e in CalculatorDocument.Root.Element (NS.Profile + "Consequences").Elements ()
-					where e.Name.Namespace == NS.Profile
-					&& ACalculator.CalcType (e) != null
-						select ACalculator.GetInstance (e);
-				if (calculators != null)
-					this.Calculators = calculators.ToList ();
-				
-				ResultTemplates = CalculatorDocument.Root.Element (NS.Profile + "ResultTemplates").Elements ()
-					.Where (x => x.Attribute ("Name") != null)
-					.ToDictionary (x => x.Attribute ("Name").Value, y => y.Element(NS.XSLT + "stylesheet"));
-				
-				ConsequenceTemplates = CalculatorDocument.Root.Element (NS.Profile + "ConsequenceTemplates").Elements ()
-					.Where (x => x.Attribute ("Name") != null)
-					.ToDictionary (x => x.Attribute ("Name").Value);
-			}
-			
-			if (Calculators != null) {
-				TableSource = new ConsequenceTableSource (Calculators, this);
+			if (Profile != null) {
+				TableSource = new ConsequenceTableSource (Profile, this);
 				ConsequenceView.Source = TableSource;
 			}
 			
@@ -268,7 +231,7 @@ namespace SpendingConsequences
 		public void DisplayConsequenceDetails (ConsequenceResult result)
 		{
 			if (this.DetailController == null) {
-				DetailController = new ConsequenceDetailController ();
+				DetailController = new ConsequenceDetailController (Profile);
 				DetailController.ResultChanged += delegate(object sender, ResultChangedArgs e) {
 					int index = this.TableSource.ReplaceResult (e.OldResult, e.NewResult);
 					if (index > -1) {
@@ -317,11 +280,6 @@ namespace SpendingConsequences
 				this.View.Frame = this._contentViewSize;
 				UIView.CommitAnimations ();
 			}
-		}
-		
-		public List<ACalculator> TriggeredCalculators (decimal ammount, TriggerType mode)
-		{
-			return null;
 		}
 		
 		public override void ViewDidUnload ()

@@ -16,14 +16,14 @@ namespace SpendingConsequences
 		
 		public SpendingConsequencesViewController ParentController { get; private set; }
 		
-		public List<ACalculator> Calculators { get; private set; }
+		public Profile Profile { get; private set; }
 		
 		public ConsequenceResult[] CurrentResults { get; private set; }
 		
-		public ConsequenceTableSource (List<ACalculator> calculators, SpendingConsequencesViewController parent)
+		public ConsequenceTableSource (Profile profile, SpendingConsequencesViewController parent)
 		{
 			this.ParentController = parent;
-			this.Calculators = calculators;
+			this.Profile = profile;
 			
 			if (NSUserDefaults.StandardUserDefaults ["Gender"] != null)
 				Enum.TryParse (NSUserDefaults.StandardUserDefaults ["Gender"].ToString (), true, out UserGender);
@@ -33,7 +33,7 @@ namespace SpendingConsequences
 		
 		public void ComputeConsequences (ConsequenceRequest request)
 		{	
-			this.CurrentResults = (from c in this.Calculators
+			this.CurrentResults = (from c in Profile.Calculators
 			        where c.WillTriggerOn (request.TriggerMode)
 			        && (c.ForGender == Gender.Unspecified || c.ForGender == UserGender)
 			        && (c.Country == null || c.Country == NSLocale.CurrentLocale.CountryCode)
@@ -84,18 +84,8 @@ namespace SpendingConsequences
 			if (cell == null)
 				cell = new UITableViewCell (UITableViewCellStyle.Subtitle, this._consequenceCellID);
 			
-			NSCache imgCache = ((AppDelegate)UIApplication.SharedApplication.Delegate).ImageCache;
-
 			if (result != null) {
-				NSObject key = NSObject.FromObject (result.ImageName);
-				UIImage image = imgCache.ObjectForKey (key) as UIImage;
-				if (image == null) {
-					string filename = string.Format ("Artwork/{0}.png", result.ImageName);
-					if (NSFileManager.DefaultManager.FileExists (filename)) {
-						image = UIImage.FromBundle (filename);
-						imgCache.SetObjectforKey (image, key);	
-					}
-				}
+				UIImage image = Profile.GetImage (result.ImageName);
 			
 				if (image != null)
 					cell.ImageView.Image = image;

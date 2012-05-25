@@ -14,12 +14,15 @@ namespace SpendingConsequences
 	{	
 		private const int DYNAMIC_VIEW_TAG = 1024;
 		
-		public ConsequenceDetailController ()
+		public ConsequenceDetailController (Profile profile)
 		{
 			NSBundle.MainBundle.LoadNib ("ConsequenceDetailController", this, null);
+			this.Profile = profile;
 			this.ViewDidLoad();
 			LastLabelYOffset = this.caption.Frame.Y + this.caption.Frame.Height;
 		}
+		
+		private Profile Profile { get; set; }
 		
 		// Y + Height of the last label in our XIB, below which we can add dynamic controls
 		private float LastLabelYOffset { get; set; }
@@ -42,17 +45,8 @@ namespace SpendingConsequences
 			
 			UpdateCurrentResult (result);
 			
-			NSCache imgCache = ((AppDelegate)UIApplication.SharedApplication.Delegate).ImageCache;
-			
-			NSObject key = NSObject.FromObject (result.ImageName);
-			UIImage image = imgCache.ObjectForKey (key) as UIImage;
-			if (image == null) {
-				string filename = string.Format ("Artwork/{0}.png", result.ImageName);
-				if (NSFileManager.DefaultManager.FileExists (filename)) {
-					image = UIImage.FromBundle (string.Format ("Artwork/{0}.png", result.ImageName));
-					imgCache.SetObjectforKey (image, key);
-				}
-			}
+			UIImage image = Profile.GetImage (result.ImageName);
+
 			if (image != null)
 				iconView.Image = image;
 			
@@ -171,7 +165,7 @@ namespace SpendingConsequences
 				|| UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight
 				&& CurrentResult.Table != null) {
 				if (GridView == null)
-					GridView = new WebGridView ();
+					GridView = new WebGridView (Profile);
 				GridView.SetResult (this.CurrentResult);
 				this.PresentViewController (GridView, false, null);
 			}

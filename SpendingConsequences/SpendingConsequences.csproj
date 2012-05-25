@@ -128,6 +128,7 @@
       <DependentUpon>WebGridView.cs</DependentUpon>
     </Compile>
     <Compile Include="NS.cs" />
+    <Compile Include="Profile.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
