@@ -222,6 +222,10 @@
     <Content Include="Artwork\refrigerator.png" />
     <Content Include="Artwork\washing_machine.png" />
     <Content Include="Artwork\ambulance.png" />
+    <Content Include="UIArt\result_panel.png" />
+    <Content Include="UIArt\detail_background.png" />
+    <Content Include="UIArt\detail_result_panel.png" />
+    <Content Include="UIArt\input_panel.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

@@ -18,6 +18,8 @@ namespace SpendingConsequences
 	{
 		public WebGridView () : base ("WebGridView", null)
 		{
+			if (TransformCache == null)
+				TransformCache = new Dictionary<string, XslCompiledTransform>();
 		}
 		
 		public ConsequenceResult CurrentResult { get; private set; }
@@ -33,25 +35,35 @@ namespace SpendingConsequences
 			if (tableTemplateName == null)
 				return; // ToDo: Maybe throw exception so parent view can abort the transition
 			
-			XElement tableTemplate = SpendingConsequencesViewController.ResultTemplates.ContainsKey (tableTemplateName) ?
-				SpendingConsequencesViewController.ResultTemplates [tableTemplateName] : null;
-			
-			if (tableTemplate == null)
-				return; // ToDo: Maybe throw exception so parent view can abort the transition
+			if (result.Table == null)
+				return;
 			
 			XElement data = result.Table.GetData ();
 			
 			if (data == null)
 				return; // ToDo: Throw exception?
 			
-			Transform = new XslCompiledTransform ();
-			XmlReader tmplReader = tableTemplate.CreateReader ();
-			Transform.Load (tmplReader);
+			XslCompiledTransform transformer;
+			
+			if (!TransformCache.ContainsKey (tableTemplateName)) {
+				XElement tableTemplate = SpendingConsequencesViewController.ResultTemplates.ContainsKey (tableTemplateName) ?
+				SpendingConsequencesViewController.ResultTemplates [tableTemplateName] : null;
+			
+				if (tableTemplate == null)
+					return; // ToDo: Maybe throw exception so parent view can abort the transition
+			
+				transformer = new XslCompiledTransform ();
+				XmlReader tmplReader = tableTemplate.CreateReader ();
+				transformer.Load (tmplReader);		
+				
+				TransformCache.Add (tableTemplateName, transformer);
+			} else
+				transformer = TransformCache [tableTemplateName];
 			
 			XmlReader datReader = data.CreateReader ();
 			StringBuilder htmlBuilder = new StringBuilder ();
 			XmlWriter writer = XmlWriter.Create (htmlBuilder);
-			Transform.Transform (datReader, writer);
+			transformer.Transform (datReader, writer);
 			writer.Flush ();
 			
 			DisplayedHTML = htmlBuilder.ToString ();
@@ -63,7 +75,7 @@ namespace SpendingConsequences
 		
 		private static NSUrl BaseURL = NSUrl.FromString("http://spentbetter.com/");
 		
-		private XslCompiledTransform Transform { get; set; }
+		private static Dictionary<string, XslCompiledTransform> TransformCache { get; set; }
 		
 		public override void DidReceiveMemoryWarning ()
 		{
@@ -71,6 +83,7 @@ namespace SpendingConsequences
 			base.DidReceiveMemoryWarning ();
 			
 			// Release any cached data, images, etc that aren't in use.
+			TransformCache.Clear ();
 		}
 		
 		public override void ViewDidLoad ()

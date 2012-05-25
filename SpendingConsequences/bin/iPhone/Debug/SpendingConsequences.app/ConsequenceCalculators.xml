@@ -1,238 +1,392 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Calculators>
-	<Sum TriggersOn="Repeating" Caption="after [years] years">
-		<Image Name="Cash"/>
-	</Sum>
+<Calculators xmlns="http://schemas.spentbetter.com/Profile"
+		xmlns:h="http://www.w3.org/1999/xhtml"
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<Consequences>
+		<!-- Captions appear after the calculated value. EG: "$12,000 by Retirement" -->	
+		<!-- Image names will be appended with ".png" and looked for in bundle -->
+		<!-- Labels appear before the editable control. EG: "Expected annual yield 5%" -->
+		<Investment TriggersOn="OneTime,Repeating" Caption="by Retirement">
+			<Image Name="money"/>
+			<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="5"/>
+			<Configurable Name="Years" Type="Year" Label="I plan to retire in" Value="30"/>
+			<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>
+			<Commentary>The average annual yield of your retirement portfolio may be more or less than our estimates. Use
+			the controls above to adjust the yield to match what your investment advisor has projected, as well as the 
+			number of years remaining before you expect to retire.</Commentary>
+		</Investment>
+		
+		<Investment TriggersOn="OneTime,Repeating" Caption="under the mattress for [Years] years">
+			<Image Name="bed"/>
+			<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="0"/>
+			<Configurable Name="Years" Type="Year" Label="I plan to raid this after" Value="3"/>
+			<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>		
+			<Commentary>The phrase "stuffing money under the mattress" might have come from the Depression era, when banks were failing and the FDIC (Federal
+			Deposit Insurance Corporation) didn't exist yet.
+			<br/>According to the Federal Reserve about one in every 12 families, or 8.7 percent of the US population, do not have a bank account. The majority of
+			those are immigrants with low incomes who may be inhibited by a language barrier, or because they distrust traditional financial institutions.
+			<br/>Another reason for going without a bank account, especially for low-income workers, are the fees: monthly service fees and overdraft fees are more
+			common when you can't keep much money in your account at any time. Plus, the number of banks offering free checking accounts has dwindled rapidly since
+			2008.</Commentary>
+			<!-- http://www.cbsnews.com/2100-201_162-2970973.html -->
+		</Investment>
+		
+		<LoanPayoff TriggersOn="OneTime" Caption="to pay-off credit card in [Periods] months" LowerThreshold="10.00" TableTemplate="AmortizationTable">
+			<Image Name="credit_card"/>
+			<Configurable Name="Rate" Type="Percentage" Label="APR for your card" Value="14.9"/>
+			<Configurable Name="PayoffMode" Type="PayoffMode" Label="Minimum payments calculated as" Value="PercentPlusInterest"/>
+			<Configurable Name="MinPayPercent" Type="Percentage" Label="Percent-After-Interest for minimum payments" Value="1.00"/>
+			<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>
+			<Commentary>The total payoff includes the principal plus the interest. This calculator assumes that you'll
+				only make minimum payments, defined as the interest plus a percentage of the balance.
+				Try increasing the <b>Percent-After-Interest</b> to see how much you'd save if you paid more each month.
+				<br/>
+				<br/>Making only minimum payments can force you to pay
+				an enormous amount of interest over time thanks to <b>monthly compounding and low monthly payments:</b> even if 
+				the interest rate is only 14% per year, putting $100 on a credit card does not mean you'll only ever to pay $14 
+				in interest, in fact you may pay <i>much</i> more.
+			<br/>The first trick they use, <b>monthly compounding</b> means that they calculate your interest and add it to
+				your balance each month. That means that by the second month they're now charging you <i>interest on the
+				interest.</i> Before the CARD act of 2009, some banks even charged more interest than the minimum payment
+				could cover, creating an escalating debt problem called <i>Negative Amortization</i> that you can never
+				escape from.
+			<br/>The second trick is to make the minimum monthly payment as low as possible in order to <i>stretch out</i>
+				the time it takes you to pay-off the card, sometimes to many years or decades. The longer you carry a 
+				balance the more often they can use monthly compounding to charge you more interest.
+			<br/>So what's the best way to use credit cards? Many smart shoppers pay-off their credit card balance in full
+				each month, while it's still in the <b>grace period.</b> The grace period is when you can pay-off the balance
+				of the card <i>without being charged interest</i>, and lasts for about 20 days after you use the card.
+			<br/>Even if you can't pay the balance in full, every time you pay <i>more than the minimum balance</i> the extra
+				amount will chip away at the <b>principal</b> balance, meaning that it bites-off more of the balance that
+				they're using to calculate your interest the following month.
+			</Commentary>
+		</LoanPayoff>
+		
+		<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in Index Funds">
+			<Image Name="stockmarket"/>
+			<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="9.3"/>
+			<Configurable Name="Years" Type="Year" Label="When invested for" Value="5"/>
+			<Commentary>The Compound Annual Growth Rate of the Standard &amp; Poor 500 Index since its inception in 1957 is 
+				about <b>9.34%</b>, however this is not what you'll typically expect in any given year; in some years the index 
+				does worse than others, some years it does much better. When investing in such a fund you should be thinking
+				about the long term and be willing to ride-out dips in the market that can make it look as if you're losing
+				money.
+			</Commentary>
+		</Investment>
+		
+		<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in a savings account">
+			<Image Name="bank"/>
+			<Configurable Name="Rate" Type="Percentage" Label="Savings APR" Value="0.8"/>
+			<Configurable Name="Years" Type="Year" Label="When saved for" Value="5"/>
+		</Investment>
+		
+		<SpendingPower TriggersOn="Repeating" Caption="for a new car in [Installments] monthly payments" LowerResultLimit="10000" UpperResultLimit="100000" TableTemplate="AmortizationTable" RowTemplate="AmortizationRow">
+			<Image Name="carkey"/>
+			<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="4.5"/>
+			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="60"/>		
+			<Commentary>The actual amount of money you can borrow will depend on your income, cash flow and credit history. This calculator assumes that
+			you'll qualify anyway, and shows how much you could borrow for the given payment amount.</Commentary>
+		</SpendingPower>
+		
+		<SpendingPower TriggersOn="Repeating" Caption="for a used car in [Installments] monthly payments" LowerResultLimit="1000" UpperResultLimit="9999" TableTemplate="AmortizationTable" RowTemplate="AmortizationRow">
+			<Image Name="carkey"/> <!-- Note: We want to look for a reasonable "used car" icon, if possible -->
+			<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="5.2"/>
+			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="36"/>
+			<Commentary>They say that a new car loses half of its value the moment you drive it off the dealer's lot, but at the same time the loans for buying
+			used cars tend to have a slightly higher interest rate over a shorter period of time (60 months for new cars, 36 months for used).
+			<br/>Used cars also tend to incur more <i>repair costs</i> and have a <i>shorter</i> lifetime, so while they may be cheaper to buy initially, you need to 
+			be careful to balance price versus economy. If you plan to drive the same car for more than 6 years, you may wish to consider a <b>new</b> car instead 
+			because	most of your maintenance expenses will be covered by the warrantee. 
+			<br/>Indeed, some studies have suggested that the most <i>economical</i> choice is to buy a new car and drive it until it falls apart.</Commentary>
+		</SpendingPower>
+		
+		<SpendingPower TriggersOn="Repeating" Caption="mortgage, with [Installments] monthly payments" LowerResultLimit="100000" UpperResultLimit="1000000" TableTemplate="AmortizationTable" RowTemplate="AmortizationRow">
+			<Image Name="house"/>
+			<Configurable Name="Rate" Type="Percentage" Label="APR" Value="3.50"/>
+			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="360"/>		
+		</SpendingPower>
+		
+		<TimeOfService UnitForCost="Year" TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00">
+			<Image Name="walle"/>
+			<Configurable Name="Cost" Type="Money" Label="Cost per year for trash removal" Value="479.28"/>
+			<!-- Monthly: 39.94. Source: http://www.sanramon.ca.gov/recycle/curbside.htm -->
+			<Commentary>Based on yearly curbside pickup rates as quoted by Waste Management Inc. for San Ramon, CA.</Commentary>
+		</TimeOfService>
+		
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53">
+			<Image Name="bestsoap"/>
+			<Configurable Name="Cost" Type="Money" Label="Per bar of luxury soap" Value="20.00"/>
+			<Commentary>Soap: the yardstick of civilization.</Commentary>
+		</UnitsPerPeriod>
+		
+		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3">
+			<Image Name="cappuccino"/>
+			<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="4.36" Source="HuMuch.com" SourceUrl="http://www.humuch.com/detailspage.php?item_id=102"/>
+			<Commentary>Based on the average price of a Grande Cappucino from a national coffee restaurant chain.</Commentary>
+		</UnitsPerPeriod>
 	
-	<!-- Captions appear after the calculated value. EG: "$12,000 by Retirement" -->	
-	<!-- Image names will be appended with ".png" and looked for in bundle -->
-	<!-- Labels appear before the editable control. EG: "Expected annual yield 5%" -->
-	<Investment TriggersOn="OneTime,Repeating" Caption="by Retirement">
-		<Image Name="money"/>
-		<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="5"/>
-		<Configurable Name="Years" Type="Year" Label="I plan to retire in" Value="30"/>
-		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>
-		<Commentary>The average annual yield of your retirement portfolio may be more or less than our estimates. Use
-		the controls above to adjust the yield to match what your investment advisor has projected, as well as the 
-		number of years remaining before you expect to retire.</Commentary>
-	</Investment>
+		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000">
+			<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
+			<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" SourceUrl="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
+			<Commentary>It costs surprisingly little to vaccinate a child against polio. The good news is that it appears to 
+				be working, as India was declared entirely polio-free in 2012 by the World Health Organization.
+			</Commentary>
+			<!-- Source: http://www.cbsnews.com/8301-202_162-57385542/india-declared-polio-free-by-world-health-org/ -->
+		</UnitsPerPeriod>
+		
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie rentals per week" LowerResultLimit="1" UpperResultLimit="7">
+			<Image Name="movie" SourceUrl="http://www.officinadigitale.org/"/>
+			<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99"/>
+			<Commentary>Based on the price of a High-Defenition New Release rental on Apple's iTunes movie store.</Commentary>
+		</UnitsPerPeriod>
+		
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie tickets per week" LowerResultLimit="2" UpperResultLimit="14">
+			<Image Name="popcorn"/>
+			<Configurable Name="Cost" Type="Money" Label="Cost per ticket" Value="8.15" Source="Time.com" SourceUrl="http://moneyland.time.com/2012/01/05/the-cure-for-the-ailing-movie-business-is-to-raise-ticket-prices/"/>
+		</UnitsPerPeriod>
+		
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14">
+			<Image Name="hamburger"/>
+			<Configurable Name="Cost" Type="Money" Label="Average meal price" Value="10.16" Source="QSR Magazine" SourceUrl="http://www.qsrmagazine.com/news/study-says-fast-food-remains-popular"/>
+		</UnitsPerPeriod>
+		
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="subway rides per week" LowerResultLimit="1" UpperResultLimit="14">
+			<Image Name="nysubway"/>
+			<Configurable Name="Cost" Type="Money" Label="Ticket price" Value="2.25"/>
+		</UnitsPerPeriod>
+		
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="console games per year" LowerResultLimit="1" UpperResultLimit="12">
+			<Image Name="controller"/>
+			<Configurable Name="Cost" Type="Money" Label="Average price per game" Value="45.00" Source="CostHelper" SourceUrl="http://electronics.costhelper.com/xbox360.html"/>
+			<Commentary>Video games, although sometimes expensive, actually offer a very economical form of entertainment.
+			With some studies indicating that gamers spend an average of 13 hours a week playing their favorites, a game that
+			you play for 2 or 3 weeks can work out to only pennies per hour of enjoyment. Far cheaper than renting movies.
+			<br/>Beware, of course, the endless stream of accessories and upgrades, subscription fees for online gaming, and
+				the sudden evaporation of your social life.
+			</Commentary>
+		</UnitsPerPeriod>
+		
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12">
+			<Image Name="inkjet"/>
+			<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30"/>
+		</UnitsPerPeriod>
+		
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" ForGender="Female">
+			<Image Name="hair_woman"/>
+			<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a woman" Value="56" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
+		</UnitsPerPeriod>
+		
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" ForGender="Male">
+			<Image Name="hair_man"/>
+			<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
+		</UnitsPerPeriod>
+		
+		<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24">
+			<Image Name="newspaper"/>
+			<!-- Estimate comes from New York Times rate for daily delivery -->
+			<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>
+		</TimeOfService>
+		
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30">
+			<Image Name="beach_chair"/>
+			<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" Source="PlanHawaiiVacation.com" SourceUrl="http://www.planhawaiivacation.com/vacationcost/"/>
+			<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
+				$455 for food, $540 for activities and $450 to rent a car for the week.
+			</Commentary>
+		</TimeUntil>
+		
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000">
+			<Image Name="treadmill"/>
+			<Configurable Name="Cost" Type="Money" Label="Average price" Value="1314.11" Source="Amazon.com" SourceUrl="http://www.amazon.com/mn/search/?_encoding=UTF8&amp;keywords=treadmills&amp;tag=synesmedia-20&amp;linkCode=ur2&amp;qid=1335895621&amp;camp=1789&amp;creative=390957&amp;rh=k%3Atreadmills%2Ci%3Asporting#/ref=sr_st?keywords=treadmills"/>
+			<Commentary>Based on the average price of the top-20 highest customer rated motorized treadmills on Amazon.com.</Commentary>
+		</TimeUntil>
+		
+		<TimeUntil TriggersOn="Repeating" Caption="to save for an Espresso machine" LowerResultLimit="1" UpperResultLimit="1000">
+			<Image Name="espressomachine"/>
+			<Configurable Name="Cost" Type="Money" Label="Average price" Value="334.72" Source="Amazon.com" SourceUrl="http://amzn.to/IJIUe5"/>
+			<Commentary>Based on the average price of the top-20 highest customer rated espresso machines on Amazon.com</Commentary>
+		</TimeUntil>
+		
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a Home Theater system" LowerResultLimit="1" UpperResultLimit="1000">
+			<Image Name="home_theater"/>
+			<Configurable Name="Cost" Type="Money" Label="Average price" Value="5000.00"/>
+			<Commentary>Our $5,000 estimate would cover a 42-inch flat-screen TV, a surround-sound system with five speakers, Blu-Ray DVD player
+			and a basic infrared remote. We didn't include some of the more expensive options such as professional installation, sound-proofing your room and 
+			installing theater seats, which can add another $30,000 or more to the budget.
+			<br/>If that high-end experience is what you're looking for then just tap on the <b>Average price</b> above and enter what your contractor has quoted you.</Commentary>
+		</TimeUntil>
+		
+		<UnitsForPrice TriggersOn="OneTime" Caption="Nimitz-class Aircraft Carriers" LowerResultLimit="1" UpperResultLimit="10" LowerThreshold="4500000000.00" Country="US">
+			<Image Name="aircraftcarrier"/>
+			<Configurable Name="Cost" Type="Money" Label="Price per carrier" Value="4500000000.00" Source="Wikipedia" SourceUrl="http://en.wikipedia.org/wiki/Nimitz_class_aircraft_carrier"/>
+			<Commentary>The largest capital ships in the world are Nimitz-class supercarriers. As President of the United
+			States, you would expect to have 5-10 of these warships in service at any given time.</Commentary>
+			<!-- Note: re-visit for best number of ships in service -->
+		</UnitsForPrice>
+		
+		<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6" Country="US">
+			<Image Name="ambulance"/>
+			<Configurable Name="Cost" Type="Money" Label="Price per service call" Value="750"/>
+			<Commentary>Ambulance transport varies widely in the United States, with most billings coming between $500 and $1,000, but you may be lucky enough to live
+			in an area where ambulance service is provided free by the city or county.
+			<br/>The most expensive emergency ride you can get, however, is an <b>Airlift</b>, or hellicopter ambulance, which can add more than $2,000 to your
+			hospital bill. An airlift is called for by paramedics for certain types of injury, especially head injuries that could have caused damage to the brain.</Commentary>
+		</UnitsForPrice>
+	</Consequences>
 	
-	<Investment TriggersOn="OneTime,Repeating" Caption="under the mattress for [Years] years">
-		<Image Name="bed"/>
-		<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="0"/>
-		<Configurable Name="Years" Type="Year" Label="I plan to raid this after" Value="3"/>
-		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>		
-		<Commentary>The phrase "stuffing money under the mattress" might have come from the Depression era, when banks were failing and the FDIC (Federal
-		Deposit Insurance Corporation) didn't exist yet.
-		<br/>According to the Federal Reserve about one in every 12 families, or 8.7 percent of the US population, do not have a bank account. The majority of
-		those are immigrants with low incomes who may be inhibited by a language barrier, or because they distrust traditional financial institutions.
-		<br/>Another reason for going without a bank account, especially for low-income workers, are the fees: monthly service fees and overdraft fees are more
-		common when you can't keep much money in your account at any time. Plus, the number of banks offering free checking accounts has dwindled rapidly since
-		2008.</Commentary>
-		<!-- http://www.cbsnews.com/2100-201_162-2970973.html -->
-	</Investment>
-	
-	<LoanPayoff TriggersOn="OneTime" Caption="to pay-off credit card in [Periods] months" LowerThreshold="10.00">
-		<Image Name="credit_card"/>
-		<Configurable Name="Rate" Type="Percentage" Label="APR for your card" Value="14.9"/>
-		<Configurable Name="PayoffMode" Type="PayoffMode" Label="Minimum payments calculated as" Value="PercentPlusInterest"/>
-		<Configurable Name="MinPayPercent" Type="Percentage" Label="Percent-After-Interest for minimum payments" Value="1.00"/>
-		<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>
-		<Commentary>The total payoff includes the principal plus the interest. This calculator assumes that you'll
-			only make minimum payments, defined as the interest plus a percentage of the balance.
-			Try increasing the <b>Percent-After-Interest</b> to see how much you'd save if you paid more each month.
-			<br/>
-			<br/>Making only minimum payments can force you to pay
-			an enormous amount of interest over time thanks to <b>monthly compounding and low monthly payments:</b> even if 
-			the interest rate is only 14% per year, putting $100 on a credit card does not mean you'll only ever to pay $14 
-			in interest, in fact you may pay <i>much</i> more.
-		<br/>The first trick they use, <b>monthly compounding</b> means that they calculate your interest and add it to
-			your balance each month. That means that by the second month they're now charging you <i>interest on the
-			interest.</i> Before the CARD act of 2009, some banks even charged more interest than the minimum payment
-			could cover, creating an escalating debt problem called <i>Negative Amortization</i> that you can never
-			escape from.
-		<br/>The second trick is to make the minimum monthly payment as low as possible in order to <i>stretch out</i>
-			the time it takes you to pay-off the card, sometimes to many years or decades. The longer you carry a 
-			balance the more often they can use monthly compounding to charge you more interest.
-		<br/>So what's the best way to use credit cards? Many smart shoppers pay-off their credit card balance in full
-			each month, while it's still in the <b>grace period.</b> The grace period is when you can pay-off the balance
-			of the card <i>without being charged interest</i>, and lasts for about 20 days after you use the card.
-		<br/>Even if you can't pay the balance in full, every time you pay <i>more than the minimum balance</i> the extra
-			amount will chip away at the <b>principal</b> balance, meaning that it bites-off more of the balance that
-			they're using to calculate your interest the following month.
-		</Commentary>
-	</LoanPayoff>
-	
-	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in Index Funds">
-		<Image Name="stockmarket"/>
-		<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="9.3"/>
-		<Configurable Name="Years" Type="Year" Label="When invested for" Value="5"/>
-		<Commentary>The Compound Annual Growth Rate of the Standard &amp; Poor 500 Index since its inception in 1957 is 
-			about <b>9.34%</b>, however this is not what you'll typically expect in any given year; in some years the index 
-			does worse than others, some years it does much better. When investing in such a fund you should be thinking
-			about the long term and be willing to ride-out dips in the market that can make it look as if you're losing
-			money.
-		</Commentary>
-	</Investment>
-	
-	<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in a savings account">
-		<Image Name="bank"/>
-		<Configurable Name="Rate" Type="Percentage" Label="Savings APR" Value="0.8"/>
-		<Configurable Name="Years" Type="Year" Label="When saved for" Value="5"/>
-	</Investment>
-	
-	<SpendingPower TriggersOn="Repeating" Caption="for a new car in [Installments] monthly payments" LowerResultLimit="10000" UpperResultLimit="100000">
-		<Image Name="carkey"/>
-		<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="4.5"/>
-		<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="60"/>		
-		<Commentary>The actual amount of money you can borrow will depend on your income, cash flow and credit history. This calculator assumes that
-		you'll qualify anyway, and shows how much you could borrow for the given payment amount.</Commentary>
-	</SpendingPower>
-	
-	<SpendingPower TriggersOn="Repeating" Caption="for a used car in [Installments] monthly payments" LowerResultLimit="1000" UpperResultLimit="9999">
-		<Image Name="carkey"/> <!-- Note: We want to look for a reasonable "used car" icon, if possible -->
-		<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="5.2"/>
-		<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="36"/>
-		<Commentary>They say that a new car loses half of its value the moment you drive it off the dealer's lot, but at the same time the loans for buying
-		used cars tend to have a slightly higher interest rate over a shorter period of time (60 months for new cars, 36 months for used).
-		<br/>Used cars also tend to incur more <i>repair costs</i> and have a <i>shorter</i> lifetime, so while they may be cheaper to buy initially, you need to 
-		be careful to balance price versus economy. If you plan to drive the same car for more than 6 years, you may wish to consider a <b>new</b> car instead 
-		because	most of your maintenance expenses will be covered by the warrantee. 
-		<br/>Indeed, some studies have suggested that the most <i>economical</i> choice is to buy a new car and drive it until it falls apart.</Commentary>
-	</SpendingPower>
-	
-	<SpendingPower TriggersOn="Repeating" Caption="mortgage, with [Installments] monthly payments" LowerResultLimit="100000" UpperResultLimit="1000000">
-		<Image Name="house"/>
-		<Configurable Name="Rate" Type="Percentage" Label="APR" Value="3.50"/>
-		<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="360"/>		
-	</SpendingPower>
-	
-	<TimeOfService UnitForCost="Year" TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00">
-		<Image Name="walle"/>
-		<Configurable Name="Cost" Type="Money" Label="Cost per year for trash removal" Value="479.28"/>
-		<!-- Monthly: 39.94. Source: http://www.sanramon.ca.gov/recycle/curbside.htm -->
-		<Commentary>Based on yearly curbside pickup rates as quoted by Waste Management Inc. for San Ramon, CA.</Commentary>
-	</TimeOfService>
-	
-	<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53">
-		<Image Name="bestsoap"/>
-		<Configurable Name="Cost" Type="Money" Label="Per bar of luxury soap" Value="20.00"/>
-		<Commentary>Soap: the yardstick of civilization.</Commentary>
-	</UnitsPerPeriod>
-	
-	<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3">
-		<Image Name="cappuccino"/>
-		<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="4.36" Source="HuMuch.com" SourceUrl="http://www.humuch.com/detailspage.php?item_id=102"/>
-		<Commentary>Based on the average price of a Grande Cappucino from a national coffee restaurant chain.</Commentary>
-	</UnitsPerPeriod>
+	<ResultTemplates>
+		<Template Name="AmortizationTable" Syntax="XSLT">
+			<xsl:stylesheet version="1.0">
+				<xsl:output method="html" indent="yes" omit-xml-declaration="yes"/>
+				<xsl:template match="/">
+					<h:html>
+						<h:head>
+							<h:title><xsl:value-of select="@title"/></h:title>
+						</h:head>
+						<h:style type="text/css">
+							tbody.scrollable {
+								overflow: scroll;
+								max-height: 300px;
+							}
+						</h:style>
+						<h:body>
+							<h:table width="100%">
+								<h:thead>
+									<h:tr>
+										<h:th>Installment</h:th>
+										<h:th>Payment</h:th>
+										<h:th>Interest</h:th>
+										<h:th>Principal</h:th>
+										<h:th>Balance</h:th>
+									</h:tr>
+								</h:thead>
+		
+								<h:tbody class="scrollable">
+									<xsl:apply-templates/>
+								</h:tbody>						
+							</h:table>
+						</h:body>
+					</h:html>				
+				</xsl:template>
+				
+				<xsl:template match="Row">
+					<h:tr>
+						<xsl:apply-templates/>
+					</h:tr>
+				</xsl:template>
+				
+				<xsl:template match="Installment">
+					<h:th><xsl:apply-templates/></h:th>
+				</xsl:template>
+				
+				<xsl:template match="Payment|Interest|Principal|Balance">
+					<h:td><xsl:apply-templates/></h:td>
+				</xsl:template>
+			</xsl:stylesheet>
 
-	<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000">
-		<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
-		<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" SourceUrl="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
-		<Commentary>It costs surprisingly little to vaccinate a child against polio. The good news is that it appears to 
-			be working, as India was declared entirely polio-free in 2012 by the World Health Organization.
-		</Commentary>
-		<!-- Source: http://www.cbsnews.com/8301-202_162-57385542/india-declared-polio-free-by-world-health-org/ -->
-	</UnitsPerPeriod>
+		</Template>
+	</ResultTemplates>
 	
-	<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie rentals per week" LowerResultLimit="1" UpperResultLimit="7">
-		<Image Name="movie" SourceUrl="http://www.officinadigitale.org/"/>
-		<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99"/>
-		<Commentary>Based on the price of a High-Defenition New Release rental on Apple's iTunes movie store.</Commentary>
-	</UnitsPerPeriod>
+	<ConsequenceTemplates>
+		<!-- Templates for basic consequence modules the user can add and customize. The UI will use the template names to populate a list -->
+		
+		<Template Name="Investment">
+			<Investment TriggersOn="OneTime,Repeating" Caption="invested">
+				<Image Name="money"/>
+				<Configurable Name="Rate" Type="Percentage" Label="APR" Value="5"/>
+				<Configurable Name="Years" Type="Year" Label="Term" Value="5"/>
+				<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>
+				<Commentary>Just look at how much you'll earn!</Commentary>
+			</Investment>
+		</Template>
+		
+		<Template Name="Loan Payoff">
+			<LoanPayoff TriggersOn="OneTime" Caption="to pay a loan" LowerThreshold="10.00">
+				<Image Name="money"/>
+				<Configurable Name="Rate" Type="Percentage" Label="Interest Rate" Value="5.0"/>
+				<Configurable Name="PayoffMode" Type="PayoffMode" Label="Minimum payments calculated as" Value="PercentPlusInterest"/>
+				<Configurable Name="MinPayPercent" Type="Percentage" Label="Percent-After-Interest for minimum payments" Value="1.00"/>
+				<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>
+				<Commentary>Think how much interest you'll avoid if you pay a little bit more each month.</Commentary>
+			</LoanPayoff>
+		</Template>
+		
+		<!-- We may add this one back in later, but the user might confuse it with "loan payoff", which is more likely what they'll want anyway -->
+		<!--
+		<Template Name="Financing potential">
+			<SpendingPower TriggersOn="Repeating" Caption="financed in [Installments] monthly payments">
+				<Image Name="house"/>
+				<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="5"/>
+				<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="60"/>		
+				<Commentary>Edit this comment</Commentary>
+			</SpendingPower>		
+		</Template>
+		-->
+		
+		<Template Name="Weeks of Service">
+			<TimeOfService UnitForCost="Week" TriggersOn="OneTime" Caption="weeks of service">
+				<Image Name="globe"/>
+				<Configurable Name="Cost" Type="Money" Label="Cost per week" Value="19.95"/>
+				<Commentary>If I skip eating out this week, I could pay for this much service!</Commentary>
+			</TimeOfService>
+		</Template>
+		
+		<Template Name="Months of Service">
+			<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="months of service">
+				<Image Name="globe"/>
+				<Configurable Name="Cost" Type="Money" Label="Cost per month" Value="19.95"/>
+				<Commentary>If I don't buy that AbFlexer Pro, I could pay for this much service!</Commentary>
+			</TimeOfService>
+		</Template>
+		
+		<Template Name="Years of Service">
+			<TimeOfService UnitForCost="Year" TriggersOn="OneTime" Caption="years of service">
+				<Image Name="globe"/>
+				<Configurable Name="Cost" Type="Money" Label="Cost per year" Value="19.95"/>
+				<Commentary>I don't really need that Deluxe Barbeque Grill, I could use the money to pay for this much service!</Commentary>
+			</TimeOfService>
+		</Template>
+		
+		<Template Name="Things Per Day">
+			<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="units per day" LowerResultLimit="1">
+				<Image Name="globe"/>
+				<Configurable Name="Cost" Type="Money" Label="Cost per unit" Value="10.00"/>
+				<Commentary>Wow, I didn't know I could buy so many of these for that much!</Commentary>
+			</UnitsPerPeriod>		
+		</Template>
+		
+		<Template Name="Things Per Week">
+			<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="units per week" LowerResultLimit="1">
+				<Image Name="globe"/>
+				<Configurable Name="Cost" Type="Money" Label="Cost per unit" Value="10.00"/>
+				<Commentary>I'd rather have more of these each week than waste money on that other thing.</Commentary>
+			</UnitsPerPeriod>		
+		</Template>		
 	
-	<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie tickets per week" LowerResultLimit="2" UpperResultLimit="14">
-		<Image Name="popcorn"/>
-		<Configurable Name="Cost" Type="Money" Label="Cost per ticket" Value="8.15" Source="Time.com" SourceUrl="http://moneyland.time.com/2012/01/05/the-cure-for-the-ailing-movie-business-is-to-raise-ticket-prices/"/>
-	</UnitsPerPeriod>
-	
-	<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14">
-		<Image Name="hamburger"/>
-		<Configurable Name="Cost" Type="Money" Label="Average meal price" Value="10.16" Source="QSR Magazine" SourceUrl="http://www.qsrmagazine.com/news/study-says-fast-food-remains-popular"/>
-	</UnitsPerPeriod>
-	
-	<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="subway rides per week" LowerResultLimit="1" UpperResultLimit="14">
-		<Image Name="nysubway"/>
-		<Configurable Name="Cost" Type="Money" Label="Ticket price" Value="2.25"/>
-	</UnitsPerPeriod>
-	
-	<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="console games per year" LowerResultLimit="1" UpperResultLimit="12">
-		<Image Name="controller"/>
-		<Configurable Name="Cost" Type="Money" Label="Average price per game" Value="45.00" Source="CostHelper" SourceUrl="http://electronics.costhelper.com/xbox360.html"/>
-		<Commentary>Video games, although sometimes expensive, actually offer a very economical form of entertainment.
-		With some studies indicating that gamers spend an average of 13 hours a week playing their favorites, a game that
-		you play for 2 or 3 weeks can work out to only pennies per hour of enjoyment. Far cheaper than renting movies.
-		<br/>Beware, of course, the endless stream of accessories and upgrades, subscription fees for online gaming, and
-			the sudden evaporation of your social life.
-		</Commentary>
-	</UnitsPerPeriod>
-	
-	<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12">
-		<Image Name="inkjet"/>
-		<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30"/>
-	</UnitsPerPeriod>
-	
-	<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" ForGender="Female">
-		<Image Name="hair_woman"/>
-		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a woman" Value="56" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
-	</UnitsPerPeriod>
-	
-	<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" ForGender="Male">
-		<Image Name="hair_man"/>
-		<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
-	</UnitsPerPeriod>
-	
-	<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24">
-		<Image Name="newspaper"/>
-		<!-- Estimate comes from New York Times rate for daily delivery -->
-		<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>
-	</TimeOfService>
-	
-	<TimeUntil TriggersOn="Repeating" Caption="to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30">
-		<Image Name="beach_chair"/>
-		<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" Source="PlanHawaiiVacation.com" SourceUrl="http://www.planhawaiivacation.com/vacationcost/"/>
-		<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
-			$455 for food, $540 for activities and $450 to rent a car for the week.
-		</Commentary>
-	</TimeUntil>
-	
-	<TimeUntil TriggersOn="Repeating" Caption="to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000">
-		<Image Name="treadmill"/>
-		<Configurable Name="Cost" Type="Money" Label="Average price" Value="1314.11" Source="Amazon.com" SourceUrl="http://www.amazon.com/mn/search/?_encoding=UTF8&amp;keywords=treadmills&amp;tag=synesmedia-20&amp;linkCode=ur2&amp;qid=1335895621&amp;camp=1789&amp;creative=390957&amp;rh=k%3Atreadmills%2Ci%3Asporting#/ref=sr_st?keywords=treadmills"/>
-		<Commentary>Based on the average price of the top-20 highest customer rated motorized treadmills on Amazon.com.</Commentary>
-	</TimeUntil>
-	
-	<TimeUntil TriggersOn="Repeating" Caption="to save for an Espresso machine" LowerResultLimit="1" UpperResultLimit="1000">
-		<Image Name="espressomachine"/>
-		<Configurable Name="Cost" Type="Money" Label="Average price" Value="334.72" Source="Amazon.com" SourceUrl="http://amzn.to/IJIUe5"/>
-		<Commentary>Based on the average price of the top-20 highest customer rated espresso machines on Amazon.com</Commentary>
-	</TimeUntil>
-	
-	<TimeUntil TriggersOn="Repeating" Caption="to save for a Home Theater system" LowerResultLimit="1" UpperResultLimit="1000">
-		<Image Name="home_theater"/>
-		<Configurable Name="Cost" Type="Money" Label="Average price" Value="5000.00"/>
-		<Commentary>Our $5,000 estimate would cover a 42-inch flat-screen TV, a surround-sound system with five speakers, Blu-Ray DVD player
-		and a basic infrared remote. We didn't include some of the more expensive options such as professional installation, sound-proofing your room and 
-		installing theater seats, which can add another $30,000 or more to the budget.
-		<br/>If that high-end experience is what you're looking for then just tap on the <b>Average price</b> above and enter what your contractor has quoted you.</Commentary>
-	</TimeUntil>
-	
-	<UnitsForPrice TriggersOn="OneTime" Caption="Nimitz-class Aircraft Carriers" LowerResultLimit="1" UpperResultLimit="10" LowerThreshold="4500000000.00" Country="US">
-		<Image Name="aircraftcarrier"/>
-		<Configurable Name="Cost" Type="Money" Label="Price per carrier" Value="4500000000.00" Source="Wikipedia" SourceUrl="http://en.wikipedia.org/wiki/Nimitz_class_aircraft_carrier"/>
-		<Commentary>The largest capital ships in the world are Nimitz-class supercarriers. As President of the United
-		States, you would expect to have 5-10 of these warships in service at any given time.</Commentary>
-		<!-- Note: re-visit for best number of ships in service -->
-	</UnitsForPrice>
-	
-	<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6" Country="US">
-		<Image Name="ambulance"/>
-		<Configurable Name="Cost" Type="Money" Label="Price per service call" Value="750"/>
-		<Commentary>Ambulance transport varies widely in the United States, with most billings coming between $500 and $1,000, but you may be lucky enough to live
-		in an area where ambulance service is provided free by the city or county.
-		<br/>The most expensive emergency ride you can get, however, is an <b>Airlift</b>, or hellicopter ambulance, which can add more than $2,000 to your
-		hospital bill. An airlift is called for by paramedics for certain types of injury, especially head injuries that could have caused damage to the brain.</Commentary>
-	</UnitsForPrice>
+		<Template Name="Things Per Month">
+			<UnitsPerPeriod Period="Month" TriggersOn="Repeating" Caption="units per month" LowerResultLimit="1">
+				<Image Name="globe"/>
+				<Configurable Name="Cost" Type="Money" Label="Cost per unit" Value="10.00"/>
+				<Commentary>I gotta have these, and all I have to do is not spend money on that other thing.</Commentary>
+			</UnitsPerPeriod>		
+		</Template>
+		
+		<Template Name="Things Per Year">
+			<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="units per year" LowerResultLimit="1">
+				<Image Name="globe"/>
+				<Configurable Name="Cost" Type="Money" Label="Cost per unit" Value="10.00"/>
+				<Commentary>I'll thank myself later when I realize I could have wasted the money buying that other thing instead of these.</Commentary>
+			</UnitsPerPeriod>		
+		</Template>
+		
+		<Template Name="Time to save up">
+			<TimeUntil TriggersOn="Repeating" Caption="to save for something" LowerResultLimit="1">
+				<Image Name="beach_umbrella"/>
+				<Configurable Name="Cost" Type="Money" Label="Cost to save for" Value="1000.00"/>
+				<Commentary>Everyone will be so envious when they see me with one of these!</Commentary>
+			</TimeUntil>		
+		</Template>
+	</ConsequenceTemplates>
 	
 	<Sources>
 		<Image Name="newspaper" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>

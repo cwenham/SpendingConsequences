@@ -79,7 +79,7 @@ namespace SpendingConsequences.Calculators
 			double ratePerPeriod = PercentAsDouble (Rate) / annualCompoundings;
 			double minPayRate = PercentAsDouble (MinPayPercent);
 			
-			XElement amortTable = new XElement("Amortization");
+			XElement amortTable = new XElement ("Amortization", new XAttribute ("Title", string.Format ("{0:C} financed at {1}%", request.InitialAmount, Rate)));
 			
 			while (remaining > 0m) {
 				periods++;
@@ -97,26 +97,47 @@ namespace SpendingConsequences.Calculators
 				
 				remaining -= minPayment;
 				
-				amortTable.Add(new XElement("Row",
-				                            new XElement("Installment", string.Format("Payment {0}", periods)),
-				                            new XElement("Payment", minPayment.ToString("C")),
-				                            new XElement("Interest", interest.ToString("C")),
-				                            new XElement("Principal", (minPayment - interest).ToString("C")),
-				                            new XElement("Balance", remaining.ToString("C"))));
+				if (periods > 100)
+					amortTable = null; // Give up trying to store this much data, the phone can't handle it
+				
+				if (amortTable != null)
+					amortTable.Add (new XElement ("Row",
+					                            new XElement ("Installment", string.Format ("Payment {0}", periods)),
+					                            new XElement ("Payment", minPayment.ToString ("C")),
+					                            new XElement ("Interest", interest.ToString ("C")),
+					                            new XElement ("Principal", (minPayment - interest).ToString ("C")),
+					                            new XElement ("Balance", remaining.ToString ("C")))
+					);
 			}
 			
 			decimal payoff = accruedInterest + request.InitialAmount;
 			
-			return new ConsequenceResult (this,
-			                             request,
-			                             new Money(payoff),
-			                             new TabularResult(request.Summary, String.Format("Amortization of a {0:C} loan at {1}%", request.InitialAmount, Rate), this, amortTable),
-			                             FormatCaption (this.Caption, new Dictionary<string,string> {
-				{"Periods", periods.ToString()},
-				{"Interest", accruedInterest.ToString ()}
-			}
-			), this.ImageName,
-			   (payoff >= LowerResultLimit && payoff <= UpperResultLimit));
+			if (amortTable != null)
+				return new ConsequenceResult (this,
+				                             request,
+				                             new Money (payoff),
+				                             new TabularResult (
+					request.Summary,
+					String.Format("Amortization of a {0:C} loan at {1}%", request.InitialAmount, Rate),
+					this,
+					amortTable
+				),
+				                             FormatCaption (this.Caption, new Dictionary<string,string> {
+					{"Periods", periods.ToString()},
+					{"Interest", accruedInterest.ToString ()}
+				}
+				), this.ImageName,
+				   (payoff >= LowerResultLimit && payoff <= UpperResultLimit));
+			else
+				return new ConsequenceResult (this,
+				                             request,
+				                             new Money (payoff),
+				                             FormatCaption (this.Caption, new Dictionary<string,string> {
+					{"Periods", periods.ToString()},
+					{"Interest", accruedInterest.ToString ()}
+				}
+				), this.ImageName,
+				   (payoff >= LowerResultLimit && payoff <= UpperResultLimit));				
 		}
 		#endregion
 	}
