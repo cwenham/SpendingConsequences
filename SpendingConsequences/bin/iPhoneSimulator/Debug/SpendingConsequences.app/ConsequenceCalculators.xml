@@ -16,6 +16,17 @@
 			number of years remaining before you expect to retire.</Commentary>
 		</Investment>
 		
+		<TimeOfService UnitForCost="Hour" TriggersOn="OneTime" Caption="of labor to earn">
+			<Image Name="globe"/>
+			<Configurable Name="Cost" Type="Money" Label="Your hourly wage" Value="23.38"/>
+			<Commentary>Modify the above to match your hourly wage so you can quickly see how long you need to work to earn any given amount.
+			<br/>The time span we report is also for <b>total</b> or <b>cumilative</b> labor, so if you work 8 hours a day and take weekends off, then the
+				actual amount of <i>calendar time</i> it'll take to earn this much money will be longer.
+			<br/>As a comparison, the US Bureau of Labor Statistics reported that the average hourly salary of an employee in the United States was
+			$23.38 as of April 2012, which is where we picked our initial value from.</Commentary>
+			<!-- http://www.bls.gov/eag/eag.us.htm -->
+		</TimeOfService>
+		
 		<Investment TriggersOn="OneTime,Repeating" Caption="under the mattress for [Years] years">
 			<Image Name="bed"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="0"/>

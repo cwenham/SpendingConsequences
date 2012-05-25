@@ -44,6 +44,9 @@ namespace SpendingConsequences.Calculators
 		{			
 			TimeSpan period = span.Value;
 			
+			if (period.TotalMinutes <= 59)
+				return string.Format ("{0:%m} minutes", period);
+			
 			if (period.TotalMinutes <= 2879)
 				return string.Format ("{0:%h} hours {0:%m} minutes", period);
 		

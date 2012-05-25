@@ -38,11 +38,11 @@ namespace SpendingConsequences.Calculators
 		// require higher precision. EG: A month or quarter can't be summarized
 		// to 30 and 90 days, respectively. If we adapt this for ETF, we must use
 		// calendar-sensitive math.
-		public static Dictionary<TriggerType, double> DayCounts = new Dictionary<TriggerType, double>() {
+		public static Dictionary<TriggerType, double> DayCounts = new Dictionary<TriggerType, double> () {
 			{TriggerType.PerDay, 1},
 			{TriggerType.PerWeek, 7},
-			{TriggerType.PerMonth, 30},
-			{TriggerType.PerQuarter, 90},
+			{TriggerType.PerMonth, 30.4375},
+			{TriggerType.PerQuarter, 91.3125},
 			{TriggerType.PerYear, 365.25}
 		};
 		
@@ -63,10 +63,24 @@ namespace SpendingConsequences.Calculators
 			{TimeUnit.Day, 1},
 			{TimeUnit.Week, 7},
 			{TimeUnit.Month, 30.4375},
-			{TimeUnit.Quarter, 4.0583333333},
+			{TimeUnit.Quarter, 91.3125},
 			{TimeUnit.Year, 365.25},
 			{TimeUnit.Century, 36525},
 			{TimeUnit.Millenium, 365250}
+		};
+		
+		public static Dictionary<TimeUnit, double> SecondsPerUnit = new Dictionary<TimeUnit, double> {
+			{TimeUnit.Millisecond, 0.001},
+			{TimeUnit.Second, 1},
+			{TimeUnit.Minute, 60},
+			{TimeUnit.Hour, 3600},
+			{TimeUnit.Day, 86400},
+			{TimeUnit.Week, 604800},
+			{TimeUnit.Month, 2629800},
+			{TimeUnit.Quarter, 7889400},
+			{TimeUnit.Year, 31557600},
+			{TimeUnit.Century, 3155760000},
+			{TimeUnit.Millenium, 31557600000}
 		};
 	}
 	

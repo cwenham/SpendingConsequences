@@ -37,7 +37,7 @@ namespace SpendingConsequences.Calculators
 		private TimeUnit _unitForCost = TimeUnit.Day;
 		private bool _unitWasSet = false;
 		
-		private static double MaxDays = TimeSpan.MaxValue.TotalDays;
+		private static double MaxSeconds = TimeSpan.MaxValue.TotalSeconds;
 		
 		#region implemented abstract members of SpendingConsequences.Calculators.ACalculator
 		public override ConsequenceResult Calculate (ConsequenceRequest request)
@@ -49,9 +49,9 @@ namespace SpendingConsequences.Calculators
 				return null;
 			
 			double serviceUnits = (double)(request.InitialAmount / this.Cost);
-			double serviceDays = ConsequenceRequest.DaysPerUnit [UnitForCost] * serviceUnits;
+			double serviceSeconds = ConsequenceRequest.SecondsPerUnit [UnitForCost] * serviceUnits;
 			
-			if (serviceDays > MaxDays)
+			if (serviceSeconds > MaxSeconds)
 				return new ConsequenceResult (this,
 				                             request,
 				                             new OverflowMessage (),
@@ -61,14 +61,13 @@ namespace SpendingConsequences.Calculators
 			else
 				return new ConsequenceResult (this, 
 				                              request, 
-				                              new Time (new TimeSpan ((int)(Math.Floor (serviceDays)), 0, 0, 0)),
+				                              new Time (TimeSpan.FromSeconds(serviceSeconds)),
 				                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
-					{"Unit", this.UnitForCost.ToString ()},
-					{"Cost", this.Cost.ToString ()}
-				}
-				),
+													{"Unit", this.UnitForCost.ToString ()},
+													{"Cost", this.Cost.ToString ()}
+												}),
 				                              this.ImageName,
-				                              (serviceDays <= MaxDays && serviceUnits >= (double)LowerResultLimit && serviceUnits <= (double)UpperResultLimit));
+				                              (serviceSeconds <= MaxSeconds && serviceUnits >= (double)LowerResultLimit && serviceUnits <= (double)UpperResultLimit));
 		
 		}
 		#endregion
