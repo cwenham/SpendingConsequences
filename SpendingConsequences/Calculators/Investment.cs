@@ -69,7 +69,7 @@ namespace SpendingConsequences.Calculators
 			
 			int annualCompoundings = CompoundingsPerYear (Compounding);
 			
-			double compoundingPeriods = Years * annualCompoundings;
+			int compoundingPeriods = Years * annualCompoundings;
 			double ratePerPeriod = PercentAsDouble (Rate) / annualCompoundings;
 			double investmentsPerYear = InvestmentsPerYear (request.TriggerMode);
 			
@@ -85,10 +85,8 @@ namespace SpendingConsequences.Calculators
 					// Compounding frequency is the same as the investment frequency, so we can
 					// use a mathematical series.
 					// Described here: http://mathdude.quickanddirtytips.com/math-dude-web-bonus.aspx
-				
-					double seriesSum = 0;
-					for (int i = 1; i <= compoundingPeriods; i++)
-						seriesSum += Math.Pow (1 + ratePerPeriod, i);
+					
+					double seriesSum = Enumerable.Range (1, compoundingPeriods).Sum (x => Math.Pow (1 + ratePerPeriod, x));
 				
 					result = (decimal)(((double)request.InitialAmount) * seriesSum);
 				
@@ -98,24 +96,24 @@ namespace SpendingConsequences.Calculators
 					double investmentPeriods = Years * investmentsPerYear;
 					int compoundingsPerInvestment = ((int)Math.Floor (((double)annualCompoundings / investmentsPerYear)));
 				
-					double sum = ((double)request.InitialAmount) * Math.Pow (1 + ratePerPeriod, compoundingsPerInvestment);
+					decimal sum = request.InitialAmount * (decimal)(Math.Pow (1 + ratePerPeriod, compoundingsPerInvestment));
 					for (int i = 1; i <= investmentPeriods - 1; i++)
-						sum = (sum + ((double)request.InitialAmount)) * Math.Pow (1 + ratePerPeriod, compoundingsPerInvestment);
+						sum = (sum + (request.InitialAmount * (decimal)(Math.Pow (1 + ratePerPeriod, compoundingsPerInvestment))));
 				
 					result = (decimal)sum;
 					
 				} else if (investmentsPerYear > annualCompoundings) {
 					// Apply the interest to the midpoint of the previous + next balance for each compounding period
 			
-					double investmentsPerPeriod = (double)investmentsPerYear / annualCompoundings;
-					double amountPerPeriod = (investmentsPerPeriod * ((double)request.InitialAmount));
+					decimal investmentsPerPeriod = (decimal)(investmentsPerYear / annualCompoundings);
+					decimal amountPerPeriod = (investmentsPerPeriod * request.InitialAmount);
 				
-					double sum = 0;
+					decimal sum = 0;
 					for (int i = 1; i <= compoundingPeriods; i++) {
-						sum = sum + amountPerPeriod + ((sum + amountPerPeriod / 2) * ratePerPeriod);
+						sum = sum + amountPerPeriod + ((sum + amountPerPeriod / 2) * (decimal)ratePerPeriod);
 					}
 				
-					result = (decimal)sum;
+					result = sum;
 				}				
 			} catch (OverflowException oex) {
 				Console.WriteLine (String.Format ("Number overflow in investment calculator: {0}", oex.Message));
