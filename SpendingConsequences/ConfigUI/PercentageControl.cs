@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Diagnostics;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -35,12 +36,31 @@ namespace SpendingConsequences
 			this.stepper.MinimumValue = ConfigValue.MinValue;
 			this.stepper.MaximumValue = ConfigValue.MaxValue;
 			this.stepper.StepValue = ConfigValue.StepValue;
+			valueChangeTimer = new Stopwatch ();
+			valueChangeTimer.Start ();
 			this.stepper.ValueChanged += delegate {
-				this.ConfigValue.Value = stepper.Value;
+				valueChangeTimer.Stop ();
 				this.configuredValue.Text = String.Format ("{0:0.00}", stepper.Value);
-				ValueChanged (this, new ConfigurableValueChanged (this.ConfigValue));
+				
+				if (valueChangeTimer.ElapsedMilliseconds < 1000)
+					averageValueChange = ((long)Math.Floor ((double)(averageValueChange + valueChangeTimer.ElapsedMilliseconds) / 2));
+
+				// Go faster if the user has held their finger down for a while
+				if (averageValueChange <= 100)
+					this.stepper.StepValue = ConfigValue.StepValue * 10;
+				
+				valueChangeTimer.Reset ();
+				valueChangeTimer.Start ();
+			};
+			this.stepper.TouchUpInside += delegate {
+				this.ConfigValue.Value = stepper.Value;
+				ValueChanged (this, new ConfigurableValueChanged (this.ConfigValue));	
+				this.stepper.StepValue = ConfigValue.StepValue;
 			};
 		}
+		
+		private long averageValueChange = 1000;
+		private Stopwatch valueChangeTimer { get; set; }
 		
 		public override void ViewDidUnload ()
 		{

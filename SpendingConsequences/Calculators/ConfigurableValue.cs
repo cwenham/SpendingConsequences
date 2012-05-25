@@ -62,11 +62,11 @@ namespace SpendingConsequences.Calculators
 				if (Definition.Attribute ("StepValue") != null) {
 					double stepVal = 0;
 					if (!double.TryParse (Definition.Attribute ("StepValue").Value, out stepVal))
-						return 0.1;
+						return 0.01;
 					else
 						return stepVal;
 				} else
-					return 0.1;
+					return 0.01;
 			}
 		}
 		
