@@ -2,8 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using System.Linq.Parallel;
-using System.Diagnostics;
+using System.ComponentModel;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -33,19 +32,50 @@ namespace SpendingConsequences
 		
 		private Gender UserGender = Gender.Unspecified;
 		
+		private BackgroundWorker computeWorker;
+		
 		public void ComputeConsequences (ConsequenceRequest request)
 		{	
-			this.CurrentResults = (from c in Profile.Calculators
+			if (computeWorker != null && computeWorker.IsBusy)
+				computeWorker.CancelAsync ();
+			
+			computeWorker = new BackgroundWorker ();
+			computeWorker.DoWork += HandleDoWork;
+			computeWorker.RunWorkerCompleted += HandleRunWorkerCompleted;
+			computeWorker.WorkerSupportsCancellation = true;
+			computeWorker.RunWorkerAsync (request);
+		}
+
+		void HandleRunWorkerCompleted (object sender, RunWorkerCompletedEventArgs e)
+		{
+			if (e.Result != null) {
+				this.CurrentResults = (ConsequenceResult[])(e.Result);	
+				ResultsReady (this, new EventArgs ());
+			}
+		}
+
+		void HandleDoWork (object sender, DoWorkEventArgs e)
+		{
+			BackgroundWorker myWorker = sender as BackgroundWorker;
+			ConsequenceRequest request = e.Argument as ConsequenceRequest;
+				
+			ConsequenceResult[] results = (from c in Profile.Calculators
 			        where c.WillTriggerOn (request.TriggerMode)
 				&& (c.ForGender == Gender.Unspecified || c.ForGender == UserGender)
 				&& (c.Country == null || c.Country == NSLocale.CurrentLocale.CountryCode)
 				&& c.LowerThreshold <= request.InitialAmount
 				&& c.UpperThreshold >= request.InitialAmount
 				    let result = c.Calculate (request)
-					where result != null
+					where !myWorker.CancellationPending
+				&& result != null
 				&& result.Recommended
 					select result).ToArray ();
+				
+			if (!myWorker.CancellationPending)
+				e.Result = results;
 		}
+		
+		public event EventHandler<EventArgs> ResultsReady = delegate {};
 		
 		public int ReplaceResult (ConsequenceResult oldResult, ConsequenceResult newResult)
 		{

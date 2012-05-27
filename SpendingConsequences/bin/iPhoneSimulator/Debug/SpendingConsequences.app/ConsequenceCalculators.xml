@@ -42,7 +42,7 @@
 			<!-- http://www.cbsnews.com/2100-201_162-2970973.html -->
 		</Investment>
 		
-		<LoanPayoff TriggersOn="OneTime" Caption="to pay-off credit card in [Periods] months" LowerThreshold="10.00" UpperThreshold="1000000" TableTemplate="AmortizationTable">
+		<LoanPayoff TriggersOn="OneTime" Caption="to pay-off credit card in [Periods] months" LowerThreshold="10.00" UpperThreshold="1000000000" TableTemplate="AmortizationTable">
 			<Image Name="credit_card"/>
 			<Configurable Name="Rate" Type="Percentage" Label="APR for your card" Value="14.9"/>
 			<Configurable Name="PayoffMode" Type="PayoffMode" Label="Minimum payments calculated as" Value="PercentPlusInterest"/>

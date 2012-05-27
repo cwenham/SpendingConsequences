@@ -74,6 +74,9 @@ namespace SpendingConsequences
 			if (Profile != null) {
 				TableSource = new ConsequenceTableSource (Profile, this);
 				ConsequenceView.Source = TableSource;
+				TableSource.ResultsReady += delegate {
+					this.ConsequenceView.ReloadData ();	
+				};
 			}
 			
 			this.InitialAmount.ShouldReturn = (textField) => {
@@ -137,7 +140,6 @@ namespace SpendingConsequences
 				return;
 			
 			TableSource.ComputeConsequences (new ConsequenceRequest (CurrentAmount, CurrentMode));
-			this.ConsequenceView.ReloadData ();
 		}
 
 		void HandleMul2handleTouchUpInside (object sender, EventArgs e)
@@ -151,8 +153,7 @@ namespace SpendingConsequences
 			else
 				CurrentAmount = 1.00m;
 			
-			TableSource.ComputeConsequences (new ConsequenceRequest (CurrentAmount, CurrentMode));
-			this.ConsequenceView.ReloadData ();			
+			TableSource.ComputeConsequences (new ConsequenceRequest (CurrentAmount, CurrentMode));		
 		}
 		
 		private decimal CurrentAmount {
@@ -222,10 +223,8 @@ namespace SpendingConsequences
 		
 		private void RefreshCalculators ()
 		{
-			if (TableSource != null && CurrentAmount > 0m) {
+			if (TableSource != null && CurrentAmount > 0m)
 				TableSource.ComputeConsequences (new ConsequenceRequest (CurrentAmount, CurrentMode));
-				this.ConsequenceView.ReloadData ();
-			}
 		}
 		
 		public void DisplayConsequenceDetails (ConsequenceResult result)
