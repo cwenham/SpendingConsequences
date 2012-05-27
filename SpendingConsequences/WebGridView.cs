@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using System.Xml.Xsl;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -27,12 +28,29 @@ namespace SpendingConsequences
 		
 		public ConsequenceResult CurrentResult { get; private set; }
 		
+		private BackgroundWorker resultWorker;
+		
 		public void SetResult (ConsequenceResult result)
 		{
 			if (CurrentResult == result)
 				return;
 			
-			CurrentResult = result;			
+			CurrentResult = result;	
+			
+			if (resultWorker != null && resultWorker.IsBusy)
+				resultWorker.CancelAsync ();
+			
+			resultWorker = new BackgroundWorker ();
+			resultWorker.WorkerSupportsCancellation = true;
+			resultWorker.RunWorkerCompleted += HandleRunWorkerCompleted;
+			resultWorker.DoWork += HandleDoWork;
+			resultWorker.RunWorkerAsync (result);
+		}
+
+		void HandleDoWork (object sender, DoWorkEventArgs e)
+		{
+			BackgroundWorker myWorker = sender as BackgroundWorker;
+			ConsequenceResult result = e.Argument as ConsequenceResult;
 			
 			string tableTemplateName = result.Calculator.TableTemplate;
 			if (tableTemplateName == null)
@@ -62,14 +80,22 @@ namespace SpendingConsequences
 			} else
 				transformer = TransformCache [tableTemplateName];
 			
-			XmlReader datReader = data.CreateReader ();
 			StringBuilder htmlBuilder = new StringBuilder ();
-			XmlWriter writer = XmlWriter.Create (htmlBuilder);
-			transformer.Transform (datReader, writer);
-			writer.Flush ();
+			if (!myWorker.CancellationPending) {
+				XmlReader datReader = data.CreateReader ();
+				XmlWriter writer = XmlWriter.Create (htmlBuilder);
+				transformer.Transform (datReader, writer);
+				writer.Flush ();
+			}
 			
-			DisplayedHTML = htmlBuilder.ToString ();
-			if (this.webView != null)
+			if (!myWorker.CancellationPending)
+				e.Result = htmlBuilder.ToString ();
+		}
+
+		void HandleRunWorkerCompleted (object sender, RunWorkerCompletedEventArgs e)
+		{
+			DisplayedHTML = e.Result as String;
+			if (this.webView != null && DisplayedHTML != null)
 				this.webView.LoadData (DisplayedHTML, "application/xhtml+xml", "utf-8", BaseURL);
 		}
 		
