@@ -42,7 +42,7 @@
 			<!-- http://www.cbsnews.com/2100-201_162-2970973.html -->
 		</Investment>
 		
-		<LoanPayoff TriggersOn="OneTime" Caption="to pay-off credit card in [Periods] months" LowerThreshold="10.00" TableTemplate="AmortizationTable">
+		<LoanPayoff TriggersOn="OneTime" Caption="to pay-off credit card in [Periods] months" LowerThreshold="10.00" UpperThreshold="1000000" TableTemplate="AmortizationTable">
 			<Image Name="credit_card"/>
 			<Configurable Name="Rate" Type="Percentage" Label="APR for your card" Value="14.9"/>
 			<Configurable Name="PayoffMode" Type="PayoffMode" Label="Minimum payments calculated as" Value="PercentPlusInterest"/>
@@ -75,7 +75,7 @@
 		
 		<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in Index Funds">
 			<Image Name="stockmarket"/>
-			<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="9.3"/>
+			<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="9.62"/>
 			<Configurable Name="Years" Type="Year" Label="When invested for" Value="5"/>
 			<Commentary>The Compound Annual Growth Rate of the Standard &amp; Poor 500 Index since its inception in 1957 is 
 				about <b>9.34%</b>, however this is not what you'll typically expect in any given year; in some years the index 
@@ -83,6 +83,7 @@
 				about the long term and be willing to ride-out dips in the market that can make it look as if you're losing
 				money.
 			</Commentary>
+			<!-- http://www.moolanomy.com/5924/what-is-the-historical-return-of-the-sp-500-kmulligan/ -->
 		</Investment>
 		
 		<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in a savings account">
@@ -95,8 +96,8 @@
 			<Image Name="carkey"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="4.5"/>
 			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="60"/>		
-			<Commentary>The actual amount of money you can borrow will depend on your income, cash flow and credit history. This calculator assumes that
-			you'll qualify anyway, and shows how much you could borrow for the given payment amount.</Commentary>
+			<Commentary>The actual amount of money you can borrow will depend on your income, cash flow and credit history. But assuming you'll qualify anyway, 
+			this is how much you could borrow for the given payment amount.</Commentary>
 		</SpendingPower>
 		
 		<SpendingPower TriggersOn="Repeating" Caption="for a used car in [Installments] monthly payments" LowerResultLimit="1000" UpperResultLimit="9999" TableTemplate="AmortizationTable" RowTemplate="AmortizationRow">

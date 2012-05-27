@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using System.Linq.Parallel;
+using System.Diagnostics;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -35,13 +37,13 @@ namespace SpendingConsequences
 		{	
 			this.CurrentResults = (from c in Profile.Calculators
 			        where c.WillTriggerOn (request.TriggerMode)
-			        && (c.ForGender == Gender.Unspecified || c.ForGender == UserGender)
-			        && (c.Country == null || c.Country == NSLocale.CurrentLocale.CountryCode)
-			        && c.LowerThreshold <= request.InitialAmount
-			        && c.UpperThreshold >= request.InitialAmount
+				&& (c.ForGender == Gender.Unspecified || c.ForGender == UserGender)
+				&& (c.Country == null || c.Country == NSLocale.CurrentLocale.CountryCode)
+				&& c.LowerThreshold <= request.InitialAmount
+				&& c.UpperThreshold >= request.InitialAmount
 				    let result = c.Calculate (request)
 					where result != null
-			        && result.Recommended
+				&& result.Recommended
 					select result).ToArray ();
 		}
 		
