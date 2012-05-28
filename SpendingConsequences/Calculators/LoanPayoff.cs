@@ -66,35 +66,14 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		
-		private IEnumerable<AmortizedInstallment> Amortization (decimal amount)
-		{
-			int annualCompoundings = CompoundingsPerYear (Compounding);
-			double ratePerPeriod = PercentAsDouble (Rate) / annualCompoundings;
-			double minPayRate = PercentAsDouble (MinPayPercent);
-			
-			decimal remaining = amount;
-			
-			var baseAmortization = from p in Enumerable.Range (1, int.MaxValue)
-				let interest = remaining * (decimal)ratePerPeriod
-				let subBalance = remaining + interest
-				let basePay = remaining * (decimal)minPayRate
-				let minPay = PayoffMode == PayoffMode.PercentPlusInterest ? basePay + interest : basePay
-				let adjustedPay = minPay < MinimumPayment ? MinimumPayment : minPay
-				let actualPay = adjustedPay > subBalance ? subBalance : adjustedPay
-				select new AmortizedInstallment {
-					Installment = p,
-					Interest = interest,
-					Payment = actualPay,
-					BeforePayment = remaining += interest,
-					Balance = remaining -= actualPay
-					};
-			
-			return baseAmortization.TakeWhile (x => x.BeforePayment > 0);
-		}
-		
 		public override XElement GetTableData (ConsequenceResult result)
 		{
-			var amortization = Amortization (result.Request.InitialAmount);
+			var amortization = Financials.Amortization (result.Request.InitialAmount, 
+			                                 CompoundingsPerYear (Compounding), 
+			                                 PercentAsDouble (Rate), 
+			                                 PercentAsDouble (MinPayPercent),
+			                                 MinimumPayment,
+			                                 PayoffMode);
 
 			return new XElement (new XStreamingElement ("Amortization", 
 			                    new XAttribute ("Title", string.Format ("{0:C} financed at {1}%", result.Request.InitialAmount, Rate)),
@@ -115,7 +94,12 @@ namespace SpendingConsequences.Calculators
 			if (request.InitialAmount == 0 || request.InitialAmount < LowerThreshold || request.InitialAmount > UpperThreshold)
 				return null;
 			
-			var amortization = Amortization (request.InitialAmount);
+			var amortization = Financials.Amortization (request.InitialAmount, 
+			                                 CompoundingsPerYear (Compounding), 
+			                                 PercentAsDouble (Rate), 
+			                                 PercentAsDouble (MinPayPercent),
+			                                 MinimumPayment,
+			                                 PayoffMode);
 			
 			int installments = 0;
 			decimal totalInterest = 0;
@@ -141,23 +125,6 @@ namespace SpendingConsequences.Calculators
 				   (payoff >= LowerResultLimit && payoff <= UpperResultLimit));		
 		}
 		#endregion
-	}
-	
-	public enum PayoffMode {
-		FlatPercent,
-		PercentPlusInterest
-	}
-	
-	public class AmortizedInstallment {
-		public int Installment { get; set; }
-		
-		public decimal Interest { get; set; }
-		
-		public decimal Payment { get; set; }
-		
-		public decimal BeforePayment { get; set; }
-		
-		public decimal Balance { get; set; }
 	}
 }
 

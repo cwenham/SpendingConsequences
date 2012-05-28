@@ -50,6 +50,31 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		
+		public override XElement GetTableData (ConsequenceResult result)
+		{
+			int annualPayments = CompoundingsPerYear (PaymentFrequency);
+			decimal paymentPerInstallment = (result.Request.InitialAmount * (decimal)(InvestmentsPerYear (result.Request.TriggerMode))) / annualPayments;
+			
+			var amortization = Financials.Amortization (((Money)result.ComputedValue).Value, 
+			                                 CompoundingsPerYear (PaymentFrequency), 
+			                                 PercentAsDouble (Rate), 
+			                                 0.0,
+			                                 paymentPerInstallment,
+			                                 PayoffMode.FlatAmount);
+
+			return new XElement (new XStreamingElement ("Amortization", 
+			                    new XAttribute ("Title", string.Format ("{0:C} financed at {1}%", ((Money)result.ComputedValue).Value, Rate)),
+			                       from i in amortization
+			                       select new XElement ("Row",
+			                    new XElement ("Installment", string.Format ("Payment {0}", i.Installment)),
+			                    new XElement ("Payment", i.Payment.ToString ("C")),
+			                    new XElement ("Interest", i.Interest.ToString ("C")),
+			                    new XElement ("Principal", (i.Payment - i.Interest).ToString ("C")),
+			                    new XElement ("Balance", i.Balance.ToString ("C")))
+			)
+			);
+		}
+		
 		#region implemented abstract members of SpendingConsequences.Calculators.ACalculator
 		public override ConsequenceResult Calculate (ConsequenceRequest request)
 		{
@@ -71,6 +96,7 @@ namespace SpendingConsequences.Calculators
 			return new ConsequenceResult (this,
 		                             request,
 		                             new Money (maxLoanAmount),
+			                         new TabularResult (request.Summary, string.Format ("Amortization of a {0:C} loan at {1}%", maxLoanAmount, Rate), this),
 		                             FormatCaption (this.Caption, new Dictionary<string,string> {
 			{"Installments", Installments.ToString ()},
 			{"TotalPayment", totalPayment.ToString ()},

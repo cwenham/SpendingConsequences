@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="NS.cs" />
     <Compile Include="Profile.cs" />
+    <Compile Include="Calculators\Financials.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
