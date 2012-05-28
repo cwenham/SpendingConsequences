@@ -42,6 +42,12 @@ namespace SpendingConsequences
 			
 			// Release any cached data, images, etc that aren't in use.
 			ConfigurableValue.CloseResources ();
+			
+			if (DetailController != null)
+				if (this.NavigationController.PresentedViewController == this) {
+					DetailController.ResultChanged -= HandleResultChanged;
+					DetailController = null;	
+				}
 		}
 		
 		public override void ViewDidLoad ()
@@ -231,13 +237,7 @@ namespace SpendingConsequences
 		{
 			if (this.DetailController == null) {
 				DetailController = new ConsequenceDetailController (Profile);
-				DetailController.ResultChanged += delegate(object sender, ResultChangedArgs e) {
-					int index = this.TableSource.ReplaceResult (e.OldResult, e.NewResult);
-					if (index > -1) {
-						NSIndexPath path = NSIndexPath.FromRowSection (index, 0);
-						this.ConsequenceView.ReloadRows (new NSIndexPath[] {path}, UITableViewRowAnimation.None);
-					}
-				};
+				DetailController.ResultChanged += HandleResultChanged;
 			}
 			
 			DetailController.SetCurrentResult (result);
@@ -250,6 +250,15 @@ namespace SpendingConsequences
 				var BackButton = new UIBarButtonItem ("Back", UIBarButtonItemStyle.Bordered, null);
 				this.NavigationController.NavigationBar.BackItem.BackBarButtonItem = BackButton;
 			}
+		}
+
+		void HandleResultChanged (object sender, ResultChangedArgs e)
+		{
+			int index = this.TableSource.ReplaceResult (e.OldResult, e.NewResult);
+			if (index > -1) {
+				NSIndexPath path = NSIndexPath.FromRowSection (index, 0);
+				this.ConsequenceView.ReloadRows (new NSIndexPath[] {path}, UITableViewRowAnimation.None);
+			}			
 		}
 		
 		private bool IsEditingAmount = false;

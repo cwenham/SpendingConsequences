@@ -65,7 +65,7 @@
 						</object>
 						<object class="IBUIView" id="391071860">
 							<reference key="NSNextResponder" ref="602011254"/>
-							<int key="NSvFlags">292</int>
+							<int key="NSvFlags">268</int>
 							<array class="NSMutableArray" key="NSSubviews">
 								<object class="IBUITextField" id="614577451">
 									<reference key="NSNextResponder" ref="391071860"/>
@@ -226,7 +226,7 @@
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
 					</array>
-					<string key="NSFrame">{{0, 20}, {320, 460}}</string>
+					<string key="NSFrameSize">{320, 460}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="1046498637"/>
@@ -238,7 +238,6 @@
 					</object>
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				</object>
-				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
 					<int key="IBUIInterfaceOrientation">1</int>
 					<int key="interfaceOrientation">1</int>

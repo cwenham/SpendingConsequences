@@ -80,10 +80,15 @@ namespace SpendingConsequences
 		
 		private void UpdateCurrentResult (ConsequenceResult result)
 		{
-			CurrentResult = result;
+			try {
+				CurrentResult = result;
 			
-			this.calculatedAmount.Text = result.ComputedValue.ToString();
-			this.caption.Text = result.FormattedCaption;
+				this.calculatedAmount.Text = result.ComputedValue.ToString ();
+				this.caption.Text = result.FormattedCaption;				
+			} catch (Exception ex) {
+				Console.WriteLine (string.Format ("{0} thrown when updating current result: {1}", ex.GetType ().Name, ex.Message));
+			}
+
 		}
 		
 		private UIViewController GetConfigurator (ConfigurableValue val)
@@ -130,12 +135,10 @@ namespace SpendingConsequences
 		{
 			// Releases the view if it doesn't have a superview.
 			base.DidReceiveMemoryWarning ();
-			
+		
 			// Release any cached data, images, etc that aren't in use.
-			if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.Portrait 
-				|| UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.PortraitUpsideDown
-				&& this.GridView != null)
-				this.GridView = null;
+			if (this.GridView != null && this.PresentedViewController == this)
+				this.GridView = null;	
 		}
 		
 		public override void ViewDidLoad ()
@@ -161,19 +164,20 @@ namespace SpendingConsequences
 		
 		private void DeviceRotated (NSNotification notification)
 		{
-			if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeLeft 
-				|| UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight
-				&& CurrentResult.Table != null) {
+			if ((UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeLeft 
+				|| UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight)
+				&& CurrentResult.Table != null
+				&& this.PresentedViewController == this) {
 				if (GridView == null)
 					GridView = new WebGridView (Profile);
 				GridView.SetResult (this.CurrentResult);
-				this.PresentViewController (GridView, false, null);
+				this.PresentViewController (GridView, true, null);
 			}
 			
-			if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.Portrait 
-				|| UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.PortraitUpsideDown
+			if ((UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.Portrait 
+				|| UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.PortraitUpsideDown)
 				&& this.PresentedViewController == GridView) {
-				this.DismissViewController (false, () => {});
+				this.DismissViewController (true, () => {});
 			}
 		}
 		

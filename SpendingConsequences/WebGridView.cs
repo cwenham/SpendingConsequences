@@ -111,7 +111,8 @@ namespace SpendingConsequences
 			base.DidReceiveMemoryWarning ();
 			
 			// Release any cached data, images, etc that aren't in use.
-			TransformCache.Clear ();
+			if (TransformCache != null)
+				TransformCache.Clear ();
 		}
 		
 		public override void ViewDidLoad ()
