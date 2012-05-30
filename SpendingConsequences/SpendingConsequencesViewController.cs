@@ -207,12 +207,19 @@ namespace SpendingConsequences
 			//ToDo: Move me to a neutral class so it's easier to reuse me
 			
 			UIView accView = new UIView (new RectangleF (10.0f, 0.0f, 310.0f, 30.0f));
-			accView.BackgroundColor = UIColor.LightGray;
+			accView.BackgroundColor = UIColor.FromRGB (197, 202, 188);
 			
 			UIButton btnDone = UIButton.FromType (UIButtonType.Custom);
 			btnDone.Frame = new RectangleF (240.0f, 0.0f, 80.0f, 30.0f);
+			btnDone.SetTitleColor (UIColor.Black, UIControlState.Normal);
 			btnDone.SetTitle ("Done", UIControlState.Normal);
-			btnDone.BackgroundColor = UIColor.Blue;
+
+			UIImage segSelected = UIImage.FromBundle (@"UIArt/mode_sel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
+			UIImage segUnselected = UIImage.FromBundle (@"UIArt/mode_unsel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
+			
+			btnDone.SetBackgroundImage (segUnselected, UIControlState.Normal);
+			btnDone.SetBackgroundImage (segSelected, UIControlState.Highlighted);
+			
 			btnDone.TouchUpInside += doneButtonHandler;
 			
 			accView.AddSubview (btnDone);

@@ -167,17 +167,17 @@ namespace SpendingConsequences
 			if ((UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeLeft 
 				|| UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight)
 				&& CurrentResult.Table != null
-				&& this.PresentedViewController == this) {
+				&& (this.PresentedViewController == null || this.PresentedViewController == this)) {
 				if (GridView == null)
 					GridView = new WebGridView (Profile);
 				GridView.SetResult (this.CurrentResult);
-				this.PresentViewController (GridView, true, null);
+				this.PresentViewController (GridView, false, null);
 			}
 			
 			if ((UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.Portrait 
 				|| UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.PortraitUpsideDown)
 				&& this.PresentedViewController == GridView) {
-				this.DismissViewController (true, () => {});
+				this.DismissViewController (false, () => {});
 			}
 		}
 		
