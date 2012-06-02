@@ -132,9 +132,33 @@ namespace SpendingConsequences.Calculators
 			return new ConsequenceResult (this, 
 			                              request,
 			                              new Money (result),
+			                              new TabularResult(request.Summary, string.Format ("{0} invested at {1:0.00}%", request.Summary, Rate), this),
 			                              FormatMyCaption (),
 			                              this.ImageName,
 			                              (result >= this.LowerResultLimit && result <= this.UpperResultLimit));
+		}
+		
+		public override XElement GetTableData (ConsequenceResult result)
+		{
+			int annualCompoundings = CompoundingsPerYear (Compounding);
+			decimal investmentsPerYear = (decimal)(InvestmentsPerYear (result.Request.TriggerMode));
+			
+			var schedule = Financials.InvestmentSchedule (result.Request.InitialAmount,
+			                                             investmentsPerYear,
+			                                             annualCompoundings,
+			                                             PercentAsDouble (Rate),
+			                                             (int)(Math.Floor(investmentsPerYear * Years)));	
+			
+			return new XElement (new XStreamingElement ("InvestmentSchedule", 
+			                    new XAttribute ("Title", string.Format ("{0} invested at {1:0.00}%", result.Request.Summary, Rate)),
+			                       from i in schedule
+			                       select new XElement ("Row",
+			                     new XElement ("Installment", string.Format ("{0} {1}", ConsequenceRequest.ModeUnits[result.Request.TriggerMode], i.Installment)),
+			                    new XElement ("Investment", i.Investment.ToString ("C")),
+			                    new XElement ("Earnings", i.Earnings.ToString ("C")),
+			                    new XElement ("Balance", i.Balance.ToString ("C")))
+			)
+			);
 		}
 		#endregion
 	}

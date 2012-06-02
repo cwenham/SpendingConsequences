@@ -22,7 +22,7 @@ namespace SpendingConsequences.Calculators
 			this.Recommended = recommended;
 		}
 		
-				public ConsequenceResult (ACalculator calculator,
+		public ConsequenceResult (ACalculator calculator,
 		                          ConsequenceRequest request,
 		                          object computedValue, 
 		                          TabularResult table,

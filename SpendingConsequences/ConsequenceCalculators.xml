@@ -6,7 +6,7 @@
 		<!-- Captions appear after the calculated value. EG: "$12,000 by Retirement" -->	
 		<!-- Image names will be appended with ".png" and looked for in bundle -->
 		<!-- Labels appear before the editable control. EG: "Expected annual yield 5%" -->
-		<Investment TriggersOn="OneTime,Repeating" Caption="by Retirement">
+		<Investment TriggersOn="OneTime,Repeating" Caption="by Retirement" TableTemplate="InvestmentTable">
 			<Image Name="money"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="5"/>
 			<Configurable Name="Years" Type="Year" Label="I plan to retire in" Value="30"/>
@@ -27,7 +27,7 @@
 			<!-- http://www.bls.gov/eag/eag.us.htm -->
 		</TimeOfService>
 		
-		<Investment TriggersOn="OneTime,Repeating" Caption="under the mattress for [Years] years">
+		<Investment TriggersOn="OneTime,Repeating" Caption="under the mattress for [Years] years" TableTemplate="InvestmentTable">
 			<Image Name="bed"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="0"/>
 			<Configurable Name="Years" Type="Year" Label="I plan to raid this after" Value="3"/>
@@ -73,12 +73,12 @@
 			</Commentary>
 		</LoanPayoff>
 		
-		<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in Index Funds">
+		<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in Index Funds" TableTemplate="InvestmentTable">
 			<Image Name="stockmarket"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="9.62"/>
 			<Configurable Name="Years" Type="Year" Label="When invested for" Value="5"/>
 			<Commentary>The Compound Annual Growth Rate of the Standard &amp; Poor 500 Index since its inception in 1957 is 
-				about <b>9.34%</b>, however this is not what you'll typically expect in any given year; in some years the index 
+				about <b>9.62%</b>, however this is not what you'll typically expect in any given year; in some years the index 
 				does worse than others, some years it does much better. When investing in such a fund you should be thinking
 				about the long term and be willing to ride-out dips in the market that can make it look as if you're losing
 				money.
@@ -86,13 +86,13 @@
 			<!-- http://www.moolanomy.com/5924/what-is-the-historical-return-of-the-sp-500-kmulligan/ -->
 		</Investment>
 		
-		<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in a savings account">
+		<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in a savings account" TableTemplate="InvestmentTable">
 			<Image Name="bank"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Savings APR" Value="0.8"/>
 			<Configurable Name="Years" Type="Year" Label="When saved for" Value="5"/>
 		</Investment>
 		
-		<SpendingPower TriggersOn="Repeating" Caption="for a new car in [Installments] monthly payments" LowerResultLimit="10000" UpperResultLimit="100000" TableTemplate="AmortizationTable" RowTemplate="AmortizationRow">
+		<SpendingPower TriggersOn="Repeating" Caption="for a new car in [Installments] monthly payments" LowerResultLimit="10000" UpperResultLimit="100000" TableTemplate="AmortizationTable">
 			<Image Name="carkey"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="4.5"/>
 			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="60"/>		
@@ -100,7 +100,7 @@
 			this is how much you could borrow for the given payment amount.</Commentary>
 		</SpendingPower>
 		
-		<SpendingPower TriggersOn="Repeating" Caption="for a used car in [Installments] monthly payments" LowerResultLimit="1000" UpperResultLimit="9999" TableTemplate="AmortizationTable" RowTemplate="AmortizationRow">
+		<SpendingPower TriggersOn="Repeating" Caption="for a used car in [Installments] monthly payments" LowerResultLimit="1000" UpperResultLimit="9999" TableTemplate="AmortizationTable">
 			<Image Name="carkey"/> <!-- Note: We want to look for a reasonable "used car" icon, if possible -->
 			<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="5.2"/>
 			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="36"/>
@@ -112,7 +112,7 @@
 			<br/>Indeed, some studies have suggested that the most <i>economical</i> choice is to buy a new car and drive it until it falls apart.</Commentary>
 		</SpendingPower>
 		
-		<SpendingPower TriggersOn="Repeating" Caption="mortgage, with [Installments] monthly payments" LowerResultLimit="100000" UpperResultLimit="1000000" TableTemplate="AmortizationTable" RowTemplate="AmortizationRow">
+		<SpendingPower TriggersOn="Repeating" Caption="mortgage, with [Installments] monthly payments" LowerResultLimit="100000" UpperResultLimit="1000000" TableTemplate="AmortizationTable">
 			<Image Name="house"/>
 			<Configurable Name="Rate" Type="Percentage" Label="APR" Value="3.50"/>
 			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="360"/>		
@@ -330,6 +330,94 @@
 				</xsl:template>
 				
 				<xsl:template match="Payment|Interest|Principal|Balance">
+					<h:td><xsl:apply-templates/></h:td>
+				</xsl:template>
+			</xsl:stylesheet>
+
+		</Template>
+		
+		<Template Name="InvestmentTable" Syntax="XSLT">
+			<xsl:stylesheet version="1.0">
+				<xsl:output method="html" indent="yes" omit-xml-declaration="yes"/>
+				<xsl:template match="/">
+					<h:html>
+						<h:head>
+							<h:title><xsl:value-of select="InvestmentSchedule/@Title"/></h:title>
+						</h:head>
+						<h:style type="text/css">
+							table.schedule {
+								font-family: Helvitica, sans-serif;
+								border: 1px solid black;
+								border-collapse: collapse;
+								margin: 0px;
+							}
+							table.schedule thead th {
+								background: #86a18a;
+								text-align: left;
+								padding: 3px;
+								margin: 0px;
+								border: 1px solid #004217;
+							}
+							table.schedule thead th.title {
+								background: #fbaf5d;
+								font-size: 120%;
+								text-align: center;
+							}
+							tbody {
+								overflow-y: scroll;
+								-webkit-overflow-scrolling: touch;
+							}
+							tbody td {
+								padding: 3px;
+								margin: 0px;
+								border: 1px solid #004217;
+								text-align: right;
+							}
+							tbody th {
+								border: 1px solid #004217;
+								text-align: left;
+							}
+							tbody tr:nth-child(even) {
+								background: #c4d3c2;
+							}
+						</h:style>
+						<h:body>
+							<xsl:apply-templates/>
+						</h:body>
+					</h:html>				
+				</xsl:template>
+				
+				<xsl:template match="InvestmentSchedule">
+					<h:table width="100%" class="schedule">
+						<h:thead>
+							<h:tr>
+								<h:th colspan="5" class="title"><xsl:value-of select="@Title"/></h:th>
+							</h:tr>
+							<h:tr>
+								<h:th>Installment</h:th>
+								<h:th>Investment</h:th>
+								<h:th>Earnings</h:th>
+								<h:th>Balance</h:th>
+							</h:tr>
+						</h:thead>
+
+						<h:tbody>
+							<xsl:apply-templates/>
+						</h:tbody>						
+					</h:table>				
+				</xsl:template>
+				
+				<xsl:template match="Row">
+					<h:tr>
+						<xsl:apply-templates/>
+					</h:tr>
+				</xsl:template>
+				
+				<xsl:template match="Installment">
+					<h:th><xsl:apply-templates/></h:th>
+				</xsl:template>
+				
+				<xsl:template match="Investment|Earnings|Balance">
 					<h:td><xsl:apply-templates/></h:td>
 				</xsl:template>
 			</xsl:stylesheet>

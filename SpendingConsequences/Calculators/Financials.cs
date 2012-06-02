@@ -30,6 +30,73 @@ namespace SpendingConsequences.Calculators
 			
 			return baseAmortization.TakeWhile (x => x.BeforePayment > 0);
 		}
+		
+		public static IEnumerable<InvestmentInstallment> InvestmentSchedule (decimal periodicInvestment, decimal investmentsPerYear, decimal annualCompoundings, double rate, int investmentPeriods)
+		{
+			int daysOfInvestment = (int)(Math.Floor ((investmentPeriods / investmentsPerYear) * (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year]));			
+			double ratePerDay = rate / ConsequenceRequest.DaysPerUnit [TimeUnit.Year];
+			decimal daysPerInvestment = (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year] / investmentsPerYear;
+			decimal daysPerCompounding = (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year] / annualCompoundings;
+			
+			decimal balance = periodicInvestment;
+			double interestEarned = 0;
+			decimal daysUntilInvestment = daysPerInvestment;
+			decimal daysUntilCompounding = daysPerCompounding;
+			int installment = 1;
+			
+			InvestmentInstallment nextInstallment = new InvestmentInstallment {
+				Installment = 1,
+				Investment = periodicInvestment
+			};
+			
+			List<InvestmentInstallment> installments = new List<InvestmentInstallment> ();
+			
+			for (int i = 0; i < daysOfInvestment; i++) {
+				try {	
+					interestEarned += (double)balance * ratePerDay;
+					nextInstallment.Earnings += (double)balance * ratePerDay;
+				
+					if (daysUntilCompounding < 1) {
+						balance += (decimal)interestEarned;
+						interestEarned = 0;
+						daysUntilCompounding += daysPerCompounding;
+					}
+					
+					if (daysUntilInvestment < 1) {
+						installment += 1;
+
+						nextInstallment.Balance = balance;
+						installments.Add (nextInstallment);
+						
+						nextInstallment = new InvestmentInstallment {
+							Installment = installment,
+							Investment = periodicInvestment
+						};
+						
+						interestEarned = 0;
+						daysUntilInvestment += daysPerInvestment;
+						
+						balance += periodicInvestment;
+					}
+					
+					daysUntilInvestment--;
+					daysUntilCompounding--;
+				} catch (Exception ex) {
+					Console.WriteLine (string.Format ("{0} thrown calculating installment: {1}", ex.GetType ().Name, ex.Message));
+				}
+	
+			}
+			
+			balance += (decimal)interestEarned;
+			
+			if (nextInstallment != null) {
+				nextInstallment.Earnings = (decimal)interestEarned;
+				nextInstallment.Balance = balance;
+				installments.Add (nextInstallment);
+			}
+			
+			return installments;
+		}
 	}
 	
 	public class AmortizedInstallment {
@@ -48,6 +115,21 @@ namespace SpendingConsequences.Calculators
 		FlatPercent,
 		FlatAmount,
 		PercentPlusInterest
+	}
+	
+	/// <summary>
+	/// Individual installment in an ongoing investment
+	/// </summary>
+	/// <remarks>This is almost identical to AmortizedInstallment, but we might want to take them in different directions in the future. The strong typing
+	/// may also help with coding.</remarks>
+	public class InvestmentInstallment {
+		public int Installment { get; set; }
+		
+		public decimal Investment { get; set; }
+		
+		public decimal Earnings { get; set; }
+		
+		public decimal Balance { get; set; }
 	}
 }
 

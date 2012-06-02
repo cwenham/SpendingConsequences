@@ -65,28 +65,6 @@ namespace SpendingConsequences.Calculators
 					return DEFAULT_COMPOUNDING_FREQUENCY;
 			}
 		}
-		
-		public override XElement GetTableData (ConsequenceResult result)
-		{
-			var amortization = Financials.Amortization (result.Request.InitialAmount, 
-			                                 CompoundingsPerYear (Compounding), 
-			                                 PercentAsDouble (Rate), 
-			                                 PercentAsDouble (MinPayPercent),
-			                                 MinimumPayment,
-			                                 PayoffMode);
-
-			return new XElement (new XStreamingElement ("Amortization", 
-			                    new XAttribute ("Title", string.Format ("{0:C} financed at {1}%", result.Request.InitialAmount, Rate)),
-			                       from i in amortization
-			                       select new XElement ("Row",
-			                    new XElement ("Installment", string.Format ("Payment {0}", i.Installment)),
-			                    new XElement ("Payment", i.Payment.ToString ("C")),
-			                    new XElement ("Interest", i.Interest.ToString ("C")),
-			                    new XElement ("Principal", (i.Payment - i.Interest).ToString ("C")),
-			                    new XElement ("Balance", i.Balance.ToString ("C")))
-			)
-			);
-		}
 
 		#region implemented abstract members of SpendingConsequences.Calculators.ACalculator
 		public override ConsequenceResult Calculate (ConsequenceRequest request)
@@ -123,6 +101,29 @@ namespace SpendingConsequences.Calculators
 				}
 			), this.ImageName,
 				   (payoff >= LowerResultLimit && payoff <= UpperResultLimit));		
+		}
+		
+		
+		public override XElement GetTableData (ConsequenceResult result)
+		{
+			var amortization = Financials.Amortization (result.Request.InitialAmount, 
+			                                 CompoundingsPerYear (Compounding), 
+			                                 PercentAsDouble (Rate), 
+			                                 PercentAsDouble (MinPayPercent),
+			                                 MinimumPayment,
+			                                 PayoffMode);
+
+			return new XElement (new XStreamingElement ("Amortization", 
+			                    new XAttribute ("Title", string.Format ("{0:C} financed at {1}%", result.Request.InitialAmount, Rate)),
+			                       from i in amortization
+			                       select new XElement ("Row",
+			                    new XElement ("Installment", string.Format ("Payment {0}", i.Installment)),
+			                    new XElement ("Payment", i.Payment.ToString ("C")),
+			                    new XElement ("Interest", i.Interest.ToString ("C")),
+			                    new XElement ("Principal", (i.Payment - i.Interest).ToString ("C")),
+			                    new XElement ("Balance", i.Balance.ToString ("C")))
+			)
+			);
 		}
 		#endregion
 	}
