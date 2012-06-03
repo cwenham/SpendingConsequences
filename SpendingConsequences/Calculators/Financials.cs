@@ -73,7 +73,6 @@ namespace SpendingConsequences.Calculators
 							Investment = periodicInvestment
 						};
 						
-						interestEarned = 0;
 						daysUntilInvestment += daysPerInvestment;
 						
 						balance += periodicInvestment;
