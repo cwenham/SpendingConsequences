@@ -34,12 +34,12 @@ namespace SpendingConsequences.Calculators
 		public static IEnumerable<InvestmentInstallment> InvestmentSchedule (decimal periodicInvestment, decimal investmentsPerYear, decimal annualCompoundings, double rate, int investmentPeriods)
 		{
 			int daysOfInvestment = (int)(Math.Floor ((investmentPeriods / investmentsPerYear) * (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year]));			
-			double ratePerDay = rate / ConsequenceRequest.DaysPerUnit [TimeUnit.Year];
+			decimal ratePerDay = (decimal)rate / (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year];
 			decimal daysPerInvestment = (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year] / investmentsPerYear;
 			decimal daysPerCompounding = (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year] / annualCompoundings;
 			
 			decimal balance = periodicInvestment;
-			double interestEarned = 0;
+			decimal interestEarned = 0;
 			decimal daysUntilInvestment = daysPerInvestment;
 			decimal daysUntilCompounding = daysPerCompounding;
 			int installment = 1;
@@ -53,11 +53,11 @@ namespace SpendingConsequences.Calculators
 			
 			for (int i = 0; i < daysOfInvestment; i++) {
 				try {	
-					interestEarned += (double)balance * ratePerDay;
-					nextInstallment.Earnings += (double)balance * ratePerDay;
+					interestEarned += balance * ratePerDay;
+					nextInstallment.Earnings += balance * ratePerDay;
 				
 					if (daysUntilCompounding < 1) {
-						balance += (decimal)interestEarned;
+						balance += interestEarned;
 						interestEarned = 0;
 						daysUntilCompounding += daysPerCompounding;
 					}
@@ -87,10 +87,10 @@ namespace SpendingConsequences.Calculators
 	
 			}
 			
-			balance += (decimal)interestEarned;
+			balance += interestEarned;
 			
 			if (nextInstallment != null) {
-				nextInstallment.Earnings = (decimal)interestEarned;
+				nextInstallment.Earnings = interestEarned;
 				nextInstallment.Balance = balance;
 				installments.Add (nextInstallment);
 			}

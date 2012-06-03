@@ -364,6 +364,7 @@
 								text-align: center;
 							}
 							tbody {
+								height: 100%;
 								overflow-y: scroll;
 								-webkit-overflow-scrolling: touch;
 							}
@@ -383,6 +384,9 @@
 						</h:style>
 						<h:body>
 							<xsl:apply-templates/>
+							
+							<h:p>Note: Due to rounding and the assumption of a fixed rate, results may be different from what you will see in practice. These
+							figures are meant to provide approximate guidance only.</h:p>
 						</h:body>
 					</h:html>				
 				</xsl:template>
