@@ -11,13 +11,15 @@ using System.ComponentModel;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
+using TestFlightSdk;
+
 using SpendingConsequences.Calculators;
 
 namespace SpendingConsequences
 {
-	public partial class WebGridView : UIViewController
+	public partial class XsltWebView : UIViewController
 	{
-		public WebGridView (Profile profile) : base ("WebGridView", null)
+		public XsltWebView (Profile profile) : base ("XsltWebView", null)
 		{
 			this.Profile = profile;
 			if (TransformCache == null)
@@ -34,6 +36,11 @@ namespace SpendingConsequences
 		{
 			if (CurrentResult == result)
 				return;
+			
+#if DEBUG
+#else
+			TestFlight.PassCheckpoint ("VIEW_XSLT_WEB");
+#endif
 			
 			CurrentResult = result;	
 			

@@ -31,22 +31,31 @@ namespace SpendingConsequences.Calculators
 			return baseAmortization.TakeWhile (x => x.BeforePayment > 0);
 		}
 		
-		public static IEnumerable<InvestmentInstallment> InvestmentSchedule (decimal periodicInvestment, decimal investmentsPerYear, decimal annualCompoundings, double rate, int investmentPeriods)
+		public static IEnumerable<InvestmentInstallment> InvestmentSchedule (decimal periodicInvestment, 
+		                                                                     decimal investmentsPerYear, 
+		                                                                     decimal annualCompoundings, 
+		                                                                     double rate, 
+		                                                                     int investmentPeriods,
+		                                                                     decimal reportsPerYear)
 		{
 			int daysOfInvestment = (int)(Math.Floor ((investmentPeriods / investmentsPerYear) * (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year]));			
 			decimal ratePerDay = (decimal)rate / (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year];
 			decimal daysPerInvestment = (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year] / investmentsPerYear;
 			decimal daysPerCompounding = (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year] / annualCompoundings;
+			decimal daysPerReport = (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year] / reportsPerYear;
 			
 			decimal balance = periodicInvestment;
 			decimal interestEarned = 0;
 			decimal daysUntilInvestment = daysPerInvestment;
 			decimal daysUntilCompounding = daysPerCompounding;
+			decimal daysUntilReport = daysPerReport;
+			
 			int installment = 1;
 			
 			InvestmentInstallment nextInstallment = new InvestmentInstallment {
 				Installment = 1,
-				Investment = periodicInvestment
+				Investment = periodicInvestment, 
+				Earnings = 0
 			};
 			
 			List<InvestmentInstallment> installments = new List<InvestmentInstallment> ();
@@ -56,6 +65,19 @@ namespace SpendingConsequences.Calculators
 					interestEarned += balance * ratePerDay;
 					nextInstallment.Earnings += balance * ratePerDay;
 				
+					if (daysUntilReport < 1) {
+						nextInstallment.Balance = balance;
+						installments.Add (nextInstallment);
+						
+						nextInstallment = new InvestmentInstallment {
+							Installment = installment,
+							Investment = 0,
+							Earnings = 0
+						};
+						
+						daysUntilReport += daysPerReport;
+					}
+					
 					if (daysUntilCompounding < 1) {
 						balance += interestEarned;
 						interestEarned = 0;
@@ -64,22 +86,17 @@ namespace SpendingConsequences.Calculators
 					
 					if (daysUntilInvestment < 1) {
 						installment += 1;
-
-						nextInstallment.Balance = balance;
-						installments.Add (nextInstallment);
-						
-						nextInstallment = new InvestmentInstallment {
-							Installment = installment,
-							Investment = periodicInvestment
-						};
 						
 						daysUntilInvestment += daysPerInvestment;
 						
 						balance += periodicInvestment;
+						nextInstallment.Investment += periodicInvestment;
+						nextInstallment.Installment = installment;
 					}
 					
 					daysUntilInvestment--;
 					daysUntilCompounding--;
+					daysUntilReport--;
 				} catch (Exception ex) {
 					Console.WriteLine (string.Format ("{0} thrown calculating installment: {1}", ex.GetType ().Name, ex.Message));
 				}

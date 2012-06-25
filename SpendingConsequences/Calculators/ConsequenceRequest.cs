@@ -46,7 +46,17 @@ namespace SpendingConsequences.Calculators
 			{TriggerType.PerYear, 365.25}
 		};
 		
+		public static Dictionary<TriggerType, decimal> PeriodsPerYear = new Dictionary<TriggerType, decimal> () {
+			{TriggerType.OneTime, 1},
+			{TriggerType.PerDay, 365.25m},
+			{TriggerType.PerWeek, 52.1785714286m},
+			{TriggerType.PerMonth, 12m},
+			{TriggerType.PerQuarter, 4m},
+			{TriggerType.PerYear, 1m}
+		};
+		
 		public static Dictionary<TriggerType, string> ModeUnits = new Dictionary<TriggerType, string> () {
+			{TriggerType.OneTime, "Month"},
 			{TriggerType.PerDay, "Day"},
 			{TriggerType.PerWeek, "Week"},
 			{TriggerType.PerMonth, "Month"},

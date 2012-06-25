@@ -9,7 +9,7 @@ using MonoTouch.Foundation;
 namespace SpendingConsequences
 {
 	[Register ("WebGridView")]
-	partial class WebGridView
+	partial class XsltWebView
 	{
 		[Outlet]
 		MonoTouch.UIKit.UIWebView webView { get; set; }

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
+using TestFlightSdk;
+
 using SpendingConsequences.Calculators;
 
 namespace SpendingConsequences
@@ -34,12 +36,17 @@ namespace SpendingConsequences
 		/// <summary>
 		/// A view used to display tabular results, such as amortization tables, when the device is rotated to landscape
 		/// </summary>
-		private WebGridView GridView { get; set; }
+		private XsltWebView GridView { get; set; }
 		
 		public void SetCurrentResult (ConsequenceResult result)
 		{
 			if (result == null)
 				return;
+			
+#if DEBUG
+#else
+			TestFlight.PassCheckpoint ("VIEW_DETAILS");
+#endif
 			
 			this.NavigationItem.Title = result.Request.Summary;
 			
@@ -169,7 +176,7 @@ namespace SpendingConsequences
 				&& CurrentResult.Table != null
 				&& (this.PresentedViewController == null || this.PresentedViewController == this)) {
 				if (GridView == null)
-					GridView = new WebGridView (Profile);
+					GridView = new XsltWebView (Profile);
 				GridView.SetResult (this.CurrentResult);
 				this.PresentViewController (GridView, false, null);
 			}

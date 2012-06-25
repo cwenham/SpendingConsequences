@@ -5,6 +5,8 @@ using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
+using TestFlightSdk;
+
 namespace SpendingConsequences
 {
 	public class Application
@@ -13,6 +15,12 @@ namespace SpendingConsequences
 		static void Main (string[] args)
 		{
 			try {
+#if DEBUG
+#else
+				// Start the TestFlight API
+				TestFlight.TakeOff (@"e75d3cd1ee2cf1cd64beeacc25289f34_OTY2OTkyMDEyLTA2LTA0IDE5OjA3OjQwLjY5Mzk2MQ");
+#endif
+				
 				UIApplication.Main (args, null, "AppDelegate");				
 			} catch (Exception ex) {
 				Console.WriteLine (string.Format ("{0} thrown: {1}", ex.GetType ().Name, ex.Message));

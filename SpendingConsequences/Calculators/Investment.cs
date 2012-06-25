@@ -142,12 +142,20 @@ namespace SpendingConsequences.Calculators
 		{
 			int annualCompoundings = CompoundingsPerYear (Compounding);
 			decimal investmentsPerYear = (decimal)(InvestmentsPerYear (result.Request.TriggerMode));
+
+			decimal reportsPerYear = ConsequenceRequest.PeriodsPerYear [result.Request.TriggerMode];
+			// Per-day reports are too heavy, so cut back to weekly reports
+			if (result.Request.TriggerMode == TriggerType.PerDay)
+				reportsPerYear = ConsequenceRequest.PeriodsPerYear [TriggerType.PerWeek];
+			else if (result.Request.TriggerMode == TriggerType.OneTime)
+				reportsPerYear = ConsequenceRequest.PeriodsPerYear [TriggerType.PerMonth];
 			
 			var schedule = Financials.InvestmentSchedule (result.Request.InitialAmount,
 			                                             investmentsPerYear,
 			                                             annualCompoundings,
 			                                             PercentAsDouble (Rate),
-			                                             (int)(Math.Floor(investmentsPerYear * Years)));	
+			                                             (int)(Math.Floor(investmentsPerYear * Years)),
+			                                             reportsPerYear);	
 			
 			return new XElement (new XStreamingElement ("InvestmentSchedule", 
 			                    new XAttribute ("Title", string.Format ("{0} invested at {1:0.00}%", result.Request.Summary, Rate)),

@@ -54,6 +54,7 @@
     <CodesignProvision>3C64E50F-CF2C-42AA-A01B-634D5F9B3E2F</CodesignProvision>
     <MtouchUseSGen>true</MtouchUseSGen>
     <IpaPackageName />
+    <BuildIpa>true</BuildIpa>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -64,6 +65,12 @@
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchArch>ARMv7</MtouchArch>
+    <BuildIpa>true</BuildIpa>
+    <IpaPackageName>SpentBetter Beta 0.1</IpaPackageName>
+    <MtouchUseLlvm>true</MtouchUseLlvm>
+    <MtouchI18n />
+    <MtouchExtraArgs>-nosymbolstrip -nostrip -cxx -gcc_flags "-lgcc_eh -L${ProjectDir} -ltestflight -ObjC"</MtouchExtraArgs>
+    <CodesignProvision>3C64E50F-CF2C-42AA-A01B-634D5F9B3E2F</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -73,9 +80,13 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data" />
     <Reference Include="Mono.Data.Sqlite" />
+    <Reference Include="monotouch-testflight">
+      <HintPath>monotouch-testflight.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
+    <None Include="monotouch-testflight.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -126,13 +137,13 @@
     <Compile Include="Calculators\SpendingPower.cs" />
     <Compile Include="Calculators\OverflowMessage.cs" />
     <Compile Include="Calculators\TabularResult.cs" />
-    <Compile Include="WebGridView.cs" />
     <Compile Include="WebGridView.designer.cs">
-      <DependentUpon>WebGridView.cs</DependentUpon>
+      <DependentUpon>XsltWebView.cs</DependentUpon>
     </Compile>
     <Compile Include="NS.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Calculators\Financials.cs" />
+    <Compile Include="XsltWebView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
@@ -141,7 +152,7 @@
     <InterfaceDefinition Include="ConfigUI\MonthsControl.xib" />
     <InterfaceDefinition Include="ConfigUI\MoneyControl.xib" />
     <InterfaceDefinition Include="ConfigUI\YearControl.xib" />
-    <InterfaceDefinition Include="WebGridView.xib" />
+    <InterfaceDefinition Include="XsltWebView.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -231,6 +242,9 @@
     <Content Include="UIArt\detail_background.png" />
     <Content Include="UIArt\detail_result_panel.png" />
     <Content Include="UIArt\input_panel.png" />
+    <Content Include="libTestFlight.a">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

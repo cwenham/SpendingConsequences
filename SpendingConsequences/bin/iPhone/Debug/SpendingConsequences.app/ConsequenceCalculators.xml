@@ -387,6 +387,10 @@
 							
 							<h:p>Note: Due to rounding and the assumption of a fixed rate, results may be different from what you will see in practice. These
 							figures are meant to provide approximate guidance only.</h:p>
+							
+							<h:p>The Earnings column shows how much was earned between each investment, while the Balance column will only reflect earnings
+							after they have been compounded. If you invest more frequently than the compounding period then it will appear as if the balance
+							isn't reflecting your earnings right away.</h:p>
 						</h:body>
 					</h:html>				
 				</xsl:template>
