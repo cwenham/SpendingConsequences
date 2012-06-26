@@ -34,7 +34,7 @@ namespace SpendingConsequences.Calculators
 			
 			double givenUnitsUntil = (double)Cost / ((double)request.InitialAmount);
 			
-			TimeSpan timeUntil = new TimeSpan (((int)Math.Ceiling (givenUnitsUntil * ConsequenceRequest.DayCounts [request.TriggerMode])), 0, 0, 0);
+			TimeSpan timeUntil = new TimeSpan (((int)Math.Ceiling (givenUnitsUntil * request.DaysPerPeriod)), 0, 0, 0);
 							
 			return new ConsequenceResult (this, 
 			                              request,

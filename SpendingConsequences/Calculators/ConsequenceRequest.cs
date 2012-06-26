@@ -14,7 +14,41 @@ namespace SpendingConsequences.Calculators
 		public decimal InitialAmount { get; private set; }
 		
 		public TriggerType TriggerMode { get; private set; }
-		
+
+		public double DaysPerPeriod { 
+			get {
+				return DayCounts [TriggerMode];
+			}
+		}
+
+		public decimal InvestmentsPerYear {
+			get {
+				return PeriodsPerYear [TriggerMode];
+			}
+		}
+
+		public decimal ReportsPerYear {
+			get {
+				if (TriggerMode == TriggerType.OneTime)
+					return PeriodsPerYear[TriggerType.PerMonth];
+				if (TriggerMode == TriggerType.PerDay)
+					return PeriodsPerYear[TriggerType.PerWeek];
+				return PeriodsPerYear[TriggerMode];
+			}
+		}
+
+		public string ModeUnit {
+			get {
+				return ModeUnits [TriggerMode];
+			}
+		}
+
+		public string ModeTerm {
+			get {
+				return ShortTerms [TriggerMode];
+			}
+		}
+
 		public decimal AmountAfter (TimeSpan period)
 		{
 			// Either one-time, or insufficient for further calculation
@@ -38,7 +72,8 @@ namespace SpendingConsequences.Calculators
 		// require higher precision. EG: A month or quarter can't be summarized
 		// to 30 and 90 days, respectively. If we adapt this for ETF, we must use
 		// calendar-sensitive math.
-		public static Dictionary<TriggerType, double> DayCounts = new Dictionary<TriggerType, double> () {
+		private static Dictionary<TriggerType, double> DayCounts = new Dictionary<TriggerType, double> () {
+			{TriggerType.OneTime, double.MaxValue},
 			{TriggerType.PerDay, 1},
 			{TriggerType.PerWeek, 7},
 			{TriggerType.PerMonth, 30.4375},
@@ -46,7 +81,7 @@ namespace SpendingConsequences.Calculators
 			{TriggerType.PerYear, 365.25}
 		};
 		
-		public static Dictionary<TriggerType, decimal> PeriodsPerYear = new Dictionary<TriggerType, decimal> () {
+		private static Dictionary<TriggerType, decimal> PeriodsPerYear = new Dictionary<TriggerType, decimal> () {
 			{TriggerType.OneTime, 1},
 			{TriggerType.PerDay, 365.25m},
 			{TriggerType.PerWeek, 52.1785714286m},
@@ -55,8 +90,8 @@ namespace SpendingConsequences.Calculators
 			{TriggerType.PerYear, 1m}
 		};
 		
-		public static Dictionary<TriggerType, string> ModeUnits = new Dictionary<TriggerType, string> () {
-			{TriggerType.OneTime, "Month"},
+		private static Dictionary<TriggerType, string> ModeUnits = new Dictionary<TriggerType, string> () {
+			{TriggerType.OneTime, "Investment"},
 			{TriggerType.PerDay, "Day"},
 			{TriggerType.PerWeek, "Week"},
 			{TriggerType.PerMonth, "Month"},
@@ -64,7 +99,7 @@ namespace SpendingConsequences.Calculators
 			{TriggerType.PerYear, "Year"}
 		};
 		
-		public static Dictionary<TriggerType, string> ShortTerms = new Dictionary<TriggerType, string>() {
+		private static Dictionary<TriggerType, string> ShortTerms = new Dictionary<TriggerType, string>() {
 			{TriggerType.OneTime, "Once"},
 			{TriggerType.PerDay, "Daily"},
 			{TriggerType.PerWeek, "Weekly"},

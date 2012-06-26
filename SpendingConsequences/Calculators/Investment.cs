@@ -143,12 +143,7 @@ namespace SpendingConsequences.Calculators
 			int annualCompoundings = CompoundingsPerYear (Compounding);
 			decimal investmentsPerYear = (decimal)(InvestmentsPerYear (result.Request.TriggerMode));
 
-			decimal reportsPerYear = ConsequenceRequest.PeriodsPerYear [result.Request.TriggerMode];
-			// Per-day reports are too heavy, so cut back to weekly reports
-			if (result.Request.TriggerMode == TriggerType.PerDay)
-				reportsPerYear = ConsequenceRequest.PeriodsPerYear [TriggerType.PerWeek];
-			else if (result.Request.TriggerMode == TriggerType.OneTime)
-				reportsPerYear = ConsequenceRequest.PeriodsPerYear [TriggerType.PerMonth];
+			decimal reportsPerYear = result.Request.ReportsPerYear;
 			
 			var schedule = Financials.InvestmentSchedule (result.Request.InitialAmount,
 			                                             investmentsPerYear,
@@ -161,7 +156,7 @@ namespace SpendingConsequences.Calculators
 			                    new XAttribute ("Title", string.Format ("{0} invested at {1:0.00}%", result.Request.Summary, Rate)),
 			                       from i in schedule
 			                       select new XElement ("Row",
-			                     new XElement ("Installment", string.Format ("{0} {1}", ConsequenceRequest.ModeUnits[result.Request.TriggerMode], i.Installment)),
+			                     new XElement ("Installment", string.Format ("{0} {1}", result.Request.ModeUnit, i.Installment)),
 			                    new XElement ("Investment", i.Investment.ToString ("C")),
 			                    new XElement ("Earnings", i.Earnings.ToString ("C")),
 			                    new XElement ("Balance", i.Balance.ToString ("C")))

@@ -52,7 +52,7 @@ namespace SpendingConsequences.Calculators
 			if (request.TriggerMode == TriggerType.OneTime)
 				return null;
 			
-			double perDay = ((double)request.InitialAmount) / ConsequenceRequest.DayCounts [request.TriggerMode];
+			double perDay = ((double)request.InitialAmount) / request.DaysPerPeriod;
 			double unitsPerDay = perDay / (double)Cost;
 			double unitsPerPeriod = unitsPerDay * ConsequenceRequest.DaysPerUnit [Period];
 			
