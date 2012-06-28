@@ -19,6 +19,7 @@
 		<TimeOfService UnitForCost="Hour" TriggersOn="OneTime" Caption="of labor to earn">
 			<Image Name="globe"/>
 			<Configurable Name="Cost" Type="Money" Label="Your hourly wage" Value="23.38"/>
+			<Configurable Name="UnitsPerDay" Type="Decimal" Label="Hours worked per day" Value="8"/>
 			<Commentary>Modify the above to match your hourly wage so you can quickly see how long you need to work to earn any given amount.
 			<br/>The time span we report is also for <b>total</b> or <b>cumilative</b> labor, so if you work 8 hours a day and take weekends off, then the
 				actual amount of <i>calendar time</i> it'll take to earn this much money will be longer.

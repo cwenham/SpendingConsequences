@@ -36,8 +36,15 @@ namespace SpendingConsequences.Calculators
 		}
 		private TimeUnit _unitForCost = TimeUnit.Day;
 		private bool _unitWasSet = false;
-		
-		private static double MaxSeconds = TimeSpan.MaxValue.TotalSeconds;
+
+		public decimal UnitsPerDay {
+			get {
+				if (ConfigurableValues.ContainsKey ("UnitsPerDay"))
+					return ((decimal)ConfigurableValues ["UnitsPerDay"].Value);
+				else
+					return 0;
+			}
+		}
 		
 		#region implemented abstract members of SpendingConsequences.Calculators.ACalculator
 		public override ConsequenceResult Calculate (ConsequenceRequest request)
@@ -48,10 +55,20 @@ namespace SpendingConsequences.Calculators
 			if (request.TriggerMode != TriggerType.OneTime)
 				return null;
 			
-			double serviceUnits = (double)(request.InitialAmount / this.Cost);
-			double serviceSeconds = ConsequenceRequest.SecondsPerUnit [UnitForCost] * serviceUnits;
-			
-			if (serviceSeconds > MaxSeconds)
+			decimal serviceUnits = request.InitialAmount / this.Cost;
+			decimal serviceSeconds = ConsequenceRequest.SecondsPerUnit [UnitForCost] * serviceUnits;
+
+			if (UnitsPerDay > 0)
+			{
+				// If the service is not provided 24 hours/day, then spread the time over whole days.
+				// This is mainly used to calculate how long it would take to earn $n, given an 8-hour day
+				decimal maxSecondsPerDay = UnitsPerDay * ConsequenceRequest.SecondsPerUnit[UnitForCost];
+				decimal wholeDays = Math.Floor(serviceSeconds / maxSecondsPerDay);
+				decimal wholeDaysInSeconds = wholeDays * ConsequenceRequest.SecondsPerUnit[TimeUnit.Day];
+				serviceSeconds = wholeDaysInSeconds + (serviceSeconds - (wholeDays * maxSecondsPerDay));
+			}
+
+			if (serviceSeconds > (decimal)TimeSpan.MaxValue.TotalSeconds)
 				return new ConsequenceResult (this,
 				                             request,
 				                             new OverflowMessage (),
@@ -61,13 +78,13 @@ namespace SpendingConsequences.Calculators
 			else
 				return new ConsequenceResult (this, 
 				                              request, 
-				                              new Time (TimeSpan.FromSeconds(serviceSeconds)),
+				                              new Time (TimeSpan.FromSeconds((double)serviceSeconds)),
 				                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
 													{"Unit", this.UnitForCost.ToString ()},
 													{"Cost", this.Cost.ToString ()}
 												}),
 				                              this.ImageName,
-				                              (serviceSeconds <= MaxSeconds && serviceUnits >= (double)LowerResultLimit && serviceUnits <= (double)UpperResultLimit));
+				                              (serviceSeconds <= (decimal)TimeSpan.MaxValue.TotalSeconds && serviceUnits >= LowerResultLimit && serviceUnits <= UpperResultLimit));
 		
 		}
 		#endregion

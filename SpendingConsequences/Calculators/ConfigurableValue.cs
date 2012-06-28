@@ -110,6 +110,8 @@ namespace SpendingConsequences.Calculators
 				}
 				
 				switch (ValueType) {
+				case ConfigurableValueType.Decimal:
+					return decimal.Parse (_value);
 				case ConfigurableValueType.Integer:
 					return int.Parse (_value);
 				case ConfigurableValueType.Money:
@@ -144,6 +146,7 @@ namespace SpendingConsequences.Calculators
 	{
 		Undefined,
 		Integer,
+		Decimal,
 		Money,
 		Year,
 		Percentage,

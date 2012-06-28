@@ -35,7 +35,7 @@ namespace SpendingConsequences.Calculators
 						_period = TimeUnit.Day;
 					
 					_periodWasSet = true;
-				}			
+				}
 				
 				return _period;
 			}

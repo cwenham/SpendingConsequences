@@ -122,18 +122,18 @@ namespace SpendingConsequences.Calculators
 			{TimeUnit.Millenium, 365250}
 		};
 		
-		public static Dictionary<TimeUnit, double> SecondsPerUnit = new Dictionary<TimeUnit, double> {
-			{TimeUnit.Millisecond, 0.001},
-			{TimeUnit.Second, 1},
-			{TimeUnit.Minute, 60},
-			{TimeUnit.Hour, 3600},
-			{TimeUnit.Day, 86400},
-			{TimeUnit.Week, 604800},
-			{TimeUnit.Month, 2629800},
-			{TimeUnit.Quarter, 7889400},
-			{TimeUnit.Year, 31557600},
-			{TimeUnit.Century, 3155760000},
-			{TimeUnit.Millenium, 31557600000}
+		public static Dictionary<TimeUnit, decimal> SecondsPerUnit = new Dictionary<TimeUnit, decimal> {
+			{TimeUnit.Millisecond, 0.001m},
+			{TimeUnit.Second, 1m},
+			{TimeUnit.Minute, 60m},
+			{TimeUnit.Hour, 3600m},
+			{TimeUnit.Day, 86400m},
+			{TimeUnit.Week, 604800m},
+			{TimeUnit.Month, 2629800m},
+			{TimeUnit.Quarter, 7889400m},
+			{TimeUnit.Year, 31557600m},
+			{TimeUnit.Century, 3155760000m},
+			{TimeUnit.Millenium, 31557600000m}
 		};
 	}
 	
