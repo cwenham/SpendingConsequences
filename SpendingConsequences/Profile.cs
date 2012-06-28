@@ -25,6 +25,9 @@ namespace SpendingConsequences
 		private Profile (XDocument profileDoc)
 		{
 			this.Definition = profileDoc;
+			this.Definition.Changed += delegate(object sender, XObjectChangeEventArgs e) {
+				Console.WriteLine("Received XDocument changed event: {0}", e.ObjectChange.ToString());
+			};
 			
 			var calculators = from e in Definition.Root.Element (NS.Profile + "Consequences").Elements ()
 					where e.Name.Namespace == NS.Profile
@@ -44,7 +47,7 @@ namespace SpendingConsequences
 		
 		public XDocument Definition { get; private set; }
 		
-		public UIImage GetImage (string imageName)
+		public static UIImage GetImage (string imageName)
 		{
 			if (ImageCache == null)
 				ImageCache = new NSCache ();
@@ -64,7 +67,7 @@ namespace SpendingConsequences
 		/// <summary>
 		/// Cache of artwork
 		/// </summary>
-		private NSCache ImageCache { get; set; }
+		private static NSCache ImageCache { get; set; }
 		
 		public List<ACalculator> Calculators { get; private set; }
 		

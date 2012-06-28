@@ -18,7 +18,7 @@ namespace SpendingConsequences
 		SpendingConsequencesViewController viewController;
 		UINavigationController navController;
 		
-		public Profile Profile { get; private set; }
+		public Dictionary<string,Profile> Profiles { get; private set; }
 
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
@@ -29,11 +29,15 @@ namespace SpendingConsequences
 		//
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
-			Profile = Profile.Load ("ConsequenceCalculators.xml");
+			Profiles = new Dictionary<string, Profile>();
+			var mainProfile = Profile.Load ("ConsequenceCalculators.xml");
+
+			if (mainProfile != null)
+				Profiles.Add("main", mainProfile);
 			
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
-			viewController = new SpendingConsequencesViewController (Profile);
+			viewController = new SpendingConsequencesViewController (Profiles);
 			navController = new UINavigationController (viewController);
 			navController.SetNavigationBarHidden (true, false);
 			window.RootViewController = navController;

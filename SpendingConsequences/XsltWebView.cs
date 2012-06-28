@@ -19,14 +19,14 @@ namespace SpendingConsequences
 {
 	public partial class XsltWebView : UIViewController
 	{
-		public XsltWebView (Profile profile) : base ("XsltWebView", null)
+		public XsltWebView (Dictionary<string,Profile> profiles) : base ("XsltWebView", null)
 		{
-			this.Profile = profile;
+			this.Profiles = profiles;
 			if (TransformCache == null)
 				TransformCache = new Dictionary<string, XslCompiledTransform>();
 		}
 		
-		private Profile Profile { get; set; }
+		private Dictionary<string,Profile> Profiles { get; set; }
 		
 		public ConsequenceResult CurrentResult { get; private set; }
 		
@@ -74,7 +74,10 @@ namespace SpendingConsequences
 			XslCompiledTransform transformer;
 			
 			if (!TransformCache.ContainsKey (tableTemplateName)) {
-				XElement tableTemplate = Profile.GetResultTemplate (tableTemplateName);
+				XElement tableTemplate = (from p in Profiles.Values
+				                          let template = p.GetResultTemplate (tableTemplateName)
+				                          where template != null
+				                          select template).FirstOrDefault();
 			
 				if (tableTemplate == null)
 					return; // ToDo: Maybe throw exception so parent view can abort the transition

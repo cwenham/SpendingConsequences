@@ -20,14 +20,14 @@ namespace SpendingConsequences
 		// The space we live in, used to restore after scrolling up to accomodate an on-screen keyboard
 		RectangleF _contentViewSize = RectangleF.Empty;
 		
-		public SpendingConsequencesViewController (Profile profile)
+		public SpendingConsequencesViewController (Dictionary<string,Profile> profiles)
 		{
 			NSBundle.MainBundle.LoadNib ("SpendingConsequencesViewController", this, null);
-			this.Profile = profile;
+			this.Profiles = profiles;
 			this.ViewDidLoad ();
 		}
 		
-		public Profile Profile { get; private set; }
+		public Dictionary<string,Profile> Profiles { get; private set; }
 		
 		public ConsequenceTableSource TableSource { get; private set; }
 		
@@ -77,8 +77,8 @@ namespace SpendingConsequences
 			);
 			this.InitialAmount.InputAccessoryView = DecimalAccessoryView;
 			
-			if (Profile != null) {
-				TableSource = new ConsequenceTableSource (Profile, this);
+			if (Profiles != null) {
+				TableSource = new ConsequenceTableSource (Profiles, this);
 				ConsequenceView.Source = TableSource;
 				TableSource.ResultsReady += delegate {
 					this.ConsequenceView.ReloadData ();	
@@ -243,7 +243,7 @@ namespace SpendingConsequences
 		public void DisplayConsequenceDetails (ConsequenceResult result)
 		{
 			if (this.DetailController == null) {
-				DetailController = new ConsequenceDetailController (Profile);
+				DetailController = new ConsequenceDetailController (Profiles);
 				DetailController.ResultChanged += HandleResultChanged;
 			}
 			

@@ -16,15 +16,15 @@ namespace SpendingConsequences
 	{	
 		private const int DYNAMIC_VIEW_TAG = 1024;
 		
-		public ConsequenceDetailController (Profile profile)
+		public ConsequenceDetailController (Dictionary<string,Profile> profiles)
 		{
 			NSBundle.MainBundle.LoadNib ("ConsequenceDetailController", this, null);
-			this.Profile = profile;
+			this.Profiles = profiles;
 			this.ViewDidLoad();
 			LastLabelYOffset = this.caption.Frame.Y + this.caption.Frame.Height;
 		}
 		
-		private Profile Profile { get; set; }
+		private Dictionary<string,Profile> Profiles { get; set; }
 		
 		// Y + Height of the last label in our XIB, below which we can add dynamic controls
 		private float LastLabelYOffset { get; set; }
@@ -176,7 +176,7 @@ namespace SpendingConsequences
 				&& CurrentResult.Table != null
 				&& (this.PresentedViewController == null || this.PresentedViewController == this)) {
 				if (GridView == null)
-					GridView = new XsltWebView (Profile);
+					GridView = new XsltWebView (Profiles);
 				GridView.SetResult (this.CurrentResult);
 				this.PresentViewController (GridView, false, null);
 			}

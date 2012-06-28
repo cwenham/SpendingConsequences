@@ -17,14 +17,14 @@ namespace SpendingConsequences
 		
 		public SpendingConsequencesViewController ParentController { get; private set; }
 		
-		public Profile Profile { get; private set; }
+		public Dictionary<string,Profile> Profiles { get; private set; }
 		
 		public ConsequenceResult[] CurrentResults { get; private set; }
 		
-		public ConsequenceTableSource (Profile profile, SpendingConsequencesViewController parent)
+		public ConsequenceTableSource (Dictionary<string,Profile> profiles, SpendingConsequencesViewController parent)
 		{
 			this.ParentController = parent;
-			this.Profile = profile;
+			this.Profiles = profiles;
 			
 			if (NSUserDefaults.StandardUserDefaults ["Gender"] != null)
 				Enum.TryParse (NSUserDefaults.StandardUserDefaults ["Gender"].ToString (), true, out UserGender);
@@ -59,7 +59,8 @@ namespace SpendingConsequences
 			BackgroundWorker myWorker = sender as BackgroundWorker;
 			ConsequenceRequest request = e.Argument as ConsequenceRequest;
 				
-			ConsequenceResult[] results = (from c in Profile.Calculators
+			ConsequenceResult[] results = (from p in Profiles.Values
+				    from c in p.Calculators
 			        where c.WillTriggerOn (request.TriggerMode)
 				&& (c.ForGender == Gender.Unspecified || c.ForGender == UserGender)
 				&& (c.Country == null || c.Country == NSLocale.CurrentLocale.CountryCode)
