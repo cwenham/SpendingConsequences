@@ -128,11 +128,19 @@ namespace SpendingConsequences.Calculators
 				Console.WriteLine (String.Format ("{0} thrown in investment calculator: {1}", ex.GetType ().Name, ex.Message));
 				return null;
 			}
-			
+
+			// Investment schedule routine isn't working properly at the moment.
+//			return new ConsequenceResult (this, 
+//			                              request,
+//			                              new Money (result),
+//			                              new TabularResult(request.Summary, string.Format ("{0} invested at {1:0.00}%", request.Summary, Rate), this),
+//			                              FormatMyCaption (),
+//			                              this.ImageName,
+//			                              (result >= this.LowerResultLimit && result <= this.UpperResultLimit));
+
 			return new ConsequenceResult (this, 
 			                              request,
 			                              new Money (result),
-			                              new TabularResult(request.Summary, string.Format ("{0} invested at {1:0.00}%", request.Summary, Rate), this),
 			                              FormatMyCaption (),
 			                              this.ImageName,
 			                              (result >= this.LowerResultLimit && result <= this.UpperResultLimit));
