@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -30,11 +31,15 @@ namespace SpendingConsequences
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
 			Profiles = new Dictionary<string, Profile>();
+
+			// The main profile is never changed by the app and will be replaced on upgrades
 			var mainProfile = Profile.Load ("ConsequenceCalculators.xml");
 
 			if (mainProfile != null)
 				Profiles.Add("main", mainProfile);
-			
+
+			LoadUserProfiles();
+
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
 			viewController = new SpendingConsequencesViewController (Profiles);
@@ -44,6 +49,31 @@ namespace SpendingConsequences
 			window.MakeKeyAndVisible ();
 			
 			return true;
+		}
+
+		private void LoadUserProfiles () {
+			// Check Documents/Inbox for any files being given to us, move to Library
+			string inboxFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Inbox");
+			string libFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library");
+
+			if (Directory.Exists(inboxFolder))
+				foreach (var file in Directory.GetFiles("Documents/Inbox", "*.sbprofile"))
+					try {
+					File.Move(file, Path.Combine(libFolder, Path.GetFileName(file)));					
+					} catch (Exception ex) {
+					Console.WriteLine("{0} thrown when moving file: {1}", ex.GetType().Name, ex.Message);
+					}
+
+			// Load any user profiles
+			if (Directory.Exists(libFolder))
+				foreach (var file in Directory.GetFiles (libFolder, "*.sbprofile"))
+					try {
+						Profile userProfile = Profile.Load (file);
+						if (userProfile != null)
+							Profiles.Add (Path.GetFileName (file), userProfile);
+					} catch (Exception ex) {
+					Console.WriteLine("{0} thrown when loading profile at {1}: {2}", ex.GetType().Name, file, ex.Message);
+					}
 		}
 	}
 }
