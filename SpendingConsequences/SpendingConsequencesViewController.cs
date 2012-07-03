@@ -309,6 +309,15 @@ namespace SpendingConsequences
 			ConfigurableValue.CloseResources ();
 			ReleaseDesignerOutlets ();
 		}
+
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear (animated);
+
+			// Set focus to entry box so the keyboard comes up immediately, making it faster and more obvious
+			// where to begin.
+			this.InitialAmount.BecomeFirstResponder();
+		}
 		
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
 		{

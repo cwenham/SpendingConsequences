@@ -15,11 +15,9 @@ namespace SpendingConsequences
 		static void Main (string[] args)
 		{
 			try {
-#if DEBUG
-#else
 				// Start the TestFlight API
 				TestFlight.TakeOff (@"e75d3cd1ee2cf1cd64beeacc25289f34_OTY2OTkyMDEyLTA2LTA0IDE5OjA3OjQwLjY5Mzk2MQ");
-#endif
+
 				
 				UIApplication.Main (args, null, "AppDelegate");				
 			} catch (Exception ex) {

@@ -51,10 +51,11 @@
     <MtouchProfiling>true</MtouchProfiling>
     <MtouchArch>ARMv7</MtouchArch>
     <MtouchI18n />
-    <CodesignProvision>3C64E50F-CF2C-42AA-A01B-634D5F9B3E2F</CodesignProvision>
+    <CodesignProvision>0A2A52AB-943D-4118-84F1-6461891756CE</CodesignProvision>
     <MtouchUseSGen>true</MtouchUseSGen>
     <IpaPackageName />
     <BuildIpa>true</BuildIpa>
+    <CrashReportingApiKey />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -63,14 +64,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution: Christopher Wenham</CodesignKey>
     <MtouchArch>ARMv7</MtouchArch>
     <BuildIpa>true</BuildIpa>
     <IpaPackageName>SpentBetter Beta 0.1</IpaPackageName>
     <MtouchUseLlvm>true</MtouchUseLlvm>
     <MtouchI18n />
     <MtouchExtraArgs>-nosymbolstrip -nostrip -cxx -gcc_flags "-lgcc_eh -L${ProjectDir} -ltestflight -ObjC"</MtouchExtraArgs>
-    <CodesignProvision>3C64E50F-CF2C-42AA-A01B-634D5F9B3E2F</CodesignProvision>
+    <CodesignProvision>A82873C8-6D24-4CA6-B86D-C7B80055A05D</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
