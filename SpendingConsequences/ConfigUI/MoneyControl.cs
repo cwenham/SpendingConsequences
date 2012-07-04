@@ -34,8 +34,13 @@ namespace SpendingConsequences
 			this.configuredValue.KeyboardType = UIKeyboardType.DecimalPad;
 			this.configuredValue.InputAccessoryView = SpendingConsequencesViewController.CreateDecimalPadAccessoryView ((sender, e) => {
 				this.configuredValue.ResignFirstResponder ();
-				this.ConfigValue.Value = decimal.Parse (this.configuredValue.Text);
-				ValueChanged(this, new ConfigurableValueChanged(this.ConfigValue));
+
+				decimal newVal = 0m;
+				if (decimal.TryParse(this.configuredValue.Text, out newVal))
+				{
+					this.ConfigValue.Value = newVal;
+					ValueChanged(this, new ConfigurableValueChanged(this.ConfigValue));
+				}
 			});
 			
 			this.caption.Text = ConfigValue.Label;
