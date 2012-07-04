@@ -96,6 +96,7 @@ namespace SpendingConsequences
 			};
 
 			this.NavigationItem.Title = "Back";
+			this.currencySymbol.Text = Money.LocalCurrencySymbol ();
 		}
 
 		public override void ViewDidAppear (bool animated)
