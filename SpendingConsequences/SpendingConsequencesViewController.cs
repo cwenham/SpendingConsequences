@@ -56,8 +56,8 @@ namespace SpendingConsequences
 			
 			SetUICosmetics ();
 			
-			this.mul2.TouchUpInside += HandleMul2handleTouchUpInside;
-			this.div2.TouchUpInside += HandleDiv2handleTouchUpInside;
+			this.mul2.TouchUpInside += Handle_Mul2_TouchUpInside;
+			this.div2.TouchUpInside += Handle_Div2_TouchUpInside;
 			
 			// Add handlers to move the view whenever the keyboard appears or disappears
 			NSNotificationCenter.DefaultCenter.AddObserver (UIKeyboard.WillShowNotification, delegate(NSNotification n) {
@@ -94,7 +94,23 @@ namespace SpendingConsequences
 				if (!IsEditingAmount)
 					RefreshCalculators ();
 			};
+
+			this.NavigationItem.Title = "Back";
 		}
+
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear (animated);
+
+			// Set focus to entry box so the keyboard comes up immediately, making it faster and more obvious
+			// where to begin.
+			if (!viewShownOnce) {
+				this.InitialAmount.BecomeFirstResponder ();
+				viewShownOnce = true;
+			}
+		}
+
+		private bool viewShownOnce = false;
 		
 		/// <summary>
 		/// Fits views and controls with custom backgrounds and bitmaps
@@ -135,7 +151,7 @@ namespace SpendingConsequences
 			this.View.BackgroundColor = UIColor.FromPatternImage (resultBackground);
 		}
 
-		void HandleDiv2handleTouchUpInside (object sender, EventArgs e)
+		void Handle_Div2_TouchUpInside (object sender, EventArgs e)
 		{
 			decimal current = CurrentAmount;
 			if (current > 0.01m)
@@ -148,7 +164,7 @@ namespace SpendingConsequences
 			TableSource.ComputeConsequences (new ConsequenceRequest (CurrentAmount, CurrentMode));
 		}
 
-		void HandleMul2handleTouchUpInside (object sender, EventArgs e)
+		void Handle_Mul2_TouchUpInside (object sender, EventArgs e)
 		{
 			decimal current = CurrentAmount;
 			if (current > 0m)
@@ -249,14 +265,8 @@ namespace SpendingConsequences
 			
 			DetailController.SetCurrentResult (result);
 			
-			if (this.NavigationController != null) {
+			if (this.NavigationController != null)
 				this.NavigationController.PushViewController (DetailController, true);
-				
-				// this.NavigationItem isn't working, so for now I'm going to force the back
-				// button to what I want by changing it in the NavController's NavBar directly
-				var BackButton = new UIBarButtonItem ("Back", UIBarButtonItemStyle.Bordered, null);
-				this.NavigationController.NavigationBar.BackItem.BackBarButtonItem = BackButton;
-			}
 		}
 
 		void HandleResultChanged (object sender, ResultChangedArgs e)
@@ -310,15 +320,6 @@ namespace SpendingConsequences
 			ReleaseDesignerOutlets ();
 		}
 
-		public override void ViewDidAppear (bool animated)
-		{
-			base.ViewDidAppear (animated);
-
-			// Set focus to entry box so the keyboard comes up immediately, making it faster and more obvious
-			// where to begin.
-			this.InitialAmount.BecomeFirstResponder();
-		}
-		
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
 		{
 			// Return true for supported orientations

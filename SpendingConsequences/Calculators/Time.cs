@@ -47,7 +47,7 @@ namespace SpendingConsequences.Calculators
 			if (period.TotalMinutes <= 59)
 				return string.Format ("{0:%m} minute{1}", period, period.TotalMinutes > 1 ? "s" : "");
 			
-			if (period.TotalMinutes <= 2879)
+			if (period.TotalMinutes <= 1439)
 				return string.Format ("{0:%h} hour{1} {0:%m} minute{2}", period, period.Hours > 1 ? "s" : "", period.Minutes > 1 ? "s" : "");
 		
 			string unit = null;
