@@ -115,8 +115,14 @@ namespace SpendingConsequences
 			UITableViewCell cell = tableView.DequeueReusableCell (this._consequenceCellID);
 			
 			if (cell == null)
+			{
 				cell = new UITableViewCell (UITableViewCellStyle.Subtitle, this._consequenceCellID);
-			
+
+				cell.TextLabel.ShadowColor = UIColor.White;
+				cell.TextLabel.ShadowOffset = new System.Drawing.SizeF(0,1);
+				cell.TextLabel.Alpha = 0.7f;
+			}
+		
 			if (result != null) {
 				UIImage image = Profile.GetImage (result.ImageName);
 			

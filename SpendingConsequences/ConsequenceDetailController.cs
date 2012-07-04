@@ -164,7 +164,9 @@ namespace SpendingConsequences
 				                                          this.resultSubview.Frame.Width, 
 				                                          this.resultSubview.Frame.Height);
 			};
-			
+
+
+
 			// We want to show an extra detail view, usually WebGridView for amortization tables, etc.
 			NSNotificationCenter.DefaultCenter.AddObserver ("UIDeviceOrientationDidChangeNotification", DeviceRotated);
 		}

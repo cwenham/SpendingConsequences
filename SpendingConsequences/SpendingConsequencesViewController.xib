@@ -221,7 +221,7 @@
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="IBUIOpaque">NO</bool>
 									<bool key="IBUIClipsSubviews">YES</bool>
-									<float key="IBUIAlpha">0.69999998807907104</float>
+									<float key="IBUIAlpha">0.60000002384185791</float>
 									<int key="IBUIContentMode">7</int>
 									<bool key="IBUIUserInteractionEnabled">NO</bool>
 									<object class="IBUIAccessibilityConfiguration" key="IBUIAccessibilityConfiguration">
@@ -234,7 +234,8 @@
 										<bytes key="NSRGB">MCAwLjI4MjM1Mjk1NDEgMC4wMDc4NDMxMzc3MTkAA</bytes>
 									</object>
 									<nil key="IBUIHighlightedColor"/>
-									<string key="IBUIShadowOffset">{-1, -1}</string>
+									<reference key="IBUIShadowColor" ref="919186925"/>
+									<string key="IBUIShadowOffset">{0, 1}</string>
 									<int key="IBUIBaselineAdjustment">0</int>
 									<float key="IBUIMinimumFontSize">10</float>
 									<int key="IBUITextAlignment">2</int>
