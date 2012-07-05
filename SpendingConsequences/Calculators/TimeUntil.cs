@@ -32,7 +32,7 @@ namespace SpendingConsequences.Calculators
 			if (this.Cost < request.InitialAmount)
 				return null;
 			
-			double givenUnitsUntil = (double)Cost / ((double)request.InitialAmount);
+			double givenUnitsUntil = (double)Cost / ((double)request.InitialAmount.Value);
 			
 			TimeSpan timeUntil = new TimeSpan (((int)Math.Ceiling (givenUnitsUntil * request.DaysPerPeriod)), 0, 0, 0);
 							

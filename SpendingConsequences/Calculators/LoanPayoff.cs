@@ -7,8 +7,8 @@ namespace SpendingConsequences.Calculators
 {
 	public class LoanPayoff : ACalculator
 	{
-		private const double DEFAULT_RATE = 14.9;
-		private const double DEFAULT_PAYMENT_PERCENT = 1;
+		private const decimal DEFAULT_RATE = 14.9m;
+		private const decimal DEFAULT_PAYMENT_PERCENT = 1m;
 		private const decimal DEFAULT_MINIMUM_PAYMENT = 5.0m;
 		private const string DEFAULT_COMPOUNDING_FREQUENCY = "Monthly";
 		
@@ -21,10 +21,10 @@ namespace SpendingConsequences.Calculators
 		/// <summary>
 		/// The Annual interest rate as a percentage
 		/// </summary>
-		public double Rate {
+		public decimal Rate {
 			get {
 				if (ConfigurableValues.ContainsKey ("Rate"))
-					return ((double)ConfigurableValues ["Rate"].Value);
+					return ((decimal)ConfigurableValues ["Rate"].Value);
 				else
 					return DEFAULT_RATE;
 			}
@@ -39,10 +39,10 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		
-		public double MinPayPercent {
+		public decimal MinPayPercent {
 			get {
 				if (ConfigurableValues.ContainsKey ("MinPayPercent"))
-					return ((double)ConfigurableValues ["MinPayPercent"].Value);
+					return ((decimal)ConfigurableValues ["MinPayPercent"].Value);
 				else
 					return DEFAULT_PAYMENT_PERCENT;
 			}
@@ -72,10 +72,10 @@ namespace SpendingConsequences.Calculators
 			if (request.InitialAmount == 0 || request.InitialAmount < LowerThreshold || request.InitialAmount > UpperThreshold)
 				return null;
 			
-			var amortization = Financials.Amortization (request.InitialAmount, 
+			var amortization = Financials.Amortization (request.InitialAmount.Value, 
 			                                 CompoundingsPerYear (Compounding), 
-			                                 PercentAsDouble (Rate), 
-			                                 PercentAsDouble (MinPayPercent),
+			                                 PercentAsDecimal (Rate), 
+			                                 PercentAsDecimal (MinPayPercent),
 			                                 MinimumPayment,
 			                                 PayoffMode);
 			
@@ -86,7 +86,7 @@ namespace SpendingConsequences.Calculators
 				totalInterest += i.Interest;
 			}
 			
-			decimal payoff = request.InitialAmount + totalInterest;
+			decimal payoff = request.InitialAmount.Value + totalInterest;
 			
 			return new ConsequenceResult (this,
 				                             request,
@@ -106,10 +106,10 @@ namespace SpendingConsequences.Calculators
 		
 		public override XElement GetTableData (ConsequenceResult result)
 		{
-			var amortization = Financials.Amortization (result.Request.InitialAmount, 
+			var amortization = Financials.Amortization (result.Request.InitialAmount.Value, 
 			                                 CompoundingsPerYear (Compounding), 
-			                                 PercentAsDouble (Rate), 
-			                                 PercentAsDouble (MinPayPercent),
+			                                 PercentAsDecimal (Rate), 
+			                                 PercentAsDecimal (MinPayPercent),
 			                                 MinimumPayment,
 			                                 PayoffMode);
 

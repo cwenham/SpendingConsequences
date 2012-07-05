@@ -12,7 +12,7 @@ namespace SpendingConsequences.Calculators
 	/// </summary>
 	public class SpendingPower : ACalculator
 	{
-		private const double DEFAULT_RATE = 4.5;
+		private const decimal DEFAULT_RATE = 4.5m;
 		private const int DEFAULT_INSTALLMENTS = 60;
 		private const string DEFAULT_PAYMENT_FREQUENCY = "Monthly";
 		
@@ -23,10 +23,10 @@ namespace SpendingConsequences.Calculators
 		/// <summary>
 		/// The Annual interest rate as a percentage
 		/// </summary>
-		public double Rate {
+		public decimal Rate {
 			get {
 				if (ConfigurableValues.ContainsKey ("Rate"))
-					return ((double)ConfigurableValues ["Rate"].Value);
+					return ((decimal)ConfigurableValues ["Rate"].Value);
 				else
 					return DEFAULT_RATE;
 			}
@@ -53,12 +53,12 @@ namespace SpendingConsequences.Calculators
 		public override XElement GetTableData (ConsequenceResult result)
 		{
 			int annualPayments = CompoundingsPerYear (PaymentFrequency);
-			decimal paymentPerInstallment = (result.Request.InitialAmount * (decimal)(InvestmentsPerYear (result.Request.TriggerMode))) / annualPayments;
+			decimal paymentPerInstallment = (result.Request.InitialAmount.Value * (decimal)(InvestmentsPerYear (result.Request.TriggerMode))) / annualPayments;
 			
 			var amortization = Financials.Amortization (((Money)result.ComputedValue).Value, 
 			                                 CompoundingsPerYear (PaymentFrequency), 
-			                                 PercentAsDouble (Rate), 
-			                                 0.0,
+			                                 PercentAsDecimal (Rate), 
+			                                 0.0m,
 			                                 paymentPerInstallment,
 			                                 PayoffMode.FlatAmount);
 
@@ -82,20 +82,20 @@ namespace SpendingConsequences.Calculators
 				return null;
 			
 			int annualPayments = CompoundingsPerYear (PaymentFrequency);
-			double ratePerPeriod = PercentAsDouble (Rate) / annualPayments;
-			decimal paymentPerInstallment = (request.InitialAmount * (decimal)(InvestmentsPerYear (request.TriggerMode))) / annualPayments;
+			decimal ratePerPeriod = PercentAsDecimal (Rate) / annualPayments;
+			Money paymentPerInstallment = (request.InitialAmount * (decimal)(InvestmentsPerYear (request.TriggerMode))) / annualPayments;
 			
 			
-			decimal totalPayment = paymentPerInstallment * Installments;
-			decimal maxLoanAmount = 0;
+			Money totalPayment = paymentPerInstallment * Installments;
+			Money maxLoanAmount = null;
 			if (Rate > 0)
-				maxLoanAmount = (decimal)(((double)paymentPerInstallment / ratePerPeriod) * (1 - (1 / Math.Pow ((1 + ratePerPeriod), (double)Installments))));
+				maxLoanAmount = ((paymentPerInstallment / ratePerPeriod) * (1 - (1 / Financials.Pow ((1 + ratePerPeriod), Installments))));
 			else
 				maxLoanAmount = totalPayment;
 			
 			return new ConsequenceResult (this,
 		                             request,
-		                             new Money (maxLoanAmount),
+		                             maxLoanAmount,
 			                         new TabularResult (request.Summary, string.Format ("Amortization of a {0:C} loan at {1}%", maxLoanAmount, Rate), this),
 		                             FormatCaption (this.Caption, new Dictionary<string,string> {
 			{"Installments", Installments.ToString ()},

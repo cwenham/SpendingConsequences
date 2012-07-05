@@ -90,7 +90,11 @@ namespace SpendingConsequences
 			try {
 				CurrentResult = result;
 			
-				this.calculatedAmount.Text = result.ComputedValue.ToString ();
+				if (result.ComputedValue is Money)
+					this.calculatedAmount.Text = ExchangeRates.CurrentRates.ConvertToLocal(result.ComputedValue as Money).ToString();
+				else
+					this.calculatedAmount.Text = result.ComputedValue.ToString ();
+
 				this.caption.Text = result.FormattedCaption;				
 			} catch (Exception ex) {
 				Console.WriteLine (string.Format ("{0} thrown when updating current result: {1}", ex.GetType ().Name, ex.Message));

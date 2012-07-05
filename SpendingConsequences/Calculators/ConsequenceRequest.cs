@@ -11,7 +11,7 @@ namespace SpendingConsequences.Calculators
 			this.TriggerMode = mode;
 		}
 		
-		public decimal InitialAmount { get; private set; }
+		public Money InitialAmount { get; private set; }
 		
 		public TriggerType TriggerMode { get; private set; }
 
@@ -49,7 +49,7 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 
-		public decimal AmountAfter (TimeSpan period)
+		public Money AmountAfter (TimeSpan period)
 		{
 			// Either one-time, or insufficient for further calculation
 			if (TriggerMode == TriggerType.OneTime || TriggerMode == TriggerType.All || TriggerMode == TriggerType.Undefined || TriggerMode == TriggerType.Repeating)

@@ -145,6 +145,7 @@
     <Compile Include="Profile.cs" />
     <Compile Include="Calculators\Financials.cs" />
     <Compile Include="XsltWebView.cs" />
+    <Compile Include="Calculators\ExchangeRates.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />

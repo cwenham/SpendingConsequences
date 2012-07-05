@@ -32,10 +32,10 @@ namespace SpendingConsequences
 			
 			this.caption.Text = ConfigValue.Label;
 			this.configuredValue.Text = String.Format ("{0:0.00}", ConfigValue.Value);
-			this.stepper.Value = ((double)ConfigValue.Value);
-			this.stepper.MinimumValue = ConfigValue.MinValue;
-			this.stepper.MaximumValue = ConfigValue.MaxValue;
-			this.stepper.StepValue = ConfigValue.StepValue;
+			this.stepper.Value = Convert.ToDouble(ConfigValue.Value);
+			this.stepper.MinimumValue = Convert.ToDouble(ConfigValue.MinValue);
+			this.stepper.MaximumValue = Convert.ToDouble(ConfigValue.MaxValue);
+			this.stepper.StepValue = Convert.ToDouble(ConfigValue.StepValue);
 			valueChangeTimer = new Stopwatch ();
 			valueChangeTimer.Start ();
 			this.stepper.ValueChanged += delegate {
@@ -47,7 +47,7 @@ namespace SpendingConsequences
 
 				// Go faster if the user has held their finger down for a while
 				if (averageValueChange <= 100)
-					this.stepper.StepValue = ConfigValue.StepValue * 10;
+					this.stepper.StepValue = (double)ConfigValue.StepValue * 10;
 				
 				valueChangeTimer.Reset ();
 				valueChangeTimer.Start ();
@@ -55,7 +55,7 @@ namespace SpendingConsequences
 			this.stepper.TouchUpInside += delegate {
 				this.ConfigValue.Value = stepper.Value;
 				ValueChanged (this, new ConfigurableValueChanged (this.ConfigValue));	
-				this.stepper.StepValue = ConfigValue.StepValue;
+				this.stepper.StepValue = Convert.ToDouble(ConfigValue.StepValue);
 			};
 		}
 		

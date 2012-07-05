@@ -10,7 +10,7 @@ namespace SpendingConsequences.Calculators
 	/// </summary>
 	public class Investment : ACalculator
 	{
-		private const float DEFAULT_RATE = 5.0f;
+		private const decimal DEFAULT_RATE = 5.0m;
 		private const int DEFAULT_YEARS = 5;
 		private const string DEFAULT_COMPOUNDING_FREQUENCY = "Monthly";
 		
@@ -21,10 +21,10 @@ namespace SpendingConsequences.Calculators
 		/// <summary>
 		/// The Annual Percentage of Return (APR) as a percentage
 		/// </summary>
-		public double Rate {
+		public decimal Rate {
 			get {
 				if (ConfigurableValues.ContainsKey ("Rate"))
-					return ((double)ConfigurableValues ["Rate"].Value);
+					return ((decimal)ConfigurableValues ["Rate"].Value);
 				else
 					return DEFAULT_RATE;
 			}
@@ -64,49 +64,49 @@ namespace SpendingConsequences.Calculators
 			// within a few milliseconds. EG: A savings account may compound monthly but calculate interest daily, but
 			// that would require more CPU time than we can afford.
 			
-			if (request.InitialAmount == 0m)
+			if (request.InitialAmount.Value == 0m)
 				return null;
 			
 			int annualCompoundings = CompoundingsPerYear (Compounding);
 			
 			int compoundingPeriods = Years * annualCompoundings;
-			double ratePerPeriod = PercentAsDouble (Rate) / annualCompoundings;
-			double investmentsPerYear = InvestmentsPerYear (request.TriggerMode);
+			decimal ratePerPeriod = PercentAsDecimal (Rate) / annualCompoundings;
+			decimal investmentsPerYear = InvestmentsPerYear (request.TriggerMode);
 			
-			decimal result = 0;
+			Money result = null;
 			
 			try {
 				if (request.TriggerMode == TriggerType.OneTime) {
 					// A one-time investment means we can use the compound interest formula
-				
-					result = request.InitialAmount * ((decimal)Math.Pow (1 + ratePerPeriod, compoundingPeriods));
+
+					result = request.InitialAmount * Financials.Pow (1 + ratePerPeriod, compoundingPeriods);
 
 				} else if (annualCompoundings == investmentsPerYear) {
 					// Compounding frequency is the same as the investment frequency, so we can
 					// use a mathematical series.
 					// Described here: http://mathdude.quickanddirtytips.com/math-dude-web-bonus.aspx
 					
-					double seriesSum = Enumerable.Range (1, compoundingPeriods).Sum (x => Math.Pow (1 + ratePerPeriod, x));
+					decimal seriesSum = Enumerable.Range (1, compoundingPeriods).Sum (x => Financials.Pow (1 + ratePerPeriod, x));
 				
-					result = (decimal)(((double)request.InitialAmount) * seriesSum);
+					result = request.InitialAmount.Value * seriesSum;
 				
 				} else if (annualCompoundings > investmentsPerYear) {
 					// We need to take the sum of sub-periods and apply the standard compound interest formula to each
 				
-					double investmentPeriods = Years * investmentsPerYear;
-					int compoundingsPerInvestment = ((int)Math.Floor (((double)annualCompoundings / investmentsPerYear)));
+					decimal investmentPeriods = Years * investmentsPerYear;
+					int compoundingsPerInvestment = ((int)Math.Floor (annualCompoundings / investmentsPerYear));
 				
-					decimal sum = request.InitialAmount * (decimal)(Math.Pow (1 + ratePerPeriod, compoundingsPerInvestment));
+					Money sum = request.InitialAmount * Financials.Pow (1 + ratePerPeriod, compoundingsPerInvestment);
 					for (int i = 1; i <= investmentPeriods - 1; i++)
-						sum = (sum + (request.InitialAmount * (decimal)(Math.Pow (1 + ratePerPeriod, compoundingsPerInvestment))));
+						sum = (sum + (request.InitialAmount * Financials.Pow (1 + ratePerPeriod, compoundingsPerInvestment)));
 				
-					result = (decimal)sum;
+					result = sum;
 					
 				} else if (investmentsPerYear > annualCompoundings) {
 					// Apply the interest to the midpoint of the previous + next balance for each compounding period
 			
 					decimal investmentsPerPeriod = (decimal)(investmentsPerYear / annualCompoundings);
-					decimal amountPerPeriod = (investmentsPerPeriod * request.InitialAmount);
+					decimal amountPerPeriod = (investmentsPerPeriod * request.InitialAmount.Value);
 				
 					decimal sum = 0;
 					for (int i = 1; i <= compoundingPeriods; i++) {
@@ -140,7 +140,7 @@ namespace SpendingConsequences.Calculators
 
 			return new ConsequenceResult (this, 
 			                              request,
-			                              new Money (result),
+			                              result,
 			                              FormatMyCaption (),
 			                              this.ImageName,
 			                              (result >= this.LowerResultLimit && result <= this.UpperResultLimit));
@@ -153,10 +153,10 @@ namespace SpendingConsequences.Calculators
 
 			decimal reportsPerYear = result.Request.ReportsPerYear;
 			
-			var schedule = Financials.InvestmentSchedule (result.Request.InitialAmount,
+			var schedule = Financials.InvestmentSchedule (result.Request.InitialAmount.Value,
 			                                             investmentsPerYear,
 			                                             annualCompoundings,
-			                                             PercentAsDouble (Rate),
+			                                             PercentAsDecimal (Rate),
 			                                             (int)(Math.Floor(investmentsPerYear * Years)),
 			                                             reportsPerYear);	
 			

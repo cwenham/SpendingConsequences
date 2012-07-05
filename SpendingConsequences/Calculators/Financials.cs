@@ -7,16 +7,21 @@ namespace SpendingConsequences.Calculators
 {
 	public static class Financials
 	{
-		public static IEnumerable<AmortizedInstallment> Amortization (decimal amount, int annualCompoundings, double rate, double minPayRate, decimal paymentFloor, PayoffMode payMode)
+		public static decimal Pow(decimal val1, decimal val2)
 		{
-			double ratePerPeriod = rate / annualCompoundings;
+			return (decimal)Math.Pow((double)val1, (double)val2);
+		}
+
+		public static IEnumerable<AmortizedInstallment> Amortization (decimal amount, int annualCompoundings, decimal rate, decimal minPayRate, decimal paymentFloor, PayoffMode payMode)
+		{
+			decimal ratePerPeriod = rate / annualCompoundings;
 			
 			decimal remaining = amount;
 			
 			var baseAmortization = from p in Enumerable.Range (1, int.MaxValue)
-				let interest = remaining * (decimal)ratePerPeriod
+				let interest = remaining * ratePerPeriod
 				let subBalance = remaining + interest
-				let basePay = remaining * (decimal)minPayRate
+				let basePay = remaining * minPayRate
 				let minPay = payMode == PayoffMode.PercentPlusInterest ? basePay + interest : basePay
 				let adjustedPay = minPay < paymentFloor ? paymentFloor : minPay
 				let actualPay = adjustedPay > subBalance ? subBalance : adjustedPay
@@ -34,7 +39,7 @@ namespace SpendingConsequences.Calculators
 		public static IEnumerable<InvestmentInstallment> InvestmentSchedule (decimal periodicInvestment, 
 		                                                                     decimal investmentsPerYear, 
 		                                                                     decimal annualCompoundings, 
-		                                                                     double rate, 
+		                                                                     decimal rate, 
 		                                                                     int investmentPeriods,
 		                                                                     decimal reportsPerYear)
 		{

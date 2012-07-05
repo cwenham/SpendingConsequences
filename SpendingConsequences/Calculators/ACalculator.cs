@@ -257,31 +257,26 @@ namespace SpendingConsequences.Calculators
 		
 		#region Static helpers
 		
-		public static double PercentAsDouble (decimal percent)
-		{
-			return ((double)percent / 100);
-		}
-		
-		public static double PercentAsDouble (double percent)
+		public static decimal PercentAsDecimal (decimal percent)
 		{
 			return percent / 100;
 		}
 		
-		public static double InvestmentsPerYear (TriggerType trigger)
+		public static decimal InvestmentsPerYear (TriggerType trigger)
 		{
 			switch (trigger) {
 			case TriggerType.PerDay:
-				return 365.25;
+				return 365.25m;
 			case TriggerType.PerMonth:
-				return 12;
+				return 12m;
 			case TriggerType.PerQuarter:
-				return 4;
+				return 4m;
 			case TriggerType.PerWeek:
-				return 52;
+				return 52m;
 			case TriggerType.PerYear:
-				return 1;
+				return 1m;
 			default:
-				return 1;
+				return 1m;
 			}
 		}
 		

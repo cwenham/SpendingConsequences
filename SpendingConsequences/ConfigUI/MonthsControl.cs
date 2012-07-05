@@ -32,8 +32,8 @@ namespace SpendingConsequences
 			this.caption.Text = ConfigValue.Label;
 			this.configuredValue.Text = ConfigValue.Value.ToString ();
 			this.stepper.Value = Convert.ToDouble (ConfigValue.Value);
-			this.stepper.MinimumValue = ConfigValue.MinValue;
-			this.stepper.MaximumValue = ConfigValue.MaxValue;
+			this.stepper.MinimumValue = Convert.ToDouble(ConfigValue.MinValue);
+			this.stepper.MaximumValue = Convert.ToDouble(ConfigValue.MaxValue);
 			this.stepper.StepValue = 1;
 			this.stepper.ValueChanged += delegate {
 				this.configuredValue.Text = stepper.Value.ToString ();

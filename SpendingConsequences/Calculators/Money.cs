@@ -16,15 +16,180 @@ namespace SpendingConsequences.Calculators
 		public Money (decimal amount)
 		{
 			this.Value = amount;
+			this.CurrencyCode = NSLocale.CurrentLocale.CurrencyCode;
+		}
+
+		public Money (decimal amount, string currencyCode)
+		{
+			this.Value = amount;
+			this.CurrencyCode = currencyCode;
 		}
 		
 		public static implicit operator Money(decimal amount)
         {
             return new Money(amount);
         }
-		
+
+		public static Money NewMoney(decimal amount, string currencyCode)
+		{
+			return new Money(amount, currencyCode);
+		}
+
+		#region Operator overloads
+		public static Money operator *(decimal multiplier, Money amount)
+		{
+			return new Money(multiplier * amount.Value, amount.CurrencyCode);
+		}
+
+		public static Money operator *(Money amount, decimal multiplier)
+		{
+			return new Money(amount.Value * multiplier, amount.CurrencyCode);
+		}
+
+		public static Money operator /(Money amount, int value)
+		{
+			return new Money(amount.Value / value, amount.CurrencyCode);
+		}
+
+		public static Money operator /(Money amount, decimal divisor)
+		{
+			return new Money(amount.Value / divisor, amount.CurrencyCode);
+		}
+
+		public static Money operator +(Money amount1, Money amount2)
+		{
+			if (amount1.CurrencyCode != amount2.CurrencyCode)
+				throw new InvalidOperationException("Cannot add amounts of different currency");
+
+			return new Money(amount1.Value + amount2.Value, amount1.CurrencyCode);
+		}
+
+		public static Money operator -(Money amount1, Money amount2)
+		{
+			if (amount1.CurrencyCode != amount2.CurrencyCode)
+				throw new InvalidOperationException("Cannot subtract amounts of different currency");
+
+			return new Money(amount1.Value - amount2.Value, amount1.CurrencyCode);
+		}
+
+		public static bool operator <=(decimal value, Money amount)
+		{
+			return value <= amount.Value;
+		}
+
+		public static bool operator <=(Money amount, decimal value)
+		{
+			return amount.Value <= value;
+		}
+
+		public static bool operator <=(Money amount, int value)
+		{
+			return amount.Value <= value;
+		}
+
+		public static bool operator >=(decimal value, Money amount)
+		{
+			return value >= amount.Value;
+		}
+
+		public static bool operator >=(Money amount, int value)
+		{
+			return amount.Value >= value;
+		}
+
+		public static bool operator >=(Money amount, decimal value)
+		{
+			return amount.Value >= value;
+		}
+
+		public static bool operator >(decimal value, Money amount)
+		{
+			return value > amount.Value;
+		}
+
+		public static bool operator >(Money amount, decimal value)
+		{
+			return amount.Value > value;
+		}
+
+		public static bool operator <(decimal value, Money amount)
+		{
+			return value < amount.Value;
+		}
+
+		public static bool operator <(Money amount, decimal value)
+		{
+			return amount.Value < value;
+		}
+
+		public static bool operator <(int value, Money amount)
+		{
+			return value < amount.Value;
+		}
+
+		public static bool operator >(int value, Money amount)
+		{
+			return value > amount.Value;
+		}
+
+		public static bool operator ==(decimal value, Money amount)
+		{
+			return value == amount.Value;
+		}
+
+		public static bool operator ==(int value, Money amount)
+		{
+			return value == amount.Value;
+		}
+
+		public static bool operator ==(Money amount, int value)
+		{
+			return amount.Value == value;
+		}
+
+		public static bool operator ==(Money amount1, Money amount2)
+		{
+			return amount1.Equals(amount2);
+		}
+
+		public override bool Equals (object obj)
+		{
+			if (obj is Money)
+				return ((Money)obj).Value == this.Value && ((Money)obj).CurrencyCode == this.CurrencyCode;
+
+			return base.Equals (obj);
+		}
+
+		public static bool operator !=(int value, Money amount)
+		{
+			return value != amount.Value;
+		}
+
+		public static bool operator !=(decimal value, Money amount)
+		{
+			return value != amount.Value;
+		}
+
+		public static bool operator !=(Money amount, int value)
+		{
+			return amount.Value != value;
+		}
+
+		public static bool operator !=(Money amount1, Money amount2)
+		{
+			return !amount1.Equals(amount2);
+		}
+
+		public override int GetHashCode ()
+		{
+			return base.GetHashCode ();
+		}
+		#endregion
+
 		public decimal Value { get; private set; }
-		
+
+		public string CurrencyCode { get; private set; }
+
 		public override string ToString ()
 		{
 			NSNumberFormatter formatter = new NSNumberFormatter ();

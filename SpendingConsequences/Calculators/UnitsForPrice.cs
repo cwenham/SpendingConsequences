@@ -29,7 +29,7 @@ namespace SpendingConsequences.Calculators
 			if (request.TriggerMode != TriggerType.OneTime || request.InitialAmount < LowerThreshold || request.InitialAmount > UpperThreshold)
 				return null;
 			
-			decimal units = request.InitialAmount / Cost;
+			decimal units = request.InitialAmount.Value / Cost;
 			
 			return new ConsequenceResult (this,
 			                             request,

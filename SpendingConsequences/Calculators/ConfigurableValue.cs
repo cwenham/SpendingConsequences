@@ -31,11 +31,11 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		
-		public double MinValue {
+		public decimal MinValue {
 			get {
 				if (Definition.Attribute ("MinValue") != null) {
-					double minVal = 0;
-					if (!double.TryParse (Definition.Attribute ("MinValue").Value, out minVal))
+					decimal minVal = 0;
+					if (!decimal.TryParse (Definition.Attribute ("MinValue").Value, out minVal))
 						return 0;
 					else
 						return minVal;
@@ -44,29 +44,29 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		
-		public double MaxValue {
+		public decimal MaxValue {
 			get {
 				if (Definition.Attribute ("MaxValue") != null) {
-					double maxVal = 0;
-					if (!double.TryParse (Definition.Attribute ("MaxValue").Value, out maxVal))
-						return double.MaxValue;
+					decimal maxVal = 0;
+					if (!decimal.TryParse (Definition.Attribute ("MaxValue").Value, out maxVal))
+						return decimal.MaxValue;
 					else
 						return maxVal;
 				} else
-					return double.MaxValue;
+					return decimal.MaxValue;
 			}
 		}
 		
-		public double StepValue {
+		public decimal StepValue {
 			get {
 				if (Definition.Attribute ("StepValue") != null) {
-					double stepVal = 0;
-					if (!double.TryParse (Definition.Attribute ("StepValue").Value, out stepVal))
-						return 0.01;
+					decimal stepVal = 0;
+					if (!decimal.TryParse (Definition.Attribute ("StepValue").Value, out stepVal))
+						return 0.01m;
 					else
 						return stepVal;
 				} else
-					return 0.01;
+					return 0.01m;
 			}
 		}
 		
@@ -117,7 +117,7 @@ namespace SpendingConsequences.Calculators
 				case ConfigurableValueType.Money:
 					return decimal.Parse (_value);
 				case ConfigurableValueType.Percentage:
-					return double.Parse (_value);
+					return decimal.Parse (_value);
 				case ConfigurableValueType.Year:
 					return int.Parse (_value);
 				case ConfigurableValueType.Months:
