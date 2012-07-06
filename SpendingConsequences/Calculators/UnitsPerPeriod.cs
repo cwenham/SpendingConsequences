@@ -14,10 +14,10 @@ namespace SpendingConsequences.Calculators
 		/// <summary>
 		/// Cost per unit
 		/// </summary>
-		public decimal Cost {
+		public Money Cost {
 			get {
 				if (ConfigurableValues.ContainsKey ("Cost"))
-					return ((decimal)ConfigurableValues ["Cost"].Value);
+					return ((Money)ConfigurableValues ["Cost"].Value);
 				else
 					return 0;
 			}
@@ -52,9 +52,9 @@ namespace SpendingConsequences.Calculators
 			if (request.TriggerMode == TriggerType.OneTime)
 				return null;
 			
-			double perDay = ((double)request.InitialAmount.Value) / request.DaysPerPeriod;
-			double unitsPerDay = perDay / (double)Cost;
-			double unitsPerPeriod = unitsPerDay * ConsequenceRequest.DaysPerUnit [Period];
+			decimal perDay = (request.InitialAmount / request.DaysPerPeriod).Value;
+			decimal unitsPerDay = (perDay / Cost).Value;
+			decimal unitsPerPeriod = unitsPerDay * ConsequenceRequest.DaysPerUnit [Period];
 			
 			return new ConsequenceResult (this, 
 			                              request, 
@@ -63,7 +63,7 @@ namespace SpendingConsequences.Calculators
 				{"Cost", this.Cost.ToString ()}
 			}
 			), this.ImageName,
-			  (unitsPerPeriod >= (double)LowerResultLimit && unitsPerPeriod <= (double)UpperResultLimit));
+			  (unitsPerPeriod >= LowerResultLimit && unitsPerPeriod <= UpperResultLimit));
 		}
 		#endregion
 	}

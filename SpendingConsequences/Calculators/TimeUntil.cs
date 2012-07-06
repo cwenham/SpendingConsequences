@@ -11,10 +11,10 @@ namespace SpendingConsequences.Calculators
 		{
 		}
 		
-		public decimal Cost {
+		public Money Cost {
 			get {
 				if (ConfigurableValues.ContainsKey ("Cost"))
-					return ((decimal)ConfigurableValues ["Cost"].Value);
+					return ((Money)ConfigurableValues ["Cost"].Value);
 				else
 					return 0;
 			}
@@ -23,7 +23,7 @@ namespace SpendingConsequences.Calculators
 		#region implemented abstract members of SpendingConsequences.Calculators.ACalculator
 		public override ConsequenceResult Calculate (ConsequenceRequest request)
 		{
-			if (Cost == 0m)
+			if (Cost == null || Cost == 0m)
 				return null;
 			
 			if (request.TriggerMode == TriggerType.OneTime)
@@ -32,7 +32,7 @@ namespace SpendingConsequences.Calculators
 			if (this.Cost < request.InitialAmount)
 				return null;
 			
-			double givenUnitsUntil = (double)Cost / ((double)request.InitialAmount.Value);
+			decimal givenUnitsUntil = (Cost / request.InitialAmount).Value;
 			
 			TimeSpan timeUntil = new TimeSpan (((int)Math.Ceiling (givenUnitsUntil * request.DaysPerPeriod)), 0, 0, 0);
 							

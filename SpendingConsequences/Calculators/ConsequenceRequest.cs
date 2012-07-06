@@ -15,7 +15,7 @@ namespace SpendingConsequences.Calculators
 		
 		public TriggerType TriggerMode { get; private set; }
 
-		public double DaysPerPeriod { 
+		public decimal DaysPerPeriod { 
 			get {
 				return DayCounts [TriggerMode];
 			}
@@ -55,7 +55,7 @@ namespace SpendingConsequences.Calculators
 			if (TriggerMode == TriggerType.OneTime || TriggerMode == TriggerType.All || TriggerMode == TriggerType.Undefined || TriggerMode == TriggerType.Repeating)
 				return InitialAmount;
 			
-			return (decimal)(period.TotalDays / DayCounts [TriggerMode]) * InitialAmount;
+			return ((decimal)period.TotalDays / DayCounts [TriggerMode]) * InitialAmount;
 		}
 		
 		/// <summary>
@@ -72,13 +72,13 @@ namespace SpendingConsequences.Calculators
 		// require higher precision. EG: A month or quarter can't be summarized
 		// to 30 and 90 days, respectively. If we adapt this for ETF, we must use
 		// calendar-sensitive math.
-		private static Dictionary<TriggerType, double> DayCounts = new Dictionary<TriggerType, double> () {
-			{TriggerType.OneTime, double.MaxValue},
-			{TriggerType.PerDay, 1},
-			{TriggerType.PerWeek, 7},
-			{TriggerType.PerMonth, 30.4375},
-			{TriggerType.PerQuarter, 91.3125},
-			{TriggerType.PerYear, 365.25}
+		private static Dictionary<TriggerType, decimal> DayCounts = new Dictionary<TriggerType, decimal> () {
+			{TriggerType.OneTime, decimal.MaxValue},
+			{TriggerType.PerDay, 1m},
+			{TriggerType.PerWeek, 7m},
+			{TriggerType.PerMonth, 30.4375m},
+			{TriggerType.PerQuarter, 91.3125m},
+			{TriggerType.PerYear, 365.25m}
 		};
 		
 		private static Dictionary<TriggerType, decimal> PeriodsPerYear = new Dictionary<TriggerType, decimal> () {
@@ -108,18 +108,18 @@ namespace SpendingConsequences.Calculators
 			{TriggerType.PerYear, "Yearly"}
 		};
 		
-		public static Dictionary<TimeUnit, double> DaysPerUnit = new Dictionary<TimeUnit, double> {
-			{TimeUnit.Millisecond, 0.0000000116},
-			{TimeUnit.Second, 0.0000115741},
-			{TimeUnit.Minute, 0.0006944444},
-			{TimeUnit.Hour, 0.0416666667},
-			{TimeUnit.Day, 1},
-			{TimeUnit.Week, 7},
-			{TimeUnit.Month, 30.4375},
-			{TimeUnit.Quarter, 91.3125},
-			{TimeUnit.Year, 365.25},
-			{TimeUnit.Century, 36525},
-			{TimeUnit.Millenium, 365250}
+		public static Dictionary<TimeUnit, decimal> DaysPerUnit = new Dictionary<TimeUnit, decimal> {
+			{TimeUnit.Millisecond, 0.0000000116m},
+			{TimeUnit.Second, 0.0000115741m},
+			{TimeUnit.Minute, 0.0006944444m},
+			{TimeUnit.Hour, 0.0416666667m},
+			{TimeUnit.Day, 1m},
+			{TimeUnit.Week, 7m},
+			{TimeUnit.Month, 30.4375m},
+			{TimeUnit.Quarter, 91.3125m},
+			{TimeUnit.Year, 365.25m},
+			{TimeUnit.Century, 36525m},
+			{TimeUnit.Millenium, 365250m}
 		};
 		
 		public static Dictionary<TimeUnit, decimal> SecondsPerUnit = new Dictionary<TimeUnit, decimal> {

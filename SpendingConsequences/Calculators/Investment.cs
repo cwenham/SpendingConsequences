@@ -165,9 +165,9 @@ namespace SpendingConsequences.Calculators
 			                       from i in schedule
 			                       select new XElement ("Row",
 			                     new XElement ("Installment", string.Format ("{0} {1}", result.Request.ModeUnit, i.Installment)),
-			                    new XElement ("Investment", i.Investment.ToString ("C")),
-			                    new XElement ("Earnings", i.Earnings.ToString ("C")),
-			                    new XElement ("Balance", i.Balance.ToString ("C")))
+			                    new XElement ("Investment", i.Investment.ToString ()),
+			                    new XElement ("Earnings", i.Earnings.ToString ()),
+			                    new XElement ("Balance", i.Balance.ToString ()))
 			)
 			);
 		}

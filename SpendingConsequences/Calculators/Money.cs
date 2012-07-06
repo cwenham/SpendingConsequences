@@ -56,6 +56,14 @@ namespace SpendingConsequences.Calculators
 			return new Money(amount.Value / divisor, amount.CurrencyCode);
 		}
 
+		public static Money operator /(Money amount1, Money amount2)
+		{
+			if (amount1.CurrencyCode != amount2.CurrencyCode)
+				throw new InvalidOperationException("Cannot divide amounts of different currency");
+
+			return new Money(amount1.Value / amount2.Value, amount1.CurrencyCode);
+		}
+
 		public static Money operator +(Money amount1, Money amount2)
 		{
 			if (amount1.CurrencyCode != amount2.CurrencyCode)
@@ -112,6 +120,19 @@ namespace SpendingConsequences.Calculators
 			return amount.Value > value;
 		}
 
+		public static bool operator >(int value, Money amount)
+		{
+			return value > amount.Value;
+		}
+
+		public static bool operator >(Money amount1, Money amount2)
+		{
+			if (amount1.CurrencyCode != amount2.CurrencyCode)
+				throw new InvalidOperationException("Cannot compare amounts of different currencies");
+
+			return amount1.Value > amount2.Value;
+		}
+
 		public static bool operator <(decimal value, Money amount)
 		{
 			return value < amount.Value;
@@ -127,9 +148,12 @@ namespace SpendingConsequences.Calculators
 			return value < amount.Value;
 		}
 
-		public static bool operator >(int value, Money amount)
+		public static bool operator <(Money amount1, Money amount2)
 		{
-			return value > amount.Value;
+			if (amount1.CurrencyCode != amount2.CurrencyCode)
+				throw new InvalidOperationException("Cannot compare amounts of different currencies");
+
+			return amount1.Value < amount2.Value;
 		}
 
 		public static bool operator ==(decimal value, Money amount)

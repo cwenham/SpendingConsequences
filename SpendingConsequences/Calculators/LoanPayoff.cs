@@ -80,24 +80,24 @@ namespace SpendingConsequences.Calculators
 			                                 PayoffMode);
 			
 			int installments = 0;
-			decimal totalInterest = 0;
+			Money totalInterest = 0;
 			foreach (var i in amortization) {
 				installments++;
 				totalInterest += i.Interest;
 			}
 			
-			decimal payoff = request.InitialAmount.Value + totalInterest;
+			Money payoff = request.InitialAmount + totalInterest;
 			
 			return new ConsequenceResult (this,
 				                             request,
-				                             new Money (payoff),
+				                             payoff,
 				                             new TabularResult (
 					request.Summary,
 					String.Format ("Amortization of a {0:C} loan at {1}%", request.InitialAmount, Rate),
 					this),
 				                             FormatCaption (this.Caption, new Dictionary<string,string> {
 					{"Periods", installments.ToString()},
-					{"Interest", totalInterest.ToString("C")}
+					{"Interest", totalInterest.ToString()}
 				}
 			), this.ImageName,
 				   (payoff >= LowerResultLimit && payoff <= UpperResultLimit));		
@@ -118,10 +118,10 @@ namespace SpendingConsequences.Calculators
 			                       from i in amortization
 			                       select new XElement ("Row",
 			                    new XElement ("Installment", string.Format ("Payment {0}", i.Installment)),
-			                    new XElement ("Payment", i.Payment.ToString ("C")),
-			                    new XElement ("Interest", i.Interest.ToString ("C")),
-			                    new XElement ("Principal", (i.Payment - i.Interest).ToString ("C")),
-			                    new XElement ("Balance", i.Balance.ToString ("C")))
+			                    new XElement ("Payment", i.Payment.ToString ()),
+			                    new XElement ("Interest", i.Interest.ToString ()),
+			                    new XElement ("Principal", (i.Payment - i.Interest).ToString ()),
+			                    new XElement ("Balance", i.Balance.ToString ()))
 			)
 			);
 		}

@@ -12,11 +12,11 @@ namespace SpendingConsequences.Calculators
 			return (decimal)Math.Pow((double)val1, (double)val2);
 		}
 
-		public static IEnumerable<AmortizedInstallment> Amortization (decimal amount, int annualCompoundings, decimal rate, decimal minPayRate, decimal paymentFloor, PayoffMode payMode)
+		public static IEnumerable<AmortizedInstallment> Amortization (Money amount, int annualCompoundings, decimal rate, decimal minPayRate, decimal paymentFloor, PayoffMode payMode)
 		{
 			decimal ratePerPeriod = rate / annualCompoundings;
 			
-			decimal remaining = amount;
+			Money remaining = amount;
 			
 			var baseAmortization = from p in Enumerable.Range (1, int.MaxValue)
 				let interest = remaining * ratePerPeriod
@@ -36,7 +36,7 @@ namespace SpendingConsequences.Calculators
 			return baseAmortization.TakeWhile (x => x.BeforePayment > 0);
 		}
 		
-		public static IEnumerable<InvestmentInstallment> InvestmentSchedule (decimal periodicInvestment, 
+		public static IEnumerable<InvestmentInstallment> InvestmentSchedule (Money periodicInvestment, 
 		                                                                     decimal investmentsPerYear, 
 		                                                                     decimal annualCompoundings, 
 		                                                                     decimal rate, 
@@ -44,13 +44,13 @@ namespace SpendingConsequences.Calculators
 		                                                                     decimal reportsPerYear)
 		{
 			int daysOfInvestment = (int)(Math.Floor ((investmentPeriods / investmentsPerYear) * (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year]));			
-			decimal ratePerDay = (decimal)rate / (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year];
+			decimal ratePerDay = rate / (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year];
 			decimal daysPerInvestment = (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year] / investmentsPerYear;
 			decimal daysPerCompounding = (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year] / annualCompoundings;
 			decimal daysPerReport = (decimal)ConsequenceRequest.DaysPerUnit [TimeUnit.Year] / reportsPerYear;
 			
-			decimal balance = periodicInvestment;
-			decimal interestEarned = 0;
+			Money balance = periodicInvestment;
+			Money interestEarned = 0;
 			decimal daysUntilInvestment = daysPerInvestment;
 			decimal daysUntilCompounding = daysPerCompounding;
 			decimal daysUntilReport = daysPerReport;
@@ -123,13 +123,13 @@ namespace SpendingConsequences.Calculators
 	public class AmortizedInstallment {
 		public int Installment { get; set; }
 		
-		public decimal Interest { get; set; }
+		public Money Interest { get; set; }
 		
-		public decimal Payment { get; set; }
+		public Money Payment { get; set; }
 		
-		public decimal BeforePayment { get; set; }
+		public Money BeforePayment { get; set; }
 		
-		public decimal Balance { get; set; }
+		public Money Balance { get; set; }
 	}
 	
 	public enum PayoffMode {
@@ -146,11 +146,11 @@ namespace SpendingConsequences.Calculators
 	public class InvestmentInstallment {
 		public int Installment { get; set; }
 		
-		public decimal Investment { get; set; }
+		public Money Investment { get; set; }
 		
-		public decimal Earnings { get; set; }
+		public Money Earnings { get; set; }
 		
-		public decimal Balance { get; set; }
+		public Money Balance { get; set; }
 	}
 }
 

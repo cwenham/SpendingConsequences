@@ -14,10 +14,10 @@ namespace SpendingConsequences.Calculators
 		{
 		}
 		
-		public decimal Cost {
+		public Money Cost {
 			get {
 				if (ConfigurableValues.ContainsKey ("Cost"))
-					return ((decimal)ConfigurableValues ["Cost"].Value);
+					return ((Money)ConfigurableValues ["Cost"].Value);
 				else
 					return 0;
 			}
@@ -29,7 +29,7 @@ namespace SpendingConsequences.Calculators
 			if (request.TriggerMode != TriggerType.OneTime || request.InitialAmount < LowerThreshold || request.InitialAmount > UpperThreshold)
 				return null;
 			
-			decimal units = request.InitialAmount.Value / Cost;
+			decimal units = (request.InitialAmount / Cost).Value;
 			
 			return new ConsequenceResult (this,
 			                             request,

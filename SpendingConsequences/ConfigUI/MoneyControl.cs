@@ -44,7 +44,7 @@ namespace SpendingConsequences
 			});
 			
 			this.caption.Text = ConfigValue.Label;
-			this.configuredValue.Text = ConfigValue.Value.ToString ();
+			this.configuredValue.Text = ((Money)ConfigValue.Value).Value.ToString();
 		}
 		
 		

@@ -115,7 +115,7 @@ namespace SpendingConsequences.Calculators
 				case ConfigurableValueType.Integer:
 					return int.Parse (_value);
 				case ConfigurableValueType.Money:
-					return decimal.Parse (_value);
+					return new Money(decimal.Parse (_value));
 				case ConfigurableValueType.Percentage:
 					return decimal.Parse (_value);
 				case ConfigurableValueType.Year:

@@ -67,10 +67,10 @@ namespace SpendingConsequences.Calculators
 			                       from i in amortization
 			                       select new XElement ("Row",
 			                    new XElement ("Installment", string.Format ("Payment {0}", i.Installment)),
-			                    new XElement ("Payment", i.Payment.ToString ("C")),
-			                    new XElement ("Interest", i.Interest.ToString ("C")),
-			                    new XElement ("Principal", (i.Payment - i.Interest).ToString ("C")),
-			                    new XElement ("Balance", i.Balance.ToString ("C")))
+			                    new XElement ("Payment", i.Payment.ToString ()),
+			                    new XElement ("Interest", i.Interest.ToString ()),
+			                    new XElement ("Principal", (i.Payment - i.Interest).ToString ()),
+			                    new XElement ("Balance", i.Balance.ToString ()))
 			)
 			);
 		}

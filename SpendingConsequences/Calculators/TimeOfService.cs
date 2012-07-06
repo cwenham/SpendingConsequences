@@ -10,11 +10,11 @@ namespace SpendingConsequences.Calculators
 		public TimeOfService (XElement definition) : base(definition)
 		{
 		}
-		
-		public decimal Cost {
+
+		public Money Cost {
 			get {
 				if (ConfigurableValues.ContainsKey ("Cost"))
-					return ((decimal)ConfigurableValues ["Cost"].Value);
+					return ((Money)ConfigurableValues ["Cost"].Value);
 				else
 					return 0;
 			}
@@ -55,7 +55,7 @@ namespace SpendingConsequences.Calculators
 			if (request.TriggerMode != TriggerType.OneTime)
 				return null;
 			
-			decimal serviceUnits = request.InitialAmount.Value / this.Cost;
+			decimal serviceUnits = (request.InitialAmount / this.Cost).Value;
 			decimal serviceSeconds = ConsequenceRequest.SecondsPerUnit [UnitForCost] * serviceUnits;
 
 			if (UnitsPerDay > 0)
