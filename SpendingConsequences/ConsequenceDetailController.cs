@@ -103,9 +103,7 @@ namespace SpendingConsequences
 		}
 		
 		private UIViewController GetConfigurator (ConfigurableValue val)
-		{
-			// ToDo: Implement this with flyweight pattern
-			
+		{			
 			IConfigControl control = null;
 			
 			switch (val.ValueType) {
@@ -170,9 +168,8 @@ namespace SpendingConsequences
 			};
 
 
-
-			// We want to show an extra detail view, usually WebGridView for amortization tables, etc.
-			NSNotificationCenter.DefaultCenter.AddObserver ("UIDeviceOrientationDidChangeNotification", DeviceRotated);
+			// We want to show an extra detail view, usually XsltWebView for amortization tables, etc.
+			NSNotificationCenter.DefaultCenter.AddObserver (UIDevice.OrientationDidChangeNotification, DeviceRotated);
 		}
 		
 		private void DeviceRotated (NSNotification notification)

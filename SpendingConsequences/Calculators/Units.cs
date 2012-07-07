@@ -15,19 +15,19 @@ namespace SpendingConsequences.Calculators
 		
 		public Units (double units)
 		{
-			this.Value = units;
+			this.Value = (decimal)units;
 		}
 		
 		public Units (decimal units)
 		{
-			this.Value = (double)units;
+			this.Value = units;
 		}
 		
-		public double Value { get; private set; }
+		public decimal Value { get; private set; }
 		
 		public override string ToString ()
 		{
-			if (Value % 1 <= 0.1)
+			if (Value % 1 <= 0.1m)
 				return string.Format ("{0:0}", Value);
 			else 
 				return string.Format ("{0:0.0}", Value);

@@ -286,7 +286,8 @@ namespace SpendingConsequences
 			if (openOrClose == "Open") {
 				IsEditingAmount = true;
 				this._contentViewSize = this.View.Frame;
-				RectangleF kbdFrame = UIKeyboard.BoundsFromNotification (n);
+				RectangleF kbdFrame = ((NSValue)n.UserInfo.ValueForKey(UIKeyboard.FrameBeginUserInfoKey)).RectangleFValue;
+
 				double animationDuration = UIKeyboard.AnimationDurationFromNotification (n);
 
 				RectangleF newFrame = this.View.Frame;
