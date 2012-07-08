@@ -129,18 +129,10 @@ namespace SpendingConsequences.Calculators
 				return null;
 			}
 
-			// Investment schedule routine isn't working properly at the moment.
-//			return new ConsequenceResult (this, 
-//			                              request,
-//			                              new Money (result),
-//			                              new TabularResult(request.Summary, string.Format ("{0} invested at {1:0.00}%", request.Summary, Rate), this),
-//			                              FormatMyCaption (),
-//			                              this.ImageName,
-//			                              (result >= this.LowerResultLimit && result <= this.UpperResultLimit));
-
 			return new ConsequenceResult (this, 
 			                              request,
 			                              result,
+			                              new TabularResult(request.Summary, string.Format ("{0} invested at {1:0.00}%", request.Summary, Rate), this),
 			                              FormatMyCaption (),
 			                              this.ImageName,
 			                              (result >= this.LowerResultLimit && result <= this.UpperResultLimit));
@@ -148,18 +140,8 @@ namespace SpendingConsequences.Calculators
 		
 		public override XElement GetTableData (ConsequenceResult result)
 		{
-			int annualCompoundings = CompoundingsPerYear (Compounding);
-			decimal investmentsPerYear = (decimal)(InvestmentsPerYear (result.Request.TriggerMode));
+			var schedule = Financials.InvestmentSchedule (result.Request, this);
 
-			decimal reportsPerYear = result.Request.ReportsPerYear;
-			
-			var schedule = Financials.InvestmentSchedule (result.Request.InitialAmount.Value,
-			                                             investmentsPerYear,
-			                                             annualCompoundings,
-			                                             PercentAsDecimal (Rate),
-			                                             (int)(Math.Floor(investmentsPerYear * Years)),
-			                                             reportsPerYear);	
-			
 			return new XElement (new XStreamingElement ("InvestmentSchedule", 
 			                    new XAttribute ("Title", string.Format ("{0} invested at {1:0.00}%", result.Request.Summary, Rate)),
 			                       from i in schedule

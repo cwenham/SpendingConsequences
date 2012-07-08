@@ -24,6 +24,11 @@ namespace SpendingConsequences.Calculators
 			this.Value = amount;
 			this.CurrencyCode = currencyCode;
 		}
+
+		public Money Clone()
+		{
+			return new Money(this.Value, this.CurrencyCode);
+		}
 		
 		public static implicit operator Money(decimal amount)
         {
