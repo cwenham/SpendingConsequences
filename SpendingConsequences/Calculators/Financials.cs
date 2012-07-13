@@ -93,8 +93,6 @@ namespace SpendingConsequences.Calculators
 		public Money Earnings { get; set; }
 		
 		public Money Balance { get; set; }
-
-		public Money BalanceAfterInvestment { get; set; }
 	}
 }
 

@@ -69,6 +69,12 @@ namespace SpendingConsequences.Calculators
 					return 0.01m;
 			}
 		}
+
+		public string CurrencyCode {
+			get {
+				return Definition.Attribute("CurrencyCode") != null ? Definition.Attribute("CurrencyCode").Value : null;
+			}
+		}
 		
 		/// <summary>
 		/// Returns true if a UI should not be presented for changing the value
@@ -115,7 +121,7 @@ namespace SpendingConsequences.Calculators
 				case ConfigurableValueType.Integer:
 					return int.Parse (_value);
 				case ConfigurableValueType.Money:
-					return new Money(decimal.Parse (_value));
+					return new Money(decimal.Parse (_value), CurrencyCode);
 				case ConfigurableValueType.Percentage:
 					return decimal.Parse (_value);
 				case ConfigurableValueType.Year:

@@ -50,13 +50,18 @@ namespace SpendingConsequences.Calculators
 		/// Support elements, such as commentary, etc.
 		/// </summary>
 		public Dictionary<String,ASupportElement> SupportElements { get; private set; }
-		
+
+		internal string AttributeOrNull(string attribName)
+		{
+			if (Definition.Attribute(attribName) != null)
+				return Definition.Attribute(attribName).Value;
+			else
+				return null;
+		}
+
 		public String Caption {
 			get {
-				if (Definition.Attribute ("Caption") != null)
-					return Definition.Attribute ("Caption").Value;
-				else
-					return null;
+				return AttributeOrNull("Caption");
 			}
 		}
 		
@@ -98,10 +103,13 @@ namespace SpendingConsequences.Calculators
 		/// </summary>
 		public string Country {
 			get {
-				if (Definition.Attribute ("Country") != null)
-					return Definition.Attribute ("Country").Value;
-				else
-					return null;
+				return AttributeOrNull("Country");
+			}
+		}
+
+		public string Category {
+			get {
+				return AttributeOrNull("Category");
 			}
 		}
 		
@@ -121,10 +129,7 @@ namespace SpendingConsequences.Calculators
 		
 		public string TableTemplate {
 			get {
-				if (Definition.Attribute ("TableTemplate") != null)
-					return Definition.Attribute ("TableTemplate").Value;
-				else
-					return null;
+				return AttributeOrNull("TableTemplate");
 			}
 		}
 		

@@ -6,7 +6,7 @@
 		<!-- Captions appear after the calculated value. EG: "$12,000 by Retirement" -->	
 		<!-- Image names will be appended with ".png" and looked for in bundle -->
 		<!-- Labels appear before the editable control. EG: "Expected annual yield 5%" -->
-		<Investment TriggersOn="OneTime,Repeating" Caption="by Retirement" TableTemplate="InvestmentTable">
+		<Investment TriggersOn="OneTime,Repeating" Caption="by Retirement" TableTemplate="InvestmentTable" Category="Savings">
 			<Image Name="money"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="5"/>
 			<Configurable Name="Years" Type="Year" Label="I plan to retire in" Value="30"/>
@@ -16,17 +16,26 @@
 			number of years remaining before you expect to retire.</Commentary>
 		</Investment>
 		
-		<TimeOfService UnitForCost="Hour" TriggersOn="OneTime" Caption="of labor to earn">
-			<Image Name="globe"/>
-			<Configurable Name="Cost" Type="Money" Label="Your hourly wage" Value="23.38"/>
-			<Configurable Name="UnitsPerDay" Type="Decimal" Label="Hours worked per day" Value="8"/>
-			<Commentary>Modify the above to match your hourly wage so you can quickly see how long you need to work to earn any given amount.
-			<br/>As a comparison, the US Bureau of Labor Statistics reported that the average hourly salary of an employee in the United States was
-			$23.38 as of April 2012, which is where we picked our value from.</Commentary>
-			<!-- http://www.bls.gov/eag/eag.us.htm -->
-		</TimeOfService>
+		<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in Index Funds" TableTemplate="InvestmentTable" Category="Savings">
+			<Image Name="stockmarket"/>
+			<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="9.62"/>
+			<Configurable Name="Years" Type="Year" Label="When invested for" Value="5"/>
+			<Commentary>The Compound Annual Growth Rate of the Standard &amp; Poor 500 Index since its inception in 1957 is 
+				about <b>9.62%</b>, however this is not what you'll typically expect in any given year; in some years the index 
+				does worse than others, some years it does much better. When investing in such a fund you should be thinking
+				about the long term and be willing to ride-out dips in the market that can make it look as if you're losing
+				money.
+			</Commentary>
+			<!-- http://www.moolanomy.com/5924/what-is-the-historical-return-of-the-sp-500-kmulligan/ -->
+		</Investment>
 		
-		<Investment TriggersOn="OneTime,Repeating" Caption="under the mattress for [Years] years" TableTemplate="InvestmentTable">
+		<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in a savings account" TableTemplate="InvestmentTable" Category="Savings">
+			<Image Name="bank"/>
+			<Configurable Name="Rate" Type="Percentage" Label="Savings APR" Value="0.8"/>
+			<Configurable Name="Years" Type="Year" Label="When saved for" Value="5"/>
+		</Investment>
+		
+		<Investment TriggersOn="OneTime,Repeating" Caption="under the mattress for [Years] years" TableTemplate="InvestmentTable" Category="Savings">
 			<Image Name="bed"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="0"/>
 			<Configurable Name="Years" Type="Year" Label="I plan to raid this after" Value="3"/>
@@ -41,7 +50,17 @@
 			<!-- http://www.cbsnews.com/2100-201_162-2970973.html -->
 		</Investment>
 		
-		<LoanPayoff TriggersOn="OneTime" Caption="to pay-off credit card in [Periods] months" LowerThreshold="10.00" UpperThreshold="1000000000" TableTemplate="AmortizationTable">
+		<TimeOfService UnitForCost="Hour" TriggersOn="OneTime" Caption="of labor to earn" Category="Equivalents">
+			<Image Name="globe"/>
+			<Configurable Name="Cost" Type="Money" Label="Your hourly wage" Value="23.38" CurrencyCode="USD"/>
+			<Configurable Name="UnitsPerDay" Type="Decimal" Label="Hours worked per day" Value="8"/>
+			<Commentary>Modify the above to match your hourly wage so you can quickly see how long you need to work to earn any given amount.
+			<br/>As a comparison, the US Bureau of Labor Statistics reported that the average hourly salary of an employee in the United States was
+			$23.38 as of April 2012, which is where we picked our value from.</Commentary>
+			<!-- http://www.bls.gov/eag/eag.us.htm -->
+		</TimeOfService>
+		
+		<LoanPayoff TriggersOn="OneTime" Caption="to pay-off credit card in [Periods] months" LowerThreshold="10.00" UpperThreshold="1000000000" TableTemplate="AmortizationTable" Category="Equivalents">
 			<Image Name="credit_card"/>
 			<Configurable Name="Rate" Type="Percentage" Label="APR for your card" Value="14.9"/>
 			<Configurable Name="PayoffMode" Type="PayoffMode" Label="Minimum payments calculated as" Value="PercentPlusInterest"/>
@@ -72,26 +91,16 @@
 			</Commentary>
 		</LoanPayoff>
 		
-		<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in Index Funds" TableTemplate="InvestmentTable">
-			<Image Name="stockmarket"/>
-			<Configurable Name="Rate" Type="Percentage" Label="Average annual growth rate" Value="9.62"/>
-			<Configurable Name="Years" Type="Year" Label="When invested for" Value="5"/>
-			<Commentary>The Compound Annual Growth Rate of the Standard &amp; Poor 500 Index since its inception in 1957 is 
-				about <b>9.62%</b>, however this is not what you'll typically expect in any given year; in some years the index 
-				does worse than others, some years it does much better. When investing in such a fund you should be thinking
-				about the long term and be willing to ride-out dips in the market that can make it look as if you're losing
-				money.
-			</Commentary>
-			<!-- http://www.moolanomy.com/5924/what-is-the-historical-return-of-the-sp-500-kmulligan/ -->
-		</Investment>
+		<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6" Country="US" Category="Equivalents">
+			<Image Name="ambulance"/>
+			<Configurable Name="Cost" Type="Money" Label="Price per service call" Value="750" CurrencyCode="USD"/>
+			<Commentary>Ambulance transport varies widely in the United States, with most billings coming between $500 and $1,000, but you may be lucky enough to live
+			in an area where ambulance service is provided free by the city or county.
+			<br/>The most expensive emergency ride you can get, however, is an <b>Airlift</b>, or hellicopter ambulance, which can add more than $2,000 to your
+			hospital bill. An airlift is called for by paramedics for certain types of injury, especially head injuries that could have caused damage to the brain.</Commentary>
+		</UnitsForPrice>
 		
-		<Investment TriggersOn="OneTime,Repeating" Caption="after [Years] years in a savings account" TableTemplate="InvestmentTable">
-			<Image Name="bank"/>
-			<Configurable Name="Rate" Type="Percentage" Label="Savings APR" Value="0.8"/>
-			<Configurable Name="Years" Type="Year" Label="When saved for" Value="5"/>
-		</Investment>
-		
-		<SpendingPower TriggersOn="Repeating" Caption="for a new car in [Installments] monthly payments" LowerResultLimit="10000" UpperResultLimit="100000" TableTemplate="AmortizationTable">
+		<SpendingPower TriggersOn="Repeating" Caption="for a new car in [Installments] monthly payments" LowerResultLimit="10000" UpperResultLimit="100000" TableTemplate="AmortizationTable" Category="Goals">
 			<Image Name="carkey"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="4.5"/>
 			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="60"/>		
@@ -99,7 +108,7 @@
 			this is how much you could borrow for the given payment amount.</Commentary>
 		</SpendingPower>
 		
-		<SpendingPower TriggersOn="Repeating" Caption="for a used car in [Installments] monthly payments" LowerResultLimit="1000" UpperResultLimit="9999" TableTemplate="AmortizationTable">
+		<SpendingPower TriggersOn="Repeating" Caption="for a used car in [Installments] monthly payments" LowerResultLimit="1000" UpperResultLimit="9999" TableTemplate="AmortizationTable" Category="Goals">
 			<Image Name="carkey"/> <!-- Note: We want to look for a reasonable "used car" icon, if possible -->
 			<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="5.2"/>
 			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="36"/>
@@ -111,64 +120,55 @@
 			<br/>Indeed, some studies have suggested that the most <i>economical</i> choice is to buy a new car and drive it until it falls apart.</Commentary>
 		</SpendingPower>
 		
-		<SpendingPower TriggersOn="Repeating" Caption="mortgage, with [Installments] monthly payments" LowerResultLimit="100000" UpperResultLimit="1000000" TableTemplate="AmortizationTable">
+		<SpendingPower TriggersOn="Repeating" Caption="mortgage, with [Installments] monthly payments" LowerResultLimit="100000" UpperResultLimit="1000000" TableTemplate="AmortizationTable" Category="Goals">
 			<Image Name="house"/>
 			<Configurable Name="Rate" Type="Percentage" Label="APR" Value="3.50"/>
 			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="360"/>		
 		</SpendingPower>
 		
-		<TimeOfService UnitForCost="Year" TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00">
+		<TimeOfService UnitForCost="Year" TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00" Category="Utilities">
 			<Image Name="walle"/>
-			<Configurable Name="Cost" Type="Money" Label="Cost per year for trash removal" Value="479.28"/>
+			<Configurable Name="Cost" Type="Money" Label="Cost per year for trash removal" Value="479.28" CurrencyCode="USD"/>
 			<!-- Monthly: 39.94. Source: http://www.sanramon.ca.gov/recycle/curbside.htm -->
 			<Commentary>Based on yearly curbside pickup rates as quoted by Waste Management Inc. for San Ramon, CA.</Commentary>
 		</TimeOfService>
 		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53">
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53" Category="Lifestyle">
 			<Image Name="bestsoap"/>
-			<Configurable Name="Cost" Type="Money" Label="Per bar of luxury soap" Value="20.00"/>
+			<Configurable Name="Cost" Type="Money" Label="Per bar of luxury soap" Value="20.00" CurrencyCode="USD"/>
 			<Commentary>Soap: the yardstick of civilization.</Commentary>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3">
+		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3" Category="Lifestyle">
 			<Image Name="cappuccino"/>
-			<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="4.36" Source="HuMuch.com" SourceUrl="http://www.humuch.com/detailspage.php?item_id=102"/>
+			<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="4.36" CurrencyCode="USD" Source="HuMuch.com" SourceUrl="http://www.humuch.com/detailspage.php?item_id=102"/>
 			<Commentary>Based on the average price of a Grande Cappucino from a national coffee restaurant chain.</Commentary>
 		</UnitsPerPeriod>
-	
-		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000">
-			<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
-			<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" SourceUrl="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
-			<Commentary>It costs surprisingly little to vaccinate a child against polio. The good news is that it appears to 
-				be working, as India was declared entirely polio-free in 2012 by the World Health Organization.
-			</Commentary>
-			<!-- Source: http://www.cbsnews.com/8301-202_162-57385542/india-declared-polio-free-by-world-health-org/ -->
-		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie rentals per week" LowerResultLimit="1" UpperResultLimit="7">
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie rentals per week" LowerResultLimit="1" UpperResultLimit="7" Category="Lifestyle">
 			<Image Name="movie" SourceUrl="http://www.officinadigitale.org/"/>
-			<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99"/>
+			<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99" CurrencyCode="USD"/>
 			<Commentary>Based on the price of a High-Defenition New Release rental on Apple's iTunes movie store.</Commentary>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie tickets per week" LowerResultLimit="2" UpperResultLimit="14">
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie tickets per week" LowerResultLimit="2" UpperResultLimit="14" Category="Lifestyle">
 			<Image Name="popcorn"/>
-			<Configurable Name="Cost" Type="Money" Label="Cost per ticket" Value="8.15" Source="Time.com" SourceUrl="http://moneyland.time.com/2012/01/05/the-cure-for-the-ailing-movie-business-is-to-raise-ticket-prices/"/>
+			<Configurable Name="Cost" Type="Money" Label="Cost per ticket" Value="8.15" CurrencyCode="USD" Source="Time.com" SourceUrl="http://moneyland.time.com/2012/01/05/the-cure-for-the-ailing-movie-business-is-to-raise-ticket-prices/"/>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14">
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14" Category="Lifestyle">
 			<Image Name="hamburger"/>
-			<Configurable Name="Cost" Type="Money" Label="Average meal price" Value="10.16" Source="QSR Magazine" SourceUrl="http://www.qsrmagazine.com/news/study-says-fast-food-remains-popular"/>
+			<Configurable Name="Cost" Type="Money" Label="Average meal price" Value="10.16" CurrencyCode="USD" Source="QSR Magazine" SourceUrl="http://www.qsrmagazine.com/news/study-says-fast-food-remains-popular"/>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="subway rides per week" LowerResultLimit="1" UpperResultLimit="14">
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="subway rides per week" LowerResultLimit="1" UpperResultLimit="14" Category="Lifestyle">
 			<Image Name="nysubway"/>
-			<Configurable Name="Cost" Type="Money" Label="Ticket price" Value="2.25"/>
+			<Configurable Name="Cost" Type="Money" Label="Ticket price" Value="2.25" CurrencyCode="USD"/>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="console games per year" LowerResultLimit="1" UpperResultLimit="12">
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="console games per year" LowerResultLimit="1" UpperResultLimit="12" Category="Lifestyle">
 			<Image Name="controller"/>
-			<Configurable Name="Cost" Type="Money" Label="Average price per game" Value="45.00" Source="CostHelper" SourceUrl="http://electronics.costhelper.com/xbox360.html"/>
+			<Configurable Name="Cost" Type="Money" Label="Average price per game" Value="45.00" CurrencyCode="USD" Source="CostHelper" SourceUrl="http://electronics.costhelper.com/xbox360.html"/>
 			<Commentary>Video games, although sometimes expensive, actually offer a very economical form of entertainment.
 			With some studies indicating that gamers spend an average of 13 hours a week playing their favorites, a game that
 			you play for 2 or 3 weeks can work out to only pennies per hour of enjoyment. Far cheaper than renting movies.
@@ -177,71 +177,71 @@
 			</Commentary>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12">
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12" Category="Utilities">
 			<Image Name="inkjet"/>
-			<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30"/>
+			<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30" CurrencyCode="USD"/>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" ForGender="Female">
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" ForGender="Female" Category="Lifestyle">
 			<Image Name="hair_woman"/>
-			<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a woman" Value="56" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
+			<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a woman" Value="56" CurrencyCode="USD" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" ForGender="Male">
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" ForGender="Male" Category="Lifestyle">
 			<Image Name="hair_man"/>
-			<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
+			<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" CurrencyCode="USD" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 		</UnitsPerPeriod>
 		
-		<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24">
+		<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24" Category="Utilities">
 			<Image Name="newspaper"/>
 			<!-- Estimate comes from New York Times rate for daily delivery -->
-			<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22"/>
+			<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22" CurrencyCode="USD"/>
 		</TimeOfService>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30">
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30" Category="Goals">
 			<Image Name="beach_chair"/>
-			<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" Source="PlanHawaiiVacation.com" SourceUrl="http://www.planhawaiivacation.com/vacationcost/"/>
+			<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" CurrencyCode="USD" Source="PlanHawaiiVacation.com" SourceUrl="http://www.planhawaiivacation.com/vacationcost/"/>
 			<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
 				$455 for food, $540 for activities and $450 to rent a car for the week.
 			</Commentary>
 		</TimeUntil>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000">
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000" Category="Goals">
 			<Image Name="treadmill"/>
-			<Configurable Name="Cost" Type="Money" Label="Average price" Value="1314.11" Source="Amazon.com" SourceUrl="http://www.amazon.com/mn/search/?_encoding=UTF8&amp;keywords=treadmills&amp;tag=synesmedia-20&amp;linkCode=ur2&amp;qid=1335895621&amp;camp=1789&amp;creative=390957&amp;rh=k%3Atreadmills%2Ci%3Asporting#/ref=sr_st?keywords=treadmills"/>
+			<Configurable Name="Cost" Type="Money" Label="Average price" Value="1314.11" CurrencyCode="USD" Source="Amazon.com" SourceUrl="http://www.amazon.com/mn/search/?_encoding=UTF8&amp;keywords=treadmills&amp;tag=synesmedia-20&amp;linkCode=ur2&amp;qid=1335895621&amp;camp=1789&amp;creative=390957&amp;rh=k%3Atreadmills%2Ci%3Asporting#/ref=sr_st?keywords=treadmills"/>
 			<Commentary>Based on the average price of the top-20 highest customer rated motorized treadmills on Amazon.com.</Commentary>
 		</TimeUntil>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for an Espresso machine" LowerResultLimit="1" UpperResultLimit="1000">
+		<TimeUntil TriggersOn="Repeating" Caption="to save for an Espresso machine" LowerResultLimit="1" UpperResultLimit="1000" Category="Goals">
 			<Image Name="espressomachine"/>
-			<Configurable Name="Cost" Type="Money" Label="Average price" Value="334.72" Source="Amazon.com" SourceUrl="http://amzn.to/IJIUe5"/>
+			<Configurable Name="Cost" Type="Money" Label="Average price" Value="334.72" CurrencyCode="USD" Source="Amazon.com" SourceUrl="http://amzn.to/IJIUe5"/>
 			<Commentary>Based on the average price of the top-20 highest customer rated espresso machines on Amazon.com</Commentary>
 		</TimeUntil>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for a Home Theater system" LowerResultLimit="1" UpperResultLimit="1000">
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a Home Theater system" LowerResultLimit="1" UpperResultLimit="1000" Category="Goals">
 			<Image Name="home_theater"/>
-			<Configurable Name="Cost" Type="Money" Label="Average price" Value="5000.00"/>
+			<Configurable Name="Cost" Type="Money" Label="Average price" Value="5000.00" CurrencyCode="USD"/>
 			<Commentary>Our $5,000 estimate would cover a 42-inch flat-screen TV, a surround-sound system with five speakers, Blu-Ray DVD player
 			and a basic infrared remote. We didn't include some of the more expensive options such as professional installation, sound-proofing your room and 
 			installing theater seats, which can add another $30,000 or more to the budget.
 			<br/>If that high-end experience is what you're looking for then just tap on the <b>Average price</b> above and enter what your contractor has quoted you.</Commentary>
 		</TimeUntil>
 		
-		<UnitsForPrice TriggersOn="OneTime" Caption="Nimitz-class Aircraft Carriers" LowerResultLimit="1" UpperResultLimit="10" LowerThreshold="4500000000.00" Country="US">
+		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000" Category="Awareness">
+			<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
+			<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" CurrencyCode="USD" SourceUrl="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
+			<Commentary>It costs surprisingly little to vaccinate a child against polio. The good news is that it appears to 
+				be working, as India was declared entirely polio-free in 2012 by the World Health Organization.
+			</Commentary>
+			<!-- Source: http://www.cbsnews.com/8301-202_162-57385542/india-declared-polio-free-by-world-health-org/ -->
+		</UnitsPerPeriod>
+		
+		<UnitsForPrice TriggersOn="OneTime" Caption="Nimitz-class Aircraft Carriers" LowerResultLimit="1" UpperResultLimit="10" LowerThreshold="4500000000.00" Country="US" Category="Defense">
 			<Image Name="aircraftcarrier"/>
-			<Configurable Name="Cost" Type="Money" Label="Price per carrier" Value="4500000000.00" Source="Wikipedia" SourceUrl="http://en.wikipedia.org/wiki/Nimitz_class_aircraft_carrier"/>
+			<Configurable Name="Cost" Type="Money" Label="Price per carrier" Value="4500000000.00" CurrencyCode="USD" Source="Wikipedia" SourceUrl="http://en.wikipedia.org/wiki/Nimitz_class_aircraft_carrier"/>
 			<Commentary>The largest capital ships in the world are Nimitz-class supercarriers. As President of the United
 			States, you would expect to have 5-10 of these warships in service at any given time.</Commentary>
 			<!-- Note: re-visit for best number of ships in service -->
-		</UnitsForPrice>
-		
-		<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6" Country="US">
-			<Image Name="ambulance"/>
-			<Configurable Name="Cost" Type="Money" Label="Price per service call" Value="750"/>
-			<Commentary>Ambulance transport varies widely in the United States, with most billings coming between $500 and $1,000, but you may be lucky enough to live
-			in an area where ambulance service is provided free by the city or county.
-			<br/>The most expensive emergency ride you can get, however, is an <b>Airlift</b>, or hellicopter ambulance, which can add more than $2,000 to your
-			hospital bill. An airlift is called for by paramedics for certain types of injury, especially head injuries that could have caused damage to the brain.</Commentary>
 		</UnitsForPrice>
 	</Consequences>
 	
