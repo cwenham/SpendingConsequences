@@ -33,6 +33,11 @@
 			<Image Name="bank"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Savings APR" Value="0.8"/>
 			<Configurable Name="Years" Type="Year" Label="When saved for" Value="5"/>
+			<Commentary>Savings accounts are traditionally low-interest earners, but in the last 7 years many banks have
+			introduced high-interest savings accoungs that can earn up to 5 times more than the national average. Our
+			estimates come from the interest rate offered by a popular high-interest savings account, as of July 2012.
+			<br/>Change the <b>Savings APR</b> above to reflect what your bank is reporting for your savings account to
+			see more accurate estimates.</Commentary>
 		</Investment>
 		
 		<Investment TriggersOn="OneTime,Repeating" Caption="under the mattress for [Years] years" TableTemplate="InvestmentTable" Category="Savings">
@@ -51,12 +56,12 @@
 		</Investment>
 		
 		<TimeOfService UnitForCost="Hour" TriggersOn="OneTime" Caption="of labor to earn" Category="Equivalents">
-			<Image Name="globe"/>
+			<Image Name="clock"/>
 			<Configurable Name="Cost" Type="Money" Label="Your hourly wage" Value="23.38" CurrencyCode="USD"/>
 			<Configurable Name="UnitsPerDay" Type="Decimal" Label="Hours worked per day" Value="8"/>
 			<Commentary>Modify the above to match your hourly wage so you can quickly see how long you need to work to earn any given amount.
 			<br/>As a comparison, the US Bureau of Labor Statistics reported that the average hourly salary of an employee in the United States was
-			$23.38 as of April 2012, which is where we picked our value from.</Commentary>
+			$23.38 as of April 2012, which is where we picked our initial estimate from.</Commentary>
 			<!-- http://www.bls.gov/eag/eag.us.htm -->
 		</TimeOfService>
 		
@@ -91,82 +96,75 @@
 			</Commentary>
 		</LoanPayoff>
 		
-		<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6" Country="US" Category="Equivalents">
-			<Image Name="ambulance"/>
-			<Configurable Name="Cost" Type="Money" Label="Price per service call" Value="750" CurrencyCode="USD"/>
-			<Commentary>Ambulance transport varies widely in the United States, with most billings coming between $500 and $1,000, but you may be lucky enough to live
-			in an area where ambulance service is provided free by the city or county.
-			<br/>The most expensive emergency ride you can get, however, is an <b>Airlift</b>, or hellicopter ambulance, which can add more than $2,000 to your
-			hospital bill. An airlift is called for by paramedics for certain types of injury, especially head injuries that could have caused damage to the brain.</Commentary>
-		</UnitsForPrice>
-		
 		<SpendingPower TriggersOn="Repeating" Caption="for a new car in [Installments] monthly payments" LowerResultLimit="10000" UpperResultLimit="100000" TableTemplate="AmortizationTable" Category="Goals">
 			<Image Name="carkey"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="4.5"/>
 			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="60"/>		
-			<Commentary>The actual amount of money you can borrow will depend on your income, cash flow and credit history. But assuming you'll qualify anyway, 
-			this is how much you could borrow for the given payment amount.</Commentary>
+			<Commentary>The actual amount of money you can borrow will depend on your income, cash flow and credit history.
+			What you see here is an estimate based on the <i>assumption</i> that you will qualify for such a loan, and
+			is only meant to help you get an idea of what you could finance.
+			<br/>Only your bank or financing company can tell you how much you can actually borrow and what kind of
+			interest rate you qualify for. Most new-car loans tend to come with a lower rate than used-car loans because
+			a new car will be covered by a manufacturer's warrantee, which lowers the risk to the lender. Your credit
+			history will also affect the interest rate and maximum loan amount, as lenders are less willing to loan
+			large amounts at low rates to those who may have defaulted on a loan in the past, or haven't yet established
+			a good payment history.</Commentary>
 		</SpendingPower>
 		
 		<SpendingPower TriggersOn="Repeating" Caption="for a used car in [Installments] monthly payments" LowerResultLimit="1000" UpperResultLimit="9999" TableTemplate="AmortizationTable" Category="Goals">
-			<Image Name="carkey"/> <!-- Note: We want to look for a reasonable "used car" icon, if possible -->
+			<Image Name="vw_bug"/> <!-- Note: We want to look for a reasonable "used car" icon, if possible -->
 			<Configurable Name="Rate" Type="Percentage" Label="Loan Rate" Value="5.2"/>
 			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="36"/>
-			<Commentary>They say that a new car loses half of its value the moment you drive it off the dealer's lot, but at the same time the loans for buying
-			used cars tend to have a slightly higher interest rate over a shorter period of time (60 months for new cars, 36 months for used).
-			<br/>Used cars also tend to incur more <i>repair costs</i> and have a <i>shorter</i> lifetime, so while they may be cheaper to buy initially, you need to 
-			be careful to balance price versus economy. If you plan to drive the same car for more than 6 years, you may wish to consider a <b>new</b> car instead 
-			because	most of your maintenance expenses will be covered by the warrantee. 
-			<br/>Indeed, some studies have suggested that the most <i>economical</i> choice is to buy a new car and drive it until it falls apart.</Commentary>
+			<Commentary>They say that a new car loses half of its value the moment you drive it off the dealer's lot, 
+			but at the same time the loans for buying used cars tend to have a slightly higher interest rate over a 
+			shorter period of time (60 months for new cars, 36 months for used).
+			<br/>Used cars also tend to incur more <i>repair costs</i> and have a <i>shorter</i> lifetime, so while they 
+			may be cheaper to buy initially, you need to be careful to balance price versus economy. If you plan to 
+			drive the same car for more than 6 years, you may wish to consider a <b>new</b> car instead because	most of 
+			your maintenance expenses will be covered by the warrantee. 
+			<br/>Indeed, some studies have suggested that the most <i>economical</i> choice is to buy a new car and 
+			drive it until it falls apart.</Commentary>
 		</SpendingPower>
 		
 		<SpendingPower TriggersOn="Repeating" Caption="mortgage, with [Installments] monthly payments" LowerResultLimit="100000" UpperResultLimit="1000000" TableTemplate="AmortizationTable" Category="Goals">
 			<Image Name="house"/>
 			<Configurable Name="Rate" Type="Percentage" Label="APR" Value="3.50"/>
-			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="360"/>		
+			<Configurable Name="Installments" Type="Months" Label="Total monthly payments" Value="360"/>
+			<Commentary>The above estimate doesn't include any closing costs or down payments that you may also incur
+			when buying a house, but it may help you determine roughly how much you can finance for a given monthly
+			payment.
+			<br/>Change the <b>APR</b> above to match what your mortgage lender has quoted you to see more accurate 
+			estimates.</Commentary>		
 		</SpendingPower>
 		
-		<TimeOfService UnitForCost="Year" TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00" Category="Utilities">
-			<Image Name="walle"/>
-			<Configurable Name="Cost" Type="Money" Label="Cost per year for trash removal" Value="479.28" CurrencyCode="USD"/>
-			<!-- Monthly: 39.94. Source: http://www.sanramon.ca.gov/recycle/curbside.htm -->
-			<Commentary>Based on yearly curbside pickup rates as quoted by Waste Management Inc. for San Ramon, CA.</Commentary>
-		</TimeOfService>
-		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53" Category="Lifestyle">
-			<Image Name="bestsoap"/>
-			<Configurable Name="Cost" Type="Money" Label="Per bar of luxury soap" Value="20.00" CurrencyCode="USD"/>
-			<Commentary>Soap: the yardstick of civilization.</Commentary>
-		</UnitsPerPeriod>
-		
-		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3" Category="Lifestyle">
+		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3" Country="US" Category="Lifestyle">
 			<Image Name="cappuccino"/>
 			<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="4.36" CurrencyCode="USD" Source="HuMuch.com" SourceUrl="http://www.humuch.com/detailspage.php?item_id=102"/>
 			<Commentary>Based on the average price of a Grande Cappucino from a national coffee restaurant chain.</Commentary>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie rentals per week" LowerResultLimit="1" UpperResultLimit="7" Category="Lifestyle">
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie rentals per week" LowerResultLimit="1" UpperResultLimit="7" Country="US" Category="Lifestyle">
 			<Image Name="movie" SourceUrl="http://www.officinadigitale.org/"/>
 			<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99" CurrencyCode="USD"/>
 			<Commentary>Based on the price of a High-Defenition New Release rental on Apple's iTunes movie store.</Commentary>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie tickets per week" LowerResultLimit="2" UpperResultLimit="14" Category="Lifestyle">
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie tickets per week" LowerResultLimit="2" UpperResultLimit="14" Country="US" Category="Lifestyle">
 			<Image Name="popcorn"/>
 			<Configurable Name="Cost" Type="Money" Label="Cost per ticket" Value="8.15" CurrencyCode="USD" Source="Time.com" SourceUrl="http://moneyland.time.com/2012/01/05/the-cure-for-the-ailing-movie-business-is-to-raise-ticket-prices/"/>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14" Category="Lifestyle">
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14" Country="US" Category="Lifestyle">
 			<Image Name="hamburger"/>
 			<Configurable Name="Cost" Type="Money" Label="Average meal price" Value="10.16" CurrencyCode="USD" Source="QSR Magazine" SourceUrl="http://www.qsrmagazine.com/news/study-says-fast-food-remains-popular"/>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="subway rides per week" LowerResultLimit="1" UpperResultLimit="14" Category="Lifestyle">
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="subway rides per week" LowerResultLimit="1" UpperResultLimit="14" Country="US" Category="Lifestyle">
 			<Image Name="nysubway"/>
 			<Configurable Name="Cost" Type="Money" Label="Ticket price" Value="2.25" CurrencyCode="USD"/>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="console games per year" LowerResultLimit="1" UpperResultLimit="12" Category="Lifestyle">
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="console games per year" LowerResultLimit="1" UpperResultLimit="12" Country="US" Category="Lifestyle">
 			<Image Name="controller"/>
 			<Configurable Name="Cost" Type="Money" Label="Average price per game" Value="45.00" CurrencyCode="USD" Source="CostHelper" SourceUrl="http://electronics.costhelper.com/xbox360.html"/>
 			<Commentary>Video games, although sometimes expensive, actually offer a very economical form of entertainment.
@@ -177,28 +175,37 @@
 			</Commentary>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12" Category="Utilities">
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12" Country="US" Category="Utilities">
 			<Image Name="inkjet"/>
 			<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30" CurrencyCode="USD"/>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" ForGender="Female" Category="Lifestyle">
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" ForGender="Female" Country="US" Category="Lifestyle">
 			<Image Name="hair_woman"/>
 			<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a woman" Value="56" CurrencyCode="USD" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" ForGender="Male" Category="Lifestyle">
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" ForGender="Male" Country="US" Category="Lifestyle">
 			<Image Name="hair_man"/>
 			<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" CurrencyCode="USD" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 		</UnitsPerPeriod>
 		
-		<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24" Category="Utilities">
+		<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24" Country="US" Category="Utilities">
 			<Image Name="newspaper"/>
 			<!-- Estimate comes from New York Times rate for daily delivery -->
 			<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22" CurrencyCode="USD"/>
 		</TimeOfService>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30" Category="Goals">
+		<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6" Country="US" Category="Health">
+			<Image Name="ambulance"/>
+			<Configurable Name="Cost" Type="Money" Label="Price per service call" Value="750" CurrencyCode="USD"/>
+			<Commentary>Ambulance transport varies widely in the United States, with most billings coming between $500 and $1,000, but you may be lucky enough to live
+			in an area where ambulance service is provided free by the city or county.
+			<br/>The most expensive emergency ride you can get, however, is an <b>Airlift</b>, or hellicopter ambulance, which can add more than $2,000 to your
+			hospital bill. An airlift is called for by paramedics for certain types of injury, especially head injuries that could have caused damage to the brain.</Commentary>
+		</UnitsForPrice>
+		
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30" Country="US" Category="Goals">
 			<Image Name="beach_chair"/>
 			<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" CurrencyCode="USD" Source="PlanHawaiiVacation.com" SourceUrl="http://www.planhawaiivacation.com/vacationcost/"/>
 			<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
@@ -206,13 +213,13 @@
 			</Commentary>
 		</TimeUntil>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000" Category="Goals">
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000" Country="US" Category="Goals">
 			<Image Name="treadmill"/>
 			<Configurable Name="Cost" Type="Money" Label="Average price" Value="1314.11" CurrencyCode="USD" Source="Amazon.com" SourceUrl="http://www.amazon.com/mn/search/?_encoding=UTF8&amp;keywords=treadmills&amp;tag=synesmedia-20&amp;linkCode=ur2&amp;qid=1335895621&amp;camp=1789&amp;creative=390957&amp;rh=k%3Atreadmills%2Ci%3Asporting#/ref=sr_st?keywords=treadmills"/>
 			<Commentary>Based on the average price of the top-20 highest customer rated motorized treadmills on Amazon.com.</Commentary>
 		</TimeUntil>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for an Espresso machine" LowerResultLimit="1" UpperResultLimit="1000" Category="Goals">
+		<TimeUntil TriggersOn="Repeating" Caption="to save for an Espresso machine" LowerResultLimit="1" UpperResultLimit="1000" Country="US" Category="Goals">
 			<Image Name="espressomachine"/>
 			<Configurable Name="Cost" Type="Money" Label="Average price" Value="334.72" CurrencyCode="USD" Source="Amazon.com" SourceUrl="http://amzn.to/IJIUe5"/>
 			<Commentary>Based on the average price of the top-20 highest customer rated espresso machines on Amazon.com</Commentary>
@@ -227,13 +234,26 @@
 			<br/>If that high-end experience is what you're looking for then just tap on the <b>Average price</b> above and enter what your contractor has quoted you.</Commentary>
 		</TimeUntil>
 		
-		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000" Category="Awareness">
+		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000" Country="US" Category="Awareness">
 			<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
 			<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" CurrencyCode="USD" SourceUrl="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
 			<Commentary>It costs surprisingly little to vaccinate a child against polio. The good news is that it appears to 
 				be working, as India was declared entirely polio-free in 2012 by the World Health Organization.
 			</Commentary>
 			<!-- Source: http://www.cbsnews.com/8301-202_162-57385542/india-declared-polio-free-by-world-health-org/ -->
+		</UnitsPerPeriod>
+		
+		<TimeOfService UnitForCost="Year" TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00" Country="US" Category="Utilities">
+			<Image Name="walle"/>
+			<Configurable Name="Cost" Type="Money" Label="Cost per year for trash removal" Value="479.28" CurrencyCode="USD"/>
+			<!-- Monthly: 39.94. Source: http://www.sanramon.ca.gov/recycle/curbside.htm -->
+			<Commentary>Based on yearly curbside pickup rates as quoted by Waste Management Inc.</Commentary>
+		</TimeOfService>
+		
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53" Country="US" Category="Lifestyle">
+			<Image Name="bestsoap"/>
+			<Configurable Name="Cost" Type="Money" Label="Per bar of luxury soap" Value="20.00" CurrencyCode="USD"/>
+			<Commentary>Soap: the yardstick of civilization.</Commentary>
 		</UnitsPerPeriod>
 		
 		<UnitsForPrice TriggersOn="OneTime" Caption="Nimitz-class Aircraft Carriers" LowerResultLimit="1" UpperResultLimit="10" LowerThreshold="4500000000.00" Country="US" Category="Defense">
@@ -386,10 +406,6 @@
 							
 							<h:p>Note: Due to rounding and the assumption of a fixed rate, results may be different from what you will see in practice. These
 							figures are meant to provide approximate guidance only.</h:p>
-							
-							<h:p>The Earnings column shows how much was earned between each investment, while the Balance column will only reflect earnings
-							after they have been compounded. If you invest more frequently than the compounding period then it will appear as if the balance
-							isn't reflecting your earnings right away.</h:p>
 						</h:body>
 					</h:html>				
 				</xsl:template>
@@ -534,17 +550,19 @@
 	</ConsequenceTemplates>
 	
 	<Sources>
+		<Image Name="money" Source="Aha-Soft" License="Paid Commercial"/>
+		<Image Name="stockmarket" Source="Aha-Soft" License="Paid Commercial"/>
 		<Image Name="newspaper" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
 		<Image Name="fryingpan" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
-		<Image Name="coins" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="credit_card" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="gold_bullion" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="safe" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="beach_chair" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="beach_umbrella" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="coffeecup" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="espressomachine" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="laptop" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="coins" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/finance_icon_set/" License="Creative Commons Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="credit_card" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/finance_icon_set/" License="Creative Commons Attribution Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="gold_bullion" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/finance_icon_set/" License="Creative Commons Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="safe" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/finance_icon_set/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="beach_chair" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/vacation_icon_set/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="beach_umbrella" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/vacation_icon_set/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="coffeecup" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/office_space_icon_set/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="espressomachine" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/office_space_icon_set/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<Image Name="laptop" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/hadware_icon_set/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="cappuccino" Source="Creative 9 Design" SourceUrl="http://www.c9-d.com/"/>
 		<Image Name="wineglass" Source="Oxygen Team" SourceUrl="http://www.oxygen-icons.org/" License="Creative Commons Attribution-ShareAlike 3.0 License" LicenseUrl="http://creativecommons.org/licenses/by-sa/3.0/"/>
 		<Image Name="house" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
@@ -573,6 +591,8 @@
 		<Image Name="cfl" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
 		<Image Name="wifirouter" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
 		<Image Name="bank" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
-		<Image Name="aircraftcarrier" Source="8icon" SourceUrl="http://www.8icon.com/"/> <!-- Note: 8icon isn't author. Discovered real author, this art is not licensed for commercial use. Must replace -->
+		<Image Name="aircraftcarrier"/> <!-- http://www.byond.com/members/Zane444?command=view_post&post=665645 -->
+		<Image Name="clock" Source="Aha-Soft" LicenseUrl="http://www.iconfinder.com/browse/iconset/free-business-desktop-icons/#readme"/>
+		<Image Name="vw_bug" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/" License="Creative Commons Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
 	</Sources> 
 </Calculators>

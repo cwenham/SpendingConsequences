@@ -247,6 +247,8 @@
     <Content Include="libTestFlight.a">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Artwork\clock.png" />
+    <Content Include="Artwork\vw_bug.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

@@ -97,6 +97,7 @@ namespace SpendingConsequences
 			//ToDo: Find a more elegant way to do this. Carry a reference around to a
 			//specific ViewController subclass is ugly.
 			this.ParentController.DisplayConsequenceDetails (CurrentResults [indexPath.Row]);
+			tableView.DeselectRow(indexPath, true);
 		}
 		
 		#region implemented abstract members of MonoTouch.UIKit.UITableViewSource		

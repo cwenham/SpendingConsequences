@@ -39,26 +39,41 @@ namespace SpendingConsequences.Calculators
 		public static IEnumerable<InvestmentInstallment> InvestmentSchedule (ConsequenceRequest request,
 		                                                                     Investment calculator)
 		{
-			Money periodicInvestment = request.InitialAmount;
-			decimal annualRate = ACalculator.PercentAsDecimal(calculator.Rate);
+			decimal annualRate = ACalculator.PercentAsDecimal (calculator.Rate);
 			decimal compoundingsPerYear = ACalculator.CompoundingsPerYear (calculator.Compounding);
-			decimal compoundingsPerInvestment = compoundingsPerYear / request.InvestmentsPerYear;
 			decimal periodRate = annualRate / compoundingsPerYear;
 
-			decimal totalInvestments = request.InvestmentsPerYear * calculator.Years;
-
 			Money balance = 0m;
-			var baseSchedule = from p in Enumerable.Range (1, (int)Math.Floor(totalInvestments))
-				let newBalance = balance += periodicInvestment
-				let earnings = ((balance * periodRate) * compoundingsPerInvestment)
-				select new InvestmentInstallment {
-				    Installment = p,
-				    Investment = periodicInvestment,
-				    Earnings = earnings,
-					Balance = balance += earnings
-			    };
 
-			return baseSchedule;
+			if (request.TriggerMode != TriggerType.OneTime) {
+				Money periodicInvestment = request.InitialAmount;
+				decimal totalInvestments = request.InvestmentsPerYear * calculator.Years;
+				decimal compoundingsPerInvestment = compoundingsPerYear / request.InvestmentsPerYear;
+				var baseSchedule = from p in Enumerable.Range (1, (int)Math.Floor (totalInvestments))
+									let newBalance = balance += periodicInvestment
+									let earnings = ((balance * periodRate) * compoundingsPerInvestment)
+									select new InvestmentInstallment {
+									    Installment = p,
+									    Investment = periodicInvestment,
+									    Earnings = earnings,
+										Balance = balance += earnings
+								    };
+
+				return baseSchedule;
+			} else {
+				decimal totalCompoundings = compoundingsPerYear * calculator.Years;
+				balance = request.InitialAmount;
+				var baseSchedule = from p in Enumerable.Range (1, (int)Math.Floor (totalCompoundings))
+					let earnings = balance * periodRate
+					select new InvestmentInstallment {
+						Installment = p,
+						Investment = p == 1 ? request.InitialAmount : 0,
+						Earnings = earnings,
+						Balance = balance += earnings
+					};
+
+				return baseSchedule;
+			}
 		}
 	}
 	
