@@ -146,22 +146,39 @@
 		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie rentals per week" LowerResultLimit="1" UpperResultLimit="7" Country="US" Category="Lifestyle">
 			<Image Name="movie" SourceUrl="http://www.officinadigitale.org/"/>
 			<Configurable Name="Cost" Type="Money" Label="Cost per rental" Value="3.99" CurrencyCode="USD"/>
-			<Commentary>Based on the price of a High-Defenition New Release rental on Apple's iTunes movie store.</Commentary>
+			<Commentary>Based on the price of a High-Defenition New Release rental on Apple's iTunes movie store.
+			<br/>Not all movies cost this much to rent, as older releases, Standard Definition rentals, and weekly specials
+			can bring the price of a 24-hour rental to as low as <b>99 cents</b>.</Commentary>
 		</UnitsPerPeriod>
 		
 		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie tickets per week" LowerResultLimit="2" UpperResultLimit="14" Country="US" Category="Lifestyle">
 			<Image Name="popcorn"/>
 			<Configurable Name="Cost" Type="Money" Label="Cost per ticket" Value="8.15" CurrencyCode="USD" Source="Time.com" SourceUrl="http://moneyland.time.com/2012/01/05/the-cure-for-the-ailing-movie-business-is-to-raise-ticket-prices/"/>
+			<Commentary>Our estimate comes from the average nationwide ticket price in 2012, but those prices have been
+			steadily increasing since movies first began to be shown. In an effort to make more profit at the box office,
+			studios and cinemas have been adding features such as <b>3D effects</b>, digital projection, and even doubling
+			the frame rate from 24-Frames Per Second (FPS) to 48, all to justify higher and higher ticket prices.
+			<br/>In the meantime, digital movie rentals, convenience-store DVD rental kiosks and mail-driven services
+			such as Netflix have made it cheaper and easier than ever to watch movies at home.</Commentary>
 		</UnitsPerPeriod>
 		
 		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14" Country="US" Category="Lifestyle">
 			<Image Name="hamburger"/>
 			<Configurable Name="Cost" Type="Money" Label="Average meal price" Value="10.16" CurrencyCode="USD" Source="QSR Magazine" SourceUrl="http://www.qsrmagazine.com/news/study-says-fast-food-remains-popular"/>
+			<Commentary>Fast food is certainly convenient, but the costs can add up quickly and they rarely save more
+			than about 10 or 11 minutes over preparing your meals yourself. Once you add the long-term health benefits
+			of cooking at home, reducing your fast-food consumption by just 1 meal a week can be worth <b>$528 per year</b>
+			plus a much longer, healthier life to spend it in.</Commentary>
 		</UnitsPerPeriod>
 		
 		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="subway rides per week" LowerResultLimit="1" UpperResultLimit="14" Country="US" Category="Lifestyle">
 			<Image Name="nysubway"/>
 			<Configurable Name="Cost" Type="Money" Label="Ticket price" Value="2.25" CurrencyCode="USD"/>
+			<Commentary>Once you add the cost of fuel, insurance, and maintenance to your loan payments, an automobile 
+			can easily cost over <b>$600 per month</b> to own. But if you live in a city with subway or bus service, it
+			may cost as little as $90 per month to commute to-and-from work every day.
+			<br/>Most cities also offer ways to save even more money by purchasing pre-paid fare cards or even weekly
+			and monthly <i>unlimited</i> ride cards that work out even cheaper per ride.</Commentary>
 		</UnitsPerPeriod>
 		
 		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="console games per year" LowerResultLimit="1" UpperResultLimit="12" Country="US" Category="Lifestyle">
@@ -174,6 +191,13 @@
 				the sudden evaporation of your social life.
 			</Commentary>
 		</UnitsPerPeriod>
+		
+		<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of Internet service" LowerResultLimit="1" UpperResultLimit="24" Country="US" Category="Utilities">
+			<Image Name="wifirouter"/>
+			<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="49.95" CurrencyCode="USD"/>
+			<Commentary>Change the <b>Monthly subscription price</b> above to reflect what your Internet Service Provider 
+			bills you per month for more accurate estimates.</Commentary>
+		</TimeOfService>
 		
 		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12" Country="US" Category="Utilities">
 			<Image Name="inkjet"/>
@@ -190,10 +214,29 @@
 			<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" CurrencyCode="USD" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 		</UnitsPerPeriod>
 		
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="CFL bulbs per year" LowerResultLimit="1" UpperResultLimit="6" Country="US" Category="Utilities">
+			<Image Name="cfl"/>
+			<Configurable Name="Cost" Type="Money" Label="Average cost of a CFL bulb" Value="1.67" CurrencyCode="USD"/>
+			<Commentary>Compact Flourescent Light Bulbs (CFLs) use less energy (as much as 75% less) and can last for
+			9 years longer than an incandescent light bulb of the same brightness. According to the Hinkle Charitable
+			Foundation, a typical apartment with 20 bulbs can save <b>$1,4000</b> in electricity over the lifetime of those
+			bulbs by converting to CFL.
+			<br/>Our estimate for the cost of a CFL bulb is the average for a 60W equivalent bulb purchased at a typical
+			home improvement store.</Commentary>
+			<!-- http://www.thehcf.org/cflprimer.html -->
+		</UnitsPerPeriod>
+		
 		<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24" Country="US" Category="Utilities">
 			<Image Name="newspaper"/>
 			<!-- Estimate comes from New York Times rate for daily delivery -->
 			<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22" CurrencyCode="USD"/>
+			<Commentary>In the age of the Internet, daily door-stop newspaper delivery seems antiquated, and almost all
+			newspapers around the world have seen their subscriber base steadily shrink as people get their news from
+			cheaper, more quickly-updated sources online.
+			<br/>Some newspapers are trying to fight back. The New York Times, where we obtained our price estimate
+			from, is including access to premium content on its web site and iPad app as part of a basic Home Delivery subscription.
+			<br/>So now you can get your news in the most convenient form while still having the prestige of an old-fashioned
+			newspaper sitting on your breakfast table each day.</Commentary>
 		</TimeOfService>
 		
 		<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6" Country="US" Category="Health">
@@ -205,12 +248,12 @@
 			hospital bill. An airlift is called for by paramedics for certain types of injury, especially head injuries that could have caused damage to the brain.</Commentary>
 		</UnitsForPrice>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30" Country="US" Category="Goals">
-			<Image Name="beach_chair"/>
-			<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" CurrencyCode="USD" Source="PlanHawaiiVacation.com" SourceUrl="http://www.planhawaiivacation.com/vacationcost/"/>
-			<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
-				$455 for food, $540 for activities and $450 to rent a car for the week.
-			</Commentary>
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a new dishwasher" LowerResultLimit="1" UpperResultLimit="1000" Country="US" Category="Goals">
+			<Image Name="dishwasher"/>
+			<Configurable Name="Cost" Type="Money" Label="Average price" Value="558.88" CurrencyCode="USD" Source="Amazon.com"/>
+			<Commentary>Based on the average price of the top-20 highest customer rated dishwashers on Amazon.com.
+			<br/>Modify the <b>Average price</b> above to match what you've budgeted for and help you figure out what
+			it'll take to reach your goal.</Commentary>
 		</TimeUntil>
 		
 		<TimeUntil TriggersOn="Repeating" Caption="to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000" Country="US" Category="Goals">
@@ -225,7 +268,15 @@
 			<Commentary>Based on the average price of the top-20 highest customer rated espresso machines on Amazon.com</Commentary>
 		</TimeUntil>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for a Home Theater system" LowerResultLimit="1" UpperResultLimit="1000" Category="Goals">
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30" Country="US" Category="Goals">
+			<Image Name="beach_chair"/>
+			<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" CurrencyCode="USD" Source="PlanHawaiiVacation.com" SourceUrl="http://www.planhawaiivacation.com/vacationcost/"/>
+			<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
+				$455 for food, $540 for activities and $450 to rent a car for the week.
+			</Commentary>
+		</TimeUntil>
+		
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a Home Theater system" LowerResultLimit="1" UpperResultLimit="1000" Country="US" Category="Goals">
 			<Image Name="home_theater"/>
 			<Configurable Name="Cost" Type="Money" Label="Average price" Value="5000.00" CurrencyCode="USD"/>
 			<Commentary>Our $5,000 estimate would cover a 42-inch flat-screen TV, a surround-sound system with five speakers, Blu-Ray DVD player
@@ -239,6 +290,7 @@
 			<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" CurrencyCode="USD" SourceUrl="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
 			<Commentary>It costs surprisingly little to vaccinate a child against polio. The good news is that it appears to 
 				be working, as India was declared entirely polio-free in 2012 by the World Health Organization.
+				<br/>Source: Global Polio Eradication Initiative.
 			</Commentary>
 			<!-- Source: http://www.cbsnews.com/8301-202_162-57385542/india-declared-polio-free-by-world-health-org/ -->
 		</UnitsPerPeriod>
@@ -256,13 +308,24 @@
 			<Commentary>Soap: the yardstick of civilization.</Commentary>
 		</UnitsPerPeriod>
 		
-		<UnitsForPrice TriggersOn="OneTime" Caption="Nimitz-class Aircraft Carriers" LowerResultLimit="1" UpperResultLimit="10" LowerThreshold="4500000000.00" Country="US" Category="Defense">
+		<UnitsForPrice TriggersOn="OneTime" Caption="Nimitz-class Aircraft Carriers" LowerResultLimit="1" UpperResultLimit="11" LowerThreshold="4500000000.00" Country="US" Category="Defense">
 			<Image Name="aircraftcarrier"/>
 			<Configurable Name="Cost" Type="Money" Label="Price per carrier" Value="4500000000.00" CurrencyCode="USD" Source="Wikipedia" SourceUrl="http://en.wikipedia.org/wiki/Nimitz_class_aircraft_carrier"/>
-			<Commentary>The largest capital ships in the world are Nimitz-class supercarriers. As President of the United
-			States, you would expect to have 5-10 of these warships in service at any given time.</Commentary>
-			<!-- Note: re-visit for best number of ships in service -->
+			<Commentary>The largest capital ships in the world are Nimitz-class supercarriers, typically displacing over
+			90,000 tons and deployed with at least three other ships as part of a <b>carrier strike group</b>. As of 2012 
+			the United States Navy has <b>11</b> carrier strike groups in active service.</Commentary>
 		</UnitsForPrice>
+		
+		<TimeUntil TriggersOn="Repeating" Caption="to pay for a Moon Base" LowerResultLimit="1" UpperResultLimit="3650" Country="US" Category="Manifest Destiny">
+			<Image Name="clavius"/>
+			<Configurable Name="Cost" Type="Money" Label="Construction cost" Value="35000000000.00" CurrencyCode="USD"/>
+			<Commentary>As a current or future President of the United States, you may be looking for ways to make your
+			mark in the history books, and what better way than to establish a permanent, manned research base on The Moon?
+			<br/>An analysis performed in 2009 by the Center for Strategic and International Studies (a policy Think-Tank)
+			estimates that such a lunar base would cost about <b>$35 billion</b> and require an additional <b>$7.35 billion</b>
+			per year in operational costs.
+			<br/>You'd better act quickly, though, as both Russia and China have ambitions for Earth's natural satellite, too.</Commentary>
+		</TimeUntil>
 	</Consequences>
 	
 	<ResultTemplates>
@@ -591,8 +654,10 @@
 		<Image Name="cfl" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
 		<Image Name="wifirouter" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
 		<Image Name="bank" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
+		<Image Name="smartphone" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
 		<Image Name="aircraftcarrier"/> <!-- http://www.byond.com/members/Zane444?command=view_post&post=665645 -->
 		<Image Name="clock" Source="Aha-Soft" LicenseUrl="http://www.iconfinder.com/browse/iconset/free-business-desktop-icons/#readme"/>
 		<Image Name="vw_bug" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/" License="Creative Commons Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="clavius" Source="Mischa McLachlan" SourceUrl="http://www.iconfinder.com/browse/iconset/2001/"/>
 	</Sources> 
 </Calculators>

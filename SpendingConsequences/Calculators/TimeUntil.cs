@@ -20,6 +20,8 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 
+		private decimal MaxDays = (decimal)TimeSpan.MaxValue.TotalDays;
+
 		#region implemented abstract members of SpendingConsequences.Calculators.ACalculator
 		public override ConsequenceResult Calculate (ConsequenceRequest request)
 		{
@@ -33,17 +35,28 @@ namespace SpendingConsequences.Calculators
 				return null;
 			
 			decimal givenUnitsUntil = (Cost / request.InitialAmount).Value;
-			
-			TimeSpan timeUntil = new TimeSpan (((int)Math.Ceiling (givenUnitsUntil * request.DaysPerPeriod)), 0, 0, 0);
-							
-			return new ConsequenceResult (this, 
-			                              request,
-			                              new Time (timeUntil), 
-			                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
-				{"Cost", this.Cost.ToString ()}
+
+			if (givenUnitsUntil * request.DaysPerPeriod < MaxDays)
+			{
+				TimeSpan timeUntil = TimeSpan.FromDays((double)(givenUnitsUntil * request.DaysPerPeriod));
+								
+				return new ConsequenceResult (this, 
+				                              request,
+				                              new Time (timeUntil), 
+				                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
+					{"Cost", this.Cost.ToString ()}
+				}
+				), this.ImageName,
+				   (timeUntil.TotalDays >= (double)LowerResultLimit && timeUntil.TotalDays <= (double)UpperResultLimit));
+			} else {
+				return new ConsequenceResult(this,
+				                             request,
+				                             new OverflowMessage(),
+				                             this.FormatCaption(this.Caption, new Dictionary<string,string> {
+					{"Cost", this.Cost.ToString ()}
+				}), this.ImageName, false);
 			}
-			), this.ImageName,
-			   (timeUntil.TotalDays >= (double)LowerResultLimit && timeUntil.TotalDays <= (double)UpperResultLimit));
+
 		}
 		#endregion
 	}
