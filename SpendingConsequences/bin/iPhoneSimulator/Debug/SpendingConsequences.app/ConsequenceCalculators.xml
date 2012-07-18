@@ -43,7 +43,7 @@
 		<Investment TriggersOn="OneTime,Repeating" Caption="under the mattress for [Years] years" TableTemplate="InvestmentTable" Category="Savings">
 			<Image Name="bed"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="0"/>
-			<Configurable Name="Years" Type="Year" Label="I plan to raid this after" Value="3"/>
+			<Configurable Name="Years" Type="Year" Label="I plan to raid this after" Value="5"/>
 			<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>		
 			<Commentary>The phrase "stuffing money under the mattress" might have come from the Depression era, when banks were failing and the FDIC (Federal
 			Deposit Insurance Corporation) didn't exist yet.
@@ -55,7 +55,7 @@
 			<!-- http://www.cbsnews.com/2100-201_162-2970973.html -->
 		</Investment>
 		
-		<TimeOfService UnitForCost="Hour" TriggersOn="OneTime" Caption="of labor to earn" Category="Equivalents">
+		<TimeOfService UnitForCost="Hour" TriggersOn="OneTime" Caption="of labor to earn" Country="US" Category="Equivalents">
 			<Image Name="clock"/>
 			<Configurable Name="Cost" Type="Money" Label="Your hourly wage" Value="23.38" CurrencyCode="USD"/>
 			<Configurable Name="UnitsPerDay" Type="Decimal" Label="Hours worked per day" Value="8"/>
@@ -295,6 +295,7 @@
 			<!-- Source: http://www.cbsnews.com/8301-202_162-57385542/india-declared-polio-free-by-world-health-org/ -->
 		</UnitsPerPeriod>
 		
+		<!-- *** Easter Eggs *** -->
 		<TimeOfService UnitForCost="Year" TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00" Country="US" Category="Utilities">
 			<Image Name="walle"/>
 			<Configurable Name="Cost" Type="Money" Label="Cost per year for trash removal" Value="479.28" CurrencyCode="USD"/>
@@ -323,7 +324,7 @@
 			mark in the history books, and what better way than to establish a permanent, manned research base on The Moon?
 			<br/>An analysis performed in 2009 by the Center for Strategic and International Studies (a policy Think-Tank)
 			estimates that such a lunar base would cost about <b>$35 billion</b> and require an additional <b>$7.35 billion</b>
-			per year in operations costs.
+			per year in operational costs.
 			<br/>You'd better act quickly, though, as both Russia and China have ambitions for Earth's natural satellite, too.</Commentary>
 		</TimeUntil>
 	</Consequences>
@@ -651,10 +652,10 @@
 		<Image Name="popcorn" Source="Svengraph" SourceUrl="http://svengraph.deviantart.com/"/>
 		<Image Name="apple" Source="Fi3uR" SourceUrl="http://fi3ur.deviantart.com/"/>
 		<Image Name="ambulance" Source="DevCom" SourceUrl="http://www.devcom.com/"/>
-		<Image Name="cfl" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
-		<Image Name="wifirouter" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
-		<Image Name="bank" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
-		<Image Name="smartphone" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Note: purchase license before publishing app -->
+		<Image Name="cfl" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Licensed 4758464112 -->
+		<Image Name="wifirouter" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Licensed 4758464112 -->
+		<Image Name="bank" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Licensed 4758464112 -->
+		<Image Name="smartphone" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Licensed 4758464112 -->
 		<Image Name="aircraftcarrier"/> <!-- http://www.byond.com/members/Zane444?command=view_post&post=665645 -->
 		<Image Name="clock" Source="Aha-Soft" LicenseUrl="http://www.iconfinder.com/browse/iconset/free-business-desktop-icons/#readme"/>
 		<Image Name="vw_bug" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/" License="Creative Commons Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>

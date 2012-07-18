@@ -11,7 +11,9 @@ using System.ComponentModel;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
+#if DEBUG
 using TestFlightSdk;
+#endif
 
 using SpendingConsequences.Calculators;
 
@@ -38,7 +40,6 @@ namespace SpendingConsequences
 				return;
 			
 #if DEBUG
-#else
 			TestFlight.PassCheckpoint ("VIEW_XSLT_WEB");
 #endif
 			
