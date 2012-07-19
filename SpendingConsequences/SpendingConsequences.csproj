@@ -71,7 +71,7 @@
     <MtouchUseLlvm>true</MtouchUseLlvm>
     <MtouchI18n />
     <MtouchExtraArgs>-nosymbolstrip -nostrip -cxx -gcc_flags "-lgcc_eh -L${ProjectDir} -ltestflight -ObjC"</MtouchExtraArgs>
-    <CodesignProvision>A82873C8-6D24-4CA6-B86D-C7B80055A05D</CodesignProvision>
+    <CodesignProvision>06D16066-BA41-40F1-A8F2-28129973EE1E</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -204,7 +204,6 @@
     <Content Include="Artwork\hamburger.png" />
     <Content Include="Artwork\pistol.png" />
     <Content Include="Artwork\orange.png" />
-    <Content Include="Artwork\walle.png" />
     <Content Include="Artwork\nysubway.png" />
     <Content Include="Artwork\plane.png" />
     <Content Include="Artwork\hair_man.png" />
