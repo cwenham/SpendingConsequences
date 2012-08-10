@@ -7,5 +7,5 @@ System.Transactions.dll
 System.Xml.Linq.dll
 System.Xml.dll
 System.dll
-monotouch-testflight.dll
+TestFlight.dll
 mscorlib.dll

@@ -3,9 +3,6 @@
 		xmlns:h="http://www.w3.org/1999/xhtml"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<Consequences>
-		<!-- Captions appear after the calculated value. EG: "$12,000 by Retirement" -->	
-		<!-- Image names will be appended with ".png" and looked for in bundle -->
-		<!-- Labels appear before the editable control. EG: "Expected annual yield 5%" -->
 		<Investment TriggersOn="OneTime,Repeating" Caption="by Retirement" TableTemplate="InvestmentTable" Category="Savings">
 			<Image Name="money"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="5"/>
@@ -295,20 +292,7 @@
 			<!-- Source: http://www.cbsnews.com/8301-202_162-57385542/india-declared-polio-free-by-world-health-org/ -->
 		</UnitsPerPeriod>
 		
-		<!-- *** Easter Eggs *** -->
-		<TimeOfService UnitForCost="Year" TriggersOn="OneTime" Caption="years of garbage removal service" LowerResultLimit="700" UpperResultLimit="700" LowerThreshold="335496.00" UpperThreshold="335497.00" Country="US" Category="Utilities">
-			<Image Name="walle"/>
-			<Configurable Name="Cost" Type="Money" Label="Cost per year for trash removal" Value="479.28" CurrencyCode="USD"/>
-			<!-- Monthly: 39.94. Source: http://www.sanramon.ca.gov/recycle/curbside.htm -->
-			<Commentary>Based on yearly curbside pickup rates as quoted by Waste Management Inc.</Commentary>
-		</TimeOfService>
-		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="bars of luxury soap per year" LowerResultLimit="52" UpperResultLimit="53" Country="US" Category="Lifestyle">
-			<Image Name="bestsoap"/>
-			<Configurable Name="Cost" Type="Money" Label="Per bar of luxury soap" Value="20.00" CurrencyCode="USD"/>
-			<Commentary>Soap: the yardstick of civilization.</Commentary>
-		</UnitsPerPeriod>
-		
+		<!-- *** Easter Eggs *** -->		
 		<UnitsForPrice TriggersOn="OneTime" Caption="Nimitz-class Aircraft Carriers" LowerResultLimit="1" UpperResultLimit="11" LowerThreshold="4500000000.00" Country="US" Category="Defense">
 			<Image Name="aircraftcarrier"/>
 			<Configurable Name="Cost" Type="Money" Label="Price per carrier" Value="4500000000.00" CurrencyCode="USD" Source="Wikipedia" SourceUrl="http://en.wikipedia.org/wiki/Nimitz_class_aircraft_carrier"/>
@@ -324,8 +308,7 @@
 			mark in the history books, and what better way than to establish a permanent, manned research base on The Moon?
 			<br/>An analysis performed in 2009 by the Center for Strategic and International Studies (a policy Think-Tank)
 			estimates that such a lunar base would cost about <b>$35 billion</b> and require an additional <b>$7.35 billion</b>
-			per year in operational costs.
-			<br/>You'd better act quickly, though, as both Russia and China have ambitions for Earth's natural satellite, too.</Commentary>
+			per year in operational costs.</Commentary>
 		</TimeUntil>
 	</Consequences>
 	
@@ -536,7 +519,7 @@
 			</LoanPayoff>
 		</Template>
 		
-		<!-- We may add this one back in later, but the user might confuse it with "loan payoff", which is more likely what they'll want anyway -->
+		<!-- We may put this back in later, but the user might confuse it with "loan payoff", which is more likely what they'll want anyway -->
 		<!--
 		<Template Name="Financing potential">
 			<SpendingPower TriggersOn="Repeating" Caption="financed in [Installments] monthly payments">
@@ -614,10 +597,24 @@
 	</ConsequenceTemplates>
 	
 	<Sources>
-		<Image Name="money" Source="Aha-Soft" License="Paid Commercial"/>
-		<Image Name="stockmarket" Source="Aha-Soft" License="Paid Commercial"/>
-		<Image Name="newspaper" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
-		<Image Name="fryingpan" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
+		<!-- Commercially licensed artwork -->
+		<Image Name="money" Source="Aha-Soft"/> <!-- Receipt 974836 -->
+		<Image Name="stockmarket" Source="Aha-Soft"/> <!-- Receipt 974836 -->
+		<Image Name="cfl" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Receipt 4758464112 -->
+		<Image Name="wifirouter" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Receipt 4758464112 -->
+		<Image Name="bank" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Receipt 4758464112 -->
+		<Image Name="smartphone" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Receipt 4758464112 -->
+		<Image Name="bed" Source="IconShock"/> <!-- Receipt 415349575 -->
+		<Image Name="couch" Source="IconShock"/> <!-- Receipt 415349575 -->
+		<Image Name="dishwasher" Source="IconShock"/> <!-- Receipt 415349575 -->
+		<Image Name="drying_machine" Source="IconShock"/> <!-- Receipt 415349575 -->
+		<Image Name="freezer" Source="IconShock"/> <!-- Receipt 415349575 -->
+		<Image Name="home_theater" Source="IconShock"/> <!-- Receipt 415349575 -->
+		<Image Name="microwave" Source="IconShock"/> <!-- Receipt 415349575 -->
+		<Image Name="refrigerator" Source="IconShock"/> <!-- Receipt 415349575 -->
+		<Image Name="washing_machine" Source="IconShock"/> <!-- Receipt 415349575 -->
+		
+		<!-- Creative Commons licensed. See http://spentbetter.com/about/ for attributions -->
 		<Image Name="coins" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/finance_icon_set/" License="Creative Commons Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
 		<Image Name="credit_card" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/finance_icon_set/" License="Creative Commons Attribution Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
 		<Image Name="gold_bullion" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/finance_icon_set/" License="Creative Commons Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
@@ -627,14 +624,21 @@
 		<Image Name="coffeecup" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/office_space_icon_set/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="espressomachine" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/office_space_icon_set/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
 		<Image Name="laptop" Source="VisualPharm" SourceUrl="http://www.visualpharm.com/hadware_icon_set/" License="Creative Commons Attribution-No Derivative Works 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by-nd/3.0/"/>
-		<Image Name="cappuccino" Source="Creative 9 Design" SourceUrl="http://www.c9-d.com/"/>
 		<Image Name="wineglass" Source="Oxygen Team" SourceUrl="http://www.oxygen-icons.org/" License="Creative Commons Attribution-ShareAlike 3.0 License" LicenseUrl="http://creativecommons.org/licenses/by-sa/3.0/"/>
-		<Image Name="house" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
-		<Image Name="inkjet" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
 		<Image Name="champagne" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
 		<Image Name="shoppingbag" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
 		<Image Name="shoppingbasket" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
 		<Image Name="slrcamera" Source="ArtDesigner.lv" SourceUrl="http://artdesigner.lv/" License="Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+		<Image Name="vw_bug" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/" License="Creative Commons Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
+
+		<!-- Artwork with permission for commercial use given on artist's web site -->
+		<Image Name="house" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
+		<Image Name="inkjet" Source="DelliPack" SourceUrl="http://www.smashingmagazine.com/2008/09/04/dellipack-a-free-icon-set/"/>
+		<Image Name="cappuccino" Source="Creative 9 Design" SourceUrl="http://www.c9-d.com/"/>
+		<Image Name="aircraftcarrier"/> <!-- http://www.byond.com/members/Zane444?command=view_post&post=665645 -->
+		<Image Name="clavius" Source="Mischa McLachlan" SourceUrl="http://www.iconfinder.com/browse/iconset/2001/"/>
+		<Image Name="newspaper" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
+		<Image Name="fryingpan" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/"/>
 		<Image Name="globe" Source="MazeNL77" SourceUrl="http://mazenl77.deviantart.com/"/>
 		<Image Name="controller" Source="MazeNL77" SourceUrl="http://mazenl77.deviantart.com/"/>
 		<Image Name="books" Source="PC Unleashed" SourceUrl="http://pcunleashed.com/download/icon-sets/"/>
@@ -646,19 +650,11 @@
 		<Image Name="hamburger" Source="PixTea" SourceUrl="http://pixtea.com/"/>
 		<Image Name="pistol" Source="PixTea" SourceUrl="http://pixtea.com/"/>
 		<Image Name="orange" Source="dembSky" SourceUrl="http://www.dembsky.me/"/>
-		<Image Name="walle" Source="Noctuline" SourceUrl="http://noctuline.deviantart.com/"/>
 		<Image Name="nysubway" Source="ncrow" SourceUrl="http://ncrow.deviantart.com/"/>
 		<Image Name="plane" Source="Sallee Design" SourceUrl="http://www.salleedesign.com/"/>
 		<Image Name="popcorn" Source="Svengraph" SourceUrl="http://svengraph.deviantart.com/"/>
 		<Image Name="apple" Source="Fi3uR" SourceUrl="http://fi3ur.deviantart.com/"/>
 		<Image Name="ambulance" Source="DevCom" SourceUrl="http://www.devcom.com/"/>
-		<Image Name="cfl" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Licensed 4758464112 -->
-		<Image Name="wifirouter" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Licensed 4758464112 -->
-		<Image Name="bank" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Licensed 4758464112 -->
-		<Image Name="smartphone" Source="psdGraphics" SourceUrl="http://www.psdgraphics.com/"/> <!-- Licensed 4758464112 -->
-		<Image Name="aircraftcarrier"/> <!-- http://www.byond.com/members/Zane444?command=view_post&post=665645 -->
 		<Image Name="clock" Source="Aha-Soft" LicenseUrl="http://www.iconfinder.com/browse/iconset/free-business-desktop-icons/#readme"/>
-		<Image Name="vw_bug" Source="Cemagraphics" SourceUrl="http://cemagraphics.deviantart.com/" License="Creative Commons Attribution 3.0 Unported" LicenseUrl="http://creativecommons.org/licenses/by/3.0/"/>
-		<Image Name="clavius" Source="Mischa McLachlan" SourceUrl="http://www.iconfinder.com/browse/iconset/2001/"/>
 	</Sources> 
 </Calculators>

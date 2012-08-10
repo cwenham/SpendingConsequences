@@ -126,7 +126,13 @@ namespace SpendingConsequences.Calculators
 				);
 			} catch (Exception ex) {
 				Console.WriteLine (String.Format ("{0} thrown in investment calculator: {1}", ex.GetType ().Name, ex.Message));
-				return null;
+				return new ConsequenceResult (this,
+				                              request,
+				                              null,
+				                              "Oops, something went wrong in this calculation",
+				                              this.ImageName,
+				                              false				                             
+				);
 			}
 
 			return new ConsequenceResult (this, 

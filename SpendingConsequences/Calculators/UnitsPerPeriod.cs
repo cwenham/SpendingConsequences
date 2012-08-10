@@ -51,19 +51,30 @@ namespace SpendingConsequences.Calculators
 			
 			if (request.TriggerMode == TriggerType.OneTime)
 				return null;
-			
-			decimal perDay = (request.InitialAmount / request.DaysPerPeriod).Value;
-			decimal unitsPerDay = (perDay / Cost).Value;
-			decimal unitsPerPeriod = unitsPerDay * ConsequenceRequest.DaysPerUnit [Period];
-			
-			return new ConsequenceResult (this, 
-			                              request, 
-			                              new Units (unitsPerPeriod), 
-			                              FormatCaption (this.Caption, new Dictionary<string,string> {
-				{"Cost", this.Cost.ToString ()}
+
+			try {
+				decimal perDay = (request.InitialAmount / request.DaysPerPeriod).Value;
+				decimal unitsPerDay = (perDay / Cost).Value;
+				decimal unitsPerPeriod = unitsPerDay * ConsequenceRequest.DaysPerUnit [Period];
+				
+				return new ConsequenceResult (this, 
+				                              request, 
+				                              new Units (unitsPerPeriod), 
+				                              FormatCaption (this.Caption, new Dictionary<string,string> {
+					{"Cost", this.Cost.ToString ()}
+				}
+				), this.ImageName,
+				  (unitsPerPeriod >= LowerResultLimit && unitsPerPeriod <= UpperResultLimit));				
+			} catch (Exception ex) {
+				Console.WriteLine ("{0} thrown when computing Units per Period: {1}", ex.GetType().Name, ex.Message);
+				return new ConsequenceResult (this,
+				                              request,
+				                              null,
+				                              "Oops, something went wrong in this calculator",
+				                              this.ImageName,
+				                              false);
 			}
-			), this.ImageName,
-			  (unitsPerPeriod >= LowerResultLimit && unitsPerPeriod <= UpperResultLimit));
+
 		}
 		#endregion
 	}

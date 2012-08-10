@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-
-#if DEBUG
-using TestFlightSdk;
-#endif
+using MonoTouch.TestFlight;
 
 using SpendingConsequences.Calculators;
 

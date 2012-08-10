@@ -71,36 +71,47 @@ namespace SpendingConsequences.Calculators
 		{
 			if (request.InitialAmount == 0 || request.InitialAmount < LowerThreshold || request.InitialAmount > UpperThreshold)
 				return null;
-			
-			var amortization = Financials.Amortization (request.InitialAmount.Value, 
-			                                 CompoundingsPerYear (Compounding), 
-			                                 PercentAsDecimal (Rate), 
-			                                 PercentAsDecimal (MinPayPercent),
-			                                 MinimumPayment,
-			                                 PayoffMode);
-			
-			int installments = 0;
-			Money totalInterest = 0;
-			foreach (var i in amortization) {
-				installments++;
-				totalInterest += i.Interest;
-			}
-			
-			Money payoff = request.InitialAmount + totalInterest;
-			
-			return new ConsequenceResult (this,
-				                             request,
-				                             payoff,
-				                             new TabularResult (
-					request.Summary,
-					String.Format ("Amortization of a {0:C} loan at {1}%", request.InitialAmount, Rate),
-					this),
-				                             FormatCaption (this.Caption, new Dictionary<string,string> {
-					{"Periods", installments.ToString()},
-					{"Interest", totalInterest.ToString()}
+
+			try {
+				var amortization = Financials.Amortization (request.InitialAmount.Value, 
+				                                 CompoundingsPerYear (Compounding), 
+				                                 PercentAsDecimal (Rate), 
+				                                 PercentAsDecimal (MinPayPercent),
+				                                 MinimumPayment,
+				                                 PayoffMode);
+				
+				int installments = 0;
+				Money totalInterest = 0;
+				foreach (var i in amortization) {
+					installments++;
+					totalInterest += i.Interest;
 				}
-			), this.ImageName,
-				   (payoff >= LowerResultLimit && payoff <= UpperResultLimit));		
+				
+				Money payoff = request.InitialAmount + totalInterest;
+				
+				return new ConsequenceResult (this,
+					                             request,
+					                             payoff,
+					                             new TabularResult (
+						request.Summary,
+						String.Format ("Amortization of a {0:C} loan at {1}%", request.InitialAmount, Rate),
+						this),
+					                             FormatCaption (this.Caption, new Dictionary<string,string> {
+						{"Periods", installments.ToString()},
+						{"Interest", totalInterest.ToString()}
+					}
+				), this.ImageName,
+					   (payoff >= LowerResultLimit && payoff <= UpperResultLimit));				
+			} catch (Exception ex) {
+				Console.WriteLine("{0} thrown when computing loan payoff: {1}", ex.GetType().Name, ex.Message);
+				return new ConsequenceResult(this,
+				                             request,
+				                             null,
+				                             "Oops, something went wrong in this calculator",
+				                             this.ImageName,
+				                             false);
+			}
+		
 		}
 		
 		

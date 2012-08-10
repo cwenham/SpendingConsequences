@@ -33,30 +33,38 @@ namespace SpendingConsequences.Calculators
 			
 			if (this.Cost < request.InitialAmount)
 				return null;
-			
-			decimal givenUnitsUntil = (Cost / request.InitialAmount).Value;
 
-			if (givenUnitsUntil * request.DaysPerPeriod < MaxDays)
-			{
-				TimeSpan timeUntil = TimeSpan.FromDays((double)(givenUnitsUntil * request.DaysPerPeriod));
-								
-				return new ConsequenceResult (this, 
+			try {
+				decimal givenUnitsUntil = (Cost / request.InitialAmount).Value;
+
+				if (givenUnitsUntil * request.DaysPerPeriod < MaxDays)
+				{
+					TimeSpan timeUntil = TimeSpan.FromDays((double)(givenUnitsUntil * request.DaysPerPeriod));
+									
+					return new ConsequenceResult (this, 
+					                              request,
+					                              new Time (timeUntil), 
+					                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
+						{"Cost", this.Cost.ToString ()}
+					}
+					), this.ImageName,
+					   (timeUntil.TotalDays >= (double)LowerResultLimit && timeUntil.TotalDays <= (double)UpperResultLimit));
+				} else {
+					return new ConsequenceResult(this,
+					                             request,
+					                             new OverflowMessage(),
+					                             "Try reducing the target price", 
+					                             this.ImageName, false);
+				}				
+			} catch (Exception ex) {
+				Console.WriteLine("{0} thrown when computing Time Until: {1}", ex.GetType().Name, ex.Message);
+				return new ConsequenceResult (this,
 				                              request,
-				                              new Time (timeUntil), 
-				                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
-					{"Cost", this.Cost.ToString ()}
-				}
-				), this.ImageName,
-				   (timeUntil.TotalDays >= (double)LowerResultLimit && timeUntil.TotalDays <= (double)UpperResultLimit));
-			} else {
-				return new ConsequenceResult(this,
-				                             request,
-				                             new OverflowMessage(),
-				                             this.FormatCaption(this.Caption, new Dictionary<string,string> {
-					{"Cost", this.Cost.ToString ()}
-				}), this.ImageName, false);
+				                              null,
+				                              "Oops, something went wrong in this calculator",
+				                              this.ImageName,
+				                              false);
 			}
-
 		}
 		#endregion
 	}

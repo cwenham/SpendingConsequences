@@ -80,30 +80,41 @@ namespace SpendingConsequences.Calculators
 		{
 			if (request.InitialAmount <= 0 || request.TriggerMode == TriggerType.OneTime)
 				return null;
-			
-			int annualPayments = CompoundingsPerYear (PaymentFrequency);
-			decimal ratePerPeriod = PercentAsDecimal (Rate) / annualPayments;
-			Money paymentPerInstallment = (request.InitialAmount * (decimal)(InvestmentsPerYear (request.TriggerMode))) / annualPayments;
-			
-			
-			Money totalPayment = paymentPerInstallment * Installments;
-			Money maxLoanAmount = null;
-			if (Rate > 0)
-				maxLoanAmount = ((paymentPerInstallment / ratePerPeriod) * (1 - (1 / Financials.Pow ((1 + ratePerPeriod), Installments))));
-			else
-				maxLoanAmount = totalPayment;
-			
-			return new ConsequenceResult (this,
-		                             request,
-		                             maxLoanAmount,
-			                         new TabularResult (request.Summary, string.Format ("Amortization of a {0:C} loan at {1}%", maxLoanAmount, Rate), this),
-		                             FormatCaption (this.Caption, new Dictionary<string,string> {
-			{"Installments", Installments.ToString ()},
-			{"TotalPayment", totalPayment.ToString ()},
-			{"TotalInterest", (totalPayment - maxLoanAmount).ToString()}
-		}
-			), this.ImageName,
-			   (maxLoanAmount >= LowerResultLimit && maxLoanAmount <= UpperResultLimit));
+
+			try {
+				int annualPayments = CompoundingsPerYear (PaymentFrequency);
+				decimal ratePerPeriod = PercentAsDecimal (Rate) / annualPayments;
+				Money paymentPerInstallment = (request.InitialAmount * (decimal)(InvestmentsPerYear (request.TriggerMode))) / annualPayments;
+				
+				
+				Money totalPayment = paymentPerInstallment * Installments;
+				Money maxLoanAmount = null;
+				if (Rate > 0)
+					maxLoanAmount = ((paymentPerInstallment / ratePerPeriod) * (1 - (1 / Financials.Pow ((1 + ratePerPeriod), Installments))));
+				else
+					maxLoanAmount = totalPayment;
+				
+				return new ConsequenceResult (this,
+			                             request,
+			                             maxLoanAmount,
+				                         new TabularResult (request.Summary, string.Format ("Amortization of a {0:C} loan at {1}%", maxLoanAmount, Rate), this),
+			                             FormatCaption (this.Caption, new Dictionary<string,string> {
+				{"Installments", Installments.ToString ()},
+				{"TotalPayment", totalPayment.ToString ()},
+				{"TotalInterest", (totalPayment - maxLoanAmount).ToString()}
+			}
+				), this.ImageName,
+				   (maxLoanAmount >= LowerResultLimit && maxLoanAmount <= UpperResultLimit));				
+			} catch (Exception ex) {
+				Console.WriteLine("{0} thrown when computing spending power: {1}", ex.GetType().Name, ex.Message);
+				return new ConsequenceResult (this,
+				                               request,
+				                               null,
+				                               "Oops, something went wrong in this calculator",
+				                              this.ImageName,
+				                              false);
+			}
+
 		}
 		#endregion
 	}

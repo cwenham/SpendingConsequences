@@ -5,10 +5,7 @@ using System.Collections.Generic;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-
-#if DEBUG
-using TestFlightSdk;
-#endif
+//using MonoTouch.TestFlight;
 
 using SpendingConsequences.Calculators;
 
@@ -46,11 +43,9 @@ namespace SpendingConsequences
 				return;
 			
 #if DEBUG
-			TestFlight.PassCheckpoint ("VIEW_DETAILS");
+			//TestFlight.PassCheckpoint ("VIEW_DETAILS");
 #endif
-			
-			this.NavigationItem.Title = result.Request.Summary;
-			
+
 			UpdateCurrentResult (result);
 			
 			UIImage image = Profile.GetImage (result.ImageName);
@@ -91,6 +86,8 @@ namespace SpendingConsequences
 			try {
 				CurrentResult = result;
 			
+				this.NavigationItem.Title = result.Request.Summary;
+
 				if (result.ComputedValue is Money)
 					this.calculatedAmount.Text = ExchangeRates.CurrentRates.ConvertToLocal(result.ComputedValue as Money).ToString();
 				else

@@ -28,18 +28,29 @@ namespace SpendingConsequences.Calculators
 		{
 			if (request.TriggerMode != TriggerType.OneTime || request.InitialAmount < LowerThreshold || request.InitialAmount > UpperThreshold)
 				return null;
-			
-			decimal units = (request.InitialAmount / Cost).Value;
-			
-			return new ConsequenceResult (this,
-			                             request,
-			                             new Units (units),
-			                             FormatCaption (Caption, new Dictionary<string,string> {
-				{"Cost", Cost.ToString()}
+
+			try {
+				decimal units = (request.InitialAmount / Cost).Value;
+				
+				return new ConsequenceResult (this,
+				                             request,
+				                             new Units (units),
+				                             FormatCaption (Caption, new Dictionary<string,string> {
+					{"Cost", Cost.ToString()}
+				}
+				), this.ImageName,
+				   (units >= LowerResultLimit && units <= UpperResultLimit)
+				);				
+			} catch (Exception ex) {
+				Console.WriteLine ("{0} thrown when calculating units for price: {1}", ex.GetType().Name, ex.Message);
+				return new ConsequenceResult (this,
+				                              request,
+				                              null,
+				                              "Oops, something went wrong in this calculator",
+				                              this.ImageName,
+				                              false);
 			}
-			), this.ImageName,
-			   (units >= LowerResultLimit && units <= UpperResultLimit)
-			);
+
 		}
 		#endregion
 	}
