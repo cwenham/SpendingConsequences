@@ -87,7 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
-    <None Include="monotouch-testflight.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
