@@ -176,10 +176,10 @@ namespace SpendingConsequences
 				|| UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight)
 				&& CurrentResult.Table != null
 				&& (this.PresentedViewController == null || this.PresentedViewController == this)) {
-				if (GridView == null)
-					GridView = new XsltWebView (Profiles);
-				GridView.SetResult (this.CurrentResult);
-				this.PresentViewController (GridView, false, null);
+					if (GridView == null)
+						GridView = new XsltWebView (Profiles);
+					GridView.SetResult (this.CurrentResult);
+					this.PresentViewController (GridView, false, null);
 			}
 			
 			if ((UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.Portrait 

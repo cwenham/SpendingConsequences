@@ -154,41 +154,47 @@ namespace SpendingConsequences
 
 		void Handle_Div2_TouchUpInside (object sender, EventArgs e)
 		{
-			decimal current = CurrentAmount;
-			if (current > 0.01m)
+			Money current = CurrentAmount;
+			if (current.Value > 0.01m)
 				CurrentAmount = current / 2m;
-			else if (current == 0m)
+			else if (current.Value == 0m)
 				CurrentAmount = 1.00m; // Default to a simple value so the user can enter small amounts quickly
 			else
 				return;
 			
-			TableSource.ComputeConsequences (new ConsequenceRequest (CurrentAmount, CurrentMode));
+			RefreshCalculators();
 		}
 
 		void Handle_Mul2_TouchUpInside (object sender, EventArgs e)
 		{
-			decimal current = CurrentAmount;
-			if (current > 0m)
-			if (current < MAX_AMOUNT / 2)
+			Money current = CurrentAmount;
+			if (current.Value > 0m)
+			if (current.Value < MAX_AMOUNT / 2)
 				CurrentAmount = current * 2m;
 			else
 				return;
 			else
 				CurrentAmount = 1.00m;
 			
-			TableSource.ComputeConsequences (new ConsequenceRequest (CurrentAmount, CurrentMode));		
+			RefreshCalculators();		
 		}
 		
-		private decimal CurrentAmount {
+		private Money CurrentAmount {
 			get {
 				decimal amount;
 				if (decimal.TryParse (this.InitialAmount.Text, out amount))
-					return amount;
+					return Money.NewMoney(amount,NSLocale.CurrentLocale.CurrencyCode);
 				else 
-					return 0;
+					return null;
 			}
 			set {
 				this.InitialAmount.Text = string.Format("{0:0.00}", value);
+			}
+		}
+
+		private Money CurrentAmountInBaseCurrency {
+			get {
+				return ExchangeRates.CurrentRates.ConvertToBase(CurrentAmount);
 			}
 		}
 		

@@ -84,6 +84,7 @@
     <Reference Include="TestFlight">
       <HintPath>..\..\monotouch-bindings\TestFlight\binding\TestFlight.dll</HintPath>
     </Reference>
+    <Reference Include="System.Json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -249,6 +250,9 @@
     <Content Include="Artwork\vw_bug.png" />
     <Content Include="Artwork\smartphone.png" />
     <Content Include="Artwork\clavius.png" />
+    <Content Include="fallbackExchangeRates.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

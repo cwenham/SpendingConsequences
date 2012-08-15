@@ -110,42 +110,56 @@ namespace SpendingConsequences.Calculators
 		public object Value {
 			get {
 				if (_value == null) {
-					_value = UserSettings.GetCustomValue (this);
+					if (ValueType == ConfigurableValueType.Money)
+						_value = UserSettings.GetCustomValue (this) as Money;
+					else
+						_value = UserSettings.GetCustomValue (this);
 					if (_value == null)
 						_value = Definition.Attribute ("Value").Value;
 				}
-				
-				switch (ValueType) {
-				case ConfigurableValueType.Decimal:
-					return decimal.Parse (_value);
-				case ConfigurableValueType.Integer:
-					return int.Parse (_value);
-				case ConfigurableValueType.Money:
-					return new Money(decimal.Parse (_value), CurrencyCode);
-				case ConfigurableValueType.Percentage:
-					return decimal.Parse (_value);
-				case ConfigurableValueType.Year:
-					return int.Parse (_value);
-				case ConfigurableValueType.Months:
-					return int.Parse (_value);
-				case ConfigurableValueType.PayoffMode:
-					PayoffMode mode;
-					if (!Enum.TryParse (_value, out mode))
-						mode = PayoffMode.PercentPlusInterest;
-					return mode;
-				case ConfigurableValueType.String:
-					return _value;
-				default:
-					return _value;
+
+				if (_value is string && ValueType != ConfigurableValueType.String)
+				{
+					switch (ValueType) {
+					case ConfigurableValueType.Decimal:
+						_value = decimal.Parse (_value as String);
+						break;
+					case ConfigurableValueType.Integer:
+						_value = int.Parse (_value as string);
+						break;
+					case ConfigurableValueType.Money:
+						_value = new Money(decimal.Parse (_value as string), CurrencyCode);
+						break;
+					case ConfigurableValueType.Percentage:
+						_value = decimal.Parse (_value as string);
+						break;
+					case ConfigurableValueType.Year:
+						_value = int.Parse (_value as string);
+						break;
+					case ConfigurableValueType.Months:
+						_value = int.Parse (_value as string);
+						break;
+					case ConfigurableValueType.PayoffMode:
+						PayoffMode mode;
+						if (!Enum.TryParse (_value as string, out mode))
+							mode = PayoffMode.PercentPlusInterest;
+						_value = mode;
+						break;
+					}
 				}
+
+				return _value;
 			}
 			set {
-				_value = value.ToString ();
+				_value = value;
 				if (value != null)
-					UserSettings.StoreCustomValue (this, value.ToString ());
+					if (value is Money)
+						UserSettings.StoreCustomValue(this, value as Money);
+					else
+					    UserSettings.StoreCustomValue (this, value.ToString ());
 			}
 		}
-		private string _value = null;
+		private object _value = null;
 	}
 	
 	public enum ConfigurableValueType

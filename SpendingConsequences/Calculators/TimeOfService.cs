@@ -56,7 +56,9 @@ namespace SpendingConsequences.Calculators
 				return null;
 
 			try {
-				decimal serviceUnits = (request.InitialAmount / this.Cost).Value;
+				Money localizedCost = ExchangeRates.CurrentRates.ConvertToGiven(this.Cost, request.InitialAmount.CurrencyCode);
+
+				decimal serviceUnits = (request.InitialAmount / localizedCost).Value;
 				decimal serviceSeconds = ConsequenceRequest.SecondsPerUnit [UnitForCost] * serviceUnits;
 
 				if (UnitsPerDay > 0)

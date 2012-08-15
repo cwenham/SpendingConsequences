@@ -52,7 +52,7 @@
 			<!-- http://www.cbsnews.com/2100-201_162-2970973.html -->
 		</Investment>
 		
-		<TimeOfService UnitForCost="Hour" TriggersOn="OneTime" Caption="of labor to earn" Country="US" Category="Equivalents">
+		<TimeOfService UnitForCost="Hour" TriggersOn="OneTime" Caption="of labor to earn" Category="Equivalents">
 			<Image Name="clock"/>
 			<Configurable Name="Cost" Type="Money" Label="Your hourly wage" Value="23.38" CurrencyCode="USD"/>
 			<Configurable Name="UnitsPerDay" Type="Decimal" Label="Hours worked per day" Value="8"/>
@@ -134,7 +134,7 @@
 			estimates.</Commentary>		
 		</SpendingPower>
 		
-		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3" Country="US" Category="Lifestyle">
+		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="large cappuccinos per day" LowerResultLimit="1" UpperResultLimit="3" Category="Lifestyle">
 			<Image Name="cappuccino"/>
 			<Configurable Name="Cost" Type="Money" Label="Price per cup" Value="4.36" CurrencyCode="USD" Source="HuMuch.com" SourceUrl="http://www.humuch.com/detailspage.php?item_id=102"/>
 			<Commentary>Based on the average price of a Grande Cappucino from a national coffee restaurant chain.</Commentary>
@@ -148,7 +148,7 @@
 			can bring the price of a 24-hour rental to as low as <b>99 cents</b>.</Commentary>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie tickets per week" LowerResultLimit="2" UpperResultLimit="14" Country="US" Category="Lifestyle">
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="movie tickets per week" LowerResultLimit="2" UpperResultLimit="14" Category="Lifestyle">
 			<Image Name="popcorn"/>
 			<Configurable Name="Cost" Type="Money" Label="Cost per ticket" Value="8.15" CurrencyCode="USD" Source="Time.com" SourceUrl="http://moneyland.time.com/2012/01/05/the-cure-for-the-ailing-movie-business-is-to-raise-ticket-prices/"/>
 			<Commentary>Our estimate comes from the average nationwide ticket price in 2012, but those prices have been
@@ -159,7 +159,7 @@
 			such as Netflix have made it cheaper and easier than ever to watch movies at home.</Commentary>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14" Country="US" Category="Lifestyle">
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="fast-food meals per week" LowerResultLimit="1" UpperResultLimit="14" Category="Lifestyle">
 			<Image Name="hamburger"/>
 			<Configurable Name="Cost" Type="Money" Label="Average meal price" Value="10.16" CurrencyCode="USD" Source="QSR Magazine" SourceUrl="http://www.qsrmagazine.com/news/study-says-fast-food-remains-popular"/>
 			<Commentary>Fast food is certainly convenient, but the costs can add up quickly and they rarely save more
@@ -168,7 +168,7 @@
 			plus a much longer, healthier life to spend it in.</Commentary>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="subway rides per week" LowerResultLimit="1" UpperResultLimit="14" Country="US" Category="Lifestyle">
+		<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="subway rides per week" LowerResultLimit="1" UpperResultLimit="14" Category="Lifestyle">
 			<Image Name="nysubway"/>
 			<Configurable Name="Cost" Type="Money" Label="Ticket price" Value="2.25" CurrencyCode="USD"/>
 			<Commentary>Once you add the cost of fuel, insurance, and maintenance to your loan payments, an automobile 
@@ -178,7 +178,7 @@
 			and monthly <i>unlimited</i> ride cards that work out even cheaper per ride.</Commentary>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="console games per year" LowerResultLimit="1" UpperResultLimit="12" Country="US" Category="Lifestyle">
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="console games per year" LowerResultLimit="1" UpperResultLimit="12" Category="Lifestyle">
 			<Image Name="controller"/>
 			<Configurable Name="Cost" Type="Money" Label="Average price per game" Value="45.00" CurrencyCode="USD" Source="CostHelper" SourceUrl="http://electronics.costhelper.com/xbox360.html"/>
 			<Commentary>Video games, although sometimes expensive, actually offer a very economical form of entertainment.
@@ -189,24 +189,24 @@
 			</Commentary>
 		</UnitsPerPeriod>
 		
-		<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of Internet service" LowerResultLimit="1" UpperResultLimit="24" Country="US" Category="Utilities">
+		<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of Internet service" LowerResultLimit="1" UpperResultLimit="24" Category="Utilities">
 			<Image Name="wifirouter"/>
 			<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="49.95" CurrencyCode="USD"/>
 			<Commentary>Change the <b>Monthly subscription price</b> above to reflect what your Internet Service Provider 
 			bills you per month for more accurate estimates.</Commentary>
 		</TimeOfService>
 		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12" Country="US" Category="Utilities">
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="inkjet cartridges per year" LowerResultLimit="1" UpperResultLimit="12" Category="Utilities">
 			<Image Name="inkjet"/>
 			<Configurable Name="Cost" Type="Money" Label="Average inkjet cartridge price" Value="30" CurrencyCode="USD"/>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" ForGender="Female" Country="US" Category="Lifestyle">
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="women's haircuts per year" LowerResultLimit="1" UpperResultLimit="15" ForGender="Female" Category="Lifestyle">
 			<Image Name="hair_woman"/>
 			<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a woman" Value="56" CurrencyCode="USD" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 		</UnitsPerPeriod>
 		
-		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" ForGender="Male" Country="US" Category="Lifestyle">
+		<UnitsPerPeriod Period="Year" TriggersOn="Repeating" Caption="men's haircuts per year" LowerResultLimit="1" UpperResultLimit="12" ForGender="Male" Category="Lifestyle">
 			<Image Name="hair_man"/>
 			<Configurable Name="Cost" Type="Money" Label="Average cost of a haircut for a man" Value="42" CurrencyCode="USD" Source="SmartMoney.com" SourceUrl="http://t.co/u0AgErnM"/>
 		</UnitsPerPeriod>
@@ -223,7 +223,7 @@
 			<!-- http://www.thehcf.org/cflprimer.html -->
 		</UnitsPerPeriod>
 		
-		<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24" Country="US" Category="Utilities">
+		<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="of daily newspaper delivery" LowerResultLimit="1" UpperResultLimit="24" Category="Utilities">
 			<Image Name="newspaper"/>
 			<!-- Estimate comes from New York Times rate for daily delivery -->
 			<Configurable Name="Cost" Type="Money" Label="Monthly subscription price" Value="26.22" CurrencyCode="USD"/>
@@ -236,7 +236,7 @@
 			newspaper sitting on your breakfast table each day.</Commentary>
 		</TimeOfService>
 		
-		<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6" Country="US" Category="Health">
+		<UnitsForPrice TriggersOn="OneTime" Caption="ambulance rides" LowerResultLimit="1" UpperResultLimit="6" Category="Health">
 			<Image Name="ambulance"/>
 			<Configurable Name="Cost" Type="Money" Label="Price per service call" Value="750" CurrencyCode="USD"/>
 			<Commentary>Ambulance transport varies widely in the United States, with most billings coming between $500 and $1,000, but you may be lucky enough to live
@@ -245,7 +245,7 @@
 			hospital bill. An airlift is called for by paramedics for certain types of injury, especially head injuries that could have caused damage to the brain.</Commentary>
 		</UnitsForPrice>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for a new dishwasher" LowerResultLimit="1" UpperResultLimit="1000" Country="US" Category="Goals">
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a new dishwasher" LowerResultLimit="1" UpperResultLimit="1000" Category="Goals">
 			<Image Name="dishwasher"/>
 			<Configurable Name="Cost" Type="Money" Label="Average price" Value="558.88" CurrencyCode="USD" Source="Amazon.com"/>
 			<Commentary>Based on the average price of the top-20 highest customer rated dishwashers on Amazon.com.
@@ -253,19 +253,19 @@
 			it'll take to reach your goal.</Commentary>
 		</TimeUntil>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000" Country="US" Category="Goals">
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a home treadmill" LowerResultLimit="1" UpperResultLimit="1000" Category="Goals">
 			<Image Name="treadmill"/>
 			<Configurable Name="Cost" Type="Money" Label="Average price" Value="1314.11" CurrencyCode="USD" Source="Amazon.com" SourceUrl="http://www.amazon.com/mn/search/?_encoding=UTF8&amp;keywords=treadmills&amp;tag=synesmedia-20&amp;linkCode=ur2&amp;qid=1335895621&amp;camp=1789&amp;creative=390957&amp;rh=k%3Atreadmills%2Ci%3Asporting#/ref=sr_st?keywords=treadmills"/>
 			<Commentary>Based on the average price of the top-20 highest customer rated motorized treadmills on Amazon.com.</Commentary>
 		</TimeUntil>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for an Espresso machine" LowerResultLimit="1" UpperResultLimit="1000" Country="US" Category="Goals">
+		<TimeUntil TriggersOn="Repeating" Caption="to save for an Espresso machine" LowerResultLimit="1" UpperResultLimit="1000" Category="Goals">
 			<Image Name="espressomachine"/>
 			<Configurable Name="Cost" Type="Money" Label="Average price" Value="334.72" CurrencyCode="USD" Source="Amazon.com" SourceUrl="http://amzn.to/IJIUe5"/>
 			<Commentary>Based on the average price of the top-20 highest customer rated espresso machines on Amazon.com</Commentary>
 		</TimeUntil>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30" Country="US" Category="Goals">
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a vacation for 2 in Hawaii" LowerResultLimit="1" UpperResultLimit="30" Category="Goals">
 			<Image Name="beach_chair"/>
 			<Configurable Name="Cost" Type="Money" Label="Price per couple" Value="3770.00" CurrencyCode="USD" Source="PlanHawaiiVacation.com" SourceUrl="http://www.planhawaiivacation.com/vacationcost/"/>
 			<Commentary>Based on $550 per-person for air-travel, $1,225 for 7 hotel nights at $175 per night,
@@ -273,7 +273,7 @@
 			</Commentary>
 		</TimeUntil>
 		
-		<TimeUntil TriggersOn="Repeating" Caption="to save for a Home Theater system" LowerResultLimit="1" UpperResultLimit="1000" Country="US" Category="Goals">
+		<TimeUntil TriggersOn="Repeating" Caption="to save for a Home Theater system" LowerResultLimit="1" UpperResultLimit="1000" Category="Goals">
 			<Image Name="home_theater"/>
 			<Configurable Name="Cost" Type="Money" Label="Average price" Value="5000.00" CurrencyCode="USD"/>
 			<Commentary>Our $5,000 estimate would cover a 42-inch flat-screen TV, a surround-sound system with five speakers, Blu-Ray DVD player
@@ -282,7 +282,7 @@
 			<br/>If that high-end experience is what you're looking for then just tap on the <b>Average price</b> above and enter what your contractor has quoted you.</Commentary>
 		</TimeUntil>
 		
-		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000" Country="US" Category="Awareness">
+		<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="doses of Polio vaccine per day" LowerResultLimit="1" UpperResultLimit="1000" Category="Awareness">
 			<Image Name="syringe" SourceUrl="http://en.clipart-fr.com/search_clipart.php?keyword=syringe"/>
 			<Configurable Name="Cost" Type="Money" Label="Cost per vaccination" Value="0.14" CurrencyCode="USD" SourceUrl="http://www.polioeradication.org/Polioandprevention/Thevaccines/OralpoliovaccineOPV.aspx"/>
 			<Commentary>It costs surprisingly little to vaccinate a child against polio. The good news is that it appears to 
@@ -656,5 +656,11 @@
 		<Image Name="apple" Source="Fi3uR" SourceUrl="http://fi3ur.deviantart.com/"/>
 		<Image Name="ambulance" Source="DevCom" SourceUrl="http://www.devcom.com/"/>
 		<Image Name="clock" Source="Aha-Soft" LicenseUrl="http://www.iconfinder.com/browse/iconset/free-business-desktop-icons/#readme"/>
-	</Sources> 
+	</Sources>
+	
+	<APIKeys>
+		<API Name="openexchangerates.org">
+			<Key>9c9c379497a649a9b807b339c5579b7e</Key>
+		</API>
+	</APIKeys>
 </Calculators>

@@ -53,9 +53,9 @@ namespace SpendingConsequences.Calculators
 		public override XElement GetTableData (ConsequenceResult result)
 		{
 			int annualPayments = CompoundingsPerYear (PaymentFrequency);
-			decimal paymentPerInstallment = (result.Request.InitialAmount.Value * (decimal)(InvestmentsPerYear (result.Request.TriggerMode))) / annualPayments;
+			Money paymentPerInstallment = (result.Request.InitialAmount * (decimal)(InvestmentsPerYear (result.Request.TriggerMode))) / annualPayments;
 			
-			var amortization = Financials.Amortization (((Money)result.ComputedValue).Value, 
+			var amortization = Financials.Amortization (ExchangeRates.CurrentRates.ConvertToGiven(result.ComputedValue as Money, paymentPerInstallment.CurrencyCode), 
 			                                 CompoundingsPerYear (PaymentFrequency), 
 			                                 PercentAsDecimal (Rate), 
 			                                 0.0m,
@@ -63,7 +63,7 @@ namespace SpendingConsequences.Calculators
 			                                 PayoffMode.FlatAmount);
 
 			return new XElement (new XStreamingElement ("Amortization", 
-			                    new XAttribute ("Title", string.Format ("{0:C} financed at {1}%", ((Money)result.ComputedValue).Value, Rate)),
+			                    new XAttribute ("Title", string.Format ("{0} financed at {1}%", result.ComputedValue as Money, Rate)),
 			                       from i in amortization
 			                       select new XElement ("Row",
 			                    new XElement ("Installment", string.Format ("Payment {0}", i.Installment)),
@@ -97,7 +97,7 @@ namespace SpendingConsequences.Calculators
 				return new ConsequenceResult (this,
 			                             request,
 			                             maxLoanAmount,
-				                         new TabularResult (request.Summary, string.Format ("Amortization of a {0:C} loan at {1}%", maxLoanAmount, Rate), this),
+				                         new TabularResult (request.Summary, string.Format ("Amortization of a {0} loan at {1}%", maxLoanAmount, Rate), this),
 			                             FormatCaption (this.Caption, new Dictionary<string,string> {
 				{"Installments", Installments.ToString ()},
 				{"TotalPayment", totalPayment.ToString ()},

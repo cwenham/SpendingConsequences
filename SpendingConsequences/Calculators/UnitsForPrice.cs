@@ -30,7 +30,9 @@ namespace SpendingConsequences.Calculators
 				return null;
 
 			try {
-				decimal units = (request.InitialAmount / Cost).Value;
+				Money localizedCost = ExchangeRates.CurrentRates.ConvertToGiven(this.Cost, request.InitialAmount.CurrencyCode);
+
+				decimal units = (request.InitialAmount / localizedCost).Value;
 				
 				return new ConsequenceResult (this,
 				                             request,

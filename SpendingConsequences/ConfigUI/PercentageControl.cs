@@ -53,7 +53,7 @@ namespace SpendingConsequences
 				valueChangeTimer.Start ();
 			};
 			this.stepper.TouchUpInside += delegate {
-				this.ConfigValue.Value = stepper.Value;
+				this.ConfigValue.Value = Convert.ToDecimal(stepper.Value);
 				ValueChanged (this, new ConfigurableValueChanged (this.ConfigValue));	
 				this.stepper.StepValue = Convert.ToDouble(ConfigValue.StepValue);
 			};

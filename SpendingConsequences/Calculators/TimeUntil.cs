@@ -35,7 +35,9 @@ namespace SpendingConsequences.Calculators
 				return null;
 
 			try {
-				decimal givenUnitsUntil = (Cost / request.InitialAmount).Value;
+				Money localizedCost = ExchangeRates.CurrentRates.ConvertToGiven(this.Cost, request.InitialAmount.CurrencyCode);
+
+				decimal givenUnitsUntil = (localizedCost / request.InitialAmount).Value;
 
 				if (givenUnitsUntil * request.DaysPerPeriod < MaxDays)
 				{

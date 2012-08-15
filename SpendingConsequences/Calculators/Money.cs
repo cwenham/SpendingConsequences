@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 using MonoTouch.Foundation;
 
@@ -224,9 +226,45 @@ namespace SpendingConsequences.Calculators
 			NSNumberFormatter formatter = new NSNumberFormatter ();
 			formatter.NumberStyle = NSNumberFormatterStyle.Currency;
 			formatter.Locale = NSLocale.CurrentLocale;
+			formatter.CurrencySymbol = SymbolForCurrencyCode(this.CurrencyCode);
 			return formatter.StringFromNumber (new NSNumber((double)(this.Value)));
 		}
-		
+
+		public static string SymbolForLocale(NSLocale locale)
+		{
+			NSNumberFormatter formatter = new NSNumberFormatter ();
+			formatter.NumberStyle = NSNumberFormatterStyle.Currency;
+			formatter.Locale = locale;
+			return formatter.CurrencySymbol;
+		}
+
+		public static string SymbolForCurrencyCode (string currencyCode)
+		{
+			if (SymbolByCurrency == null) {
+				var locales = from id in NSLocale.AvailableLocaleIdentifiers
+			                    let locale = new NSLocale (id)
+			                    where locale != null && locale.CurrencyCode != null
+								select new {
+									Currency = locale.CurrencyCode,
+									Symbol = SymbolForLocale (locale)
+					};
+
+				SymbolByCurrency = locales.GroupBy(x => x.Currency).Select(x => x.First()).ToDictionary (x => x.Currency, y => y.Symbol);
+			}
+
+			if (SymbolByCurrency.ContainsKey(currencyCode))
+				return SymbolByCurrency[currencyCode];
+			else
+				return null;
+		}
+
+		private static Dictionary<string, string> SymbolByCurrency { get; set; }
+
+		public string CurrencySymbol ()
+		{
+			return SymbolForCurrencyCode(this.CurrencyCode);
+		}
+
 		#region Static helper methods
 		/// <summary>
 		/// Returns the currency symbol for the Current Locale

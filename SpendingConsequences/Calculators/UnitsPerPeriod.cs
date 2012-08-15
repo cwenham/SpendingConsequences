@@ -53,8 +53,10 @@ namespace SpendingConsequences.Calculators
 				return null;
 
 			try {
-				decimal perDay = (request.InitialAmount / request.DaysPerPeriod).Value;
-				decimal unitsPerDay = (perDay / Cost).Value;
+				Money localizedCost = ExchangeRates.CurrentRates.ConvertToGiven(this.Cost, request.InitialAmount.CurrencyCode);
+
+				Money perDay = (request.InitialAmount / request.DaysPerPeriod);
+				decimal unitsPerDay = (perDay / localizedCost).Value;
 				decimal unitsPerPeriod = unitsPerDay * ConsequenceRequest.DaysPerUnit [Period];
 				
 				return new ConsequenceResult (this, 

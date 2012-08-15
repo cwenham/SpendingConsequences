@@ -28,8 +28,9 @@ namespace SpendingConsequences
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			
-			this.currencyLabel.Text = Money.LocalCurrencySymbol ();
+
+			Money editedAmount = ConfigValue.Value as Money;
+			this.currencyLabel.Text = editedAmount.CurrencySymbol();
 			
 			this.configuredValue.KeyboardType = UIKeyboardType.DecimalPad;
 			this.configuredValue.InputAccessoryView = SpendingConsequencesViewController.CreateDecimalPadAccessoryView ((sender, e) => {
@@ -38,13 +39,14 @@ namespace SpendingConsequences
 				decimal newVal = 0m;
 				if (decimal.TryParse(this.configuredValue.Text, out newVal))
 				{
-					this.ConfigValue.Value = newVal;
+					Money newAmount = Money.NewMoney(newVal, editedAmount.CurrencyCode);
+					this.ConfigValue.Value = newAmount;
 					ValueChanged(this, new ConfigurableValueChanged(this.ConfigValue));
 				}
 			});
 			
 			this.caption.Text = ConfigValue.Label;
-			this.configuredValue.Text = ((Money)ConfigValue.Value).Value.ToString();
+			this.configuredValue.Text = editedAmount.Value.ToString();
 		}
 		
 		

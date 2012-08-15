@@ -48,12 +48,12 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		
-		public decimal MinimumPayment {
+		public Money MinimumPayment {
 			get {
 				if (ConfigurableValues.ContainsKey ("MinimumPayment"))
-					return ((decimal)ConfigurableValues ["MinimumPayment"].Value);
+					return ConfigurableValues ["MinimumPayment"].Value as Money;
 				else
-					return DEFAULT_MINIMUM_PAYMENT;
+					return new Money(DEFAULT_MINIMUM_PAYMENT, "USD");
 			}
 		}
 		
@@ -73,15 +73,17 @@ namespace SpendingConsequences.Calculators
 				return null;
 
 			try {
-				var amortization = Financials.Amortization (request.InitialAmount.Value, 
+				Money localizedMinPayment = ExchangeRates.CurrentRates.ConvertToGiven(MinimumPayment, request.InitialAmount.CurrencyCode);
+
+				var amortization = Financials.Amortization (request.InitialAmount, 
 				                                 CompoundingsPerYear (Compounding), 
 				                                 PercentAsDecimal (Rate), 
 				                                 PercentAsDecimal (MinPayPercent),
-				                                 MinimumPayment,
+				                                 localizedMinPayment,
 				                                 PayoffMode);
 				
 				int installments = 0;
-				Money totalInterest = 0;
+				Money totalInterest = new Money(0, request.InitialAmount.CurrencyCode);
 				foreach (var i in amortization) {
 					installments++;
 					totalInterest += i.Interest;
@@ -94,7 +96,7 @@ namespace SpendingConsequences.Calculators
 					                             payoff,
 					                             new TabularResult (
 						request.Summary,
-						String.Format ("Amortization of a {0:C} loan at {1}%", request.InitialAmount, Rate),
+						String.Format ("Amortization of a {0} loan at {1}%", request.InitialAmount, Rate),
 						this),
 					                             FormatCaption (this.Caption, new Dictionary<string,string> {
 						{"Periods", installments.ToString()},
@@ -117,11 +119,13 @@ namespace SpendingConsequences.Calculators
 		
 		public override XElement GetTableData (ConsequenceResult result)
 		{
+			Money localizedMinPayment = ExchangeRates.CurrentRates.ConvertToGiven(MinimumPayment, result.Request.InitialAmount.CurrencyCode);
+
 			var amortization = Financials.Amortization (result.Request.InitialAmount.Value, 
 			                                 CompoundingsPerYear (Compounding), 
 			                                 PercentAsDecimal (Rate), 
 			                                 PercentAsDecimal (MinPayPercent),
-			                                 MinimumPayment,
+			                                 localizedMinPayment,
 			                                 PayoffMode);
 
 			return new XElement (new XStreamingElement ("Amortization", 

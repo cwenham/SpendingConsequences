@@ -5,7 +5,7 @@ namespace SpendingConsequences.Calculators
 {
 	public class ConsequenceRequest
 	{
-		public ConsequenceRequest (decimal amount, TriggerType mode)
+		public ConsequenceRequest (Money amount, TriggerType mode)
 		{
 			this.InitialAmount = amount;
 			this.TriggerMode = mode;

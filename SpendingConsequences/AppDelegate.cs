@@ -2,9 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.ComponentModel;
+using System.Json;
+using System.Net;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+
+using SpendingConsequences.Calculators;
 
 namespace SpendingConsequences
 {
@@ -14,6 +19,10 @@ namespace SpendingConsequences
 	[Register ("AppDelegate")]
 	public partial class AppDelegate : UIApplicationDelegate
 	{
+		private const string FallbackExchangeRates = "fallbackExchangeRates.json";
+		private const string LatestExchangeRatesURL = "http://openexchangerates.org/api/latest.json?app_id=9c9c379497a649a9b807b339c5579b7e";
+		private const string ExchangeRateCacheFilename = "latest.json";
+
 		// class-level declarations
 		UIWindow window;
 		SpendingConsequencesViewController viewController;
@@ -39,6 +48,7 @@ namespace SpendingConsequences
 				Profiles.Add("main", mainProfile);
 
 			LoadUserProfiles();
+			UpdateExchangeRates();
 
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
@@ -49,6 +59,12 @@ namespace SpendingConsequences
 			window.MakeKeyAndVisible ();
 			
 			return true;
+		}
+
+		public override void WillEnterForeground (UIApplication application)
+		{
+			if (ExchangeRates.CurrentRates.OldestQuote < DateTime.Now.AddHours(-24))
+				UpdateExchangeRates();
 		}
 
 		private void LoadUserProfiles () {
@@ -74,6 +90,94 @@ namespace SpendingConsequences
 					} catch (Exception ex) {
 					Console.WriteLine("{0} thrown when loading profile at {1}: {2}", ex.GetType().Name, file, ex.Message);
 					}
+		}
+
+		private BackgroundWorker ForexWorker;
+
+		public void UpdateExchangeRates ()
+		{
+			ExchangeRates cachedRates = null;
+			string libFolder = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.MyDocuments), "..", "Library");
+			string cachePath = Path.Combine (libFolder, ExchangeRateCacheFilename);
+			if (File.Exists (cachePath)) {
+				cachedRates = ExchangeRates.FromOXLatestJson (cachePath);
+				if (cachedRates.OldestQuote > DateTime.Now.AddHours(-24))
+				{
+					// Cached rates are less than a day old, keep using them
+					ExchangeRates.CurrentRates = cachedRates;
+					return;
+				}
+			}
+
+			if (ForexWorker != null && ForexWorker.IsBusy)
+				ForexWorker.CancelAsync();
+
+			ForexWorker = new BackgroundWorker();
+			ForexWorker.WorkerSupportsCancellation = true;
+			ForexWorker.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e) {
+				if (!e.Cancelled)
+				{
+					// Try to load new rates, if available, and replace the cache if reading was successful
+					if (e.Result != null && e.Result is String)
+					{
+						try {
+							ExchangeRates latestRates = ExchangeRates.FromOXLatestJson(e.Result as string);	
+							if (latestRates != null)
+							{
+								ExchangeRates.CurrentRates = latestRates;
+								File.Move (e.Result as string, cachePath);
+								return;
+							}
+						} catch (Exception) {
+							File.Delete (e.Result as String);
+						}
+					};
+
+					// If we managed to load cached rates from earlier, use those in case above fails
+					if (cachedRates != null)
+					{
+						ExchangeRates.CurrentRates = cachedRates;
+						return;
+					}
+
+					// Resort to our Fallback rates, which are only updated whenever the app itself is
+					try {
+						ExchangeRates latestRates = ExchangeRates.FromOXLatestJson(FallbackExchangeRates);	
+						if (latestRates != null)
+						{
+							ExchangeRates.CurrentRates = latestRates;
+							return;
+						}
+					} catch (Exception ex) {
+						Console.WriteLine("{0} thrown when trying to read Fallback exchange rates: {1}", ex.GetType().Name, ex.Message);
+					}
+				}
+			};
+			ForexWorker.DoWork += HandleForexDoWork;
+			ForexWorker.RunWorkerAsync();
+		}
+
+		void HandleForexDoWork (object sender, DoWorkEventArgs e)
+		{
+			e.Result = null;
+			BackgroundWorker myWorker = sender as BackgroundWorker;
+
+			string tempFile = Path.GetTempFileName ();
+			try {
+				using (WebClient wc = new WebClient()) {
+					wc.DownloadFile (LatestExchangeRatesURL, tempFile);
+				}
+
+				e.Cancel = myWorker.CancellationPending;
+				if (!myWorker.CancellationPending)
+					e.Result = tempFile;
+				else
+					File.Delete(tempFile);
+			} catch (Exception ex) {
+				Console.WriteLine ("{0} thrown when fetching latest exchange rates: {1}", ex.GetType ().Name, ex.Message);
+				if (!File.Exists (tempFile))
+					File.Delete (tempFile);
+			}
 		}
 	}
 }

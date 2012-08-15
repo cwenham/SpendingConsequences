@@ -12,7 +12,7 @@ namespace SpendingConsequences.Calculators
 			return (decimal)Math.Pow((double)val1, (double)val2);
 		}
 
-		public static IEnumerable<AmortizedInstallment> Amortization (Money amount, int annualCompoundings, decimal rate, decimal minPayRate, decimal paymentFloor, PayoffMode payMode)
+		public static IEnumerable<AmortizedInstallment> Amortization (Money amount, int annualCompoundings, decimal rate, decimal minPayRate, Money paymentFloor, PayoffMode payMode)
 		{
 			decimal ratePerPeriod = rate / annualCompoundings;
 			
@@ -74,6 +74,14 @@ namespace SpendingConsequences.Calculators
 
 				return baseSchedule;
 			}
+		}
+
+		public static DateTime UnixTimeStampToDateTime( double unixTimeStamp )
+		{
+		    // Unix timestamp is seconds past epoch
+		    System.DateTime dtDateTime = new DateTime(1970,1,1,0,0,0,0);
+		    dtDateTime = dtDateTime.AddSeconds( unixTimeStamp ).ToLocalTime();
+		    return dtDateTime;
 		}
 	}
 	
