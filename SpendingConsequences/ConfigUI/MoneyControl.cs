@@ -13,10 +13,29 @@ namespace SpendingConsequences
 		public MoneyControl (ConfigurableValue val) : base ("MoneyControl", null)
 		{
 			this.ConfigValue = val;
+			this.ConfigValue.ValueChanged += HandleValueChanged;
 		}
 		
 		public ConfigurableValue ConfigValue { get; private set; }
-		
+
+		private bool ExpectingChange = false;
+
+		private void HandleValueChanged (object sender, EventArgs e)
+		{
+			if (ConfigValue.Value != null && ExpectingChange == false)
+			{
+				Money newAmount = ConfigValue.Value as Money;
+				if (newAmount != null)
+				{
+					this.currencyLabel.Text = newAmount.CurrencySymbol();
+					this.currencyButton.SetTitle(newAmount.CurrencyCode, UIControlState.Normal);
+					this.configuredValue.Text = newAmount.Value.ToString("0.00");
+				}
+			}
+
+			ExpectingChange = false;
+		}
+
 		public override void DidReceiveMemoryWarning ()
 		{
 			// Releases the view if it doesn't have a superview.
@@ -31,6 +50,17 @@ namespace SpendingConsequences
 
 			Money editedAmount = ConfigValue.Value as Money;
 			this.currencyLabel.Text = editedAmount.CurrencySymbol();
+			this.currencyButton.SetTitle(editedAmount.CurrencyCode, UIControlState.Normal);
+
+			UIImage segSelected = UIImage.FromBundle (@"UIArt/mode_sel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
+			UIImage segUnselected = UIImage.FromBundle (@"UIArt/mode_unsel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
+			
+			currencyButton.SetBackgroundImage (segUnselected, UIControlState.Normal);
+			currencyButton.SetBackgroundImage (segSelected, UIControlState.Highlighted);
+			currencyButton.TouchUpInside += delegate {
+				CurrencyButtonClicked(this, new CurrencyChangeEventArgs(this.ConfigValue));
+			};
+
 			
 			this.configuredValue.KeyboardType = UIKeyboardType.DecimalPad;
 			this.configuredValue.InputAccessoryView = SpendingConsequencesViewController.CreateDecimalPadAccessoryView ((sender, e) => {
@@ -39,6 +69,7 @@ namespace SpendingConsequences
 				decimal newVal = 0m;
 				if (decimal.TryParse(this.configuredValue.Text, out newVal))
 				{
+					ExpectingChange = true;
 					Money newAmount = Money.NewMoney(newVal, editedAmount.CurrencyCode);
 					this.ConfigValue.Value = newAmount;
 					ValueChanged(this, new ConfigurableValueChanged(this.ConfigValue));
@@ -46,10 +77,8 @@ namespace SpendingConsequences
 			});
 			
 			this.caption.Text = ConfigValue.Label;
-			this.configuredValue.Text = editedAmount.Value.ToString();
+			this.configuredValue.Text = editedAmount.Value.ToString("0.00");
 		}
-		
-		
 		
 		public override void ViewDidUnload ()
 		{
@@ -71,6 +100,8 @@ namespace SpendingConsequences
 
 		#region IConfigControl implementation
 		public event EventHandler<ConfigurableValueChanged> ValueChanged = delegate {};
+
+		public event EventHandler<CurrencyChangeEventArgs> CurrencyButtonClicked = delegate {};
 		#endregion
 	}
 }

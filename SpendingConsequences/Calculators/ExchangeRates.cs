@@ -69,6 +69,15 @@ namespace SpendingConsequences.Calculators
 
 		public string BaseCurrency { get; private set; }
 
+		public string[] SupportedCurrencies { get {
+				if (_supportedCurrencies == null)
+					_supportedCurrencies = Rates.Keys.ToArray<string>();
+
+				return _supportedCurrencies;
+			}
+		}
+		private string[] _supportedCurrencies;
+
 		public static ExchangeRates CurrentRates { 
 			get {
 				if (_currentRates == null)
@@ -102,10 +111,12 @@ namespace SpendingConsequences.Calculators
 		/// </param>
 		public void SetRate (string currencyCode, decimal quote, DateTime asOf)
 		{
-			if (Rates.ContainsKey(currencyCode))
-				Rates[currencyCode] = quote;
-			else
-				Rates.Add(currencyCode, quote);
+			if (Rates.ContainsKey (currencyCode))
+				Rates [currencyCode] = quote;
+			else {
+				Rates.Add (currencyCode, quote);
+				_supportedCurrencies = null;
+			}
 
 			if (UpdateTimes.ContainsKey(currencyCode))
 				UpdateTimes[currencyCode] = asOf;

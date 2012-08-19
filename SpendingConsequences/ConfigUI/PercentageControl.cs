@@ -82,6 +82,8 @@ namespace SpendingConsequences
 		
 		#region IConfigControl implementation
 		public event EventHandler<ConfigurableValueChanged> ValueChanged = delegate {};
+
+		public event EventHandler<CurrencyChangeEventArgs> CurrencyButtonClicked = delegate {};
 		#endregion
 	}
 }

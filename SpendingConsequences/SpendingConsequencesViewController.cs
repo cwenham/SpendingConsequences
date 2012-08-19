@@ -155,9 +155,9 @@ namespace SpendingConsequences
 		void Handle_Div2_TouchUpInside (object sender, EventArgs e)
 		{
 			Money current = CurrentAmount;
-			if (current.Value > 0.01m)
+			if (current > 0.01m)
 				CurrentAmount = current / 2m;
-			else if (current.Value == 0m)
+			else if (current == 0m)
 				CurrentAmount = 1.00m; // Default to a simple value so the user can enter small amounts quickly
 			else
 				return;
@@ -168,8 +168,8 @@ namespace SpendingConsequences
 		void Handle_Mul2_TouchUpInside (object sender, EventArgs e)
 		{
 			Money current = CurrentAmount;
-			if (current.Value > 0m)
-			if (current.Value < MAX_AMOUNT / 2)
+			if (current > 0m)
+			if (current < MAX_AMOUNT / 2)
 				CurrentAmount = current * 2m;
 			else
 				return;
@@ -188,7 +188,7 @@ namespace SpendingConsequences
 					return null;
 			}
 			set {
-				this.InitialAmount.Text = string.Format("{0:0.00}", value);
+				this.InitialAmount.Text = string.Format("{0:0.00}", value.Value);
 			}
 		}
 

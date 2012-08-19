@@ -146,6 +146,11 @@
     <Compile Include="Calculators\Financials.cs" />
     <Compile Include="XsltWebView.cs" />
     <Compile Include="Calculators\ExchangeRates.cs" />
+    <Compile Include="CurrencyPickerModel.cs" />
+    <Compile Include="CurrencyPickerSheet.cs" />
+    <Compile Include="CurrencyPickerSheet.designer.cs">
+      <DependentUpon>CurrencyPickerSheet.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
@@ -155,6 +160,7 @@
     <InterfaceDefinition Include="ConfigUI\MoneyControl.xib" />
     <InterfaceDefinition Include="ConfigUI\YearControl.xib" />
     <InterfaceDefinition Include="XsltWebView.xib" />
+    <InterfaceDefinition Include="CurrencyPickerSheet.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

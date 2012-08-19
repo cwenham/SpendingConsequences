@@ -19,6 +19,9 @@ namespace SpendingConsequences
 
 		[Outlet]
 		MonoTouch.UIKit.UILabel currencyLabel { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UIButton currencyButton { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -35,6 +38,11 @@ namespace SpendingConsequences
 			if (currencyLabel != null) {
 				currencyLabel.Dispose ();
 				currencyLabel = null;
+			}
+
+			if (currencyButton != null) {
+				currencyButton.Dispose ();
+				currencyButton = null;
 			}
 		}
 	}

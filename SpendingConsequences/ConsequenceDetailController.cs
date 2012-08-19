@@ -119,10 +119,47 @@ namespace SpendingConsequences
 				break;
 			}
 			
-			if (control != null)
+			if (control != null) {
 				control.ValueChanged += HandleControlValueChanged;
+				control.CurrencyButtonClicked += HandleCurrencyButtonClicked;
+			}
 			
 			return control as UIViewController;
+		}
+
+		void HandleCurrencyButtonClicked (object sender, CurrencyChangeEventArgs e)
+		{
+			CurrencySheet = CreateCurrencyActionSheet("Choose Currency");
+			CurrencyPickerController.CurrencyChosen += delegate(object sndr, CurrencyChangedEventArgs ce) {
+				e.ConfigValue.Value = ExchangeRates.CurrentRates.ConvertToGiven(e.ConfigValue.Value as Money, ce.CurrencyCode);
+				CurrencySheet.DismissWithClickedButtonIndex(0,true);
+				CurrencySheet = null;
+				CurrencyPickerController = null;
+			};
+			CurrencyPickerController.Cancelled += delegate {
+				CurrencySheet.DismissWithClickedButtonIndex(0,true);
+				CurrencySheet = null;
+				CurrencyPickerController = null;
+			};
+
+			CurrencySheet.ShowInView(this.View);
+			CurrencyPickerController.View.Frame = new RectangleF(0,0,320,327);
+			CurrencySheet.Bounds = new RectangleF(0,0,320,634);
+			CurrencyPickerController.SetCurrency(((Money)e.ConfigValue.Value).CurrencyCode);
+		}
+
+		private UIActionSheet CurrencySheet { get; set; }
+
+		private CurrencyPickerSheet CurrencyPickerController { get; set; }
+
+		public UIActionSheet CreateCurrencyActionSheet(string title) {
+			UIActionSheet sheet = new UIActionSheet(title);
+			sheet.Style = UIActionSheetStyle.BlackTranslucent;
+
+			CurrencyPickerController = new CurrencyPickerSheet();
+			sheet.AddSubview(CurrencyPickerController.View);
+
+			return sheet;
 		}
 
 		void HandleControlValueChanged (object sender, ConfigurableValueChanged e)

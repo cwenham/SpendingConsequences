@@ -157,9 +157,13 @@ namespace SpendingConsequences.Calculators
 						UserSettings.StoreCustomValue(this, value as Money);
 					else
 					    UserSettings.StoreCustomValue (this, value.ToString ());
+
+				ValueChanged(this, new EventArgs());
 			}
 		}
 		private object _value = null;
+
+		public event EventHandler<EventArgs> ValueChanged = delegate {};
 	}
 	
 	public enum ConfigurableValueType
