@@ -47,21 +47,22 @@ namespace SpendingConsequences
 		
 		public XDocument Definition { get; private set; }
 		
-		public static UIImage GetImage (string imageName)
+		public static UIImage GetImage (Image image)
 		{
 			if (ImageCache == null)
 				ImageCache = new NSCache ();
 			
-			NSObject key = NSObject.FromObject (imageName);
-			UIImage image = ImageCache.ObjectForKey (key) as UIImage;
-			if (image == null) {
-				string filename = string.Format ("Artwork/{0}.png", imageName);
-				if (NSFileManager.DefaultManager.FileExists (filename)) {
-					image = UIImage.FromBundle (filename);
-					ImageCache.SetObjectforKey (image, key);	
+			NSObject key = NSObject.FromObject (image.Name);
+			UIImage img = ImageCache.ObjectForKey (key) as UIImage;
+			if (img == null) {
+				if (NSFileManager.DefaultManager.FileExists (image.ImagePath)) {
+					img = UIImage.FromBundle (image.ImagePath);
+					ImageCache.SetObjectforKey (img, key);	
 				}
+				else
+					Console.WriteLine("Couldn't find image for {0}", image.ImagePath);
 			}
-			return image;
+			return img;
 		}
 		
 		/// <summary>

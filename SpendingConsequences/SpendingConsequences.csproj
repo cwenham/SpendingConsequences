@@ -151,6 +151,12 @@
     <Compile Include="CurrencyPickerSheet.designer.cs">
       <DependentUpon>CurrencyPickerSheet.cs</DependentUpon>
     </Compile>
+    <Compile Include="Calculators\CurrencyConversion.cs" />
+    <Compile Include="Calculators\Image.cs" />
+    <Compile Include="ConfigUI\CurrencyControl.cs" />
+    <Compile Include="ConfigUI\CurrencyControl.designer.cs">
+      <DependentUpon>CurrencyControl.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
@@ -161,6 +167,7 @@
     <InterfaceDefinition Include="ConfigUI\YearControl.xib" />
     <InterfaceDefinition Include="XsltWebView.xib" />
     <InterfaceDefinition Include="CurrencyPickerSheet.xib" />
+    <InterfaceDefinition Include="ConfigUI\CurrencyControl.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -259,163 +266,477 @@
     <Content Include="fallbackExchangeRates.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="CurrencyFlags\AED.png" />
-    <Content Include="CurrencyFlags\AFN.png" />
-    <Content Include="CurrencyFlags\ALL.png" />
-    <Content Include="CurrencyFlags\AMD.png" />
-    <Content Include="CurrencyFlags\ANG.png" />
-    <Content Include="CurrencyFlags\AOA.png" />
-    <Content Include="CurrencyFlags\ARS.png" />
-    <Content Include="CurrencyFlags\AUD.png" />
-    <Content Include="CurrencyFlags\AWG.png" />
-    <Content Include="CurrencyFlags\AZN.png" />
-    <Content Include="CurrencyFlags\BAM.png" />
-    <Content Include="CurrencyFlags\BBD.png" />
-    <Content Include="CurrencyFlags\BDT.png" />
-    <Content Include="CurrencyFlags\BGN.png" />
-    <Content Include="CurrencyFlags\BHD.png" />
-    <Content Include="CurrencyFlags\BIF.png" />
-    <Content Include="CurrencyFlags\BMD.png" />
-    <Content Include="CurrencyFlags\BND.png" />
-    <Content Include="CurrencyFlags\BOB.png" />
-    <Content Include="CurrencyFlags\BRL.png" />
-    <Content Include="CurrencyFlags\BSD.png" />
-    <Content Include="CurrencyFlags\BTN.png" />
-    <Content Include="CurrencyFlags\BWP.png" />
-    <Content Include="CurrencyFlags\BYR.png" />
-    <Content Include="CurrencyFlags\BZD.png" />
-    <Content Include="CurrencyFlags\CAD.png" />
-    <Content Include="CurrencyFlags\CDF.png" />
-    <Content Include="CurrencyFlags\CHF.png" />
-    <Content Include="CurrencyFlags\CLF.png" />
-    <Content Include="CurrencyFlags\CLP.png" />
-    <Content Include="CurrencyFlags\CNY.png" />
-    <Content Include="CurrencyFlags\COP.png" />
-    <Content Include="CurrencyFlags\CRC.png" />
-    <Content Include="CurrencyFlags\CUP.png" />
-    <Content Include="CurrencyFlags\CVE.png" />
-    <Content Include="CurrencyFlags\CZK.png" />
-    <Content Include="CurrencyFlags\DJF.png" />
-    <Content Include="CurrencyFlags\DKK.png" />
-    <Content Include="CurrencyFlags\DOP.png" />
-    <Content Include="CurrencyFlags\DZD.png" />
-    <Content Include="CurrencyFlags\EGP.png" />
-    <Content Include="CurrencyFlags\ETB.png" />
-    <Content Include="CurrencyFlags\EUR.png" />
-    <Content Include="CurrencyFlags\FJD.png" />
-    <Content Include="CurrencyFlags\FKP.png" />
-    <Content Include="CurrencyFlags\GBP.png" />
-    <Content Include="CurrencyFlags\GEL.png" />
-    <Content Include="CurrencyFlags\GHS.png" />
-    <Content Include="CurrencyFlags\GIP.png" />
-    <Content Include="CurrencyFlags\GMD.png" />
-    <Content Include="CurrencyFlags\GNF.png" />
-    <Content Include="CurrencyFlags\GTQ.png" />
-    <Content Include="CurrencyFlags\GYD.png" />
-    <Content Include="CurrencyFlags\HKD.png" />
-    <Content Include="CurrencyFlags\HNL.png" />
-    <Content Include="CurrencyFlags\HRK.png" />
-    <Content Include="CurrencyFlags\HTG.png" />
-    <Content Include="CurrencyFlags\HUF.png" />
-    <Content Include="CurrencyFlags\IDR.png" />
-    <Content Include="CurrencyFlags\ILS.png" />
-    <Content Include="CurrencyFlags\INR.png" />
-    <Content Include="CurrencyFlags\IQD.png" />
-    <Content Include="CurrencyFlags\IRR.png" />
-    <Content Include="CurrencyFlags\ISK.png" />
-    <Content Include="CurrencyFlags\JMD.png" />
-    <Content Include="CurrencyFlags\JOD.png" />
-    <Content Include="CurrencyFlags\JPY.png" />
-    <Content Include="CurrencyFlags\KES.png" />
-    <Content Include="CurrencyFlags\KGS.png" />
-    <Content Include="CurrencyFlags\KHR.png" />
-    <Content Include="CurrencyFlags\KMF.png" />
-    <Content Include="CurrencyFlags\KPW.png" />
-    <Content Include="CurrencyFlags\KRW.png" />
-    <Content Include="CurrencyFlags\KWD.png" />
-    <Content Include="CurrencyFlags\KYD.png" />
-    <Content Include="CurrencyFlags\KZT.png" />
-    <Content Include="CurrencyFlags\LAK.png" />
-    <Content Include="CurrencyFlags\LBP.png" />
-    <Content Include="CurrencyFlags\LKR.png" />
-    <Content Include="CurrencyFlags\LRD.png" />
-    <Content Include="CurrencyFlags\LSL.png" />
-    <Content Include="CurrencyFlags\LTL.png" />
-    <Content Include="CurrencyFlags\LVL.png" />
-    <Content Include="CurrencyFlags\LYD.png" />
-    <Content Include="CurrencyFlags\MAD.png" />
-    <Content Include="CurrencyFlags\MDL.png" />
-    <Content Include="CurrencyFlags\MGA.png" />
-    <Content Include="CurrencyFlags\MKD.png" />
-    <Content Include="CurrencyFlags\MMK.png" />
-    <Content Include="CurrencyFlags\MNT.png" />
-    <Content Include="CurrencyFlags\MOP.png" />
-    <Content Include="CurrencyFlags\MRO.png" />
-    <Content Include="CurrencyFlags\MUR.png" />
-    <Content Include="CurrencyFlags\MVR.png" />
-    <Content Include="CurrencyFlags\MWK.png" />
-    <Content Include="CurrencyFlags\MXN.png" />
-    <Content Include="CurrencyFlags\MYR.png" />
-    <Content Include="CurrencyFlags\MZN.png" />
-    <Content Include="CurrencyFlags\NAD.png" />
-    <Content Include="CurrencyFlags\NGN.png" />
-    <Content Include="CurrencyFlags\NIO.png" />
-    <Content Include="CurrencyFlags\NOK.png" />
-    <Content Include="CurrencyFlags\NPR.png" />
-    <Content Include="CurrencyFlags\NZD.png" />
-    <Content Include="CurrencyFlags\OMR.png" />
-    <Content Include="CurrencyFlags\PAB.png" />
-    <Content Include="CurrencyFlags\PEN.png" />
-    <Content Include="CurrencyFlags\PGK.png" />
-    <Content Include="CurrencyFlags\PHP.png" />
-    <Content Include="CurrencyFlags\PKR.png" />
-    <Content Include="CurrencyFlags\PLN.png" />
-    <Content Include="CurrencyFlags\PYG.png" />
-    <Content Include="CurrencyFlags\QAR.png" />
-    <Content Include="CurrencyFlags\RON.png" />
-    <Content Include="CurrencyFlags\RSD.png" />
-    <Content Include="CurrencyFlags\RUB.png" />
-    <Content Include="CurrencyFlags\RWF.png" />
-    <Content Include="CurrencyFlags\SAR.png" />
-    <Content Include="CurrencyFlags\SBD.png" />
-    <Content Include="CurrencyFlags\SCR.png" />
-    <Content Include="CurrencyFlags\SDG.png" />
-    <Content Include="CurrencyFlags\SEK.png" />
-    <Content Include="CurrencyFlags\SGD.png" />
-    <Content Include="CurrencyFlags\SHP.png" />
-    <Content Include="CurrencyFlags\SLL.png" />
-    <Content Include="CurrencyFlags\SOS.png" />
-    <Content Include="CurrencyFlags\SRD.png" />
-    <Content Include="CurrencyFlags\SSP.png" />
-    <Content Include="CurrencyFlags\STD.png" />
-    <Content Include="CurrencyFlags\SYP.png" />
-    <Content Include="CurrencyFlags\SZL.png" />
-    <Content Include="CurrencyFlags\THB.png" />
-    <Content Include="CurrencyFlags\TJS.png" />
-    <Content Include="CurrencyFlags\TMT.png" />
-    <Content Include="CurrencyFlags\TND.png" />
-    <Content Include="CurrencyFlags\TOP.png" />
-    <Content Include="CurrencyFlags\TRY.png" />
-    <Content Include="CurrencyFlags\TTD.png" />
-    <Content Include="CurrencyFlags\TWD.png" />
-    <Content Include="CurrencyFlags\TZS.png" />
-    <Content Include="CurrencyFlags\UAH.png" />
-    <Content Include="CurrencyFlags\UGX.png" />
-    <Content Include="CurrencyFlags\USD.png" />
-    <Content Include="CurrencyFlags\UYI.png" />
-    <Content Include="CurrencyFlags\UZS.png" />
-    <Content Include="CurrencyFlags\VEF.png" />
-    <Content Include="CurrencyFlags\VND.png" />
-    <Content Include="CurrencyFlags\VUV.png" />
-    <Content Include="CurrencyFlags\WST.png" />
-    <Content Include="CurrencyFlags\XAF.png" />
-    <Content Include="CurrencyFlags\XCD.png" />
-    <Content Include="CurrencyFlags\XOF.png" />
-    <Content Include="CurrencyFlags\XPF.png" />
-    <Content Include="CurrencyFlags\YER.png" />
-    <Content Include="CurrencyFlags\ZAR.png" />
-    <Content Include="CurrencyFlags\ZMK.png" />
-    <Content Include="CurrencyFlags\ZWL.png" />
+    <Content Include="CurrencyFlags\AED.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\AFN.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\ALL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\AMD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\ANG.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\AOA.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\ARS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\AUD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\AWG.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\AZN.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BAM.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BBD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BDT.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BGN.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BHD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BIF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BMD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BND.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BOB.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BRL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BSD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BTN.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BWP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BYR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\BZD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\CAD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\CDF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\CHF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\CLF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\CLP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\CNY.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\COP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\CRC.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\CUP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\CVE.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\CZK.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\DJF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\DKK.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\DOP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\DZD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\EGP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\ETB.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\EUR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\FJD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\FKP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\GBP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\GEL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\GHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\GIP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\GMD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\GNF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\GTQ.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\GYD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\HKD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\HNL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\HRK.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\HTG.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\HUF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\IDR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\ILS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\INR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\IQD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\IRR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\ISK.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\JMD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\JOD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\JPY.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\KES.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\KGS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\KHR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\KMF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\KPW.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\KRW.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\KWD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\KYD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\KZT.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\LAK.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\LBP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\LKR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\LRD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\LSL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\LTL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\LVL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\LYD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MAD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MDL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MGA.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MKD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MMK.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MNT.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MOP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MRO.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MUR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MVR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MWK.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MXN.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MYR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\MZN.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\NAD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\NGN.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\NIO.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\NOK.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\NPR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\NZD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\OMR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\PAB.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\PEN.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\PGK.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\PHP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\PKR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\PLN.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\PYG.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\QAR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\RON.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\RSD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\RUB.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\RWF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\SAR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\SBD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\SCR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\SDG.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\SEK.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\SGD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\SHP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\SLL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\SOS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\SRD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\SSP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\STD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\SYP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\SZL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\THB.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\TJS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\TMT.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\TND.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\TOP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\TRY.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\TTD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\TWD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\TZS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\UAH.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\UGX.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\USD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\UYI.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\UZS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\VEF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\VND.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\VUV.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\WST.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\XAF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\XCD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\XOF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\XPF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\YER.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\ZAR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\ZMK.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CurrencyFlags\ZWL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

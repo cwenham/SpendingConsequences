@@ -36,38 +36,13 @@ namespace SpendingConsequences
 		public override string GetTitle (UIPickerView picker, int row, int component)
 		{
 			string currencyCode = ExchangeRates.CurrentRates.SupportedCurrencies [row];
-			if (CurrencyNames == null) {
-				var regions = (from country in NSLocale.ISOCountryCodes
-					let region = TryRegionInfo (country)
-					where region != null && region.ISOCurrencySymbol != null
-				    select new {
-					   ISO = region.CurrencySymbol,
-					   Name = region.ISOCurrencySymbol
-				});
-				CurrencyNames = regions.GroupBy (x => x.ISO)
-				  .Select (x => x.First ())
-				  .ToDictionary (x => x.ISO, y => y.Name);
-			}
-
-
-			string currencyName = "";
-			if (CurrencyNames.ContainsKey(currencyCode))
-				currencyName = CurrencyNames[currencyCode];
+			string currencyName = ExchangeRates.GetCurrencyName(currencyCode);
+			if (currencyName == null)
+				currencyName = "";
 
 			return string.Format("{0} - {1}",
 			                     currencyCode, currencyName);
 		}
-
-		private static RegionInfo TryRegionInfo(string countryCode)
-		{
-			try {
-				return new RegionInfo(countryCode);
-			} catch (Exception ex) {
-				return null;
-			}
-		}
-
-		private Dictionary<string,string> CurrencyNames { get; set; }
 
 		public override void Selected (UIPickerView picker, int row, int component)
 		{

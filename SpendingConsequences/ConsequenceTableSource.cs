@@ -125,15 +125,12 @@ namespace SpendingConsequences
 			}
 		
 			if (result != null) {
-				UIImage image = Profile.GetImage (result.ImageName);
+				UIImage image = Profile.GetImage (result.Image);
 			
 				if (image != null)
 					cell.ImageView.Image = image;
 
-				if (result.ComputedValue is Money)
-					cell.TextLabel.Text = ExchangeRates.CurrentRates.ConvertToLocal(result.ComputedValue as Money).ToString();
-				else
-					cell.TextLabel.Text = result.ComputedValue.ToString ();
+				cell.TextLabel.Text = result.ComputedValue.ToString ();
 
 				cell.DetailTextLabel.Text = result.FormattedCaption;
 				cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;				

@@ -40,7 +40,7 @@ namespace SpendingConsequences.Calculators
 				                             FormatCaption (Caption, new Dictionary<string,string> {
 					{"Cost", Cost.ToString()}
 				}
-				), this.ImageName,
+				), this.Image,
 				   (units >= LowerResultLimit && units <= UpperResultLimit)
 				);				
 			} catch (Exception ex) {
@@ -49,7 +49,7 @@ namespace SpendingConsequences.Calculators
 				                              request,
 				                              null,
 				                              "Oops, something went wrong in this calculator",
-				                              this.ImageName,
+				                              this.Image,
 				                              false);
 			}
 

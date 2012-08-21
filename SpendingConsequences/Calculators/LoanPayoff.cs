@@ -102,7 +102,7 @@ namespace SpendingConsequences.Calculators
 						{"Periods", installments.ToString()},
 						{"Interest", totalInterest.ToString()}
 					}
-				), this.ImageName,
+				), this.Image,
 					   (payoff >= LowerResultLimit && payoff <= UpperResultLimit));				
 			} catch (Exception ex) {
 				Console.WriteLine("{0} thrown when computing loan payoff: {1}", ex.GetType().Name, ex.Message);
@@ -110,7 +110,7 @@ namespace SpendingConsequences.Calculators
 				                             request,
 				                             null,
 				                             "Oops, something went wrong in this calculator",
-				                             this.ImageName,
+				                             this.Image,
 				                             false);
 			}
 		

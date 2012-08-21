@@ -65,7 +65,7 @@ namespace SpendingConsequences.Calculators
 				                              FormatCaption (this.Caption, new Dictionary<string,string> {
 					{"Cost", this.Cost.ToString ()}
 				}
-				), this.ImageName,
+				), this.Image,
 				  (unitsPerPeriod >= LowerResultLimit && unitsPerPeriod <= UpperResultLimit));				
 			} catch (Exception ex) {
 				Console.WriteLine ("{0} thrown when computing Units per Period: {1}", ex.GetType().Name, ex.Message);
@@ -73,7 +73,7 @@ namespace SpendingConsequences.Calculators
 				                              request,
 				                              null,
 				                              "Oops, something went wrong in this calculator",
-				                              this.ImageName,
+				                              this.Image,
 				                              false);
 			}
 

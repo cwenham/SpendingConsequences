@@ -139,6 +139,9 @@ namespace SpendingConsequences.Calculators
 					case ConfigurableValueType.Months:
 						_value = int.Parse (_value as string);
 						break;
+					case ConfigurableValueType.Currency:
+						_value = _value as String ?? "USD";
+						break;
 					case ConfigurableValueType.PayoffMode:
 						PayoffMode mode;
 						if (!Enum.TryParse (_value as string, out mode))
@@ -176,7 +179,8 @@ namespace SpendingConsequences.Calculators
 		Percentage,
 		Months,
 		PayoffMode,
-		String
+		String,
+		Currency
 	}
 }
 

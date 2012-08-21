@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Json;
 using System.Linq;
 using System.IO;
+using System.Globalization;
 
 using MonoTouch;
 using MonoTouch.Foundation;
@@ -160,6 +161,68 @@ namespace SpendingConsequences.Calculators
 			Money asBase = ConvertToBase(amount);
 			return new Money (asBase.Value * Rates[currencyCode], currencyCode);
 		}
+
+		public static string GetCurrencyName(string currencyCode)
+		{
+			if (CurrencyNames == null) {
+				var regions = (from country in NSLocale.ISOCountryCodes
+					let region = TryRegionInfo (country)
+					where region != null && region.ISOCurrencySymbol != null
+				    select new {
+					   ISO = region.CurrencySymbol,
+					   Name = region.ISOCurrencySymbol
+				});
+				CurrencyNames = regions.GroupBy (x => x.ISO)
+				  .Select (x => x.First ())
+				  .ToDictionary (x => x.ISO, y => y.Name);
+			}
+
+			if (CurrencyNames.ContainsKey(currencyCode))
+				return CurrencyNames[currencyCode];
+			else
+				return null;
+		}
+
+		private static RegionInfo TryRegionInfo(string countryCode)
+		{
+			try {
+				return new RegionInfo(countryCode);
+			} catch (Exception ex) {
+				return null;
+			}
+		}
+
+		private static Dictionary<string,string> CurrencyNames { get; set; }
+
+		public static string SymbolForCurrencyCode (string currencyCode)
+		{
+			if (SymbolByCurrency == null) {
+				var locales = from id in NSLocale.AvailableLocaleIdentifiers
+			                    let locale = new NSLocale (id)
+			                    where locale != null && locale.CurrencyCode != null
+								select new {
+									Currency = locale.CurrencyCode,
+									Symbol = SymbolForLocale (locale)
+					};
+
+				SymbolByCurrency = locales.GroupBy(x => x.Currency).Select(x => x.First()).ToDictionary (x => x.Currency, y => y.Symbol);
+			}
+
+			if (SymbolByCurrency.ContainsKey(currencyCode))
+				return SymbolByCurrency[currencyCode];
+			else
+				return null;
+		}
+
+		public static string SymbolForLocale(NSLocale locale)
+		{
+			NSNumberFormatter formatter = new NSNumberFormatter ();
+			formatter.NumberStyle = NSNumberFormatterStyle.Currency;
+			formatter.Locale = locale;
+			return formatter.CurrencySymbol;
+		}
+
+		private static Dictionary<string, string> SymbolByCurrency { get; set; }
 	}
 }
 

@@ -121,7 +121,7 @@ namespace SpendingConsequences.Calculators
 				                              request,
 				                              new OverflowMessage (),
 				                              "Try reducing the interest rate or years",
-				                              this.ImageName,
+				                              this.Image,
 				                              false				                             
 				);
 			} catch (Exception ex) {
@@ -130,7 +130,7 @@ namespace SpendingConsequences.Calculators
 				                              request,
 				                              null,
 				                              "Oops, something went wrong in this calculation",
-				                              this.ImageName,
+				                              this.Image,
 				                              false				                             
 				);
 			}
@@ -140,7 +140,7 @@ namespace SpendingConsequences.Calculators
 			                              result,
 			                              new TabularResult(request.Summary, string.Format ("{0} invested at {1:0.00}%", request.Summary, Rate), this),
 			                              FormatMyCaption (),
-			                              this.ImageName,
+			                              this.Image,
 			                              (result >= this.LowerResultLimit && result <= this.UpperResultLimit));
 		}
 		

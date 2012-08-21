@@ -11,14 +11,14 @@ namespace SpendingConsequences.Calculators
 		                          ConsequenceRequest request,
 		                          object computedValue, 
 		                          string formattedCaption,
-		                          string imageName,
+		                          Image image,
 		                          bool recommended)
 		{
 			this.Calculator = calculator;
 			this.Request = request;
 			this.ComputedValue = computedValue;
 			this.FormattedCaption = formattedCaption;
-			this.ImageName = imageName;
+			this.Image = image;
 			this.Recommended = recommended;
 		}
 		
@@ -27,14 +27,14 @@ namespace SpendingConsequences.Calculators
 		                          object computedValue, 
 		                          TabularResult table,
 		                          string formattedCaption,
-		                          string imageName,
+		                          Image image,
 		                          bool recommended)
 		{
 			this.Calculator = calculator;
 			this.Request = request;
 			this.ComputedValue = computedValue;
 			this.FormattedCaption = formattedCaption;
-			this.ImageName = imageName;
+			this.Image = image;
 			this.Recommended = recommended;
 			this.Table = table;
 			this.Table.MainResult = this;
@@ -51,7 +51,7 @@ namespace SpendingConsequences.Calculators
 		
 		public String FormattedCaption { get; private set; }
 		
-		public string ImageName { get; private set; }
+		public Image Image { get; private set; }
 		
 		/// <summary>
 		/// True if the result is worth including in the result set, false if it should be excluded

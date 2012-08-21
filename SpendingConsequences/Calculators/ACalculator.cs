@@ -208,22 +208,20 @@ namespace SpendingConsequences.Calculators
 			}
 		}
 		private decimal _upperResultLimit = 0m;
-		
-		/// <summary>
-		/// Name of the image/icon representing this calculator, not including extension
-		/// </summary>
-		/// <value>
-		/// The name of the image.
-		/// </value>
-		public String ImageName {
+
+		public virtual Image Image {
 			get {
-				var imageElement = Definition.Element (NS.Profile + "Image");
-				if (imageElement != null && imageElement.Attribute ("Name") != null)
-					return imageElement.Attribute ("Name").Value;
-				else
-					return null;
+				if (_image == null)
+				{
+					var imageElement = Definition.Element (NS.Profile + "Image");
+					if (imageElement != null)
+						_image = new Image(imageElement);
+				}
+
+				return _image;
 			}
 		}
+		private Image _image;
 		
 		/// <summary>
 		/// The comments for this calculator, before any formatting

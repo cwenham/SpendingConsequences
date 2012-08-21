@@ -49,14 +49,14 @@ namespace SpendingConsequences.Calculators
 					                              this.FormatCaption (this.Caption, new Dictionary<string,string> {
 						{"Cost", this.Cost.ToString ()}
 					}
-					), this.ImageName,
+					), this.Image,
 					   (timeUntil.TotalDays >= (double)LowerResultLimit && timeUntil.TotalDays <= (double)UpperResultLimit));
 				} else {
 					return new ConsequenceResult(this,
 					                             request,
 					                             new OverflowMessage(),
 					                             "Try reducing the target price", 
-					                             this.ImageName, false);
+					                             this.Image, false);
 				}				
 			} catch (Exception ex) {
 				Console.WriteLine("{0} thrown when computing Time Until: {1}", ex.GetType().Name, ex.Message);
@@ -64,7 +64,7 @@ namespace SpendingConsequences.Calculators
 				                              request,
 				                              null,
 				                              "Oops, something went wrong in this calculator",
-				                              this.ImageName,
+				                              this.Image,
 				                              false);
 			}
 		}

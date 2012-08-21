@@ -103,7 +103,7 @@ namespace SpendingConsequences.Calculators
 				{"TotalPayment", totalPayment.ToString ()},
 				{"TotalInterest", (totalPayment - maxLoanAmount).ToString()}
 			}
-				), this.ImageName,
+				), this.Image,
 				   (maxLoanAmount >= LowerResultLimit && maxLoanAmount <= UpperResultLimit));				
 			} catch (Exception ex) {
 				Console.WriteLine("{0} thrown when computing spending power: {1}", ex.GetType().Name, ex.Message);
@@ -111,7 +111,7 @@ namespace SpendingConsequences.Calculators
 				                               request,
 				                               null,
 				                               "Oops, something went wrong in this calculator",
-				                              this.ImageName,
+				                              this.Image,
 				                              false);
 			}
 

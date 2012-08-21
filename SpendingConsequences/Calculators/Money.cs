@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Globalization;
 
 using MonoTouch.Foundation;
 
@@ -224,45 +225,21 @@ namespace SpendingConsequences.Calculators
 		public override string ToString ()
 		{
 			NSNumberFormatter formatter = new NSNumberFormatter ();
-			formatter.NumberStyle = NSNumberFormatterStyle.Currency;
+			formatter.NumberStyle = NSNumberFormatterStyle.Decimal;
 			formatter.Locale = NSLocale.CurrentLocale;
-			formatter.CurrencySymbol = SymbolForCurrencyCode(this.CurrencyCode);
-			return formatter.StringFromNumber (new NSNumber((double)(this.Value)));
+			formatter.MaximumFractionDigits = 2;
+
+			string currencySymbol = ExchangeRates.SymbolForCurrencyCode(this.CurrencyCode);
+			if (string.IsNullOrWhiteSpace(currencySymbol))
+				currencySymbol = this.CurrencyCode;
+			string formattedNumber = formatter.StringFromNumber (new NSNumber((double)(this.Value)));
+
+			return String.Format("{0}{1}", currencySymbol, formattedNumber);
 		}
-
-		public static string SymbolForLocale(NSLocale locale)
-		{
-			NSNumberFormatter formatter = new NSNumberFormatter ();
-			formatter.NumberStyle = NSNumberFormatterStyle.Currency;
-			formatter.Locale = locale;
-			return formatter.CurrencySymbol;
-		}
-
-		public static string SymbolForCurrencyCode (string currencyCode)
-		{
-			if (SymbolByCurrency == null) {
-				var locales = from id in NSLocale.AvailableLocaleIdentifiers
-			                    let locale = new NSLocale (id)
-			                    where locale != null && locale.CurrencyCode != null
-								select new {
-									Currency = locale.CurrencyCode,
-									Symbol = SymbolForLocale (locale)
-					};
-
-				SymbolByCurrency = locales.GroupBy(x => x.Currency).Select(x => x.First()).ToDictionary (x => x.Currency, y => y.Symbol);
-			}
-
-			if (SymbolByCurrency.ContainsKey(currencyCode))
-				return SymbolByCurrency[currencyCode];
-			else
-				return null;
-		}
-
-		private static Dictionary<string, string> SymbolByCurrency { get; set; }
 
 		public string CurrencySymbol ()
 		{
-			return SymbolForCurrencyCode(this.CurrencyCode);
+			return ExchangeRates.SymbolForCurrencyCode(this.CurrencyCode);
 		}
 
 		#region Static helper methods

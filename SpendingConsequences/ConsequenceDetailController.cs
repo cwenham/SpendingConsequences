@@ -48,11 +48,6 @@ namespace SpendingConsequences
 
 			UpdateCurrentResult (result);
 			
-			UIImage image = Profile.GetImage (result.ImageName);
-
-			if (image != null)
-				iconView.Image = image;
-			
 			ClearDynamicViews ();
 			
 			float offset = LastLabelYOffset + 5;
@@ -88,12 +83,14 @@ namespace SpendingConsequences
 			
 				this.NavigationItem.Title = result.Request.Summary;
 
-				if (result.ComputedValue is Money)
-					this.calculatedAmount.Text = ExchangeRates.CurrentRates.ConvertToLocal(result.ComputedValue as Money).ToString();
-				else
-					this.calculatedAmount.Text = result.ComputedValue.ToString ();
+				this.calculatedAmount.Text = result.ComputedValue.ToString ();
 
-				this.caption.Text = result.FormattedCaption;				
+				this.caption.Text = result.FormattedCaption;
+
+				UIImage image = Profile.GetImage (result.Image);
+
+				if (image != null && image != iconView.Image)
+					iconView.Image = image;
 			} catch (Exception ex) {
 				Console.WriteLine (string.Format ("{0} thrown when updating current result: {1}", ex.GetType ().Name, ex.Message));
 			}
@@ -117,6 +114,9 @@ namespace SpendingConsequences
 			case ConfigurableValueType.Year:
 				control = new YearControl (val);
 				break;
+			case ConfigurableValueType.Currency:
+				control = new CurrencyControl (val);
+				break;
 			}
 			
 			if (control != null) {
@@ -131,7 +131,9 @@ namespace SpendingConsequences
 		{
 			CurrencySheet = CreateCurrencyActionSheet("Choose Currency");
 			CurrencyPickerController.CurrencyChosen += delegate(object sndr, CurrencyChangedEventArgs ce) {
-				e.ConfigValue.Value = ExchangeRates.CurrentRates.ConvertToGiven(e.ConfigValue.Value as Money, ce.CurrencyCode);
+				if (e.ConfigValue.Value is Money)
+					e.ConfigValue.Value = ExchangeRates.CurrentRates.ConvertToGiven(e.ConfigValue.Value as Money, ce.CurrencyCode);
+				else e.ConfigValue.Value = ce.CurrencyCode;
 				CurrencySheet.DismissWithClickedButtonIndex(0,true);
 				CurrencySheet = null;
 				CurrencyPickerController = null;
@@ -145,7 +147,10 @@ namespace SpendingConsequences
 			CurrencySheet.ShowInView(this.View);
 			CurrencyPickerController.View.Frame = new RectangleF(0,0,320,327);
 			CurrencySheet.Bounds = new RectangleF(0,0,320,634);
-			CurrencyPickerController.SetCurrency(((Money)e.ConfigValue.Value).CurrencyCode);
+			if (e.ConfigValue.ValueType == ConfigurableValueType.Money)
+				CurrencyPickerController.SetCurrency(((Money)e.ConfigValue.Value).CurrencyCode);
+			else if (e.ConfigValue.ValueType == ConfigurableValueType.Currency)
+				CurrencyPickerController.SetCurrency(e.ConfigValue.Value as string);
 		}
 
 		private UIActionSheet CurrencySheet { get; set; }

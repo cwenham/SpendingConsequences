@@ -1,0 +1,82 @@
+
+using System;
+using System.Drawing;
+
+using MonoTouch.Foundation;
+using MonoTouch.UIKit;
+
+using SpendingConsequences.Calculators;
+
+namespace SpendingConsequences
+{
+	public partial class CurrencyControl : UIViewController, IConfigControl
+	{
+		public CurrencyControl (ConfigurableValue val) : base ("CurrencyControl", null)
+		{
+			this.ConfigValue = val;
+			this.ConfigValue.ValueChanged += HandleValueChanged;
+		}
+
+		void HandleValueChanged (object sender, EventArgs e)
+		{
+			this.currencyButton.SetTitle(ConfigValue.Value.ToString(), UIControlState.Normal);
+			this.currencyName.Text = ExchangeRates.GetCurrencyName(ConfigValue.Value.ToString());
+			ValueChanged(this, new ConfigurableValueChanged(this.ConfigValue));
+		}
+
+		public ConfigurableValue ConfigValue { get; private set; }
+
+		public override void DidReceiveMemoryWarning ()
+		{
+			// Releases the view if it doesn't have a superview.
+			base.DidReceiveMemoryWarning ();
+			
+			// Release any cached data, images, etc that aren't in use.
+		}
+		
+		public override void ViewDidLoad ()
+		{
+			base.ViewDidLoad ();
+			
+			this.caption.Text = ConfigValue.Label;
+			this.currencyName.Text = ExchangeRates.GetCurrencyName(ConfigValue.Value.ToString());
+
+			this.currencyButton.SetTitle(ConfigValue.Value.ToString(), UIControlState.Normal);
+
+			UIImage segSelected = UIImage.FromBundle (@"UIArt/mode_sel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
+			UIImage segUnselected = UIImage.FromBundle (@"UIArt/mode_unsel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
+			
+			currencyButton.SetBackgroundImage (segUnselected, UIControlState.Normal);
+			currencyButton.SetBackgroundImage (segSelected, UIControlState.Highlighted);
+			currencyButton.TouchUpInside += delegate {
+				CurrencyButtonClicked(this, new CurrencyChangeEventArgs(this.ConfigValue));
+			};
+		}
+		
+		public override void ViewDidUnload ()
+		{
+			base.ViewDidUnload ();
+			
+			// Clear any references to subviews of the main view in order to
+			// allow the Garbage Collector to collect them sooner.
+			//
+			// e.g. myOutlet.Dispose (); myOutlet = null;
+			
+			ReleaseDesignerOutlets ();
+		}
+		
+		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
+		{
+			// Return true for supported orientations
+			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
+		}
+
+		#region IConfigControl implementation
+		public event EventHandler<ConfigurableValueChanged> ValueChanged = delegate {};
+
+		public event EventHandler<CurrencyChangeEventArgs> CurrencyButtonClicked = delegate {};
+		#endregion
+
+	}
+}
+

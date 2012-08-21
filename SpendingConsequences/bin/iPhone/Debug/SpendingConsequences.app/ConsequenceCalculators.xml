@@ -3,6 +3,14 @@
 		xmlns:h="http://www.w3.org/1999/xhtml"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<Consequences>
+<!--		<CurrencyConversion TriggersOn="OneTime" Caption="in [CurrencyName]" Category="Currencies">
+			<Configurable Name="CurrencyCode" Type="Currency" Label="Currency" Value="GBP"/>
+		</CurrencyConversion> -->
+		
+		<CurrencyConversion TriggersOn="OneTime" Caption="in [CurrencyName]" Category="Currencies">
+			<Configurable Name="CurrencyCode" Type="Currency" Label="Currency" Value="EUR"/>
+		</CurrencyConversion>
+	
 		<Investment TriggersOn="OneTime,Repeating" Caption="by Retirement" TableTemplate="InvestmentTable" Category="Savings">
 			<Image Name="money"/>
 			<Configurable Name="Rate" Type="Percentage" Label="Expected annual yield" Value="5"/>

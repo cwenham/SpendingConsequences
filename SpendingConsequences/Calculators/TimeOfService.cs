@@ -76,7 +76,7 @@ namespace SpendingConsequences.Calculators
 					                             request,
 					                             new OverflowMessage (),
 					                             "Try reducing the spending amount",
-					                             this.ImageName,
+					                             this.Image,
 					                             false);
 				else
 					return new ConsequenceResult (this, 
@@ -86,7 +86,7 @@ namespace SpendingConsequences.Calculators
 														{"Unit", this.UnitForCost.ToString ()},
 														{"Cost", this.Cost.ToString ()}
 													}),
-					                              this.ImageName,
+					                              this.Image,
 					                              (serviceSeconds <= (decimal)TimeSpan.MaxValue.TotalSeconds && serviceUnits >= LowerResultLimit && serviceUnits <= UpperResultLimit));				
 			} catch (Exception ex) {
 				Console.WriteLine ("{0} thrown when calculating Time Of Service: {1}", ex.GetType().Name, ex.Message);
@@ -94,7 +94,7 @@ namespace SpendingConsequences.Calculators
 				                              request,
 				                              null,
 				                              "Oops, something went wrong in this calculator",
-				                              this.ImageName,
+				                              this.Image,
 				                              false);
 			}
 
