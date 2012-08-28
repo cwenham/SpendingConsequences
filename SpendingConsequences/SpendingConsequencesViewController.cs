@@ -20,18 +20,20 @@ namespace SpendingConsequences
 		// The space we live in, used to restore after scrolling up to accomodate an on-screen keyboard
 		RectangleF _contentViewSize = RectangleF.Empty;
 		
-		public SpendingConsequencesViewController (Dictionary<string,Profile> profiles)
+		public SpendingConsequencesViewController (AppProfile profile)
 		{
 			NSBundle.MainBundle.LoadNib ("SpendingConsequencesViewController", this, null);
-			this.Profiles = profiles;
+			this.Profile = profile;
 			this.ViewDidLoad ();
 		}
 		
-		public Dictionary<string,Profile> Profiles { get; private set; }
+		public AppProfile Profile { get; private set; }
 		
 		public ConsequenceTableSource TableSource { get; private set; }
 		
 		public ConsequenceDetailController DetailController { get; private set; }
+
+		public TemplatePickerSheet TemplateSheetController { get; private set; }
 		
 		private UIView DecimalAccessoryView { get; set; }
 		
@@ -77,8 +79,8 @@ namespace SpendingConsequences
 			);
 			this.InitialAmount.InputAccessoryView = DecimalAccessoryView;
 			
-			if (Profiles != null) {
-				TableSource = new ConsequenceTableSource (Profiles, this);
+			if (Profile != null) {
+				TableSource = new ConsequenceTableSource (Profile, this);
 				ConsequenceView.Source = TableSource;
 				TableSource.ResultsReady += delegate {
 					this.ConsequenceView.ReloadData ();	
@@ -97,7 +99,34 @@ namespace SpendingConsequences
 
 			this.NavigationItem.Title = "Back";
 			this.currencySymbol.Text = Money.LocalCurrencySymbol ();
+
+			if (FooterController == null)
+			{
+				FooterController = new ConsequenceFooterViewController();
+				FooterController.AddConsequenceRequested += delegate(object sender, EventArgs e) {
+					if (TemplateSheetController == null)
+					{
+						TemplateSheetController = new TemplatePickerSheet(this.Profile);
+						TemplateSheetController.Cancelled += delegate {
+							TemplateActionSheet.DismissWithClickedButtonIndex(0,true);
+						};
+					}
+					if (TemplateActionSheet == null)
+					{
+						TemplateActionSheet = new UIActionSheet("Add A Calculator");
+						TemplateActionSheet.AddSubview(TemplateSheetController.View);
+					}
+					TemplateActionSheet.ShowInView(this.View);
+					TemplateSheetController.View.Frame = new RectangleF(0,0,320,600);
+					TemplateActionSheet.Bounds = new RectangleF(0,0,320,600);
+				};
+			}
+			this.ConsequenceView.TableFooterView = FooterController.View;
 		}
+
+		private UIActionSheet TemplateActionSheet { get; set; }
+
+		private ConsequenceFooterViewController FooterController { get; set; }
 
 		public override void ViewDidAppear (bool animated)
 		{
@@ -118,38 +147,13 @@ namespace SpendingConsequences
 		/// </summary>
 		private void SetUICosmetics ()
 		{
-			UIImage backgroundImage = UIImage.FromBundle (@"UIArt/input_panel.png");
-			this.panelView.BackgroundColor = UIColor.FromPatternImage (backgroundImage);
-			
-			UIImage segSelected = UIImage.FromBundle (@"UIArt/mode_sel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
-			UIImage segUnselected = UIImage.FromBundle (@"UIArt/mode_unsel.png").CreateResizableImage (new UIEdgeInsets (0,	9, 0, 9));
-			UIImage segSelUnsel = UIImage.FromBundle (@"UIArt/mode_sel_unsel.png");
-			UIImage segUnselSel = UIImage.FromBundle (@"UIArt/mode_unsel_sel.png");
-			UIImage segUnselUnsel = UIImage.FromBundle (@"UIArt/mode_unsel_unsel.png");
-			
-			this.SpendingMode.SetBackgroundImage (segUnselected, UIControlState.Normal, UIBarMetrics.Default);
-			this.SpendingMode.SetBackgroundImage (segSelected, UIControlState.Selected, UIBarMetrics.Default);
-			this.SpendingMode.SetDividerImage (segUnselUnsel, UIControlState.Normal, UIControlState.Normal,	UIBarMetrics.Default);
-			this.SpendingMode.SetDividerImage (segSelUnsel,
-				UIControlState.Selected,
-				UIControlState.Normal,
-				UIBarMetrics.Default
-			);
-			this.SpendingMode.SetDividerImage (
-				segUnselSel,
-				UIControlState.Normal,
-				UIControlState.Selected,
-				UIBarMetrics.Default
-			);
-			
-			UIImage mul2unsel = UIImage.FromBundle (@"UIArt/mul2_unsel.png");
-			UIImage div2unsel = UIImage.FromBundle (@"UIArt/div2_unsel.png");
-			
-			this.mul2.SetBackgroundImage (mul2unsel, UIControlState.Normal);
-			this.div2.SetBackgroundImage (div2unsel, UIControlState.Normal);
-			
-			UIImage resultBackground = UIImage.FromBundle (@"UIArt/result_panel.png");
-			this.View.BackgroundColor = UIColor.FromPatternImage (resultBackground);
+			ArtRepository.StyleView("input", this.panelView);
+			ArtRepository.StyleView("result", this.View);
+
+			ArtRepository.StyleSegmentedControl("mode", this.SpendingMode);
+
+			ArtRepository.StyleButton("mul2", this.mul2);
+			ArtRepository.StyleButton("div2", this.div2);
 		}
 
 		void Handle_Div2_TouchUpInside (object sender, EventArgs e)
@@ -237,11 +241,7 @@ namespace SpendingConsequences
 			btnDone.SetTitleColor (UIColor.Black, UIControlState.Normal);
 			btnDone.SetTitle ("Done", UIControlState.Normal);
 
-			UIImage segSelected = UIImage.FromBundle (@"UIArt/mode_sel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
-			UIImage segUnselected = UIImage.FromBundle (@"UIArt/mode_unsel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
-			
-			btnDone.SetBackgroundImage (segUnselected, UIControlState.Normal);
-			btnDone.SetBackgroundImage (segSelected, UIControlState.Highlighted);
+			ArtRepository.StyleButton("mode", btnDone);
 			
 			btnDone.TouchUpInside += doneButtonHandler;
 			
@@ -266,7 +266,7 @@ namespace SpendingConsequences
 		public void DisplayConsequenceDetails (ConsequenceResult result)
 		{
 			if (this.DetailController == null) {
-				DetailController = new ConsequenceDetailController (Profiles);
+				DetailController = new ConsequenceDetailController (Profile);
 				DetailController.ResultChanged += HandleResultChanged;
 			}
 			

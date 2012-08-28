@@ -17,14 +17,14 @@ namespace SpendingConsequences
 		
 		public SpendingConsequencesViewController ParentController { get; private set; }
 		
-		public Dictionary<string,Profile> Profiles { get; private set; }
+		public AppProfile Profile { get; private set; }
 		
 		public ConsequenceResult[] CurrentResults { get; private set; }
 		
-		public ConsequenceTableSource (Dictionary<string,Profile> profiles, SpendingConsequencesViewController parent)
+		public ConsequenceTableSource (AppProfile profile, SpendingConsequencesViewController parent)
 		{
 			this.ParentController = parent;
-			this.Profiles = profiles;
+			this.Profile = profile;
 			
 			if (NSUserDefaults.StandardUserDefaults ["Gender"] != null)
 				Enum.TryParse (NSUserDefaults.StandardUserDefaults ["Gender"].ToString (), true, out UserGender);
@@ -59,8 +59,7 @@ namespace SpendingConsequences
 			BackgroundWorker myWorker = sender as BackgroundWorker;
 			ConsequenceRequest request = e.Argument as ConsequenceRequest;
 				
-			ConsequenceResult[] results = (from p in Profiles.Values
-				    from c in p.Calculators
+			ConsequenceResult[] results = (from c in Profile.AllCalculators
 			        where c.WillTriggerOn (request.TriggerMode)
 				&& (c.ForGender == Gender.Unspecified || c.ForGender == UserGender)
 				&& (c.Country == null || c.Country == NSLocale.CurrentLocale.CountryCode)
@@ -125,7 +124,7 @@ namespace SpendingConsequences
 			}
 		
 			if (result != null) {
-				UIImage image = Profile.GetImage (result.Image);
+				UIImage image = ArtRepository.GetImage (result.Image);
 			
 				if (image != null)
 					cell.ImageView.Image = image;

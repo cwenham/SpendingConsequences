@@ -43,11 +43,8 @@ namespace SpendingConsequences
 
 			this.currencyButton.SetTitle(ConfigValue.Value.ToString(), UIControlState.Normal);
 
-			UIImage segSelected = UIImage.FromBundle (@"UIArt/mode_sel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
-			UIImage segUnselected = UIImage.FromBundle (@"UIArt/mode_unsel.png").CreateResizableImage (new UIEdgeInsets (0, 9, 0, 9));
-			
-			currencyButton.SetBackgroundImage (segUnselected, UIControlState.Normal);
-			currencyButton.SetBackgroundImage (segSelected, UIControlState.Highlighted);
+			ArtRepository.StyleButton("mode", currencyButton);
+
 			currencyButton.TouchUpInside += delegate {
 				CurrencyButtonClicked(this, new CurrencyChangeEventArgs(this.ConfigValue));
 			};

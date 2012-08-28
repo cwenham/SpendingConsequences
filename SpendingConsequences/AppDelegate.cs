@@ -28,7 +28,7 @@ namespace SpendingConsequences
 		SpendingConsequencesViewController viewController;
 		UINavigationController navController;
 		
-		public Dictionary<string,Profile> Profiles { get; private set; }
+		public AppProfile Profile { get; private set; }
 
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
@@ -39,20 +39,14 @@ namespace SpendingConsequences
 		//
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
-			Profiles = new Dictionary<string, Profile>();
-
-			// The main profile is never changed by the app and will be replaced on upgrades
-			var mainProfile = Profile.Load ("ConsequenceCalculators.xml");
-
-			if (mainProfile != null)
-				Profiles.Add("main", mainProfile);
+			Profile = new AppProfile("ConsequenceCalculators.xml");
 
 			LoadUserProfiles();
 			UpdateExchangeRates();
 
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
-			viewController = new SpendingConsequencesViewController (Profiles);
+			viewController = new SpendingConsequencesViewController (Profile);
 			navController = new UINavigationController (viewController);
 			navController.SetNavigationBarHidden (true, false);
 			window.RootViewController = navController;
@@ -68,25 +62,21 @@ namespace SpendingConsequences
 		}
 
 		private void LoadUserProfiles () {
-			// Check Documents/Inbox for any files being given to us, move to Library
-			string inboxFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Inbox");
-			string libFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library");
-
-			if (Directory.Exists(inboxFolder))
+			if (Directory.Exists(SubProfile.InboxFolder))
 				foreach (var file in Directory.GetFiles("Documents/Inbox", "*.sbprofile"))
 					try {
-					File.Move(file, Path.Combine(libFolder, Path.GetFileName(file)));					
+					File.Move(file, Path.Combine(SubProfile.InboxFolder, Path.GetFileName(file)));					
 					} catch (Exception ex) {
 					Console.WriteLine("{0} thrown when moving file: {1}", ex.GetType().Name, ex.Message);
 					}
 
 			// Load any user profiles
-			if (Directory.Exists(libFolder))
-				foreach (var file in Directory.GetFiles (libFolder, "*.sbprofile"))
+			if (Directory.Exists(SubProfile.LibraryFolder))
+				foreach (var file in Directory.GetFiles (SubProfile.LibraryFolder, "*.sbprofile"))
 					try {
-						Profile userProfile = Profile.Load (file);
+						SubProfile userProfile = SubProfile.Load (file);
 						if (userProfile != null)
-							Profiles.Add (Path.GetFileName (file), userProfile);
+							Profile.AddSubProfile (Path.GetFileName (file), userProfile);
 					} catch (Exception ex) {
 					Console.WriteLine("{0} thrown when loading profile at {1}: {2}", ex.GetType().Name, file, ex.Message);
 					}
@@ -97,14 +87,13 @@ namespace SpendingConsequences
 		public void UpdateExchangeRates ()
 		{
 			ExchangeRates cachedRates = null;
-			string libFolder = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.MyDocuments), "..", "Library");
-			string cachePath = Path.Combine (libFolder, ExchangeRateCacheFilename);
+			string cachePath = Path.Combine (SubProfile.LibraryFolder, ExchangeRateCacheFilename);
 			if (File.Exists (cachePath)) {
 				cachedRates = ExchangeRates.FromOXLatestJson (cachePath);
+				ExchangeRates.CurrentRates = cachedRates;
 				if (cachedRates.OldestQuote > DateTime.Now.AddHours(-24))
 				{
 					// Cached rates are less than a day old, keep using them
-					ExchangeRates.CurrentRates = cachedRates;
 					return;
 				}
 			}

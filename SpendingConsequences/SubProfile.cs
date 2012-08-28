@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+using System.IO;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -14,15 +15,54 @@ namespace SpendingConsequences
 	/// <summary>
 	/// Represent an XML document that configures the application's behavior
 	/// </summary>
-	public class Profile
+	public class SubProfile
 	{
-		public static Profile Load (string uri)
+		public static String LibraryFolder
+		{
+			get {
+				if (String.IsNullOrWhiteSpace(_libraryFolder))
+					_libraryFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library");
+
+				return _libraryFolder;
+			}
+		}
+		private static String _libraryFolder;
+
+		public static String InboxFolder
+		{
+			get {
+				if (String.IsNullOrWhiteSpace(_inboxFolder))
+					_inboxFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Inbox");
+
+				return _inboxFolder;
+			}
+		}
+		private static String _inboxFolder;
+
+		/// <summary>
+		/// Create a new empty profile and save it to the LibraryFolder
+		/// </summary>
+		/// <param name='name'>
+		/// Name of profile. Will be used to name the file
+		/// </param>
+		public static SubProfile Create (String name)
+		{
+			XDocument definition = new XDocument(new XElement(NS.Profile + "Calculators"));
+			definition.Root.Add(new XElement(NS.Profile + "Consequences"));
+
+			String filePath = Path.Combine(LibraryFolder,String.Format("{0}.sbprofile", name));
+			definition.Save(filePath);
+
+			return SubProfile.Load(filePath);
+		}
+
+		public static SubProfile Load (String uri)
 		{
 			XDocument definition = XDocument.Load (uri);
-			return new Profile (definition);
+			return new SubProfile (definition);
 		}
 		
-		private Profile (XDocument profileDoc)
+		private SubProfile (XDocument profileDoc)
 		{
 			this.Definition = profileDoc;
 			this.Definition.Changed += delegate(object sender, XObjectChangeEventArgs e) {
@@ -47,42 +87,11 @@ namespace SpendingConsequences
 		
 		public XDocument Definition { get; private set; }
 		
-		public static UIImage GetImage (Image image)
-		{
-			if (ImageCache == null)
-				ImageCache = new NSCache ();
-			
-			NSObject key = NSObject.FromObject (image.Name);
-			UIImage img = ImageCache.ObjectForKey (key) as UIImage;
-			if (img == null) {
-				if (NSFileManager.DefaultManager.FileExists (image.ImagePath)) {
-					img = UIImage.FromBundle (image.ImagePath);
-					ImageCache.SetObjectforKey (img, key);	
-				}
-				else
-					Console.WriteLine("Couldn't find image for {0}", image.ImagePath);
-			}
-			return img;
-		}
-		
-		/// <summary>
-		/// Cache of artwork
-		/// </summary>
-		private static NSCache ImageCache { get; set; }
-		
 		public List<ACalculator> Calculators { get; private set; }
 		
-		public XElement GetResultTemplate (string name)
-		{
-			if (ResultTemplates.ContainsKey (name))
-				return ResultTemplates [name];
-			else
-				return null;
-		}
+		public Dictionary<String, XElement> ResultTemplates { get; private set; }
 		
-		private Dictionary<string, XElement> ResultTemplates { get; set; }
-		
-		public Dictionary<string, XElement> ConsequenceTemplates { get; private set; }
+		public Dictionary<String, XElement> ConsequenceTemplates { get; private set; }
 	}
 }
 

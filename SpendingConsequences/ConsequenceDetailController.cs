@@ -15,15 +15,15 @@ namespace SpendingConsequences
 	{	
 		private const int DYNAMIC_VIEW_TAG = 1024;
 		
-		public ConsequenceDetailController (Dictionary<string,Profile> profiles)
+		public ConsequenceDetailController (AppProfile profile)
 		{
 			NSBundle.MainBundle.LoadNib ("ConsequenceDetailController", this, null);
-			this.Profiles = profiles;
+			this.Profile = profile;
 			this.ViewDidLoad();
 			LastLabelYOffset = this.caption.Frame.Y + this.caption.Frame.Height;
 		}
 		
-		private Dictionary<string,Profile> Profiles { get; set; }
+		private AppProfile Profile { get; set; }
 		
 		// Y + Height of the last label in our XIB, below which we can add dynamic controls
 		private float LastLabelYOffset { get; set; }
@@ -87,7 +87,7 @@ namespace SpendingConsequences
 
 				this.caption.Text = result.FormattedCaption;
 
-				UIImage image = Profile.GetImage (result.Image);
+				UIImage image = ArtRepository.GetImage (result.Image);
 
 				if (image != null && image != iconView.Image)
 					iconView.Image = image;
@@ -193,12 +193,9 @@ namespace SpendingConsequences
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			
-			UIImage detailBackground = UIImage.FromBundle (@"UIArt/detail_background.png");
-			this.View.BackgroundColor = UIColor.FromPatternImage (detailBackground);
-			
-			UIImage resultBackground = UIImage.FromBundle (@"UIArt/detail_result_panel.png");
-			this.resultSubview.BackgroundColor = UIColor.FromPatternImage (resultBackground);
+
+			ArtRepository.StyleView("detail", this.View);
+			ArtRepository.StyleView("detail_result", this.resultSubview);
 		
 			this.scrollView.Scrolled += delegate(object sender, EventArgs e) {
 				// Make the subview with the results stay fixed while content scrolls underneath it
@@ -219,7 +216,7 @@ namespace SpendingConsequences
 				&& CurrentResult.Table != null
 				&& (this.PresentedViewController == null || this.PresentedViewController == this)) {
 					if (GridView == null)
-						GridView = new XsltWebView (Profiles);
+						GridView = new XsltWebView (Profile);
 					GridView.SetResult (this.CurrentResult);
 					this.PresentViewController (GridView, false, null);
 			}

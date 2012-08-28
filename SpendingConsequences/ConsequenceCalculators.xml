@@ -4,11 +4,11 @@
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<Consequences>
 		<CurrencyConversion TriggersOn="OneTime" Caption="in [CurrencyName]" Category="Currencies">
-			<Configurable Name="CurrencyCode" Type="Currency" Label="Currency" Value="GBP"/>
+			<Configurable ID="CC1" Name="CurrencyCode" Type="Currency" Label="Currency" Value="GBP"/>
 		</CurrencyConversion> 
 		
 		<CurrencyConversion TriggersOn="OneTime" Caption="in [CurrencyName]" Category="Currencies">
-			<Configurable Name="CurrencyCode" Type="Currency" Label="Currency" Value="EUR"/>
+			<Configurable ID="CC2" Name="CurrencyCode" Type="Currency" Label="Currency" Value="EUR"/>
 		</CurrencyConversion>
 	
 		<Investment TriggersOn="OneTime,Repeating" Caption="by Retirement" TableTemplate="InvestmentTable" Category="Savings">
@@ -525,6 +525,12 @@
 				<Configurable Name="Compounding" Type="String" Label="Compounded" Value="Monthly"/>
 				<Commentary>Think how much interest you'll avoid if you pay a little bit more each month.</Commentary>
 			</LoanPayoff>
+		</Template>
+		
+		<Template Name="Currency Converter">
+			<CurrencyConversion TriggersOn="OneTime" Caption="in [CurrencyName]" Category="Currencies">
+				<Configurable ID="CC1" Name="CurrencyCode" Type="Currency" Label="Currency" Value="EUR"/>
+			</CurrencyConversion> 
 		</Template>
 		
 		<!-- We may put this back in later, but the user might confuse it with "loan payoff", which is more likely what they'll want anyway -->

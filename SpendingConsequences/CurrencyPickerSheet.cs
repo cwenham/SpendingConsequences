@@ -28,7 +28,10 @@ namespace SpendingConsequences
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			
+
+			ArtRepository.StyleButton("embossed", this.useButton);
+			ArtRepository.StyleButton("embossed", this.cancelButton);
+
 			Model = new CurrencyPickerModel();
 			Model.CurrencyChanged += delegate(object sender, CurrencyChangedEventArgs e) {
 				this.CurrencyChanged(this, e);

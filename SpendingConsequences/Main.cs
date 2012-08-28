@@ -22,7 +22,7 @@ namespace SpendingConsequences
 				Console.WriteLine (string.Format ("{0} thrown: {1}", ex.GetType ().Name, ex.Message));
 				//TestFlight.Log("{0} caught in Main: {1}", ex.GetType().Name, ex.Message);
 			}
-
 		}
 	}
+
 }

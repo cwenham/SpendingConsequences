@@ -142,7 +142,6 @@
       <DependentUpon>XsltWebView.cs</DependentUpon>
     </Compile>
     <Compile Include="NS.cs" />
-    <Compile Include="Profile.cs" />
     <Compile Include="Calculators\Financials.cs" />
     <Compile Include="XsltWebView.cs" />
     <Compile Include="Calculators\ExchangeRates.cs" />
@@ -157,6 +156,19 @@
     <Compile Include="ConfigUI\CurrencyControl.designer.cs">
       <DependentUpon>CurrencyControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConsequenceFooterViewController.cs" />
+    <Compile Include="ConsequenceFooterViewController.designer.cs">
+      <DependentUpon>ConsequenceFooterViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TemplatePickerSheet.cs" />
+    <Compile Include="TemplatePickerSheet.designer.cs">
+      <DependentUpon>TemplatePickerSheet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TemplatePickerModel.cs" />
+    <Compile Include="Calculators\Percentage.cs" />
+    <Compile Include="AppProfile.cs" />
+    <Compile Include="SubProfile.cs" />
+    <Compile Include="ArtRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="SpendingConsequencesViewController.xib" />
@@ -168,6 +180,8 @@
     <InterfaceDefinition Include="XsltWebView.xib" />
     <InterfaceDefinition Include="CurrencyPickerSheet.xib" />
     <InterfaceDefinition Include="ConfigUI\CurrencyControl.xib" />
+    <InterfaceDefinition Include="ConsequenceFooterViewController.xib" />
+    <InterfaceDefinition Include="TemplatePickerSheet.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -737,6 +751,7 @@
     <Content Include="CurrencyFlags\ZWL.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="UIArt\embossed_unsel%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />
