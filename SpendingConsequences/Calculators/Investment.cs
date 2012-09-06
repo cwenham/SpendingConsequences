@@ -64,7 +64,7 @@ namespace SpendingConsequences.Calculators
 			// within a few milliseconds. EG: A savings account may compound monthly but calculate interest daily, but
 			// that would require more CPU time than we can afford.
 			
-			if (request.InitialAmount.Value == 0m)
+			if (request.InitialAmount == 0m)
 				return null;
 			
 			int annualCompoundings = CompoundingsPerYear (Compounding);

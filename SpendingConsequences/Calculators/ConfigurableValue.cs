@@ -23,6 +23,12 @@ namespace SpendingConsequences.Calculators
 			get {
 				return Definition.Attribute ("Label") != null ? Definition.Attribute ("Label").Value : "Label";
 			}
+			set {
+				if (Definition.Attribute("Label") != null)
+					Definition.Attribute("Label").Value = value;
+				else
+					Definition.Add(new XAttribute("Label", value));
+			}
 		}
 		
 		public String ID {

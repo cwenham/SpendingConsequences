@@ -63,6 +63,12 @@ namespace SpendingConsequences.Calculators
 			get {
 				return AttributeOrNull("Caption");
 			}
+			set {
+				if (Definition.Attribute("Caption") != null)
+					Definition.Attribute("Caption").Value = value;
+				else
+					Definition.Add (new XAttribute("Caption", value));
+			}
 		}
 		
 		public TriggerType[] TriggersOn {

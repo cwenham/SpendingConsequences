@@ -90,51 +90,80 @@ namespace SpendingConsequences.Calculators
 
 		public static bool operator <=(decimal value, Money amount)
 		{
-			return value <= amount.Value;
+			if ((object)amount != null)
+				return value <= amount.Value;
+			else
+				return false;
 		}
 
 		public static bool operator <=(Money amount, decimal value)
 		{
-			return amount.Value <= value;
+			if ((object)amount != null)
+				return amount.Value <= value;
+			else
+				return false;
 		}
 
 		public static bool operator <=(Money amount, int value)
 		{
-			return amount.Value <= value;
+			if ((object)amount != null)
+				return amount.Value <= value;
+			else
+				return false;
 		}
 
 		public static bool operator >=(decimal value, Money amount)
 		{
-			return value >= amount.Value;
+			if ((object)amount != null)
+				return value >= amount.Value;
+			else
+				return false;
 		}
 
 		public static bool operator >=(Money amount, int value)
 		{
-			return amount.Value >= value;
+			if ((object)amount != null)
+				return amount.Value >= value;
+			else
+				return false;
 		}
 
 		public static bool operator >=(Money amount, decimal value)
 		{
-			return amount.Value >= value;
+			if ((object)amount != null)
+				return amount.Value >= value;
+			else
+				return false;
 		}
 
 		public static bool operator >(decimal value, Money amount)
 		{
-			return value > amount.Value;
+			if ((object)amount != null)
+				return value > amount.Value;
+			else
+				return false;
 		}
 
 		public static bool operator >(Money amount, decimal value)
 		{
-			return amount.Value > value;
+			if ((object)amount != null)
+				return amount.Value > value;
+			else return false;
 		}
 
 		public static bool operator >(int value, Money amount)
 		{
-			return value > amount.Value;
+			if ((object)amount != null)
+				return value > amount.Value;
+			else
+				return false;
 		}
 
 		public static bool operator >(Money amount1, Money amount2)
 		{
+			if ((object)amount1 == null || (object)amount2 == null)
+				return false;
+
 			if (amount1.CurrencyCode != amount2.CurrencyCode)
 				throw new InvalidOperationException("Cannot compare amounts of different currencies");
 
@@ -143,21 +172,33 @@ namespace SpendingConsequences.Calculators
 
 		public static bool operator <(decimal value, Money amount)
 		{
-			return value < amount.Value;
+			if ((object)amount != null)
+				return value < amount.Value;
+			else
+				return false;
 		}
 
 		public static bool operator <(Money amount, decimal value)
 		{
-			return amount.Value < value;
+			if ((object)amount != null)
+				return amount.Value < value;
+			else
+				return false;
 		}
 
 		public static bool operator <(int value, Money amount)
 		{
-			return value < amount.Value;
+			if ((object)amount != null)
+				return value < amount.Value;
+			else
+				return false;
 		}
 
 		public static bool operator <(Money amount1, Money amount2)
 		{
+			if ((object)amount1 == null || (object)amount2 == null)
+				return false;
+
 			if (amount1.CurrencyCode != amount2.CurrencyCode)
 				throw new InvalidOperationException("Cannot compare amounts of different currencies");
 
@@ -166,26 +207,41 @@ namespace SpendingConsequences.Calculators
 
 		public static bool operator ==(decimal value, Money amount)
 		{
-			return value == amount.Value;
+			if ((object)amount != null)
+				return value == amount.Value;
+			else
+				return false;
 		}
 
 		public static bool operator ==(int value, Money amount)
 		{
-			return value == amount.Value;
+			if ((object)amount != null)
+				return value == amount.Value;
+			else
+				return false;
 		}
 
 		public static bool operator ==(Money amount, int value)
 		{
-			return amount.Value == value;
+			if ((object)amount != null)
+				return amount.Value == value;
+			else
+				return false;
 		}
 
 		public static bool operator ==(Money amount1, Money amount2)
 		{
-			return amount1.Equals(amount2);
+			if ((object)amount1 != null)
+				return amount1.Equals(amount2);
+			else
+				return (object)amount2 == null;
 		}
 
 		public override bool Equals (object obj)
 		{
+			if (obj == null)
+				return false;
+
 			if (obj is Money)
 				return ((Money)obj).Value == this.Value && ((Money)obj).CurrencyCode == this.CurrencyCode;
 
@@ -194,21 +250,34 @@ namespace SpendingConsequences.Calculators
 
 		public static bool operator !=(int value, Money amount)
 		{
-			return value != amount.Value;
+			if ((object)amount != null)
+				return value != amount.Value;
+			else
+				return true;
 		}
 
 		public static bool operator !=(decimal value, Money amount)
 		{
-			return value != amount.Value;
+			if ((object)amount != null)
+				return value != amount.Value;
+			else
+				return true;
 		}
 
 		public static bool operator !=(Money amount, int value)
 		{
-			return amount.Value != value;
+			if ((object)amount != null)
+				return amount.Value != value;
+			else return true;
 		}
 
 		public static bool operator !=(Money amount1, Money amount2)
 		{
+			if ((object)amount1 == null && (object)amount2 == null)
+				return false;
+			if ((object)amount1 == null || (object)amount2 == null)
+				return true;
+
 			return !amount1.Equals(amount2);
 		}
 
