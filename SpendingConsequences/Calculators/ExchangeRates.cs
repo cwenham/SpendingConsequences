@@ -169,8 +169,8 @@ namespace SpendingConsequences.Calculators
 					let region = TryRegionInfo (country)
 					where region != null && region.ISOCurrencySymbol != null
 				    select new {
-					   ISO = region.CurrencySymbol,
-					   Name = region.ISOCurrencySymbol
+					   ISO = region.ISOCurrencySymbol,
+					   Name = region.CurrencyEnglishName
 				});
 				CurrencyNames = regions.GroupBy (x => x.ISO)
 				  .Select (x => x.First ())
@@ -188,6 +188,7 @@ namespace SpendingConsequences.Calculators
 			try {
 				return new RegionInfo(countryCode);
 			} catch (Exception ex) {
+				Console.WriteLine("{0} thrown fetching RegionInfo for {1}: {2}", ex.GetType().Name, countryCode, ex.Message);
 				return null;
 			}
 		}
