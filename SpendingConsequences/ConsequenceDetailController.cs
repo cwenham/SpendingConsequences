@@ -197,6 +197,9 @@ namespace SpendingConsequences
 				return _isEditing;
 			}
 			set {
+				if (value == _isEditing)
+					return;
+
 				if (value == true)
 				{
 					BeginEditing();
@@ -212,8 +215,7 @@ namespace SpendingConsequences
 
 		private void BeginEditing()
 		{
-			if (EditButton != null)
-				EditButton.Title = "Done";
+			EditButton.Title = "Done";
 
 			caption.Hidden = true;
 			editCaption.Hidden = false;
@@ -224,14 +226,16 @@ namespace SpendingConsequences
 
 		private void EndEditing()
 		{
-			if (EditButton != null)
-				EditButton.Title = "Edit";
+			EditButton.Title = "Edit";
 
 			caption.Hidden = false;
 			editCaption.Hidden = true;
 
 			foreach (IConfigControl configger in CurrentConfiggers.Where(x => x != null))
 				configger.EndEditing();
+
+			if (editCaption != null)
+				editCaption.ResignFirstResponder();
 		}
 
 		private UIBarButtonItem EditButton { get; set; }
@@ -248,7 +252,6 @@ namespace SpendingConsequences
 					IsEditing = false;
 				else
 					IsEditing = true;
-				Console.WriteLine("Edit button tapped");
 			});
 			this.NavigationItem.SetRightBarButtonItem(EditButton,false);
 
@@ -304,6 +307,8 @@ namespace SpendingConsequences
 		
 		public override void ViewWillDisappear (bool animated)
 		{
+			IsEditing = false;
+
 			NavigationController.SetNavigationBarHidden (true, true);
 			UIDevice.CurrentDevice.EndGeneratingDeviceOrientationNotifications ();
 			base.ViewWillDisappear (animated);

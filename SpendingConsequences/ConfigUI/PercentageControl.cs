@@ -105,6 +105,7 @@ namespace SpendingConsequences
 		{
 			this.caption.Hidden = false;
 			this.editCaption.Hidden = true;
+			this.editCaption.ResignFirstResponder();
 			this.ConfigValue.Label = this.editCaption.Text;
 			ConfigurationChanged(this, new ConfigurationChangeEventArgs(this.ConfigValue));
 		}

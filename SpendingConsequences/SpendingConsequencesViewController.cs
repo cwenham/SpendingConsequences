@@ -83,8 +83,7 @@ namespace SpendingConsequences
 				this.View.Frame = this._contentViewSize;
 				UIView.CommitAnimations ();
 			});
-			
-			// 
+
 			this.InitialAmount.KeyboardType = UIKeyboardType.DecimalPad;
 			DecimalAccessoryView = CreateDecimalPadAccessoryView (delegate(object sender, EventArgs e) {
 				FinishedEditingInitialAmount ();
