@@ -76,7 +76,7 @@ namespace SpendingConsequences
 					try {
 						SubProfile userProfile = SubProfile.Load (file);
 						if (userProfile != null)
-							Profile.AddSubProfile (Path.GetFileName (file), userProfile);
+							Profile.AddSubProfile (Path.GetFileNameWithoutExtension (file), userProfile);
 					} catch (Exception ex) {
 					Console.WriteLine("{0} thrown when loading profile at {1}: {2}", ex.GetType().Name, file, ex.Message);
 					}

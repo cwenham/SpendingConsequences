@@ -110,6 +110,10 @@ namespace SpendingConsequences
 						TemplateSheetController.Cancelled += delegate {
 							TemplateActionSheet.DismissWithClickedButtonIndex(0,true);
 						};
+						TemplateSheetController.TemplateChosen += delegate(object _sender, TemplateChosenEventArgs _e) {
+							TemplateActionSheet.DismissWithClickedButtonIndex(0,true);
+							CreateNewConsequence(this.CurrentMode, _e.Template);
+						};
 					}
 					if (TemplateActionSheet == null)
 					{
@@ -181,6 +185,33 @@ namespace SpendingConsequences
 				CurrentAmount = 1.00m;
 			
 			RefreshCalculators();		
+		}
+
+		private void CreateNewConsequence(TriggerType mode, XElement template)
+		{
+			if (template == null)
+				return; 
+
+			SubProfile userProfile = Profile.GetSubProfile("user");
+			if (userProfile == null)
+			{
+				userProfile = SubProfile.Create("user");
+				Profile.AddSubProfile("user", userProfile);
+			}
+
+			XElement unwrappedTemplate = template.Elements().Where(x => x.Name.Namespace == NS.Profile).FirstOrDefault();
+			if (unwrappedTemplate != null)
+			{
+				ACalculator calculator = userProfile.AddConsequenceFromDefinition(unwrappedTemplate);
+
+				// Create a prototype request in order to load the Details View in edit mode
+				Money prototypeAmount = this.CurrentAmount;
+				if (prototypeAmount == null)
+					prototypeAmount = 100;
+				ConsequenceRequest prototypeRequest = new ConsequenceRequest(prototypeAmount, this.CurrentMode);
+				ConsequenceResult prototypeResult = calculator.Calculate(prototypeRequest);
+				DisplayConsequenceDetails(prototypeResult);
+			}
 		}
 		
 		private Money CurrentAmount {
@@ -259,7 +290,7 @@ namespace SpendingConsequences
 		
 		private void RefreshCalculators ()
 		{
-			if (TableSource != null && CurrentAmount > 0m)
+			if (TableSource != null && CurrentAmount != null && CurrentAmount > 0)
 				TableSource.ComputeConsequences (new ConsequenceRequest (CurrentAmount, CurrentMode));
 		}
 		

@@ -62,19 +62,21 @@ namespace SpendingConsequences
 			if (result.Calculator.SupportElements != null && result.Calculator.SupportElements.ContainsKey ("Commentary")) {
 				Commentary commentaryElement = result.Calculator.SupportElements ["Commentary"] as Commentary;
 				NSAttributedString commentaryFormatted = commentaryElement.ToAttributedString (UIFont.FromName ("Baskerville", 17.0f));
-				
-				CoreTextView commentView = new CoreTextView ();
-				commentView.Tag = DYNAMIC_VIEW_TAG;
-				commentView.Text = commentaryFormatted;
-				SizeF suggestedSize = commentView.SuggestedFrameSize (new SizeF (this.scrollView.Frame.Width - 12, 10000.0f));
-				commentView.Frame = new RectangleF (5, offset, this.scrollView.Frame.Width - 12, suggestedSize.Height);
+
+				CommentView = new CoreTextView ();
+				CommentView.Tag = DYNAMIC_VIEW_TAG;
+				CommentView.Text = commentaryFormatted;
+				SizeF suggestedSize = CommentView.SuggestedFrameSize (new SizeF (this.scrollView.Frame.Width - 12, 10000.0f));
+				CommentView.Frame = new RectangleF (5, offset, this.scrollView.Frame.Width - 12, suggestedSize.Height);
 				offset += suggestedSize.Height + 5;
-				this.scrollView.AddSubview (commentView);
+				this.scrollView.AddSubview (CommentView);
 			}
 			
 			this.scrollView.ContentSize = new SizeF (this.scrollView.Frame.Width, offset);
 			this.scrollView.BringSubviewToFront (this.resultSubview);
 		}
+
+		private CoreTextView CommentView { get; set; }
 		
 		private void UpdateCurrentResult (ConsequenceResult result)
 		{
@@ -86,6 +88,7 @@ namespace SpendingConsequences
 				this.calculatedAmount.Text = result.ComputedValue.ToString ();
 
 				this.caption.Text = result.FormattedCaption;
+				this.editCaption.Text = result.Calculator.Caption;
 
 				UIImage image = ArtRepository.GetImage (result.Image);
 
@@ -94,7 +97,6 @@ namespace SpendingConsequences
 			} catch (Exception ex) {
 				Console.WriteLine (string.Format ("{0} thrown when updating current result: {1}", ex.GetType ().Name, ex.Message));
 			}
-
 		}
 		
 		private UIViewController GetConfigurator (ConfigurableValue val)
@@ -189,6 +191,50 @@ namespace SpendingConsequences
 			if (this.GridView != null && this.PresentedViewController == this)
 				this.GridView = null;	
 		}
+
+		private Boolean IsEditing { 
+			get {
+				return _isEditing;
+			}
+			set {
+				if (value == true)
+				{
+					BeginEditing();
+				}
+				else
+				{
+					EndEditing();
+				}
+				_isEditing = value;
+			}
+		}
+		private Boolean _isEditing = false;
+
+		private void BeginEditing()
+		{
+			if (EditButton != null)
+				EditButton.Title = "Done";
+
+			caption.Hidden = true;
+			editCaption.Hidden = false;
+
+			foreach (IConfigControl configger in CurrentConfiggers.Where(x => x != null))
+				configger.BeginEditing();
+		}
+
+		private void EndEditing()
+		{
+			if (EditButton != null)
+				EditButton.Title = "Edit";
+
+			caption.Hidden = false;
+			editCaption.Hidden = true;
+
+			foreach (IConfigControl configger in CurrentConfiggers.Where(x => x != null))
+				configger.EndEditing();
+		}
+
+		private UIBarButtonItem EditButton { get; set; }
 		
 		public override void ViewDidLoad ()
 		{
@@ -196,6 +242,23 @@ namespace SpendingConsequences
 
 			ArtRepository.StyleView("detail", this.View);
 			ArtRepository.StyleView("detail_result", this.resultSubview);
+
+			EditButton = new UIBarButtonItem("Edit", UIBarButtonItemStyle.Bordered, delegate (object sender, EventArgs e) {
+				if (IsEditing)
+					IsEditing = false;
+				else
+					IsEditing = true;
+				Console.WriteLine("Edit button tapped");
+			});
+			this.NavigationItem.SetRightBarButtonItem(EditButton,false);
+
+			this.editCaption.ShouldReturn += (textField) => {
+				textField.ResignFirstResponder();
+				this.caption.Text = textField.Text;
+				if (CurrentResult != null)
+					CurrentResult.Calculator.Caption = textField.Text;
+				return true;
+			};
 		
 			this.scrollView.Scrolled += delegate(object sender, EventArgs e) {
 				// Make the subview with the results stay fixed while content scrolls underneath it
@@ -265,6 +328,7 @@ namespace SpendingConsequences
 			//
 			// e.g. myOutlet.Dispose (); myOutlet = null;
 			ClearDynamicViews();
+			CommentView = null;
 			
 			ReleaseDesignerOutlets ();
 		}

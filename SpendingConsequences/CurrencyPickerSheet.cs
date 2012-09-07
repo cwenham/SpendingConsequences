@@ -29,6 +29,7 @@ namespace SpendingConsequences
 		{
 			base.ViewDidLoad ();
 
+			ArtRepository.StyleView("result", this.View);
 			ArtRepository.StyleButton("embossed", this.useButton);
 			ArtRepository.StyleButton("embossed", this.cancelButton);
 

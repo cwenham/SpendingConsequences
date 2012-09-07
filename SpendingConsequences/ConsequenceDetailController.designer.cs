@@ -21,6 +21,9 @@ namespace SpendingConsequences
 		MonoTouch.UIKit.UILabel caption { get; set; }
 
 		[Outlet]
+		MonoTouch.UIKit.UITextField editCaption { get; set; }
+
+		[Outlet]
 		MonoTouch.UIKit.UIView resultSubview { get; set; }
 
 		[Outlet]
@@ -41,6 +44,11 @@ namespace SpendingConsequences
 			if (caption != null) {
 				caption.Dispose ();
 				caption = null;
+			}
+
+			if (editCaption != null) {
+				editCaption.Dispose ();
+				editCaption = null;
 			}
 
 			if (resultSubview != null) {

@@ -30,7 +30,7 @@ namespace SpendingConsequences
 
 		public override string GetTitle (UIPickerView picker, int row, int component)
 		{
-			var template = Profile.AllConsequenceTemplates.Values.Skip(row - 1).FirstOrDefault();
+			var template = Profile.AllConsequenceTemplates.Values.Skip(row).FirstOrDefault();
 			if (template != null)
 				return template.Attribute("Name").Value;
 			else
@@ -39,7 +39,7 @@ namespace SpendingConsequences
 
 		public override void Selected (UIPickerView picker, int row, int component)
 		{
-			SelectedTemplate = Profile.AllConsequenceTemplates.Values.Skip(row - 1).FirstOrDefault();
+			SelectedTemplate = Profile.AllConsequenceTemplates.Values.Skip(row).FirstOrDefault();
 		}
 
 		public XElement SelectedTemplate { get; private set; }

@@ -58,15 +58,29 @@ namespace SpendingConsequences
 
 		public static SubProfile Load (String uri)
 		{
-			XDocument definition = XDocument.Load (uri);
-			return new SubProfile (definition);
+			try {
+				XDocument definition = XDocument.Load (uri, LoadOptions.SetBaseUri);
+				if (definition != null && definition.Root.Name.Namespace == NS.Profile)
+					return new SubProfile (definition);	
+				else
+				{
+					Console.WriteLine("Null or invalid profile: {0}", uri);
+					return null;
+				}
+			} catch (Exception ex) {
+				Console.WriteLine("{0} thrown when loading {1}: {2}", ex.GetType().Name, uri, ex.Message);
+				return null;
+			}
 		}
 		
 		private SubProfile (XDocument profileDoc)
 		{
 			this.Definition = profileDoc;
-			this.Definition.Changed += delegate(object sender, XObjectChangeEventArgs e) {
-				Console.WriteLine("Received XDocument changed event: {0}", e.ObjectChange.ToString());
+			this.Definition.Root.Changed += delegate(object sender, XObjectChangeEventArgs e) {
+				Console.WriteLine("Received XDocument changed event: {0}", this.Definition.BaseUri);
+				Uri uriPath = new Uri(this.Definition.BaseUri);
+				Console.WriteLine("Saving to: {0}", uriPath.LocalPath);
+				Definition.Save(uriPath.LocalPath);
 			};
 			
 			var calculators = from e in Definition.Root.Element (NS.Profile + "Consequences").Elements ()
@@ -76,15 +90,42 @@ namespace SpendingConsequences
 			if (calculators != null)
 				this.Calculators = calculators.ToList ();
 				
-			ResultTemplates = Definition.Root.Element (NS.Profile + "ResultTemplates").Elements ()
-					.Where (x => x.Attribute ("Name") != null)
-					.ToDictionary (x => x.Attribute ("Name").Value, y => y.Element (NS.XSLT + "stylesheet"));
+			var resultTemplatesElement = Definition.Root.Element (NS.Profile + "ResultTemplates");
+
+			if (resultTemplatesElement != null)
+				ResultTemplates = resultTemplatesElement.Elements ()
+						.Where (x => x.Attribute ("Name") != null)
+						.ToDictionary (x => x.Attribute ("Name").Value, y => y.Element (NS.XSLT + "stylesheet"));
+			else
+				ResultTemplates = new Dictionary<string, XElement>();
 				
-			ConsequenceTemplates = Definition.Root.Element (NS.Profile + "ConsequenceTemplates").Elements ()
-					.Where (x => x.Attribute ("Name") != null)
-					.ToDictionary (x => x.Attribute ("Name").Value);
+			var consequenceTemplatesElement = Definition.Root.Element (NS.Profile + "ConsequenceTemplates");
+			if (consequenceTemplatesElement != null)
+				ConsequenceTemplates = consequenceTemplatesElement.Elements ()
+						.Where (x => x.Attribute ("Name") != null)
+						.ToDictionary (x => x.Attribute ("Name").Value);
+			else
+				ConsequenceTemplates = new Dictionary<string, XElement>();
 		}
-		
+
+		public ACalculator AddConsequenceFromDefinition(XElement definition)
+		{
+			XElement calcContainer = this.Definition.Root.Element(NS.Profile + "Consequences");
+			if (calcContainer == null)
+			{
+				calcContainer = new XElement(NS.Profile + "Consequences");
+				this.Definition.Root.Add(calcContainer);
+			}
+
+			XElement assimilatedDef = XElement.Parse(definition.ToString());
+			calcContainer.Add(assimilatedDef);
+			ACalculator calc = ACalculator.GetInstance(assimilatedDef);
+			if (calc != null)
+				Calculators.Add(calc);
+
+			return calc;
+		}
+
 		public XDocument Definition { get; private set; }
 		
 		public List<ACalculator> Calculators { get; private set; }

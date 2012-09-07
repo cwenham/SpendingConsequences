@@ -26,6 +26,14 @@ namespace SpendingConsequences
 			SubProfiles.Add(name, subProfile);
 		}
 
+		public SubProfile GetSubProfile(String name)
+		{
+			if (SubProfiles.ContainsKey(name))
+				return SubProfiles[name];
+			else
+				return null;
+		}
+
 		public IEnumerable<ACalculator> AllCalculators {
 			get {
 				return SubProfiles.Values.SelectMany(x => x.Calculators);
