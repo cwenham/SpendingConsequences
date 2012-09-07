@@ -60,16 +60,29 @@ namespace SpendingConsequences
 			
 			this.mul2.TouchUpInside += Handle_Mul2_TouchUpInside;
 			this.div2.TouchUpInside += Handle_Div2_TouchUpInside;
-			
-			// Add handlers to move the view whenever the keyboard appears or disappears
-			NSNotificationCenter.DefaultCenter.AddObserver (UIKeyboard.WillShowNotification, delegate(NSNotification n) {
-				this.KeyboardOpenedOrClosed (n, "Open");
-			}
-			);
-			NSNotificationCenter.DefaultCenter.AddObserver (UIKeyboard.WillHideNotification, delegate(NSNotification n) {
-				this.KeyboardOpenedOrClosed (n, "Close");
-			}
-			);
+
+			UIKeyboard.Notifications.ObserveWillShow ((sender, args) => {
+				IsEditingAmount = true;
+				this._contentViewSize = this.View.Frame;
+				
+				RectangleF newFrame = this.View.Frame;
+				
+				newFrame.Y -= args.FrameBegin.Height;
+				
+				UIView.BeginAnimations ("ResizeForKeyboard");
+				UIView.SetAnimationDuration (args.AnimationDuration);
+				this.View.Frame = newFrame;
+				UIView.CommitAnimations ();
+			});
+
+			UIKeyboard.Notifications.ObserveWillHide ((sender, args) => {
+				IsEditingAmount = false;
+				
+				UIView.BeginAnimations ("ResizeForKeyboard");
+				UIView.SetAnimationDuration (args.AnimationDuration);
+				this.View.Frame = this._contentViewSize;
+				UIView.CommitAnimations ();
+			});
 			
 			// 
 			this.InitialAmount.KeyboardType = UIKeyboardType.DecimalPad;
@@ -317,34 +330,6 @@ namespace SpendingConsequences
 		}
 		
 		private bool IsEditingAmount = false;
-		
-		protected void KeyboardOpenedOrClosed (NSNotification n, string openOrClose)
-		{
-			if (openOrClose == "Open") {
-				IsEditingAmount = true;
-				this._contentViewSize = this.View.Frame;
-				RectangleF kbdFrame = ((NSValue)n.UserInfo.ValueForKey(UIKeyboard.FrameBeginUserInfoKey)).RectangleFValue;
-
-				double animationDuration = UIKeyboard.AnimationDurationFromNotification (n);
-
-				RectangleF newFrame = this.View.Frame;
-
-				newFrame.Y -= kbdFrame.Height;
-
-				UIView.BeginAnimations ("ResizeForKeyboard");
-				UIView.SetAnimationDuration (animationDuration);
-				this.View.Frame = newFrame;
-				UIView.CommitAnimations ();
-			} else { 
-				IsEditingAmount = false;
-				double animationDuration = UIKeyboard.AnimationDurationFromNotification (n);
-
-				UIView.BeginAnimations ("ResizeForKeyboard");
-				UIView.SetAnimationDuration (animationDuration);
-				this.View.Frame = this._contentViewSize;
-				UIView.CommitAnimations ();
-			}
-		}
 		
 		public override void ViewDidUnload ()
 		{
