@@ -30,6 +30,14 @@ namespace SpendingConsequences
 			base.ViewDidLoad ();
 			
 			this.caption.Text = ConfigValue.Label;
+			this.editCaption.Text = ConfigValue.Label;
+			this.editCaption.ShouldReturn += (textField) => {
+				textField.ResignFirstResponder();
+				this.caption.Text = textField.Text;
+				this.ConfigValue.Label = textField.Text;
+				return true;
+			};
+
 			this.configuredValue.Text = ConfigValue.Value.ToString ();
 			this.stepper.Value = Convert.ToDouble (ConfigValue.Value);
 			this.stepper.MinimumValue = Convert.ToDouble(ConfigValue.MinValue);
@@ -66,6 +74,22 @@ namespace SpendingConsequences
 		public event EventHandler<ConfigurableValueChanged> ValueChanged = delegate {};
 
 		public event EventHandler<CurrencyChangeEventArgs> CurrencyButtonClicked = delegate {};
+
+		public event EventHandler<ConfigurationChangeEventArgs> ConfigurationChanged = delegate{};
+
+		void IConfigControl.BeginEditing ()
+		{
+			this.caption.Hidden = true;
+			this.editCaption.Hidden = false;
+		}
+
+		void IConfigControl.EndEditing ()
+		{
+			this.caption.Hidden = false;
+			this.editCaption.Hidden = true;
+			this.ConfigValue.Label = this.editCaption.Text;
+			ConfigurationChanged(this, new ConfigurationChangeEventArgs(this.ConfigValue));
+		}
 		#endregion
 	}
 }
