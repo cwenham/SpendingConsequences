@@ -61,7 +61,7 @@ namespace SpendingConsequences
 			try {
 				XDocument definition = XDocument.Load (uri, LoadOptions.SetBaseUri);
 				if (definition != null && definition.Root.Name.Namespace == NS.Profile)
-					return new SubProfile (definition);	
+					return new SubProfile (definition);
 				else
 				{
 					Console.WriteLine("Null or invalid profile: {0}", uri);
@@ -76,6 +76,8 @@ namespace SpendingConsequences
 		private SubProfile (XDocument profileDoc)
 		{
 			this.Definition = profileDoc;
+			this.Definition.AddAnnotation(this);
+
 			this.Definition.Root.Changed += delegate(object sender, XObjectChangeEventArgs e) {
 				Console.WriteLine("Received XDocument changed event: {0}", this.Definition.BaseUri);
 				Uri uriPath = new Uri(this.Definition.BaseUri);
@@ -125,6 +127,23 @@ namespace SpendingConsequences
 
 			return calc;
 		}
+
+		public Boolean IsUserEditable {
+			get {
+				if (!_isUserEditableSet)
+				{
+					var editAttribute = this.Definition.Root.Attribute("UserEditable");
+					if (editAttribute != null)
+						Boolean.TryParse(editAttribute.Value, out _isUserEditable);
+
+					_isUserEditableSet = true;
+				}
+
+				return _isUserEditable;
+			}
+		}
+		private Boolean _isUserEditable = true;
+		private Boolean _isUserEditableSet = false;
 
 		public XDocument Definition { get; private set; }
 		

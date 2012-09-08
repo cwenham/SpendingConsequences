@@ -94,6 +94,12 @@ namespace SpendingConsequences
 
 				if (image != null && image != iconView.Image)
 					iconView.Image = image;
+
+				if (result.Calculator.IsUserEditable)
+					this.NavigationItem.SetRightBarButtonItem(EditButton,false);
+				else
+					if (this.NavigationItem.RightBarButtonItem != null)
+						this.NavigationItem.SetRightBarButtonItem(null,false);
 			} catch (Exception ex) {
 				Console.WriteLine (string.Format ("{0} thrown when updating current result: {1}", ex.GetType ().Name, ex.Message));
 			}
@@ -253,7 +259,6 @@ namespace SpendingConsequences
 				else
 					IsEditing = true;
 			});
-			this.NavigationItem.SetRightBarButtonItem(EditButton,false);
 
 			this.editCaption.ShouldReturn += (textField) => {
 				textField.ResignFirstResponder();

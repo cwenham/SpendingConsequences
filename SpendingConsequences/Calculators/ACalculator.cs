@@ -51,6 +51,27 @@ namespace SpendingConsequences.Calculators
 		/// </summary>
 		public Dictionary<String,ASupportElement> SupportElements { get; private set; }
 
+		/// <summary>
+		/// True if the user can edit labels, commentary and icons within the app
+		/// </summary>
+		/// <remarks>
+		/// 
+		/// </remarks>			
+		public bool IsUserEditable { 
+			get {
+				if (OriginalProfile != null)
+					return OriginalProfile.IsUserEditable;
+
+				return true;
+			}
+		}
+
+		public SubProfile OriginalProfile {
+			get {
+				return this.Definition.Document.Annotation<SubProfile>();
+			}
+		}
+
 		internal string AttributeOrNull(string attribName)
 		{
 			if (Definition.Attribute(attribName) != null)
