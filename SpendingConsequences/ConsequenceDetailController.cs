@@ -284,6 +284,7 @@ namespace SpendingConsequences
 		{
 			if ((UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeLeft 
 				|| UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight)
+			    && !IsEditing
 				&& CurrentResult.Table != null
 				&& (this.PresentedViewController == null || this.PresentedViewController == this)) {
 					if (GridView == null)
@@ -349,7 +350,7 @@ namespace SpendingConsequences
 			if (toInterfaceOrientation == UIInterfaceOrientation.PortraitUpsideDown || toInterfaceOrientation == UIInterfaceOrientation.Portrait)
 				return true;
 			
-			if ((toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight) && CurrentResult.Table != null)
+			if ((toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight) && CurrentResult.Table != null && !IsEditing)
 				return true;
 			
 			return false;

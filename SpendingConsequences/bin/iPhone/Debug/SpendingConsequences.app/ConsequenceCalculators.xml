@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Calculators xmlns="http://schemas.spentbetter.com/Profile"
 		xmlns:h="http://www.w3.org/1999/xhtml"
-		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		UserEditable="False">
 	<Consequences>
 		<CurrencyConversion TriggersOn="OneTime" Caption="in [CurrencyName]" Category="Currencies">
 			<Configurable ID="CC1" Name="CurrencyCode" Type="Currency" Label="Currency" Value="GBP"/>
