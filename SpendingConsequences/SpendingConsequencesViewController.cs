@@ -36,6 +36,8 @@ namespace SpendingConsequences
 		public TemplatePickerSheet TemplateSheetController { get; private set; }
 		
 		private UIView DecimalAccessoryView { get; set; }
+
+		private UIBarButtonItem EditButton { get; set; }
 		
 		public override void DidReceiveMemoryWarning ()
 		{
@@ -63,6 +65,7 @@ namespace SpendingConsequences
 
 			UIKeyboard.Notifications.ObserveWillShow ((sender, args) => {
 				IsEditingAmount = true;
+				EditButton.Enabled = false;
 				this._contentViewSize = this.View.Frame;
 				
 				RectangleF newFrame = this.View.Frame;
@@ -77,6 +80,7 @@ namespace SpendingConsequences
 
 			UIKeyboard.Notifications.ObserveWillHide ((sender, args) => {
 				IsEditingAmount = false;
+				EditButton.Enabled = true;
 				
 				UIView.BeginAnimations ("ResizeForKeyboard");
 				UIView.SetAnimationDuration (args.AnimationDuration);
@@ -109,7 +113,23 @@ namespace SpendingConsequences
 					RefreshCalculators ();
 			};
 
-			this.NavigationItem.Title = "Back";
+			this.NavigationItem.Title = "Results";
+
+			EditButton = new UIBarButtonItem("Edit", UIBarButtonItemStyle.Bordered, (sender, e) => {
+				UIBarButtonItem button = sender as UIBarButtonItem;
+				if (this.ConsequenceView.Editing)
+				{
+					this.ConsequenceView.Editing = false;
+					button.Title = "Edit";
+				}
+				else
+				{
+					this.ConsequenceView.Editing = true;
+					button.Title = "Done";
+				}
+			});
+			this.NavigationItem.SetRightBarButtonItem(EditButton, false);
+
 			this.currencySymbol.Text = Money.LocalCurrencySymbol ();
 
 			if (FooterController == null)

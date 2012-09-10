@@ -48,7 +48,6 @@ namespace SpendingConsequences
 			
 			viewController = new SpendingConsequencesViewController (Profile);
 			navController = new UINavigationController (viewController);
-			navController.SetNavigationBarHidden (true, false);
 			window.RootViewController = navController;
 			window.MakeKeyAndVisible ();
 			

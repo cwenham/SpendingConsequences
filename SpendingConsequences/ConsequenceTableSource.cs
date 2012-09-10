@@ -19,7 +19,7 @@ namespace SpendingConsequences
 		
 		public AppProfile Profile { get; private set; }
 		
-		public ConsequenceResult[] CurrentResults { get; private set; }
+		public List<ConsequenceResult> CurrentResults { get; private set; }
 		
 		public ConsequenceTableSource (AppProfile profile, SpendingConsequencesViewController parent)
 		{
@@ -49,7 +49,7 @@ namespace SpendingConsequences
 		void HandleRunWorkerCompleted (object sender, RunWorkerCompletedEventArgs e)
 		{
 			if (e.Result != null) {
-				this.CurrentResults = (ConsequenceResult[])(e.Result);	
+				this.CurrentResults = (List<ConsequenceResult>)(e.Result);	
 				ResultsReady (this, new EventArgs ());
 			}
 		}
@@ -59,7 +59,7 @@ namespace SpendingConsequences
 			BackgroundWorker myWorker = sender as BackgroundWorker;
 			ConsequenceRequest request = e.Argument as ConsequenceRequest;
 				
-			ConsequenceResult[] results = (from c in Profile.AllCalculators
+			List<ConsequenceResult> results = (from c in Profile.AllCalculators
 			        where c.WillTriggerOn (request.TriggerMode)
 				&& (c.ForGender == Gender.Unspecified || c.ForGender == UserGender)
 				&& (c.Country == null || c.Country == NSLocale.CurrentLocale.CountryCode)
@@ -69,7 +69,7 @@ namespace SpendingConsequences
 					where !myWorker.CancellationPending
 				&& result != null
 				&& result.Recommended
-					select result).ToArray ();
+					select result).ToList();
 				
 			if (!myWorker.CancellationPending)
 				e.Result = results;
@@ -82,7 +82,7 @@ namespace SpendingConsequences
 			if (CurrentResults == null)
 				return -1;
 			
-			for (int i = 0; i < CurrentResults.Length; i++)
+			for (int i = 0; i < CurrentResults.Count; i++)
 				if (CurrentResults [i] == oldResult) {
 					CurrentResults [i] = newResult;
 					return i;
@@ -98,6 +98,44 @@ namespace SpendingConsequences
 			this.ParentController.DisplayConsequenceDetails (CurrentResults [indexPath.Row]);
 			tableView.DeselectRow(indexPath, true);
 		}
+
+		public override bool CanEditRow (UITableView tableView, NSIndexPath indexPath)
+		{
+			return true;
+		}
+
+		public override bool CanMoveRow (UITableView tableView, NSIndexPath indexPath)
+		{
+			return true;
+		}
+
+		public override UITableViewCellEditingStyle EditingStyleForRow (UITableView tableView, NSIndexPath indexPath)
+		{
+			return UITableViewCellEditingStyle.Delete;
+		}
+
+		public override void MoveRow (UITableView tableView, NSIndexPath sourceIndexPath, NSIndexPath destinationIndexPath)
+		{
+			if (CurrentResults == null)
+				return;
+
+			var item = CurrentResults[sourceIndexPath.Row];
+			int deleteAt = sourceIndexPath.Row + 1;
+
+			CurrentResults.Insert (destinationIndexPath.Row, item);
+			CurrentResults.RemoveAt (deleteAt);
+		}
+
+		public override void CommitEditingStyle (UITableView tableView, UITableViewCellEditingStyle editingStyle, NSIndexPath indexPath)
+		{
+			switch (editingStyle)
+			{
+			case UITableViewCellEditingStyle.Delete:
+			    CurrentResults.RemoveAt(indexPath.Row);
+				tableView.DeleteRows (new NSIndexPath[] { indexPath }, UITableViewRowAnimation.Fade);
+			    break;
+			}
+		}
 		
 		#region implemented abstract members of MonoTouch.UIKit.UITableViewSource		
 		public override int RowsInSection (UITableView tableview, int section)
@@ -105,7 +143,7 @@ namespace SpendingConsequences
 			if (CurrentResults == null)
 				return 0;
 			else
-				return CurrentResults.Length;
+				return CurrentResults.Count;
 		}
 
 		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)

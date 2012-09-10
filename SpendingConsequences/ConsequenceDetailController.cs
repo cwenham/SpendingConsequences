@@ -315,7 +315,6 @@ namespace SpendingConsequences
 		{
 			IsEditing = false;
 
-			NavigationController.SetNavigationBarHidden (true, true);
 			UIDevice.CurrentDevice.EndGeneratingDeviceOrientationNotifications ();
 			base.ViewWillDisappear (animated);
 		}
