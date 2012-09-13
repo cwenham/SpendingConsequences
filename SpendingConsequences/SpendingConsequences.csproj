@@ -185,7 +185,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Content Include="ConsequenceCalculators.xml" />
     <Content Include="Artwork\money.png" />
     <Content Include="Artwork\stockmarket.png" />
     <Content Include="Artwork\coffeecup.png" />
@@ -752,6 +751,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UIArt\embossed_unsel%402x.png" />
+    <Content Include="Consequences_V1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MainProfile.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Calculators\" />

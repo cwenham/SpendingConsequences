@@ -76,21 +76,24 @@ namespace SpendingConsequences
 		private SubProfile (XDocument profileDoc)
 		{
 			this.Definition = profileDoc;
-			this.Definition.AddAnnotation(this);
+			this.Definition.AddAnnotation (this);
 
 			this.Definition.Root.Changed += delegate(object sender, XObjectChangeEventArgs e) {
-				Console.WriteLine("Received XDocument changed event: {0}", this.Definition.BaseUri);
-				Uri uriPath = new Uri(this.Definition.BaseUri);
-				Console.WriteLine("Saving to: {0}", uriPath.LocalPath);
-				Definition.Save(uriPath.LocalPath);
+				Console.WriteLine ("Received XDocument changed event: {0}", this.Definition.BaseUri);
+				Uri uriPath = new Uri (this.Definition.BaseUri);
+				Console.WriteLine ("Saving to: {0}", uriPath.LocalPath);
+				Definition.Save (uriPath.LocalPath);
 			};
-			
-			var calculators = from e in Definition.Root.Element (NS.Profile + "Consequences").Elements ()
+
+			var consequencesElement = Definition.Root.Element (NS.Profile + "Consequences");
+			if (consequencesElement != null) {
+				var calculators = from e in consequencesElement.Elements ()
 					where e.Name.Namespace == NS.Profile
-				&& ACalculator.CalcType (e) != null
+					&& ACalculator.CalcType (e) != null
 						select ACalculator.GetInstance (e);
-			if (calculators != null)
-				this.Calculators = calculators.ToList ();
+				if (calculators != null)
+					this.Calculators = calculators.ToList ();
+			}
 				
 			var resultTemplatesElement = Definition.Root.Element (NS.Profile + "ResultTemplates");
 
@@ -98,16 +101,12 @@ namespace SpendingConsequences
 				ResultTemplates = resultTemplatesElement.Elements ()
 						.Where (x => x.Attribute ("Name") != null)
 						.ToDictionary (x => x.Attribute ("Name").Value, y => y.Element (NS.XSLT + "stylesheet"));
-			else
-				ResultTemplates = new Dictionary<string, XElement>();
-				
+
 			var consequenceTemplatesElement = Definition.Root.Element (NS.Profile + "ConsequenceTemplates");
 			if (consequenceTemplatesElement != null)
 				ConsequenceTemplates = consequenceTemplatesElement.Elements ()
 						.Where (x => x.Attribute ("Name") != null)
 						.ToDictionary (x => x.Attribute ("Name").Value);
-			else
-				ConsequenceTemplates = new Dictionary<string, XElement>();
 		}
 
 		public ACalculator AddConsequenceFromDefinition(XElement definition)

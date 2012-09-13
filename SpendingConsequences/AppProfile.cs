@@ -36,19 +36,20 @@ namespace SpendingConsequences
 
 		public IEnumerable<ACalculator> AllCalculators {
 			get {
-				return SubProfiles.Values.SelectMany(x => x.Calculators);
+				return SubProfiles.Values.Where(x => x.Calculators != null).SelectMany(x => x.Calculators);
 			}
 		}
 
 		public IDictionary<String,XElement> AllConsequenceTemplates {
 			get {
-				return SubProfiles.Values.SelectMany(x => x.ConsequenceTemplates).ToDictionary(x => x.Key, y => y.Value);
+				return SubProfiles.Values.Where(x => x.ConsequenceTemplates != null).SelectMany(x => x.ConsequenceTemplates).ToDictionary(x => x.Key, y => y.Value);
 			}
 		}
 
 		public XElement GetResultTemplate (String name)
 		{
 			var matches = from sp in SubProfiles.Values
+				where sp.ResultTemplates != null
 				from t in sp.ResultTemplates
 					where t.Key.Equals(name, StringComparison.OrdinalIgnoreCase)
 					select t.Value;

@@ -39,8 +39,9 @@ namespace SpendingConsequences
 		//
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
-			Profile = new AppProfile("ConsequenceCalculators.xml");
+			Profile = new AppProfile("MainProfile.xml");
 
+			LoadConsequenceLibraries(Profile);
 			LoadUserProfiles();
 			UpdateExchangeRates();
 
@@ -58,6 +59,18 @@ namespace SpendingConsequences
 		{
 			if (ExchangeRates.CurrentRates.OldestQuote < DateTime.Now.AddHours(-24))
 				UpdateExchangeRates();
+		}
+
+		private void LoadConsequenceLibraries(AppProfile receivingProfile)
+		{
+			foreach (var file in Directory.GetFiles(".", "Consequences_V*.xml"))
+				try {
+					var library = SubProfile.Load(file);
+				    if (library != null)
+					    receivingProfile.AddSubProfile(Path.GetFileNameWithoutExtension(file), library);
+				} catch (Exception ex) {
+				Console.WriteLine("{0} thrown when loading subprofile {1}: {2}", ex.GetType().Name, file, ex.Message);
+				}
 		}
 
 		private void LoadUserProfiles () {
