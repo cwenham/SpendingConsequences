@@ -127,7 +127,6 @@
     <Compile Include="Calculators\Commentary.cs" />
     <Compile Include="Calculators\ASupportElement.cs" />
     <Compile Include="CoreTextView.cs" />
-    <Compile Include="UserCalculatorSettings.cs" />
     <Compile Include="Calculators\LoanPayoff.cs" />
     <Compile Include="Calculators\UnitsForPrice.cs" />
     <Compile Include="Calculators\Money.cs" />

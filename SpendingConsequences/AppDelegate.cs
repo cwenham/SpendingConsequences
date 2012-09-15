@@ -41,6 +41,7 @@ namespace SpendingConsequences
 		{
 			Profile = new AppProfile("MainProfile.xml");
 
+			CreateUserCopies();
 			LoadConsequenceLibraries(Profile);
 			LoadUserProfiles();
 			UpdateExchangeRates();
@@ -61,9 +62,30 @@ namespace SpendingConsequences
 				UpdateExchangeRates();
 		}
 
+		/// <summary>
+		/// Make copies of the consequence masters to the user directory so they can be customized by the user
+		/// </summary>
+		private void CreateUserCopies()
+		{
+			var unDuplicated = from f in Directory.GetFiles(".", "Consequences_V*.xml")
+				let dupePath = Path.Combine(SubProfile.LibraryFolder, Path.GetFileName(f))
+				where !File.Exists(dupePath)
+				select new {
+					Master = f,
+					DupePath = dupePath
+				};
+
+			foreach (var unDuped in unDuplicated)
+				try {
+					File.Copy(unDuped.Master, unDuped.DupePath);
+				} catch (Exception ex) {
+				Console.WriteLine("{0} thrown when creating copy of {1}: {2}", ex.GetType().Name, unDuped.Master, ex.Message);
+				}
+		}
+
 		private void LoadConsequenceLibraries(AppProfile receivingProfile)
 		{
-			foreach (var file in Directory.GetFiles(".", "Consequences_V*.xml"))
+			foreach (var file in Directory.GetFiles(SubProfile.LibraryFolder, "Consequences_V*.xml"))
 				try {
 					var library = SubProfile.Load(file);
 				    if (library != null)

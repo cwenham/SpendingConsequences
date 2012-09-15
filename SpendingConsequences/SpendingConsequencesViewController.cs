@@ -45,7 +45,6 @@ namespace SpendingConsequences
 			base.DidReceiveMemoryWarning ();
 			
 			// Release any cached data, images, etc that aren't in use.
-			ConfigurableValue.CloseResources ();
 			
 			if (DetailController != null)
 				if (this.NavigationController.PresentedViewController == this) {
@@ -229,6 +228,7 @@ namespace SpendingConsequences
 			if (unwrappedTemplate != null)
 			{
 				ACalculator calculator = userProfile.AddConsequenceFromDefinition(unwrappedTemplate);
+				calculator.SortOrder = -1;
 
 				// Create a prototype request in order to load the Details View in edit mode
 				Money prototypeAmount = this.CurrentAmount;
@@ -352,8 +352,7 @@ namespace SpendingConsequences
 			// allow the Garbage Collector to collect them sooner.
 			//
 			// e.g. myOutlet.Dispose (); myOutlet = null;
-			
-			ConfigurableValue.CloseResources ();
+
 			ReleaseDesignerOutlets ();
 		}
 

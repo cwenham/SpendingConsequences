@@ -47,7 +47,7 @@ namespace SpendingConsequences
 				this.configuredValue.Text = stepper.Value.ToString ();
 			};
 			this.stepper.TouchUpInside += delegate {
-				this.ConfigValue.Value = stepper.Value;
+				this.ConfigValue.Value = Convert.ToInt32(stepper.Value);
 				ValueChanged (this, new ConfigurableValueChanged (this.ConfigValue));
 			};
 		}

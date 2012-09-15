@@ -80,6 +80,12 @@ namespace SpendingConsequences.Calculators
 			get {
 				return Definition.Attribute("CurrencyCode") != null ? Definition.Attribute("CurrencyCode").Value : null;
 			}
+			set {
+				if (Definition.Attribute("CurrencyCode") != null)
+					Definition.Attribute("CurrencyCode").Value = value;
+				else
+					Definition.Add(new XAttribute("CurrencyCode", value));
+			}
 		}
 		
 		/// <summary>
@@ -105,23 +111,21 @@ namespace SpendingConsequences.Calculators
 		}
 		private ConfigurableValueType _ValueType = ConfigurableValueType.Undefined;
 		
-		private static UserCalculatorSettings UserSettings = new UserCalculatorSettings();
-		
-		public static void CloseResources ()
-		{
-			if (UserSettings != null)
-				UserSettings.CloseConnection ();
-		}
-		
 		public object Value {
 			get {
-				if (_value == null) {
-					if (ValueType == ConfigurableValueType.Money)
-						_value = UserSettings.GetCustomValue (this) as Money;
+				if (_value == null)
+				{
+					if (Definition.Attribute("Value") != null)
+						_value = Definition.Attribute("Value").Value;
 					else
-						_value = UserSettings.GetCustomValue (this);
-					if (_value == null)
-						_value = Definition.Attribute ("Value").Value;
+						_value = Definition.Value;
+
+					if (ValueType == ConfigurableValueType.Money && _value != null)
+					{
+						decimal amount = 0;
+						if (Decimal.TryParse(_value as String, out amount))
+							_value = Money.NewMoney(amount, this.CurrencyCode);
+					}
 				}
 
 				if (_value is string && ValueType != ConfigurableValueType.String)
@@ -163,9 +167,15 @@ namespace SpendingConsequences.Calculators
 				_value = value;
 				if (value != null)
 					if (value is Money)
-						UserSettings.StoreCustomValue(this, value as Money);
+				{
+					this.Definition.Value = ((Money)_value).Value.ToString();
+					this.CurrencyCode = ((Money)_value).CurrencyCode;
+				}
 					else
-					    UserSettings.StoreCustomValue (this, value.ToString ());
+					    this.Definition.Value = _value.ToString();
+
+				if (Definition.Attribute("Value") != null)
+					Definition.Attribute("Value").Remove();
 
 				ValueChanged(this, new EventArgs());
 			}

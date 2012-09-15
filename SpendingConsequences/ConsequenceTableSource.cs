@@ -69,7 +69,7 @@ namespace SpendingConsequences
 					where !myWorker.CancellationPending
 				&& result != null
 				&& result.Recommended
-					select result).ToList();
+					select result).OrderBy(x => x.Calculator.SortOrder).ToList();
 				
 			if (!myWorker.CancellationPending)
 				e.Result = results;
@@ -106,7 +106,7 @@ namespace SpendingConsequences
 
 		public override bool CanMoveRow (UITableView tableView, NSIndexPath indexPath)
 		{
-			return true;
+			return true; 
 		}
 
 		public override UITableViewCellEditingStyle EditingStyleForRow (UITableView tableView, NSIndexPath indexPath)
@@ -119,11 +119,19 @@ namespace SpendingConsequences
 			if (CurrentResults == null)
 				return;
 
-			var item = CurrentResults[sourceIndexPath.Row];
-			int deleteAt = sourceIndexPath.Row + 1;
+			var item = CurrentResults [sourceIndexPath.Row];
+			int deleteAt = sourceIndexPath.Row;
 
 			CurrentResults.Insert (destinationIndexPath.Row, item);
 			CurrentResults.RemoveAt (deleteAt);
+
+			// Renumber the sort order of successive results
+			int newSort = destinationIndexPath.Row > 1 ? CurrentResults [destinationIndexPath.Row - 1].Calculator.SortOrder : 0;
+			Console.WriteLine ("Source row: {0} Destination: {1} newSort: {2}", sourceIndexPath.Row, destinationIndexPath.Row, newSort);
+			foreach (var result in CurrentResults.Skip(destinationIndexPath.Row - 1)) {
+				Console.WriteLine("Sort {0} to {1}", result.FormattedCaption, newSort);
+				result.Calculator.SortOrder = ++newSort;
+			}
 		}
 
 		public override void CommitEditingStyle (UITableView tableView, UITableViewCellEditingStyle editingStyle, NSIndexPath indexPath)

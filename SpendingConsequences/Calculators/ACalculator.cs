@@ -264,6 +264,26 @@ namespace SpendingConsequences.Calculators
 				else return null;
 			}
 		}
+
+		public int SortOrder {
+			get {
+				string givenOrder = AttributeOrNull("SortOrder");
+				if (givenOrder != null)
+				{
+					int order = int.MaxValue;
+					if (int.TryParse(givenOrder, out order))
+						return order;
+				}
+
+				return this.Definition.ElementsBeforeSelf().Count();
+			}
+			set {
+				if (this.Definition.Attribute("SortOrder") != null)
+					this.Definition.Attribute("SortOrder").Value = value.ToString();
+				else
+					this.Definition.Add(new XAttribute("SortOrder", value));
+			}
+		}
 		
 		public string FormatCaption (string caption, Dictionary<string, string> values)
 		{
