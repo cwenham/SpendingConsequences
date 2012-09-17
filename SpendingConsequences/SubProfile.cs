@@ -92,6 +92,11 @@ namespace SpendingConsequences
 					    if (victim != null)
 						    Calculators.Remove(victim);
 					break;
+					case XObjectChange.Add:
+					    ACalculator calc = ACalculator.GetInstance(subject);
+					    if (calc != null && !Calculators.Contains(calc))
+						    Calculators.Add(calc);
+					break;
 					}
 			};
 
@@ -131,8 +136,6 @@ namespace SpendingConsequences
 			XElement assimilatedDef = XElement.Parse(definition.ToString());
 			calcContainer.Add(assimilatedDef);
 			ACalculator calc = ACalculator.GetInstance(assimilatedDef);
-			if (calc != null)
-				Calculators.Add(calc);
 
 			return calc;
 		}
