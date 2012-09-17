@@ -83,6 +83,16 @@ namespace SpendingConsequences
 				Uri uriPath = new Uri (this.Definition.BaseUri);
 				Console.WriteLine ("Saving to: {0}", uriPath.LocalPath);
 				Definition.Save (uriPath.LocalPath);
+
+				XElement subject = sender as XElement;
+				if (subject != null)
+					switch (e.ObjectChange) {
+					case XObjectChange.Remove:
+					    ACalculator victim = ACalculator.GetInstance(subject, false);
+					    if (victim != null)
+						    Calculators.Remove(victim);
+					break;
+					}
 			};
 
 			var consequencesElement = Definition.Root.Element (NS.Profile + "Consequences");

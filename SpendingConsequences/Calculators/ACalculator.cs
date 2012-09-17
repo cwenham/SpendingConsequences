@@ -363,18 +363,25 @@ namespace SpendingConsequences.Calculators
 			else
 				return null;
 		}
-		
+
 		public static ACalculator GetInstance (XElement definition)
+		{
+			return GetInstance(definition, true);
+		}
+
+		public static ACalculator GetInstance (XElement definition, bool createIfNecessary)
 		{
 			Type calcType = CalcType (definition);
 			if (calcType != null) {
 				if (definition.Annotation (calcType) != null)
 					return definition.Annotation (calcType) as ACalculator;
-				else {
+				else if (createIfNecessary) {
 					var instance = Activator.CreateInstance (calcType, new object[] { definition });
 					definition.AddAnnotation (instance);
 					return instance as ACalculator;
 				}
+				else
+					return null;
 			} else
 				return null;
 		}

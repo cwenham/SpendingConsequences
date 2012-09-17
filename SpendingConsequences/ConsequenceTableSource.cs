@@ -139,8 +139,10 @@ namespace SpendingConsequences
 			switch (editingStyle)
 			{
 			case UITableViewCellEditingStyle.Delete:
+				var deletedResult = CurrentResults[indexPath.Row];
 			    CurrentResults.RemoveAt(indexPath.Row);
 				tableView.DeleteRows (new NSIndexPath[] { indexPath }, UITableViewRowAnimation.Fade);
+				deletedResult.Calculator.Definition.Remove();
 			    break;
 			}
 		}
