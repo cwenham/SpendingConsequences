@@ -58,30 +58,6 @@ namespace SpendingConsequences
 			base.ViewDidLoad ();
 			
 			SetUICosmetics ();
-			
-			this.mul2.TouchUpInside += delegate {
-				Money current = CurrentAmount;
-				if (current > 0m)
-					if (current < MAX_AMOUNT / 2)
-						CurrentAmount = current * 2m;
-				else
-					return;
-				else
-					CurrentAmount = 1.00m;
-				
-				RefreshCalculators();	
-			};
-			this.div2.TouchUpInside += delegate {
-				Money current = CurrentAmount;
-				if (current > 0.01m)
-					CurrentAmount = current / 2m;
-				else if (current == 0m)
-					CurrentAmount = 1.00m; // Default to a simple value so the user can enter small amounts quickly
-				else
-					return;
-				
-				RefreshCalculators();
-			};
 
 			UIKeyboard.Notifications.ObserveWillShow ((sender, args) => {
 				IsEditingAmount = true;
@@ -207,9 +183,6 @@ namespace SpendingConsequences
 			ArtRepository.StyleView("result", this.View);
 
 			ArtRepository.StyleSegmentedControl("mode", this.SpendingMode);
-
-			ArtRepository.StyleButton("mul2", this.mul2);
-			ArtRepository.StyleButton("div2", this.div2);
 		}
 
 		private void CreateNewConsequence(TriggerType mode, XElement template)
