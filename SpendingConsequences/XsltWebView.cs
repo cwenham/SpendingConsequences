@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using MonoTouch.TestFlight;
+//using MonoTouch.TestFlight;
 
 using SpendingConsequences.Calculators;
 
@@ -37,7 +37,7 @@ namespace SpendingConsequences
 				return;
 			
 #if DEBUG
-			TestFlight.PassCheckpoint ("VIEW_XSLT_WEB");
+			//TestFlight.PassCheckpoint ("VIEW_XSLT_WEB");
 #endif
 			
 			CurrentResult = result;	
@@ -128,23 +128,10 @@ namespace SpendingConsequences
 			if (DisplayedHTML != null)
 				this.webView.LoadData (DisplayedHTML, "application/xhtml+xml", "utf-8", BaseURL);
 		}
-		
-		public override void ViewDidUnload ()
+
+		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations ()
 		{
-			base.ViewDidUnload ();
-			
-			// Clear any references to subviews of the main view in order to
-			// allow the Garbage Collector to collect them sooner.
-			//
-			// e.g. myOutlet.Dispose (); myOutlet = null;
-			
-			ReleaseDesignerOutlets ();
-		}
-		
-		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
-		{
-			// Return true for supported orientations
-			return (toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight);
+			return UIInterfaceOrientationMask.Landscape;
 		}
 	}
 }

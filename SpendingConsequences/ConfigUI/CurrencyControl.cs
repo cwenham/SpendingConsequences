@@ -57,24 +57,6 @@ namespace SpendingConsequences
 				CurrencyButtonClicked(this, new CurrencyChangeEventArgs(this.ConfigValue));
 			};
 		}
-		
-		public override void ViewDidUnload ()
-		{
-			base.ViewDidUnload ();
-			
-			// Clear any references to subviews of the main view in order to
-			// allow the Garbage Collector to collect them sooner.
-			//
-			// e.g. myOutlet.Dispose (); myOutlet = null;
-			
-			ReleaseDesignerOutlets ();
-		}
-		
-		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
-		{
-			// Return true for supported orientations
-			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
-		}
 
 		#region IConfigControl implementation
 		public event EventHandler<ConfigurableValueChanged> ValueChanged = delegate {};

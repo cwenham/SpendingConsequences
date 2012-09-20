@@ -81,9 +81,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data" />
     <Reference Include="Mono.Data.Sqlite" />
-    <Reference Include="TestFlight">
-      <HintPath>..\..\monotouch-bindings\TestFlight\binding\TestFlight.dll</HintPath>
-    </Reference>
     <Reference Include="System.Json" />
   </ItemGroup>
   <ItemGroup>

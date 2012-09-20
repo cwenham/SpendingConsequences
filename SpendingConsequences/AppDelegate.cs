@@ -25,7 +25,7 @@ namespace SpendingConsequences
 
 		// class-level declarations
 		UIWindow window;
-		SpendingConsequencesViewController viewController;
+		//SpendingConsequencesViewController viewController;
 		UINavigationController navController;
 		
 		public AppProfile Profile { get; private set; }
@@ -48,7 +48,7 @@ namespace SpendingConsequences
 
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
-			viewController = new SpendingConsequencesViewController (Profile);
+			SpendingConsequencesViewController viewController = new SpendingConsequencesViewController (Profile);
 			navController = new UINavigationController (viewController);
 			window.RootViewController = navController;
 			window.MakeKeyAndVisible ();

@@ -328,31 +328,13 @@ namespace SpendingConsequences
 				foreach (UIViewController configger in CurrentConfiggers.Where(x => x != null))
 					configger.View.RemoveFromSuperview ();
 		}
-		
-		public override void ViewDidUnload ()
+
+		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations ()
 		{
-			base.ViewDidUnload ();
-			
-			// Clear any references to subviews of the main view in order to
-			// allow the Garbage Collector to collect them sooner.
-			//
-			// e.g. myOutlet.Dispose (); myOutlet = null;
-			ClearDynamicViews();
-			CommentView = null;
-			
-			ReleaseDesignerOutlets ();
-		}
-		
-		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
-		{
-			// Return true for supported orientations
-			if (toInterfaceOrientation == UIInterfaceOrientation.PortraitUpsideDown || toInterfaceOrientation == UIInterfaceOrientation.Portrait)
-				return true;
-			
-			if ((toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight) && CurrentResult.Table != null && !IsEditing)
-				return true;
-			
-			return false;
+			if (CurrentResult.Table != null && !IsEditing)
+				return UIInterfaceOrientationMask.All;
+			else
+				return UIInterfaceOrientationMask.Portrait | UIInterfaceOrientationMask.PortraitUpsideDown;
 		}
 	}
 	
