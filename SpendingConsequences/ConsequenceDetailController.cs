@@ -193,6 +193,8 @@ namespace SpendingConsequences
 			// Releases the view if it doesn't have a superview.
 			base.DidReceiveMemoryWarning ();
 		
+			ClearDynamicViews ();
+
 			// Release any cached data, images, etc that aren't in use.
 			if (this.GridView != null && this.PresentedViewController == this)
 				this.GridView = null;	
