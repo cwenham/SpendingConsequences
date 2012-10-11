@@ -231,64 +231,56 @@
 		<Template Name="Weeks of Service">
 			<TimeOfService UnitForCost="Week" TriggersOn="OneTime" Caption="weeks of service">
 				<Image Name="globe"/>
-				<Configurable Name="Cost" Type="Money" Label="Cost per week" Value="19.95"/>
-				<Commentary>If I skip eating out this week, I could pay for this much service!</Commentary>
+				<Configurable Name="Cost" Type="Money" Label="Cost per week" Value="19.95" CurrencyCode="USD"/>
 			</TimeOfService>
 		</Template>
 		
 		<Template Name="Months of Service">
 			<TimeOfService UnitForCost="Month" TriggersOn="OneTime" Caption="months of service">
 				<Image Name="globe"/>
-				<Configurable Name="Cost" Type="Money" Label="Cost per month" Value="19.95"/>
-				<Commentary>If I don't buy that AbFlexer Pro, I could pay for this much service!</Commentary>
+				<Configurable Name="Cost" Type="Money" Label="Cost per month" Value="19.95" CurrencyCode="USD"/>
 			</TimeOfService>
 		</Template>
 		
 		<Template Name="Years of Service">
 			<TimeOfService UnitForCost="Year" TriggersOn="OneTime" Caption="years of service">
 				<Image Name="globe"/>
-				<Configurable Name="Cost" Type="Money" Label="Cost per year" Value="19.95"/>
-				<Commentary>I don't really need that Deluxe Barbeque Grill, I could use the money to pay for this much service!</Commentary>
+				<Configurable Name="Cost" Type="Money" Label="Cost per year" Value="19.95" CurrencyCode="USD"/>
 			</TimeOfService>
 		</Template>
 		
 		<Template Name="Things Per Day">
 			<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="units per day" LowerResultLimit="1">
 				<Image Name="globe"/>
-				<Configurable Name="Cost" Type="Money" Label="Cost per unit" Value="10.00"/>
-				<Commentary>Wow, I didn't know I could buy so many of these for that much!</Commentary>
+				<Configurable Name="Cost" Type="Money" Label="Cost per unit" Value="10.00" CurrencyCode="USD"/>
 			</UnitsPerPeriod>		
 		</Template>
 		
 		<Template Name="Things Per Week">
 			<UnitsPerPeriod Period="Week" TriggersOn="Repeating" Caption="units per week" LowerResultLimit="1">
 				<Image Name="globe"/>
-				<Configurable Name="Cost" Type="Money" Label="Cost per unit" Value="10.00"/>
-				<Commentary>I'd rather have more of these each week than waste money on that other thing.</Commentary>
+				<Configurable Name="Cost" Type="Money" Label="Cost per unit" Value="10.00" CurrencyCode="USD"/>
 			</UnitsPerPeriod>		
 		</Template>		
 	
 		<Template Name="Things Per Month">
 			<UnitsPerPeriod Period="Month" TriggersOn="Repeating" Caption="units per month" LowerResultLimit="1">
 				<Image Name="globe"/>
-				<Configurable Name="Cost" Type="Money" Label="Cost per unit" Value="10.00"/>
-				<Commentary>I gotta have these, and all I have to do is not spend money on that other thing.</Commentary>
+				<Configurable Name="Cost" Type="Money" Label="Cost per unit" Value="10.00" CurrencyCode="USD"/>
 			</UnitsPerPeriod>		
 		</Template>
 		
 		<Template Name="Things Per Year">
 			<UnitsPerPeriod Period="Day" TriggersOn="Repeating" Caption="units per year" LowerResultLimit="1">
 				<Image Name="globe"/>
-				<Configurable Name="Cost" Type="Money" Label="Cost per unit" Value="10.00"/>
-				<Commentary>I'll thank myself later when I realize I could have wasted the money buying that other thing instead of these.</Commentary>
+				<Configurable Name="Cost" Type="Money" Label="Cost per unit" Value="10.00" CurrencyCode="USD"/>
 			</UnitsPerPeriod>		
 		</Template>
 		
 		<Template Name="Time to save up">
 			<TimeUntil TriggersOn="Repeating" Caption="to save for something" LowerResultLimit="1">
 				<Image Name="beach_umbrella"/>
-				<Configurable Name="Cost" Type="Money" Label="Cost to save for" Value="1000.00"/>
-				<Commentary>Everyone will be so envious when they see me with one of these!</Commentary>
+				<Configurable Name="Cost" Type="Money" Label="Cost to save for" Value="1000.00" CurrencyCode="USD"/>
 			</TimeUntil>		
 		</Template>
 	</ConsequenceTemplates>

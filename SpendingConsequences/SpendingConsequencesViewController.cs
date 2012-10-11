@@ -203,6 +203,14 @@ namespace SpendingConsequences
 				ACalculator calculator = userProfile.AddConsequenceFromDefinition(unwrappedTemplate);
 				calculator.SortOrder = -1;
 
+				// Switch to a compatible mode
+				if (!calculator.TriggersOn.Contains(this.CurrentMode))
+					if (calculator.TriggersOn.Contains(TriggerType.Repeating))
+						this.CurrentMode = TriggerType.PerDay;
+				else
+					if (calculator.TriggersOn.Contains(TriggerType.OneTime))
+						this.CurrentMode = TriggerType.OneTime;
+
 				// Create a prototype request in order to load the Details View in edit mode
 				Money prototypeAmount = this.CurrentAmount;
 				if (prototypeAmount == null)
@@ -247,6 +255,31 @@ namespace SpendingConsequences
 					return TriggerType.PerYear;
 				default:
 					return TriggerType.OneTime;
+				}
+			}
+			set
+			{
+				switch (value) {
+				case TriggerType.OneTime:
+					this.SpendingMode.SelectedSegment = 0;
+					break;
+				case TriggerType.PerDay:
+					this.SpendingMode.SelectedSegment = 1;
+					break;
+				case TriggerType.PerWeek:
+					this.SpendingMode.SelectedSegment = 2;
+					break;
+				case TriggerType.PerMonth:
+					this.SpendingMode.SelectedSegment = 3;
+					break;
+				case TriggerType.PerYear:
+					this.SpendingMode.SelectedSegment = 4;
+					break;
+				case TriggerType.Repeating:
+					this.SpendingMode.SelectedSegment = 1;
+					break;
+				default:
+				break;
 				}
 			}
 		}

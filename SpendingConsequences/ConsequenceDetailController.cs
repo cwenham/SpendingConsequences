@@ -333,7 +333,7 @@ namespace SpendingConsequences
 
 		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations ()
 		{
-			if (CurrentResult.Table != null && !IsEditing)
+			if (CurrentResult != null && CurrentResult.Table != null && !IsEditing)
 				return UIInterfaceOrientationMask.All;
 			else
 				return UIInterfaceOrientationMask.Portrait | UIInterfaceOrientationMask.PortraitUpsideDown;
