@@ -8,6 +8,8 @@ using System.IO;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
+using ETFLib.Composition;
+
 using SpendingConsequences.Calculators;
 
 namespace SpendingConsequences
@@ -88,12 +90,12 @@ namespace SpendingConsequences
 				if (subject != null)
 					switch (e.ObjectChange) {
 					case XObjectChange.Remove:
-					    ACalculator victim = ACalculator.GetInstance(subject, false);
+					    ACalculator victim = AComposable.GetInstance<ACalculator>(subject, false);
 					    if (victim != null)
 						    Calculators.Remove(victim);
 					break;
 					case XObjectChange.Add:
-					    ACalculator calc = ACalculator.GetInstance(subject);
+					    ACalculator calc = AComposable.GetInstance<ACalculator>(subject);
 					    if (calc != null && !Calculators.Contains(calc))
 						    Calculators.Add(calc);
 					break;
@@ -104,10 +106,10 @@ namespace SpendingConsequences
 			if (consequencesElement != null) {
 				var calculators = from e in consequencesElement.Elements ()
 					where e.Name.Namespace == NS.Profile
-					&& ACalculator.CalcType (e) != null
+					&& AComposable.ComposableType (e) != null
 						select ACalculator.GetInstance (e);
 				if (calculators != null)
-					this.Calculators = calculators.ToList ();
+					this.Calculators = calculators.Cast<ACalculator>().ToList();
 			}
 				
 			var resultTemplatesElement = Definition.Root.Element (NS.Profile + "ResultTemplates");
@@ -135,7 +137,7 @@ namespace SpendingConsequences
 
 			XElement assimilatedDef = XElement.Parse(definition.ToString());
 			calcContainer.Add(assimilatedDef);
-			ACalculator calc = ACalculator.GetInstance(assimilatedDef);
+			ACalculator calc = AComposable.GetInstance<ACalculator>(assimilatedDef);
 
 			return calc;
 		}

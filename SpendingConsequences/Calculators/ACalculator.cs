@@ -7,9 +7,12 @@ using System.Reflection;
 
 using MonoTouch.UIKit;
 
+using ETFLib;
+using ETFLib.Composition;
+
 namespace SpendingConsequences.Calculators
 {
-	public abstract class ACalculator
+	public abstract class ACalculator : AComposable
 	{
 		// Default thresholds for selection. InitialAmmounts or results that are outside this threshold will exclude this
 		// calculator from the result set.
@@ -26,10 +29,8 @@ namespace SpendingConsequences.Calculators
 			TriggerType.PerYear
 		};
 		
-		public ACalculator (XElement definition)
-		{
-			this.Definition = definition;
-			
+		public ACalculator (XElement definition) : base(definition)
+		{			
 			ConfigurableValues = Definition.Elements (NS.Profile + "Configurable")
 				.Select (x => new ConfigurableValue (x))
 				.ToDictionary (x => x.Name);
@@ -38,8 +39,6 @@ namespace SpendingConsequences.Calculators
 			                   where ASupportElement.KnownElementNames().Contains(e.Name.LocalName)
 			                   select ASupportElement.GetInstance(e)).ToDictionary(x => x.Name);
 		}
-		
-		public XElement Definition { get; private set; }
 		
 		/// <summary>
 		/// Configuration values, such as cost, interest rate, etc. used by calculator
@@ -70,14 +69,6 @@ namespace SpendingConsequences.Calculators
 			get {
 				return this.Definition.Document.Annotation<SubProfile>();
 			}
-		}
-
-		internal string AttributeOrNull(string attribName)
-		{
-			if (Definition.Attribute(attribName) != null)
-				return Definition.Attribute(attribName).Value;
-			else
-				return null;
 		}
 
 		public String Caption {
@@ -344,48 +335,7 @@ namespace SpendingConsequences.Calculators
 				default:
 					return 12;
 				}
-		}
-			
-		private static Dictionary<string, Type> _calcTypes { get; set; }
-		
-		public static Type CalcType (XElement definition)
-		{
-			if (_calcTypes == null)
-				_calcTypes = (from t in Assembly.GetCallingAssembly ().GetTypes ()
-				              where t.IsSubclassOf (typeof(ACalculator))
-				              select new {
-					name = t.Name,
-					typ = t
-				}).ToDictionary (x => x.name, y => y.typ);
-			
-			if (_calcTypes.ContainsKey (definition.Name.LocalName))
-				return _calcTypes [definition.Name.LocalName];
-			else
-				return null;
-		}
-
-		public static ACalculator GetInstance (XElement definition)
-		{
-			return GetInstance(definition, true);
-		}
-
-		public static ACalculator GetInstance (XElement definition, bool createIfNecessary)
-		{
-			Type calcType = CalcType (definition);
-			if (calcType != null) {
-				if (definition.Annotation (calcType) != null)
-					return definition.Annotation (calcType) as ACalculator;
-				else if (createIfNecessary) {
-					var instance = Activator.CreateInstance (calcType, new object[] { definition });
-					definition.AddAnnotation (instance);
-					return instance as ACalculator;
-				}
-				else
-					return null;
-			} else
-				return null;
-		}
-		
+		}		
 		#endregion	
 	}
 	
