@@ -83,7 +83,7 @@
     <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="System.Json" />
     <Reference Include="ETFLib">
-      <HintPath>..\..\ETFLib\ETFLib\bin\Release\ETFLib.dll</HintPath>
+      <HintPath>..\..\ETFLib\ETFLib\bin\Debug\ETFLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -140,7 +140,6 @@
     <Compile Include="WebGridView.designer.cs">
       <DependentUpon>XsltWebView.cs</DependentUpon>
     </Compile>
-    <Compile Include="NS.cs" />
     <Compile Include="Calculators\Financials.cs" />
     <Compile Include="XsltWebView.cs" />
     <Compile Include="Calculators\ExchangeRates.cs" />

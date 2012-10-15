@@ -2,6 +2,8 @@ using System;
 using System.Xml.Linq;
 using System.Collections.Generic;
 
+using ETFLib;
+
 using SpendingConsequences;
 
 namespace SpendingConsequences.Calculators
@@ -28,7 +30,7 @@ namespace SpendingConsequences.Calculators
 			get {
 				if (_image == null || _image.Name != this.CurrencyCode)
 				{
-					XElement imgElement = new XElement(NS.Profile + "Image",
+					XElement imgElement = new XElement(NS.Composition + "Image",
 				                                   new XAttribute("Type", "CurrencyFlag"),
 				                                   new XAttribute("Name", this.CurrencyCode));
 					_image = new Image(imgElement);

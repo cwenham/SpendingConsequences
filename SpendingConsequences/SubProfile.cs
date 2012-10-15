@@ -8,6 +8,7 @@ using System.IO;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
+using ETFLib;
 using ETFLib.Composition;
 
 using SpendingConsequences.Calculators;
@@ -17,7 +18,7 @@ namespace SpendingConsequences
 	/// <summary>
 	/// Represent an XML document that configures the application's behavior
 	/// </summary>
-	public class SubProfile
+	public class SubProfile : ACompositionTree
 	{
 		public static String LibraryFolder
 		{
@@ -49,77 +50,35 @@ namespace SpendingConsequences
 		/// </param>
 		public static SubProfile Create (String name)
 		{
-			XDocument definition = new XDocument(new XElement(NS.Profile + "Calculators"));
-			definition.Root.Add(new XElement(NS.Profile + "Consequences"));
+			XDocument definition = new XDocument(new XElement(NS.Composition + "Calculators"));
+			definition.Root.Add(new XElement(NS.Composition + "Consequences"));
 
 			String filePath = Path.Combine(LibraryFolder,String.Format("{0}.sbprofile", name));
 			definition.Save(filePath);
 
-			return SubProfile.Load(filePath);
-		}
-
-		public static SubProfile Load (String uri)
-		{
-			try {
-				XDocument definition = XDocument.Load (uri, LoadOptions.SetBaseUri);
-				if (definition != null && definition.Root.Name.Namespace == NS.Profile)
-					return new SubProfile (definition);
-				else
-				{
-					Console.WriteLine("Null or invalid profile: {0}", uri);
-					return null;
-				}
-			} catch (Exception ex) {
-				Console.WriteLine("{0} thrown when loading {1}: {2}", ex.GetType().Name, uri, ex.Message);
-				return null;
-			}
+			return ACompositionTree.Load<SubProfile>(filePath);
 		}
 		
-		private SubProfile (XDocument profileDoc)
+		public SubProfile (XDocument profileDoc) : base(profileDoc)
 		{
-			this.Definition = profileDoc;
-			this.Definition.AddAnnotation (this);
-
-			this.Definition.Root.Changed += delegate(object sender, XObjectChangeEventArgs e) {
-				Console.WriteLine ("Received XDocument changed event: {0}", this.Definition.BaseUri);
-				Uri uriPath = new Uri (this.Definition.BaseUri);
-				Console.WriteLine ("Saving to: {0}", uriPath.LocalPath);
-				Definition.Save (uriPath.LocalPath);
-
-				XElement subject = sender as XElement;
-				if (subject != null)
-					switch (e.ObjectChange) {
-					case XObjectChange.Remove:
-					    ACalculator victim = AComposable.GetInstance<ACalculator>(subject, false);
-					    if (victim != null)
-						    Calculators.Remove(victim);
-					break;
-					case XObjectChange.Add:
-					    ACalculator calc = AComposable.GetInstance<ACalculator>(subject);
-					    if (calc != null && !Calculators.Contains(calc))
-						    Calculators.Add(calc);
-					break;
-					}
-			};
-
-			var consequencesElement = Definition.Root.Element (NS.Profile + "Consequences");
+			var consequencesElement = Definition.Root.Element (NS.Composition + "Consequences");
 			if (consequencesElement != null) {
 				var calculators = from e in consequencesElement.Elements ()
-					where e.Name.Namespace == NS.Profile
+					where e.Name.Namespace == NS.Composition
 					&& AComposable.ComposableType (e) != null
 						select ACalculator.GetInstance (e);
 				if (calculators != null)
 					this.Calculators = calculators.Cast<ACalculator>().ToList();
 			}
 				
-			var resultTemplatesElement = Definition.Root.Element (NS.Profile + "ResultTemplates");
+			var resultTemplatesElement = Definition.Root.Element (NS.Composition + "ResultTemplates");
 
 			if (resultTemplatesElement != null)
 				ResultTemplates = resultTemplatesElement.Elements ()
 						.Where (x => x.Attribute ("Name") != null)
 						.ToDictionary (x => x.Attribute ("Name").Value, y => y.Element (NS.XSLT + "stylesheet"));
 
-			var consequenceTemplatesElement = Definition.Root.Element (NS.Profile + "ConsequenceTemplates");
+			var consequenceTemplatesElement = Definition.Root.Element (NS.Composition + "ConsequenceTemplates");
 			if (consequenceTemplatesElement != null)
 				ConsequenceTemplates = consequenceTemplatesElement.Elements ()
 						.Where (x => x.Attribute ("Name") != null)
@@ -128,10 +87,10 @@ namespace SpendingConsequences
 
 		public ACalculator AddConsequenceFromDefinition(XElement definition)
 		{
-			XElement calcContainer = this.Definition.Root.Element(NS.Profile + "Consequences");
+			XElement calcContainer = this.Definition.Root.Element(NS.Composition + "Consequences");
 			if (calcContainer == null)
 			{
-				calcContainer = new XElement(NS.Profile + "Consequences");
+				calcContainer = new XElement(NS.Composition + "Consequences");
 				this.Definition.Root.Add(calcContainer);
 			}
 
@@ -158,8 +117,6 @@ namespace SpendingConsequences
 		}
 		private Boolean _isUserEditable = true;
 		private Boolean _isUserEditableSet = false;
-
-		public XDocument Definition { get; private set; }
 		
 		public List<ACalculator> Calculators { get; private set; }
 		

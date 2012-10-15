@@ -9,6 +9,8 @@ using System.Net;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
+using ETFLib.Composition;
+
 using SpendingConsequences.Calculators;
 
 namespace SpendingConsequences
@@ -87,7 +89,7 @@ namespace SpendingConsequences
 		{
 			foreach (var file in Directory.GetFiles(SubProfile.LibraryFolder, "Consequences_V*.xml"))
 				try {
-					var library = SubProfile.Load(file);
+					var library = ACompositionTree.Load<SubProfile>(file);
 				    if (library != null)
 					    receivingProfile.AddSubProfile(Path.GetFileNameWithoutExtension(file), library);
 				} catch (Exception ex) {
@@ -108,7 +110,7 @@ namespace SpendingConsequences
 			if (Directory.Exists(SubProfile.LibraryFolder))
 				foreach (var file in Directory.GetFiles (SubProfile.LibraryFolder, "*.sbprofile"))
 					try {
-						SubProfile userProfile = SubProfile.Load (file);
+						SubProfile userProfile = SubProfile.Load<SubProfile>(file);
 						if (userProfile != null)
 							Profile.AddSubProfile (Path.GetFileNameWithoutExtension (file), userProfile);
 					} catch (Exception ex) {

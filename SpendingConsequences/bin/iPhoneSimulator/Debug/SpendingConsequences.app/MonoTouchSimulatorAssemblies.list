@@ -1,16 +1,8 @@
 ETFLib.dll
-Mono.Data.Sqlite.dll
-Mono.Data.Tds.dll
 Mono.Security.dll
 System.Core.dll
-System.Data.dll
 System.Json.dll
-System.Runtime.Serialization.dll
-System.ServiceModel.Web.dll
-System.ServiceModel.dll
-System.Transactions.dll
 System.Xml.Linq.dll
 System.Xml.dll
 System.dll
-TestFlight.dll
 mscorlib.dll

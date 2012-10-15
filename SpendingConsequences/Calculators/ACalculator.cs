@@ -31,7 +31,7 @@ namespace SpendingConsequences.Calculators
 		
 		public ACalculator (XElement definition) : base(definition)
 		{			
-			ConfigurableValues = Definition.Elements (NS.Profile + "Configurable")
+			ConfigurableValues = Definition.Elements (NS.Composition + "Configurable")
 				.Select (x => new ConfigurableValue (x))
 				.ToDictionary (x => x.Name);
 			
@@ -231,7 +231,7 @@ namespace SpendingConsequences.Calculators
 			get {
 				if (_image == null)
 				{
-					var imageElement = Definition.Element (NS.Profile + "Image");
+					var imageElement = Definition.Element (NS.Composition + "Image");
 					if (imageElement != null)
 						_image = new Image(imageElement);
 				}
@@ -249,7 +249,7 @@ namespace SpendingConsequences.Calculators
 		/// </value>
 		public String UnformattedCommentary {
 			get {
-				var commentaryElement = Definition.Element (NS.Profile + "Commentary");
+				var commentaryElement = Definition.Element (NS.Composition + "Commentary");
 				if (commentaryElement != null)
 					return commentaryElement.Value;
 				else return null;

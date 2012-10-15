@@ -8,6 +8,8 @@ using System.Text.RegularExpressions;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
+using ETFLib;
+
 using SpendingConsequences.Calculators;
 
 namespace SpendingConsequences
@@ -197,7 +199,7 @@ namespace SpendingConsequences
 				Profile.AddSubProfile("user", userProfile);
 			}
 
-			XElement unwrappedTemplate = template.Elements().Where(x => x.Name.Namespace == NS.Profile).FirstOrDefault();
+			XElement unwrappedTemplate = template.Elements().Where(x => x.Name.Namespace == NS.Composition).FirstOrDefault();
 			if (unwrappedTemplate != null)
 			{
 				ACalculator calculator = userProfile.AddConsequenceFromDefinition(unwrappedTemplate);

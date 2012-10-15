@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Profile xmlns="http://schemas.spentbetter.com/Profile"
+<Profile xmlns="http://schemas.editthefuture.com/Composition.xsd"
 		xmlns:h="http://www.w3.org/1999/xhtml"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		UserEditable="False">
-	<Consequences>
+	<Consequences Name="Consequences_V1">
 		<CurrencyConversion TriggersOn="OneTime" Caption="in [CurrencyName]" Category="Currencies">
-			<Configurable ID="CC1" Name="CurrencyCode" Type="Currency" Label="Currency" Value="GBP"/>
+			<Configurable Name="CurrencyCode" Type="Currency" Label="Currency" Value="GBP"/>
 		</CurrencyConversion> 
 		
 		<CurrencyConversion TriggersOn="OneTime" Caption="in [CurrencyName]" Category="Currencies">
-			<Configurable ID="CC2" Name="CurrencyCode" Type="Currency" Label="Currency" Value="EUR"/>
+			<Configurable Name="CurrencyCode" Type="Currency" Label="Currency" Value="EUR"/>
 		</CurrencyConversion>
 	
 		<Investment TriggersOn="OneTime,Repeating" Caption="by Retirement" TableTemplate="InvestmentTable" Category="Savings">

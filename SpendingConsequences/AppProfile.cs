@@ -4,6 +4,8 @@ using System.Xml.Linq;
 using System.Linq;
 using System.IO;
 
+using ETFLib.Composition;
+
 using SpendingConsequences.Calculators;
 
 namespace SpendingConsequences
@@ -14,7 +16,7 @@ namespace SpendingConsequences
 		{
 			SubProfiles = new Dictionary<string, SubProfile>();
 
-			SubProfile master = SubProfile.Load(masterProfilePath);
+			SubProfile master = ACompositionTree.Load<SubProfile>(masterProfilePath);
 			if (master != null)
 				AddSubProfile("main", master);
 		}
