@@ -48,13 +48,13 @@ namespace SpendingConsequences
 			}
 		}
 
-		public XElement GetResultTemplate (String name)
+		public Template GetResultTemplate (String name)
 		{
 			var matches = from sp in SubProfiles.Values
 				where sp.ResultTemplates != null
 				from t in sp.ResultTemplates
-					where t.Key.Equals(name, StringComparison.OrdinalIgnoreCase)
-					select t.Value;
+					where t.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
+					select t;
 
 			return matches.FirstOrDefault();
 		}

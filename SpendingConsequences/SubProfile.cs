@@ -70,13 +70,6 @@ namespace SpendingConsequences
 				if (calculators != null)
 					this.Calculators = calculators.Cast<ACalculator>().ToList();
 			}
-				
-			var resultTemplatesElement = Definition.Root.Element (NS.Composition + "ResultTemplates");
-
-			if (resultTemplatesElement != null)
-				ResultTemplates = resultTemplatesElement.Elements ()
-						.Where (x => x.Attribute ("Name") != null)
-						.ToDictionary (x => x.Attribute ("Name").Value, y => y.Element (NS.XSLT + "stylesheet"));
 		}
 
 		public ACalculator AddConsequenceFromDefinition(XElement definition)
@@ -112,8 +105,18 @@ namespace SpendingConsequences
 		private Boolean _isUserEditableSet = false;
 		
 		public List<ACalculator> Calculators { get; private set; }
-		
-		public Dictionary<String, XElement> ResultTemplates { get; private set; }
+
+		public IEnumerable<Template> ResultTemplates {
+			get {
+				if (_resultTemplateContainer == null && this.Root != null)
+					_resultTemplateContainer = this.Root.GetChild<AComposable>("ResultTemplates");
+				if (_resultTemplateContainer != null)
+					return _resultTemplateContainer.Children.OfType<Template>();
+				else
+					return null;
+			}
+		}
+		private AComposable _resultTemplateContainer;
 		
 		public IEnumerable<Template> ConsequenceTemplates { 
 			get {

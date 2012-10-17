@@ -3,7 +3,7 @@
 		xmlns:h="http://www.w3.org/1999/xhtml"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		UserEditable="False">
-	<ResultTemplates>
+	<Templates Name="ResultTemplates">
 		<Template Name="AmortizationTable" Syntax="XSLT">
 			<xsl:stylesheet version="1.0">
 				<xsl:output method="html" indent="yes" omit-xml-declaration="yes"/>
@@ -184,7 +184,7 @@
 			</xsl:stylesheet>
 
 		</Template>
-	</ResultTemplates>
+	</Templates>
 	
 	<Templates Name="ConsequenceTemplates">
 		<!-- Templates for basic consequence modules the user can add and customize. The UI will use the template names to populate a list -->

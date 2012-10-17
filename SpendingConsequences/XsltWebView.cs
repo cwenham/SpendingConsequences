@@ -12,6 +12,8 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 //using MonoTouch.TestFlight;
 
+using ETFLib.Composition;
+
 using SpendingConsequences.Calculators;
 
 namespace SpendingConsequences
@@ -72,13 +74,14 @@ namespace SpendingConsequences
 			XslCompiledTransform transformer;
 			
 			if (!TransformCache.ContainsKey (tableTemplateName)) {
-				XElement tableTemplate = Profile.GetResultTemplate(tableTemplateName);
+				Template tableTemplate = Profile.GetResultTemplate(tableTemplateName);
 			
 				if (tableTemplate == null)
 					return; // ToDo: Maybe throw exception so parent view can abort the transition
 			
 				transformer = new XslCompiledTransform ();
-				XmlReader tmplReader = tableTemplate.CreateReader ();
+				XElement templateXML = tableTemplate.GetUsableTemplateDefinition();
+				XmlReader tmplReader = templateXML.CreateReader ();
 				transformer.Load (tmplReader);		
 				
 				TransformCache.Add (tableTemplateName, transformer);
