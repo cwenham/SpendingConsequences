@@ -6,6 +6,8 @@ using System.Xml.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
+using ETFLib.Composition;
+
 namespace SpendingConsequences
 {
 	public partial class TemplatePickerSheet : UIViewController
@@ -56,9 +58,9 @@ namespace SpendingConsequences
 
 	public class TemplateChosenEventArgs : EventArgs 
 	{
-		public XElement Template { get; private set; }
+		public Template Template { get; private set; }
 
-		public TemplateChosenEventArgs(XElement template)
+		public TemplateChosenEventArgs(Template template)
 		{
 			this.Template = template;
 		}

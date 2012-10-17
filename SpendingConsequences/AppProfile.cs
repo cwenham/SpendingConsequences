@@ -42,9 +42,9 @@ namespace SpendingConsequences
 			}
 		}
 
-		public IDictionary<String,XElement> AllConsequenceTemplates {
+		public IEnumerable<Template> AllConsequenceTemplates {
 			get {
-				return SubProfiles.Values.Where(x => x.ConsequenceTemplates != null).SelectMany(x => x.ConsequenceTemplates).ToDictionary(x => x.Key, y => y.Value);
+				return SubProfiles.Values.Where (x => x.ConsequenceTemplates != null).SelectMany(x => x.ConsequenceTemplates);
 			}
 		}
 

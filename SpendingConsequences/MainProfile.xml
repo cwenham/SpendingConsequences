@@ -186,7 +186,7 @@
 		</Template>
 	</ResultTemplates>
 	
-	<ConsequenceTemplates>
+	<Templates Name="ConsequenceTemplates">
 		<!-- Templates for basic consequence modules the user can add and customize. The UI will use the template names to populate a list -->
 		
 		<Template Name="Investment">
@@ -283,7 +283,7 @@
 				<Configurable Name="Cost" Type="Money" Label="Cost to save for" Value="1000.00" CurrencyCode="USD"/>
 			</TimeUntil>		
 		</Template>
-	</ConsequenceTemplates>
+	</Templates>
 	
 	<Sources>
 		<!-- Commercially licensed artwork -->

@@ -83,7 +83,7 @@
     <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="System.Json" />
     <Reference Include="ETFLib">
-      <HintPath>..\..\ETFLib\ETFLib\bin\Debug\ETFLib.dll</HintPath>
+      <HintPath>..\..\ETFLib\ETFLib\bin\Release\ETFLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using ETFLib;
+using ETFLib.Composition;
 
 using SpendingConsequences.Calculators;
 
@@ -187,7 +188,7 @@ namespace SpendingConsequences
 			ArtRepository.StyleSegmentedControl("mode", this.SpendingMode);
 		}
 
-		private void CreateNewConsequence(TriggerType mode, XElement template)
+		private void CreateNewConsequence(TriggerType mode, Template template)
 		{
 			if (template == null)
 				return; 
@@ -199,7 +200,7 @@ namespace SpendingConsequences
 				Profile.AddSubProfile("user", userProfile);
 			}
 
-			XElement unwrappedTemplate = template.Elements().Where(x => x.Name.Namespace == NS.Composition).FirstOrDefault();
+			XElement unwrappedTemplate = template.GetUsableTemplateDefinition();
 			if (unwrappedTemplate != null)
 			{
 				ACalculator calculator = userProfile.AddConsequenceFromDefinition(unwrappedTemplate);

@@ -7,6 +7,8 @@ using MonoTouch;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
+using ETFLib.Composition;
+
 namespace SpendingConsequences
 {
 	public class TemplatePickerModel : UIPickerViewModel
@@ -25,24 +27,24 @@ namespace SpendingConsequences
 
 		public override int GetRowsInComponent (UIPickerView picker, int component)
 		{
-			return Profile.AllConsequenceTemplates.Count;
+			return Profile.AllConsequenceTemplates.Count ();
 		}
 
 		public override string GetTitle (UIPickerView picker, int row, int component)
 		{
-			var template = Profile.AllConsequenceTemplates.Values.Skip(row).FirstOrDefault();
+			var template = Profile.AllConsequenceTemplates.Skip(row).FirstOrDefault();
 			if (template != null)
-				return template.Attribute("Name").Value;
+				return template.Name;
 			else
 				return "Error";
 		}
 
 		public override void Selected (UIPickerView picker, int row, int component)
 		{
-			SelectedTemplate = Profile.AllConsequenceTemplates.Values.Skip(row).FirstOrDefault();
+			SelectedTemplate = Profile.AllConsequenceTemplates.Skip(row).FirstOrDefault();
 		}
 
-		public XElement SelectedTemplate { get; private set; }
+		public Template SelectedTemplate { get; private set; }
 	}
 }
 

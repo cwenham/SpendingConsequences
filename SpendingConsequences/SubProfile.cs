@@ -77,12 +77,6 @@ namespace SpendingConsequences
 				ResultTemplates = resultTemplatesElement.Elements ()
 						.Where (x => x.Attribute ("Name") != null)
 						.ToDictionary (x => x.Attribute ("Name").Value, y => y.Element (NS.XSLT + "stylesheet"));
-
-			var consequenceTemplatesElement = Definition.Root.Element (NS.Composition + "ConsequenceTemplates");
-			if (consequenceTemplatesElement != null)
-				ConsequenceTemplates = consequenceTemplatesElement.Elements ()
-						.Where (x => x.Attribute ("Name") != null)
-						.ToDictionary (x => x.Attribute ("Name").Value);
 		}
 
 		public ACalculator AddConsequenceFromDefinition(XElement definition)
@@ -94,9 +88,8 @@ namespace SpendingConsequences
 				this.Definition.Root.Add(calcContainer);
 			}
 
-			XElement assimilatedDef = XElement.Parse(definition.ToString());
-			calcContainer.Add(assimilatedDef);
-			ACalculator calc = AComposable.GetInstance<ACalculator>(assimilatedDef);
+			calcContainer.Add(definition);
+			ACalculator calc = AComposable.GetInstance<ACalculator>(definition);
 
 			return calc;
 		}
@@ -122,7 +115,17 @@ namespace SpendingConsequences
 		
 		public Dictionary<String, XElement> ResultTemplates { get; private set; }
 		
-		public Dictionary<String, XElement> ConsequenceTemplates { get; private set; }
+		public IEnumerable<Template> ConsequenceTemplates { 
+			get {
+				if (_consequenceTemplateContainer == null && this.Root != null)
+					_consequenceTemplateContainer = this.Root.GetChild<AComposable>("ConsequenceTemplates");
+				if (_consequenceTemplateContainer != null)
+					return _consequenceTemplateContainer.Children.OfType<Template>();
+				else
+					return null;
+			}
+		}
+		private AComposable _consequenceTemplateContainer;
 	}
 }
 
