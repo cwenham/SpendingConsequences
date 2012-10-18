@@ -86,23 +86,6 @@ namespace SpendingConsequences
 
 			return calc;
 		}
-
-		public Boolean IsUserEditable {
-			get {
-				if (!_isUserEditableSet)
-				{
-					var editAttribute = this.Definition.Root.Attribute("UserEditable");
-					if (editAttribute != null)
-						Boolean.TryParse(editAttribute.Value, out _isUserEditable);
-
-					_isUserEditableSet = true;
-				}
-
-				return _isUserEditable;
-			}
-		}
-		private Boolean _isUserEditable = true;
-		private Boolean _isUserEditableSet = false;
 		
 		public List<ACalculator> Calculators { get; private set; }
 
