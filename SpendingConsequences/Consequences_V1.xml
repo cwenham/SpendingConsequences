@@ -3,7 +3,7 @@
 		xmlns:h="http://www.w3.org/1999/xhtml"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		UserEditable="False">
-	<Consequences Name="Consequences_V1">
+	<Consequences>
 		<CurrencyConversion TriggersOn="OneTime" Caption="in [CurrencyName]" Category="Currencies">
 			<Configurable Name="CurrencyCode" Type="Currency" Label="Currency" Value="GBP"/>
 		</CurrencyConversion> 

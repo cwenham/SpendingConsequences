@@ -61,15 +61,6 @@ namespace SpendingConsequences
 		
 		public SubProfile (XDocument profileDoc) : base(profileDoc)
 		{
-			var consequencesElement = Definition.Root.Element (NS.Composition + "Consequences");
-			if (consequencesElement != null) {
-				var calculators = from e in consequencesElement.Elements ()
-					where e.Name.Namespace == NS.Composition
-					&& AComposable.ComposableType (e) != null
-						select ACalculator.GetInstance (e);
-				if (calculators != null)
-					this.Calculators = calculators.Cast<ACalculator>().ToList();
-			}
 		}
 
 		public ACalculator AddConsequenceFromDefinition(XElement definition)
@@ -86,8 +77,19 @@ namespace SpendingConsequences
 
 			return calc;
 		}
-		
-		public List<ACalculator> Calculators { get; private set; }
+
+		public IEnumerable<ACalculator> Calculators {
+			get {
+				if (_calculatorContainer == null)
+					_calculatorContainer = this.Root.GetChild<AComposable>("Consequences");
+
+				if (_calculatorContainer != null)
+					return _calculatorContainer.Children.OfType<ACalculator>();
+				else
+					return null;
+			}
+		}
+		private AComposable _calculatorContainer;
 
 		public IEnumerable<Template> ResultTemplates {
 			get {
